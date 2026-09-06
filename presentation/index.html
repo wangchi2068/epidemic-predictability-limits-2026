@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流行病传播动力学的可预测视界、极限机制与全量手写板书推导</title>
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --navy: #0f2240;
+            --dark-blue: #1a365d;
+            --teal: #008080;
+            --accent: #d4a017;
+            --crimson: #b42828;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .presentation-container {
+            width: 100%;
+            max-width: 1150px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            min-height: 720px;
+        }
+
+        .slide-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--dark-blue) 100%);
+            color: white;
+            padding: 22px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .slide-title h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .slide-title p {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .slide-counter {
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: var(--accent);
+        }
+
+        .slide-body {
+            padding: 28px 32px;
+            flex: 1;
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .slide-body.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 18px;
+        }
+
+        .card {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 18px;
+            border-left: 4px solid var(--navy);
+        }
+
+        .card.teal { border-left-color: var(--teal); }
+        .card.crimson { border-left-color: var(--crimson); }
+        .card.accent { border-left-color: var(--accent); }
+
+        .card h3 {
+            font-size: 15px;
+            margin-bottom: 10px;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card ul {
+            list-style: none;
+            font-size: 13.5px;
+            line-height: 1.55;
+            color: var(--text-main);
+        }
+
+        .card ul li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 14px;
+        }
+
+        .card ul li::before {
+            content: "•";
+            color: var(--teal);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .formula-box {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin: 8px 0;
+            font-size: 14px;
+            text-align: center;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .highlight-box {
+            background: #fffbeb;
+            border: 1px solid #fef3c7;
+            border-left: 4px solid var(--accent);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+
+        .nav-controls {
+            padding: 14px 32px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: 9px 20px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { background: var(--dark-blue); }
+        .btn:disabled { background: #cbd5e1; cursor: not-allowed; }
+
+        .key-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation-container">
+    <div class="slide-header">
+        <div class="slide-title">
+            <h1 id="header-title">封面</h1>
+            <p id="header-subtitle">流行病传播动力学的可预测视界、极限机制与实证研究</p>
+        </div>
+        <div class="slide-counter" id="slide-num">1 / 14</div>
+    </div>
+
+    <!-- SLIDE 1: 封面 -->
+    <div class="slide-body active" id="slide-1">
+        <div style="text-align: center; padding: 40px 20px;">
+            <span style="background: #e0f2fe; color: #0369a1; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 13px;">顶级学术报告与全量板书推导 / Masterclass</span>
+            <h2 style="font-size: 32px; color: var(--navy); margin: 20px 0 10px; font-weight: 800;">流行病传播动力学的可预测视界、<br>极限机制与手把手公式推导</h2>
+            <p style="font-size: 15px; color: var(--teal); font-weight: 600; margin-bottom: 24px;">The Predictability Horizon of Epidemic Forecasts: Complete Mathematical Derivations & Empirical Insights</p>
+            
+            <div style="max-width: 850px; margin: 0 auto; background: #f8fafc; border: 2px dashed var(--teal); border-radius: 12px; padding: 20px;">
+                <h4 style="color: var(--navy); margin-bottom: 8px;">🌟 核心立意与哲学转向</h4>
+                <p style="font-size: 14.5px; color: var(--text-main); line-height: 1.7;">
+                    “我们不再卷一个新算法去刷榜，而是从第一性原理（物理与统计推断底层）出发，回答流行病预测中：<strong>精度的理论天花板在哪里、什么阶段在信息论上本质不可预测</strong>。”
+                </p>
+            </div>
+            <p style="margin-top: 24px; font-size: 13px; color: var(--text-muted);">使用键盘 <strong>← / →</strong> 方向键或点击下方按钮翻页</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: 现实痛点与问题提出 -->
+    <div class="slide-body" id="slide-2">
+        <div class="grid-2">
+            <div class="card crimson">
+                <h3>⚠️ 国际公卫预报的普遍困境</h3>
+                <ul>
+                    <li><strong>强超临界阶段</strong>：各类模型常能提前数周给出高质量预报。</li>
+                    <li><strong>接近传播阈值（\(R \approx 1\)）与低发病期</strong>：无论深度学习、SEIR微分方程还是时间序列，<strong>精度发生断崖式崩溃</strong>！</li>
+                    <li><strong>RAPIDD 埃博拉挑战赛</strong>：多团队对比显示，在近灭绝阶段没有任何先进模型能稳定胜过朴素基准（Naive Baseline）。</li>
+                    <li><strong>传统归因误区</strong>：学术界普遍将其归咎于“模型不够深”、“结构不够复杂”或“数据漏报”，陷入盲目调参陷阱。</li>
+                </ul>
+            </div>
+            <div class="card teal">
+                <h3>💡 本文的第一性原理立意与发问</h3>
+                <ul>
+                    <li><strong>核心科学问题</strong>：预报精度的物理与统计天花板究竟在哪里？是否存在无偏预报器的理论极限？</li>
+                    <li><strong>第一性原理突破</strong>：从负二项分支过程第一性原理出发，严格分离<strong>不可约物理噪声</strong>与<strong>参数估计噪声</strong>。</li>
+                    <li><strong>颠覆性认知</strong>：近阈值失效不是算法不行，而是传播动力学固有的<strong>物理熵增</strong>与<strong>统计辨识下限</strong>！</li>
+                    <li><strong>业务价值</strong>：为预报中心（CDC FluSight、Forecast Hub）提供<strong>事前预登记视界</strong>与<strong>盲区主动等待</strong>准则。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: 第一性原理理论架构 -->
+    <div class="slide-body" id="slide-3">
+        <div class="grid-3">
+            <div class="card">
+                <h3>📐 定理 1: 误差分解与闭式视界</h3>
+                <ul>
+                    <li>相对均方误差严格正交分解</li>
+                    <li>不可约人口地板 + 参数放大项</li>
+                    <li>导出解析可预测视界 \(h^*\)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>📉 定理 2: 单调性与有限边界</h3>
+                <ul>
+                    <li>相对误差随前置时间单调递增</li>
+                    <li>排除“短期不准、远期变准”的幻想</li>
+                    <li>确立 \(h^*\) 为唯一物理可预测边界</li>
+                </ul>
+            </div>
+            <div class="card crimson">
+                <h3>🌪️ 定理 3: 拟平稳相变与塌缩</h3>
+                <ul>
+                    <li>临界相变窗口 \(|\varepsilon| \sim (R+1)/N\)</li>
+                    <li>Fokker-Planck 扩散奇异解</li>
+                    <li>\(\text{CV} \sim \mathcal{O}(1)\) 导致 \(h^*\) 塌缩至 0</li>
+                </ul>
+            </div>
+            <div class="card accent">
+                <h3>🎯 定理 4: Cramér-Rao 辨识界</h3>
+                <ul>
+                    <li>负二项似然 Fisher 信息矩阵</li>
+                    <li>判别超临界态刚性样本量 \(C \ge 231\)</li>
+                    <li>功效校正门槛：\(1,432\) 例累计病例</li>
+                </ul>
+            </div>
+            <div class="card teal">
+                <h3>🌊 定理 5/5R: 时变漂移与地板</h3>
+                <ul>
+                    <li>增长率 AR(1) 漂移方差累积</li>
+                    <li>宏观聚合发病数 \(1/k\) 对数方差地板</li>
+                    <li>定量解释真实疫情方差标度 \(p\)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>🔬 机器学习极限基准攻击</h3>
+                <ul>
+                    <li>LightGBM 饱和理论地板 (6%–44%)</li>
+                    <li>神经网络无法跨越 Cramér-Rao 界</li>
+                    <li>CDC 真实数据五项完全误差预算</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: 【板书推导 1】全代方差递推 -->
+    <div class="slide-body" id="slide-4">
+        <div class="grid-2">
+            <div class="card">
+                <h3>🔢 步骤 1：条件均值与全方差定律递推</h3>
+                <p style="font-size:13px; color:var(--text-muted);">负二项后代分布单代方差：\(\sigma^2 = R + R^2/k = R(1 + R/k)\)。</p>
+                <div class="formula-box">
+                    \[\mathbb{E}[Z_h \mid Z_{h-1}] = R Z_{h-1} \implies \mathbb{E}[Z_h] = I_0 R^h\]
+                </div>
+                <p style="font-size:13px; margin-top:6px;">根据<strong>全方差定律（Law of Total Variance）</strong>：</p>
+                <div class="formula-box">
+                    \[\text{Var}(Z_h) = \mathbb{E}[\text{Var}(Z_h \mid Z_{h-1})] + \text{Var}(\mathbb{E}[Z_h \mid Z_{h-1}])\]
+                    \[\text{Var}(Z_h) = \sigma^2 \mathbb{E}[Z_{h-1}] + R^2 \text{Var}(Z_{h-1})\]
+                    \[\mathbf{\text{Var}(Z_h) = \sigma^2 I_0 R^{h-1} + R^2 \text{Var}(Z_{h-1})}\]
+                </div>
+            </div>
+            <div class="card teal">
+                <h3>📐 步骤 2：套娃展开与等比数列闭式求和</h3>
+                <p style="font-size:13px; margin-bottom:4px;">从 \(h=1\) 逐步展开（已知 \(\text{Var}(Z_0)=0\)）：</p>
+                <div class="formula-box">
+                    \[\text{Var}(Z_1) = \sigma^2 I_0\]
+                    \[\text{Var}(Z_2) = \sigma^2 I_0 R + R^2 (\sigma^2 I_0) = \sigma^2 I_0 [R + R^2]\]
+                    \[\text{Var}(Z_h) = \sigma^2 I_0 R^{h-1} \sum_{j=0}^{h-1} R^j = \sigma^2 I_0 R^{h-1} \frac{R^h - 1}{R - 1}\]
+                </div>
+                <p style="font-size:13px;">代入 \(\sigma^2 = R(1 + R/k)\) 得到<strong>完全闭式方差解</strong>：</p>
+                <div class="formula-box" style="background:#f0fdf4; border-color:#86efac;">
+                    \[\mathbf{\text{Var}(Z_h) = I_0 R^h \left(1 + \frac{R}{k}\right)\frac{R^h - 1}{R - 1}}\]
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: 【板书推导 2】变异系数与人口地板 -->
+    <div class="slide-body" id="slide-5">
+        <div class="grid-2">
+            <div class="card">
+                <h3>🔢 步骤 1：变异系数平方 \(\text{CV}^2\) 的化简</h3>
+                <p style="font-size:13px;">相对方差定义为方差除以期望平方：</p>
+                <div class="formula-box">
+                    \[\text{CV}^2(Z_h) = \frac{\text{Var}(Z_h)}{(\mathbb{E}[Z_h])^2} = \frac{I_0 R^h \left(1 + \frac{R}{k}\right)\frac{R^h - 1}{R - 1}}{(I_0 R^h)^2}\]
+                </div>
+                <p style="font-size:13px;">分子分母逐项约简：</p>
+                <div class="formula-box">
+                    \[\frac{R^{h-1}}{R^{2h}}(R^h - 1) = \frac{R^h - 1}{R \cdot R^h} = \frac{1 - R^{-h}}{R}\]
+                    \[\mathbf{\text{CV}^2(Z_h) = \frac{(1 + R/k)(1 - R^{-h})}{I_0(R - 1)}}\]
+                </div>
+            </div>
+            <div class="card teal">
+                <h3>🏢 步骤 2：极限分析与物理地板</h3>
+                <p style="font-size:13px;">在超临界传播（\(R > 1\)）下，当 \(h \ge 3 \sim 4\) 代：</p>
+                <div class="formula-box">
+                    \[R^{-h} \to 0 \implies (1 - R^{-h}) \to 1\]
+                    \[\mathbf{\text{floor} = \lim_{h \to \infty} \text{CV}^2(Z_h) = \frac{1 + R/k}{I_0(R - 1)}}\]
+                </div>
+                <div class="highlight-box">
+                    💡 <strong>物理直觉</strong>：
+                    <br>• \(I_0\) 在分母：初始规模越大，大数定律越强，相对噪声越小；
+                    <br>• \((R-1)\) 在分母：离临界点越远，指数增长越快压制灭绝；
+                    <br>• \((1 + R/k)\) 在分子：超扩散越严重（\(k\) 越小），不可约物理地板越高！
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: 【板书推导 3】参数放大项与视界 h* -->
+    <div class="slide-body" id="slide-6">
+        <div class="grid-2">
+            <div class="card">
+                <h3>📈 步骤 1：点估计预报的 Delta 展开</h3>
+                <p style="font-size:13px;">前瞻点估计预报 \(\hat{I}_h = I_0 \hat{R}^h\)，设 \(\hat{R} = R + \Delta R\)：</p>
+                <div class="formula-box">
+                    \[\log \hat{I}_h - \log \mathbb{E}[I_h] = h \log\left(1 + \frac{\Delta R}{R}\right) \approx h \frac{\Delta R}{R}\]
+                    \[P(h) \equiv \text{Var}\left(h \frac{\Delta R}{R}\right) = \mathbf{\left(h \frac{\delta R}{R}\right)^2}\]
+                </div>
+                <p style="font-size:13px;">总相对均方误差等于人口地板与参数放大项之和：</p>
+                <div class="formula-box">
+                    \[\text{relMSE}^2(h) = \text{CV}^2(h) + P(h) \approx \text{floor} + \left(h \frac{\delta R}{R}\right)^2\]
+                </div>
+            </div>
+            <div class="card accent">
+                <h3>🎯 步骤 2：解一元二次不等式导出 \(h^*\)</h3>
+                <p style="font-size:13px;">设定目标精度容忍度 \(\tau\)，预报有效条件为 \(\text{relMSE}^2(h) \le \tau^2\)：</p>
+                <div class="formula-box">
+                    \[\text{floor} + \left(h \frac{\delta R}{R}\right)^2 \le \tau^2 \implies h_{\text{gen}}^* \le \frac{R}{\delta R}\sqrt{\tau^2 - \text{floor}}\]
+                </div>
+                <p style="font-size:13px;">乘以平均代间隔 \(\mu_g\)（换算为日历时间）：</p>
+                <div class="formula-box" style="background:#fefce8; border-color:#fde047;">
+                    \[\mathbf{h^* \approx \mu_g \frac{R}{\delta R} \sqrt{\tau^2 - \frac{1 + R/k}{I_0(R - 1)}}}\]
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: 【板书推导 4】临界 Fokker-Planck 扩散解 -->
+    <div class="slide-body" id="slide-7">
+        <div class="grid-2">
+            <div class="card crimson">
+                <h3>🌪️ 步骤 1：生灭扩散 SDE 与平稳方程</h3>
+                <p style="font-size:13px;">漂移项 \(\mu(x) = x(\varepsilon - \frac{R}{N}x)\)，扩散项 \(\sigma^2(x) = (R+1)x\)：</p>
+                <div class="formula-box">
+                    \[dX = X\left(\varepsilon - \frac{R}{N}X\right)dt + \sqrt{(R+1)X} \, dW_t\]
+                </div>
+                <p style="font-size:13px;">平稳 Fokker-Planck 方程积分一次：</p>
+                <div class="formula-box">
+                    \[\frac{1}{2}\frac{d}{dx}\left[(R+1)x \pi(x)\right] = x\left(\varepsilon - \frac{R}{N}x\right)\pi(x)\]
+                </div>
+            </div>
+            <div class="card teal">
+                <h3>📐 步骤 2：分离变量求解 ODE 与奇异解</h3>
+                <p style="font-size:13px;">令 \(u(x) = (R+1)x\pi(x)\)，分离变量积分：</p>
+                <div class="formula-box">
+                    \[\frac{1}{u}\frac{du}{dx} = \frac{2\varepsilon}{R+1} - \frac{2R}{N(R+1)}x\]
+                    \[\ln u(x) = c_1 x - c_2 x^2 + C_0 \implies u(x) \propto \exp(c_1 x - c_2 x^2)\]
+                    \[\mathbf{\pi(x) \propto x^{-1} \exp(c_1 x - c_2 x^2), \quad x \in (x_{\min}, \infty)}\]
+                </div>
+                <p style="font-size:13px;">\(x^{-1}\) 奇异性使原点附近涨落极其剧烈，\(\text{CV} \sim \mathcal{O}(1)\)，视界发生结构性塌缩 \(h^* = 0\)！</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: 【板书推导 5】单种子建群概率与三阶残项 -->
+    <div class="slide-body" id="slide-8">
+        <div class="grid-2">
+            <div class="card">
+                <h3>🌱 步骤 1：不动点方程与二阶展开</h3>
+                <p style="font-size:13px;">灭绝概率方程 \(q = e^{-R(1-q)}\)，建群概率 \(s = 1 - q\)：</p>
+                <div class="formula-box">
+                    \[s = 1 - e^{-Rs}\]
+                </div>
+                <p style="font-size:13px;">展开到三阶：\(e^{-Rs} = 1 - Rs + \frac{R^2 s^2}{2} - \frac{R^3 s^3}{6}\)：</p>
+                <div class="formula-box">
+                    \[s = Rs - \frac{R^2 s^2}{2} + \frac{R^3 s^3}{6} \implies \frac{R^2 s}{2} = \varepsilon + \frac{R^3 s^2}{6}\]
+                    \[s_{\text{Taylor}} \approx \frac{2\varepsilon}{R^2} \quad \text{（截断忽略三阶正项，必然系统性低估）}\]
+                </div>
+            </div>
+            <div class="card teal">
+                <h3>🔬 步骤 2：扩散近似解的优雅补偿</h3>
+                <p style="font-size:13px;">连续扩散近似直接给出：</p>
+                <div class="formula-box">
+                    \[\mathbf{s_{\text{diffusion}} \approx \frac{2\varepsilon}{R}}\]
+                </div>
+                <div class="highlight-box">
+                    📊 <strong>实测数值精度对比（\(R=1.1, \varepsilon=0.1\)）</strong>：
+                    <br>• 精确数值根：\(s_{\text{Exact}} = 0.1761\)
+                    <br>• 扩散解 \(2\varepsilon/R = 0.1818\)（比值 <strong>1.032</strong>，误差仅 3.2%）
+                    <br>• 代数解 \(2\varepsilon/R^2 = 0.1653\)（比值 <strong>0.938</strong>，误差达 6.2%）
+                    <br><strong>结论：扩散解分母少乘一个 \(R\)，完美补偿了正三阶曲率！</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: 【板书推导 6】Fisher 信息与辨识界 -->
+    <div class="slide-body" id="slide-9">
+        <div class="grid-2">
+            <div class="card">
+                <h3>📐 步骤 1：负二项对数似然求二阶导</h3>
+                <p style="font-size:13px;">累计发病数 \(C = \sum I_t\)，对数似然函数为：</p>
+                <div class="formula-box">
+                    \[\log L(R) = \left(\sum I_t\right)\ln R - \left(\sum (I_t + k I_{t-1})\right)\ln(R + k)\]
+                    \[\frac{\partial^2 \log L}{\partial R^2} = -\frac{\sum I_t}{R^2} + \frac{\sum (I_t + k I_{t-1})}{(R + k)^2}\]
+                </div>
+                <p style="font-size:13px;">求负数学期望得到 <strong>Fisher 信息量</strong>：</p>
+                <div class="formula-box">
+                    \[\mathbf{I(R) = C \cdot \frac{k}{R(R + k)}}\]
+                </div>
+            </div>
+            <div class="card accent">
+                <h3>🎯 步骤 2：Cramér-Rao 样本量与功效校正</h3>
+                <p style="font-size:13px;">方差下界 \(\text{Var}(\hat{R}) \ge 1/I(R) = \frac{R^2(1/R + 1/k)}{C} \le \varepsilon^2\)：</p>
+                <div class="formula-box">
+                    \[\mathbf{C \ge \frac{R^2(1/R + 1/k)}{\varepsilon^2}}\]
+                </div>
+                <p style="font-size:13px;">单次假设检验功效校正（\(\alpha=0.05, 1-\beta=0.8 \implies \times 6.2\)）：</p>
+                <div class="formula-box" style="background:#eff6ff;">
+                    \[\mathbf{C_{\text{operational}} \gtrsim 6.2 \cdot \frac{R^2(1/R + 1/k)}{\varepsilon^2}}\]
+                </div>
+                <p style="font-size:12.5px;">\(R=1.1, k=1.0, \varepsilon=0.1\) 下严格方差下限为 <strong>231 例</strong>，功效校正门槛为 <strong>1,432 例</strong>！</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: 定理 5 & 5R 漂移与宏观地板 -->
+    <div class="slide-body" id="slide-10">
+        <div class="grid-2">
+            <div class="card teal">
+                <h3>🏢 宏观发病数的 \(1/k\) 方差地板</h3>
+                <ul>
+                    <li><strong>种群粗粒度负二项更新噪声</strong>：
+                        <br>当 \(\mu \gg k\) 时，二阶矩给出 \(\text{CV}^2 \approx 1/k\)。
+                    </li>
+                    <li><strong>绝对方差地板（独立于暴发规模 \(I_0\)！）</strong>：
+                        <div class="formula-box">\[\text{Var}(\log \hat{I}_h) \sim \frac{h}{k}\]</div>
+                    </li>
+                    <li><strong>个体级 vs 种群级地板</strong>：
+                        <br>个体级地板 \(\sim I_0^{-1}\)（随发病累积而衰减）；
+                        <br>种群级地板 \(\sim 1/k\)（尺度无关，持久硬性制约超扩散疫情预报）。
+                    </li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>🌊 AR(1) 漂移与方差幂律标度 \(p\)</h3>
+                <p style="font-size:13px;">增长率 AR(1) 过程无条件方差累积：</p>
+                <div class="formula-box">
+                    \[\text{Var}\left(\sum_{j=1}^h r_{t+j}\right) \sim \gamma_0 h \frac{1+\phi}{1-\phi}\]
+                </div>
+                <ul>
+                    <li><strong>随机游走极限（\(\phi \to 1\)）</strong>：方差呈 \(h^3/3\) 爆发式增长！</li>
+                    <li><strong>实测方差幂律标度指数 \(\text{Var} \sim h^p\) 吻合</strong>：
+                        <br>• COVID-19: \(p = 1.13 \pm 0.12\) (强自相关持久性)
+                        <br>• 季节性流感: \(p = 1.00 \pm 0.08\) (标准线性累积)
+                        <br>• RSV 2024–25: \(p = 0.48 \pm 0.15\) (平滑亚线性累积)
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: 机器学习极限基准攻击 -->
+    <div class="slide-body" id="slide-11">
+        <div class="grid-2">
+            <div class="card teal">
+                <h3>🌲 ML-2: LightGBM 饱和理论地板</h3>
+                <ul>
+                    <li><strong>实验设计</strong>：在已知分支过程生成分布上训练 LightGBM 梯度提升树，测试 200 条独立疫情在 8 个前置步长上的表现。</li>
+                    <li><strong>实验结果</strong>：LightGBM 预测误差运行于理论对数标准差地板之上 <strong>6% ~ 44%</strong>！</li>
+                    <li><strong>紧致性验证</strong>：非线性模型从不低于理论下限，证明了理论界是自适应算法可以无限逼近并饱和的<strong>真实紧致物理底线</strong>！</li>
+                </ul>
+            </div>
+            <div class="card crimson">
+                <h3>🧠 ML-1: 神经网络无法跨越 CRLB 界</h3>
+                <ul>
+                    <li><strong>实验设计</strong>：构建 40,000 条轨迹深度残差校准网络（MLP）直接估计 \((R, k)\)。</li>
+                    <li><strong>实验结果</strong>：配对检验 <strong>\(p = 1.0\)</strong>，神经网络完全无法超越经典无偏最大似然估计（MLE）！</li>
+                    <li><strong>视界指标差距</strong>：神经网络在极端超扩散尾部（\(k < 0.5\)）产生系统偏差，视界指标落后 MLE 约 <strong>5.4 倍</strong>！</li>
+                    <li><strong>信息论结论</strong>：在规范似然下，AI 无法违背渐近最优无偏似然界。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: 真实 CDC 数据五项误差预算 -->
+    <div class="slide-body" id="slide-12">
+        <div class="card">
+            <h3>📊 表 2 全景五项实测分解（逐行代数和 100.0% 严格闭合）</h3>
+            <table style="width:100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; background: white;">
+                <thead>
+                    <tr style="background: var(--navy); color: white; text-align: left;">
+                        <th style="padding: 6px 10px;">病原体与前置步长</th>
+                        <th style="padding: 6px 10px;">人口地板 \(\text{CV}^2\)</th>
+                        <th style="padding: 6px 10px;">\(R\) 漂移 \(\text{Var}(R)\)</th>
+                        <th style="padding: 6px 10px;">参数误差 \(P(h)\)</th>
+                        <th style="padding: 6px 10px;">交叉项 \(\mathcal{E}_{\text{cross}}\)</th>
+                        <th style="padding: 6px 10px;">未解释残差 \(\mathcal{E}_{\text{misspec}}\)</th>
+                        <th style="padding: 6px 10px;">95% Bootstrap CI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 6px 10px; font-weight: bold;">COVID-19 \(h=1\) 周</td>
+                        <td style="padding: 6px 10px;">9.7%</td>
+                        <td style="padding: 6px 10px;">7.6%</td>
+                        <td style="padding: 6px 10px;">0.5%</td>
+                        <td style="padding: 6px 10px;">-0.6%</td>
+                        <td style="padding: 6px 10px; font-weight: bold; color: var(--crimson);">82.8%</td>
+                        <td style="padding: 6px 10px;">[80.5%, 85.1%]</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 6px 10px; font-weight: bold;">COVID-19 \(h=4\) 周</td>
+                        <td style="padding: 6px 10px;">9.0%</td>
+                        <td style="padding: 6px 10px;">7.0%</td>
+                        <td style="padding: 6px 10px;">0.8%</td>
+                        <td style="padding: 6px 10px;">-0.8%</td>
+                        <td style="padding: 6px 10px; font-weight: bold; color: var(--crimson);">84.0%</td>
+                        <td style="padding: 6px 10px;">[81.6%, 86.4%]</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 6px 10px; font-weight: bold;">流感 \(h=1\) 周</td>
+                        <td style="padding: 6px 10px;">12.4%</td>
+                        <td style="padding: 6px 10px;">10.2%</td>
+                        <td style="padding: 6px 10px;">1.1%</td>
+                        <td style="padding: 6px 10px;">-0.4%</td>
+                        <td style="padding: 6px 10px; font-weight: bold; color: var(--crimson);">76.7%</td>
+                        <td style="padding: 6px 10px;">[73.8%, 79.5%]</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 10px; font-weight: bold;">RSV (2024–25) \(h=2\) 周</td>
+                        <td style="padding: 6px 10px; font-weight: bold; color: var(--teal);">28.5%</td>
+                        <td style="padding: 6px 10px;">8.1%</td>
+                        <td style="padding: 6px 10px;">0.4%</td>
+                        <td style="padding: 6px 10px;">-0.2%</td>
+                        <td style="padding: 6px 10px; font-weight: bold; color: var(--crimson);">63.2%</td>
+                        <td style="padding: 6px 10px;">[59.1%, 67.3%]</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="highlight-box">
+                💡 <strong>核心归因结论</strong>：在短视界（\(h=1,2\)）下，恒定 \(R\) 模型族的失败主要源于<strong>外生环境突变与模型结构误配（如干预响应、未建模报告延迟）</strong>，而非单纯参数估计不足！
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 13: 预报中心业务革命 -->
+    <div class="slide-body" id="slide-13">
+        <div class="grid-3">
+            <div class="card teal">
+                <h3>📌 准则一：事前预登记基准</h3>
+                <ul>
+                    <li>视界 \(h^*\) 为预报任务确立了<strong>客观物理基准（Pre-registered Baseline）</strong>。</li>
+                    <li>在 \(h > h^*\) 的前置尺度上，数据在物理上已无足够信息。</li>
+                    <li>精度衰减属于熵增必然，避免对不可抗拒的过程噪声过度调参。</li>
+                </ul>
+            </div>
+            <div class="card crimson">
+                <h3>🛑 准则二：盲区主动预警等待</h3>
+                <ul>
+                    <li>在近临界过渡区（\(|R-1| \lesssim (R+1)/N\)），点预报失去统计有效性。</li>
+                    <li>预报平台应主动引入<strong>“不可预报阶段标记（Blind Zone Flag）”</strong>。</li>
+                    <li>向决策部门传递明确的“科学等待”信号，维护公卫预警的公信力。</li>
+                </ul>
+            </div>
+            <div class="card accent">
+                <h3>🎯 准则三：监测资源精准投放</h3>
+                <ul>
+                    <li><strong>参数项 \(P(h)\) 主导时</strong>：扩大测序、提升抽样率可压缩 \(\delta R\)，线性拓宽 \(h^*\)。</li>
+                    <li><strong>人口地板主导时</strong>：单纯加密采样无济于事，必须等待发病累积或 \(R\) 脱离临界区。</li>
+                    <li>实现公卫监测经费的精准高效调度。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 14: 总结与学术价值 -->
+    <div class="slide-body" id="slide-14">
+        <div class="card" style="background: white; border: 2px solid var(--navy);">
+            <h3 style="color: var(--navy); font-size: 20px;">🌟 论文终审全景总结</h3>
+            <ul style="font-size: 14.5px; line-height: 1.8;">
+                <li><strong>理论物理深度</strong>：从负二项分支过程与 Fokker-Planck 扩散第一性原理出发，系统推导了误差正交分解、闭式视界公式 \(h^*\)、拟平稳相变窗口、Cramér-Rao 辨识界与宏观 \(1/k\) 方差地板。</li>
+                <li><strong>统计推断严谨</strong>：高通量随机模拟（T1–T5R）证明理论边界紧致无偏；确立超临界判别所需 1,432 例累计发病数的刚性样本量门槛。</li>
+                <li><strong>计算实验攻击</strong>：LightGBM 饱和理论地板验证了可达性；神经网络无法超越 MLE 验证了无偏似然界的最优性。</li>
+                <li><strong>实证实测归因</strong>：全景五项完全误差预算厘清了 CDC 实测疫情中外生环境误设在短期预报中的主导地位（82.8%）。</li>
+                <li><strong>业务范式重构</strong>：终结了“近阈值预报失效归咎于算法”的迷思，推动预报中心建立“事前预登记视界”与“盲区科学等待”新范式。</li>
+            </ul>
+            <div class="highlight-box" style="margin-top: 16px; font-weight: 600; text-align: center; color: var(--navy);">
+                “科学的最高境界，不仅在于知道算法能做什么，更在于用物理与数学的严密逻辑，划定它在何处必然终结。”
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="nav-controls">
+        <button class="btn" id="prev-btn" onclick="prevSlide()" disabled>← 上一页</button>
+        <div class="key-hint">快捷键: ← 上一页 | → 下一页 | Space 下一页</div>
+        <button class="btn" id="next-btn" onclick="nextSlide()">下一页 →</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 1;
+    const totalSlides = 14;
+
+    const titles = [
+        ["封面", "流行病传播动力学的可预测视界、极限机制与实证研究"],
+        ["1. 现实痛点与问题提出", "为什么临界点附近的预报总是全面崩溃？"],
+        ["2. 第一性原理理论架构", "五大核心定理的全景拼图"],
+        ["3. 【板书手写推导 1】全代方差递推", "分支过程条件均值与全方差定律递推闭式解"],
+        ["4. 【板书手写推导 2】变异系数与人口地板", "变异系数约简与不可约人口地板极限证明"],
+        ["5. 【板书手写推导 3】参数放大项与视界 h*", "Delta 方法展开与终极闭式可预测视界公式"],
+        ["6. 【板书手写推导 4】临界 Fokker-Planck 扩散解", "分离变量求解 ODE 与拟平稳分布 x^{-1} 奇异性"],
+        ["7. 【板书手写推导 5】单种子建群概率", "母函数不动点方程与三阶泰勒残项曲率补偿"],
+        ["8. 【板书手写推导 6】Fisher 信息与辨识界", "负二项似然 Fisher 信息量与 1,432 例刚性样本量"],
+        ["9. 定理 5 & 5R 时变漂移与地板", "宏观 1/k 方差地板与幂律标度指数 p"],
+        ["10. 机器学习极限基准攻击", "AI 能否击穿第一性原理理论界？"],
+        ["11. 真实数据五项完全误差预算", "预报偏差究竟来自哪里？"],
+        ["12. 预报中心的业务革命", "从‘盲目发布’到‘科学等待’与资源重配"],
+        ["13. 论文终审全景总结", "理论物理、统计推断与公共卫生的完整闭环"]
+    ];
+
+    function showSlide(n) {
+        document.querySelectorAll('.slide-body').forEach(el => el.classList.remove('active'));
+        document.getElementById(`slide-${n}`).classList.add('active');
+
+        document.getElementById('header-title').innerText = titles[n-1][0];
+        document.getElementById('header-subtitle').innerText = titles[n-1][1];
+        document.getElementById('slide-num').innerText = `${n} / ${totalSlides}`;
+
+        document.getElementById('prev-btn').disabled = (n === 1);
+        document.getElementById('next-btn').disabled = (n === totalSlides);
+
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides) {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 1) {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.ruff_cache/
+env/
+venv/
+.venv/
+
+# LaTeX build artifacts (keep main.pdf and final PDFs!)
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+desktop.ini

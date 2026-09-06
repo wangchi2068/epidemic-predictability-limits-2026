@@ -1,0 +1,20 @@
+{
+  "n": 8000,
+  "coverage_90_residual": 0.901125,
+  "sd_logR": 0.02759978547692299,
+  "sd_logk": 1.1135467290878296,
+  "median_dR_mlp_over_floor": 6.693970869850682,
+  "median_dR_classic_over_floor": 1.2262152650080513,
+  "median_horizon_ratio_mlp_vs_classic": 0.18593585415266115,
+  "bias_logR": 0.002836832520079217,
+  "bias_logk": -0.44842925084223967,
+  "action2": {
+    "median_dR_classic_minus_mlp": -0.030801549775364298,
+    "ci95": [
+      -0.030977343465703397,
+      -0.03062396722755315
+    ],
+    "p_value_one_sided_mlp_lt_classic": 1.0,
+    "median_horizon_ratio": 0.18593585415266115
+  }
+}
