@@ -25,6 +25,18 @@ def gauss_param_term(h, R, dR):
 def cv_formula(n, I0, R, k):
     return np.sqrt((1 + R / k) * (1 - R ** (-n)) / (I0 * (R - 1)))
 
+def sim_gw(I0, R, k, n_max, reps=20000, seed=20260807):
+    """Simulate Galton-Watson branching process trajectories."""
+    rng_local = np.random.default_rng(seed)
+    Z = np.zeros((reps, n_max + 1))
+    Z[:, 0] = I0
+    p = k / (k + R)
+    for n in range(1, n_max + 1):
+        m = Z[:, n - 1]
+        Z[:, n] = np.where(m > 0, rng_local.negative_binomial(np.maximum(m * k, 1e-9), p), 0.0)
+    return Z
+
+
 
 def verify_case(R, k, I0, dR, n_max, reps=20000):
     Z = np.zeros((reps, n_max + 1))
