@@ -34,7 +34,7 @@
 % Theorem environments
 \theoremstyle{plain}
 \newtheorem{theorem}{定理}
-\newtheorem*{theorem5R}{定理 5R（定理 5 的时间自回归拓展）}
+\newtheorem*{theorem5R}{定理 5R（定理 5 环境噪声分量的时间自回归平行扩展）}
 \newtheorem{lemma}{引理}
 \newtheorem{corollary}{推论}
 \theoremstyle{definition}
@@ -59,7 +59,7 @@
 \end{center}
 
 % Abstract & Keywords Box
-\noindent{\heiti\bfseries 摘要：}重大呼吸道传染病前瞻预测在近临界阶段频繁遭遇系统性失效难题。本文借鉴生态学预测视界思想，将其形式化拓展至分支过程动力学，推导了前瞻预测相对均方误差在假定 (A1)--(A4) 下的可加分解，建立了容忍度 $\tau$ 下可预测视界闭式解映射，并在对数正态参数传播下求解精确数值根；将近临界动力学分解为微观宿主种群内在方差下界与初始外推放大不确定性，导出了负二项分支似然下的 Cram\'er--Rao 最小样本量界与有限种群临界慢化时间标度。基于美国疾病预防控制中心（CDC）真实监测序列（固化版本终报数据）的实证表明：在国家级宏观聚合尺度下，微观宿主内在随机性对方差的贡献极小（占容忍度 $\tau^2$ 的比例最高仅为 0.74\%；该阶段 $k_{\text{agg}}$ 触顶截断，但截断对此比例的影响在小数点后第三位，见 4.2 节），理论视界主要由参数推断信噪比与代间隔决定；非 RSV 病原体早期指数爬坡期的理论视界为 7.9--21.2 周（相对 5 周推断窗口的最长外推倍数达 4.2 倍，表~\ref{tab:horizons} 已列 $h^*/W$ 外推因子予以警示）；而 RSV 2025--26 阶段由于推断窗口累计病例数低于定理 4 信息充分性启发式诊断所需的最小独立传播簇数（比值约 1.48），其无截断数学外推高达 41.5--67.8 周，超出呼吸道病毒单流行季 16--20 周的自然演化周期，必须作为模型外推伪迹予以识别。四项预测误差记账（描述性闭合架构，而非定理 1 的严格 $L^2$ 投影）显示：在多数中长程与大样本配置下动力学已建模项解释观测总误差的比例不足（未建模外生结构性残差约占 40\%--99\%，主导误差来源），而在少数短程、低计数序列（RSV 与流感 $h=1$）时变漂移代理项高估、闭合残差为负（$-54\%$ 至 $-297\%$），该负值已如实列入表~\ref{tab:budget_four} 作为 $\widehat{v}^2$ 校准带对相应工作点过宽的结构性诊断信号；逐周推进的伪实时滚动样本外前瞻预测评估（结合移动块 Bootstrap 抽样检验）证实，相对持续性朴素基线的可操作预测技能点估计在 1.8--5.3 周内衰减至与基线相当（Delta 3.5、Omicron 1.8、流感 5.3 周；固化版本回测仅给出无报告噪声条件下的时效上界，实时初报只会更短），且该结论对基线选择敏感——相对局部线性基线三个波次均未穿越。本研究提出了理论机制视界与经验业务时效构成的双层探索性基准框架（样本仅覆盖三波次、每波次六原点），为传染病预警从盲目远期外推转向极限知情的科学决策提供一种可复算的数理参照。
+\noindent{\heiti\bfseries 摘要：}重大呼吸道传染病前瞻预测在近临界阶段频繁遭遇系统性失效难题。本文借鉴生态学预测视界思想，将其形式化拓展至分支过程动力学，推导了前瞻预测相对均方误差在假定 (A1)--(A4) 下的可加分解，建立了容忍度 $\tau$ 下可预测视界闭式解映射，并在对数正态参数传播下求解精确数值根；将近临界动力学分解为微观宿主种群内在方差下界与初始外推放大不确定性，导出了负二项分支似然下的 Cram\'er--Rao 最小样本量界与有限种群临界慢化时间标度。基于美国疾病预防控制中心（CDC）真实监测序列（固化版本终报数据）的实证表明：在国家级宏观聚合尺度下，微观宿主内在随机性对方差的贡献极小（占容忍度 $\tau^2$ 的比例最高仅为 0.74\%；该阶段 $k_{\text{agg}}$ 触顶截断，但截断对此比例的影响在小数点后第三位，见 4.2 节），理论视界主要由参数推断信噪比与代间隔决定；非 RSV 病原体早期指数爬坡期的理论视界为 7.9--21.2 周（相对 5 周推断窗口的最长外推倍数达 4.2 倍，表~\ref{tab:horizons} 已列 $h^*/W$ 外推因子予以警示）；而 RSV 2025--26 阶段由于推断窗口累计病例数低于定理 4 信息充分性启发式诊断所需的最小独立传播簇数（比值约 1.48），其无截断数学外推高达 41.5--67.8 周，超出呼吸道病毒单流行季 16--20 周的自然演化周期，必须作为模型外推伪迹予以识别。四项预测误差记账（描述性闭合架构，而非定理 1 的严格 $L^2$ 投影）显示：未归因结构性残差在 12 个配置中的 9 个为正（6.2\%--99.2\%，其中 8 个超过 40\%，主导误差来源），其余 3 个短程、低计数配置（RSV 两季 $h=2$ 与流感 $h=1$）时变漂移代理项高估、闭合残差为负（$-54\%$ 至 $-297\%$），负值已如实列入表~\ref{tab:budget_four} 作为 $\widehat{v}^2$ 校准带对相应工作点过宽的结构性诊断信号；逐周推进的伪实时滚动样本外前瞻预测评估（结合移动块 Bootstrap 抽样检验）证实，相对持续性朴素基线的可操作预测技能点估计在 1.8--5.3 周内衰减至与基线相当（Delta 3.5、Omicron 1.8、流感 5.3 周；固化版本回测仅给出无报告噪声条件下的时效上界，实时初报只会更短），且该结论对基线选择敏感——相对局部线性基线三个波次均未穿越。本研究提出了理论机制视界与经验业务时效构成的双层探索性基准框架（样本仅覆盖三波次、每波次六原点），为传染病预警从盲目远期外推转向极限知情的科学决策提供一种可复算的数理参照。
 
 \vspace{0.8em}
 \noindent{\heiti\bfseries 关键词：}传染病预测；可预测视界；分支过程；内在随机性；近临界动力学；Fisher 信息量；模型误设
@@ -130,7 +130,7 @@
     {\bfseries\color{navyMain}\normalsize 微观群体内在随机性（微观统计涨落）}\\[4pt]
     \footnotesize 生成机制：负二项分支过程 ($X_{n-1, j} \sim \text{NB}(R, k)$)\\[2pt]
     单代方差：$\sigma^2 = R + R^2/k$\\[4pt]
-    \textbf{不可约相对方差下界（引理 1--2 / 定理 1）：}\\[3pt]
+    \textbf{不可约相对方差饱和极限（引理 1--2 / 定理 1）：}\\[3pt]
     \scalebox{0.92}{$\displaystyle \text{CV}^2(h) = \frac{(1+R/k)(1-R^{-h})}{I_0(R-1)} \xrightarrow{h\to\infty} \frac{1+R/k}{I_0(R-1)}$}
 };
 
@@ -232,7 +232,7 @@
 \textbf{证明概要与机理阐释：}第 $n$ 代发病人数可表示为上一代全部感染个体的随机加和 $Z_n = \sum_{j=1}^{Z_{n-1}} X_{n-1, j}$。全期望公式直接给出均值递推 $\mathbb{E}[Z_n] = R \mathbb{E}[Z_{n-1}]$，解得 $\mathbb{E}[Z_h] = I_0 R^h$。方差部分由全方差公式正交分解为 $\text{Var}(Z_n) = \sigma^2 \mathbb{E}[Z_{n-1}] + R^2 \text{Var}(Z_{n-1})$，转化为一阶非齐次线性差分方程；两端同除以几何因子 $R^{2n}$ 后实施伸缩求和（Telescoping Sum），即严格导出式 (\ref{eq:lem1_var})。（详细完整代数推导见附录 A。）
 \end{proof}
 
-\begin{lemma}[群体内在变异系数与方差下界]\label{lem:cv_floor}
+\begin{lemma}[群体内在变异系数与其渐近饱和极限]\label{lem:cv_floor}
 第 $h$ 代发病人数的相对方差（即变异系数平方 $\text{CV}^2(h)$）满足严格闭式解：
 \begin{equation}
 \text{CV}^2(h) = \frac{\text{Var}(Z_h)}{(\mathbb{E}[Z_h])^2} = \frac{(1 + R/k)(1 - R^{-h})}{I_0(R - 1)},
@@ -422,17 +422,17 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \textbf{证明概要与机理阐释：}平稳自回归过程自协方差函数为 $\gamma_\ell = \gamma_0 \phi^{|\ell|}$。方差双重求和展开为 $h \gamma_0 + 2\sum (h-\ell)\gamma_\ell$，利用等比级数求和直接导出大步长渐近线性系数。在单位根极限（$\phi=1$）下，未来累计增量表现为创新项的加权求和 $\sum_{m=1}^h (h-m+1)e_{t+m}$，利用自然数平方和严格通项公式直接导出三次方超线性发散。（详细级数推导见附录 E。）
 \end{proof}
 
-\begin{corollary}[宏观聚合发病数的 $h/k$ 尺度无关方差下界]\label{cor:pop_floor}
-对于跨种群聚合的宏观更新模型，当单代平均发病规模充分大（$\mu \gg k$）时，宏观发病数的相对方差下界满足尺度无关渐近律：
+\begin{corollary}[宏观聚合发病数的 $h/k$ 尺度无关方差累积律]\label{cor:pop_floor}
+对于跨种群聚合的宏观更新模型，当单代平均发病规模充分大（$\mu \gg k$）时，记 $\tilde{I}_h$ 为 $h$ 代累计观测发病量（区别于单代估计量 $\hat{I}$），其相对方差满足尺度无关的一阶渐近累积律：
 \begin{equation}
-\text{Var}(\log \hat{I}_h) \sim \frac{h}{k},
+\text{Var}(\log \tilde{I}_h) \sim \frac{h}{k},
 \label{eq:pop_floor}
 \end{equation}
-该下界与绝对发病规模 $\mu$ 渐近解耦，构成了大样本宏观聚合序列不可消除的理论方差边界。
+该累积律的首项系数与绝对发病规模 $\mu$ 渐近解耦：$1/k$ 是大样本宏观聚合序列中由微观超级传播异质性决定、不随规模稀释的噪声地板（一阶 delta 近似意义下，非严格不等式界）。
 \end{corollary}
 
 \begin{proof}
-\textbf{证明概要与机理阐释：}对数变换一阶 Delta 展开方差为 $1/\mu + 1/k$。在 $\mu \gg k$ 极限下，泊松个体噪声完全被宏观聚合所抹平，各代独立过度离散方差 $1/k$ 线性累加，直接确立式 (\ref{eq:pop_floor})。（详细推导见附录 E。）
+\textbf{证明概要与机理阐释：}对单代估计量 $\hat{I}$ 一阶 Delta 展开给 $\text{Var}(\log\hat{I}) \approx 1/\mu + 1/k$。对 $h$ 代累计量 $\tilde{I}_h$，其对数即定理 5 的逐代对数增量之和 $\log\tilde{I}_h = \log \tilde{I}_0 + \sum_{t=1}^{h}(\eta_t + \xi_t)$；在定理 5 的跨代独立假设下各代抽样涨落方差 $\text{Var}(\xi_t)\approx 1/k$ 线性相加（此处为 $\sim$ 意义的一阶渐近累积而非逐点不等式界，delta 展开余项符号未控），且 $\mu \gg k$ 时泊松项 $1/\mathbb{E}[Z_t] \to 0$ 被抹平，故 $\text{Var}(\log\tilde{I}_h) \sim h/k$，即式 (\ref{eq:pop_floor})。（详细推导见附录 E。）
 \end{proof}
 
 \section{数值复核与基准算法实现检验}\label{sec:simulation}
@@ -467,7 +467,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 数值实验系统检验了理论公式与数值模拟在各设定下的吻合度（图~\ref{fig:t1_verify_cn} 至图~\ref{fig:t4_cn}）：
 \begin{itemize}
 \item \textbf{定理 1 验证}：经验与理论变异系数比值稳定在 0.995--1.001 之间，可加分解经验/理论比值为 0.99--1.03（图~\ref{fig:t1_verify_cn}）。
-\item \textbf{定理 3 与推论 2 验证}：拟平稳扩散密度经验/理论比值在超临界区为 0.998 与 0.999，在近临界区为 0.976 与 0.950；推论 2 的建群概率在 8 组测试中有 7 组落在 95\% Beta 置信区间内（图~\ref{fig:t3_cn}）。
+\item \textbf{定理 3 与推论 2 验证}：拟平稳扩散密度经验/理论比值在超临界区为 0.9995 与 0.9991，在近临界区为 0.976 与 0.950；推论 2 的建群概率（Poisson 分支设定，8 组参数）中有 7 组落在 95\% Beta 置信区间内（图~\ref{fig:t3_cn}）。
 \item \textbf{定理 4 验证}：在定理 4 设定的固定完全观测样本量下，50,000 次蒙特卡洛数值 MLE 的经验方差与 Cram\'er--Rao 下界严格吻合，实测比值位于 0.9956--1.0024（图~\ref{fig:t4_cn}）。
 \item \textbf{定理 5R 验证}：包含两组实验（种子 20260807，存档于 \texttt{verify\_t5R\_v2.json}）：一组为直接方差累积实验：在平稳 AR(1) 过程 $r_t$ 平稳分布起步下，直接采样 $\text{Var}(\sum_{j=1}^h r_{t+j})$，在 $\phi \in \{0, 0.5, 0.8, 0.95\}$、$h \in \{1, \dots, 10\}$ 全部格点上经验/理论比值均位于 0.982--1.020，完整验证了闭式累积律；另一组为更新实现（含观测噪声）：在滞后核卷积加权下由于经验滞后平滑效应，实测/理论比值为 0.27--1.02，随 $\phi$ 增大系统性下降，反映了时变方差在平滑更新实现中的经验衰减。
 \end{itemize}
@@ -482,7 +482,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{../reports/figures_v2/fig_t3_quasistationary.png}
-\caption{\textbf{拟平稳扩散密度近临界相变模拟验证。}理论平稳密度 $\pi(x) \propto x^{-1}\exp(c_1x-c_2x^2)$ 在宿主种群 $N=2000$ 下的验证：超临界区 $(\varepsilon, R) \in \{(0.2, 1.2), (0.4, 1.4)\}$ 的经验/理论比值稳定在 0.998 与 0.999；在临界过渡窗口内（$|\varepsilon| \le O(N^{-1/2}) \approx 0.022$），$(\varepsilon, R) \in \{(0.005, 1.005), (0.01, 1.01)\}$ 的比值为 0.976 与 0.950，证实了亚临界与长尾涨落的方差放大机制。}
+\caption{\textbf{拟平稳扩散密度与定殖概率的近临界相变模拟验证（数据来源 \texttt{verify\_t3.json}，重建自 \texttt{scripts\_v2/sim\_verify\_t3.py}）。}(a) 理论平稳密度 $\pi(x) \propto x^{-1}\exp(c_1x-c_2x^2)$ 在宿主种群 $N=2000$ 下的经验/理论变异系数比值：超临界区 $(\varepsilon, R) \in \{(0.2, 1.2), (0.4, 1.4)\}$ 为 0.9995 与 0.9991，临界过渡窗口内（$|\varepsilon| \le O(N^{-1/2}) \approx 0.022$）$(\varepsilon, R) \in \{(0.005, 1.005), (0.01, 1.01)\}$ 为 0.976 与 0.950。(b) 单种子定殖概率的 Galton--Watson 模拟（8 组，每组 400 次重复）与理论 $2\varepsilon/R$ 的对照，7/8 组的理论值落入经验 95\% Beta 区间。}
 \label{fig:t3_cn}
 \end{figure}
 
@@ -609,7 +609,7 @@ RSV 两流行季在无耗竭分支假设下的纯数学外推精确视界达到 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.88\textwidth]{../reports/figures_v2/fig6_error_budget.png}
-\caption{\textbf{美国三大呼吸道传染病真实监测数据四项预测误差记账分解。}各色块展示真实监测序列在不同前瞻步长下，微观内在方差 $\text{CV}^2$（蓝）、时变漂移方差 $\mathcal{E}_{\text{drift}}$（橙）、参数估计放大 $P$（绿）占实测总相对均方误差的百分比堆叠，红色虚线为实测总误差（100\%）。多数中长程配置中堆叠柱显著低于虚线（未归因余项约 40\%--99\%，主导误差来源，表明预测误差主要源自非平稳结构扰动与行为自适应）；少数短程低计数配置的堆叠柱越过虚线（闭合残差为负，系校准带过宽的诊断信号，数值见表~\ref{tab:budget_four}）。}
+\caption{\textbf{美国三大呼吸道传染病真实监测数据四项预测误差记账分解。}各色块展示真实监测序列在不同前瞻步长下，微观内在方差 $\text{CV}^2$（蓝）、时变漂移方差 $\mathcal{E}_{\text{drift}}$（橙）、参数估计放大 $P$（绿）占实测总相对均方误差的百分比堆叠，红色虚线为实测总误差（100\%）。多数配置中堆叠柱显著低于虚线（未归因闭合残差 6.2\%--99.2\%，其中 8/9 个正残差配置超过 40\%，主导误差来源，表明预测误差主要源自非平稳结构扰动与行为自适应）；少数短程低计数配置的堆叠柱越过虚线（闭合残差为负，系校准带过宽的诊断信号，数值见表~\ref{tab:budget_four}）。}
 \label{fig:budget}
 \end{figure}
 
@@ -716,7 +716,7 @@ h^*_{\text{marginalized}} \approx \sqrt{\frac{\rho_{\text{low}}}{\rho_0}} \cdot 
 
 \section{结论}
 
-科学理解传染病前瞻预测的时效极限与误差机制，是计算流行病学与公共卫生运筹学的重大前沿命题。本文从负二项分支过程的生成性假设出发，推导了相对均方误差在假定 (A1)--(A4) 下的可加分解，确立了理论可预测视界的闭式解映射与单调性定理，给出了有限宿主种群在相变附近的 $O(N^{1/2})$ 临界慢化标度（作为经典密度依赖分支扩散标度理论在本参数化下的应用）与 Cram'er--Rao 样本量界。通过构建四项描述性误差记账架构，并在美国 CDC 三大呼吸道传染病真实监测序列上开展测算与伪实时（固化版本终报）滚动回测验证，本文提出了一种由“理论机制视界”与“实测业务时效”构成的双层探索性基准分析框架。研究结果表明：在宏观国家级聚合监测下，微观宿主内在随机性贡献极小，理论视界由参数推断信噪比主导；而在经验滚动预测中，中长程配置的实测误差主要由未建模外生结构主导，相对持续性基线的伪实时可用时效收缩至 1.8--5.3 周（该结论对基线选择敏感，且固化版本回测为无报告噪声条件下的上界，实时初报只会更短）。本文提出的框架为摆脱无视数理极限的盲目远期点预测、推动预警系统向“极限知情、分级响应、稳健兜底”的现代公共卫生运筹范式转型提供一种可复算的方法学参照；其普适性有待更大规模、前瞻性版本化的多季评估检验。
+科学理解传染病前瞻预测的时效极限与误差机制，是计算流行病学与公共卫生运筹学的重大前沿命题。本文从负二项分支过程的生成性假设出发，推导了相对均方误差在假定 (A1)--(A4) 下的可加分解，确立了理论可预测视界的闭式解映射与单调性定理，给出了有限宿主种群在相变附近的 $O(N^{1/2})$ 临界慢化标度（作为经典密度依赖分支扩散标度理论在本参数化下的应用）与 Cram'er--Rao 样本量界。通过构建四项描述性误差记账架构，并在美国 CDC 三大呼吸道传染病真实监测序列上开展测算与伪实时（固化版本终报）滚动回测验证，本文提出了一种由“理论机制视界”与“实测业务时效”构成的双层探索性基准分析框架。研究结果表明：在宏观国家级聚合监测下，微观宿主内在随机性贡献极小，理论视界由参数推断信噪比主导；而在经验滚动预测中，未归因外生结构残差在多数配置主导实测误差，相对持续性基线的伪实时可用时效收缩至 1.8--5.3 周（该结论对基线选择敏感，且固化版本回测为无报告噪声条件下的上界，实时初报只会更短）。本文提出的框架为摆脱无视数理极限的盲目远期点预测、推动预警系统向“极限知情、分级响应、稳健兜底”的现代公共卫生运筹范式转型提供一种可复算的方法学参照；其普适性有待更大规模、前瞻性版本化的多季评估检验。
 
 \clearpage
 \appendix
@@ -990,10 +990,10 @@ s_e^2 \sum_{j=1}^h j^2 = \frac{s_e^2 h(h+1)(2h+1)}{6} = \frac{s_e^2 (2h^3 + 3h^2
 证毕。
 
 \vspace{0.8em}
-\noindent\textbf{推论 3（尺度无关方差下界 $h/k$）的完整证明：}
+\noindent\textbf{推论 3（尺度无关方差累积律 $h/k$）的完整证明：}
 
-在宏观负二项聚合抽样模型中，条件方差与期望平方的相对比值为 $\text{Var}(\hat{I}_h)/(\mathbb{E}[\hat{I}_h])^2 = 1/\mu + 1/k$。对非线性对数变换 $\log \hat{I}_h$ 实施一阶 Delta 展开，其方差满足近似 $\text{Var}(\log \hat{I}_h) \approx 1/\mu + 1/k$。当宏观监测发病人数达到较大规模时（$\mu \gg k$），微观个体的泊松统计涨落项 $1/\mu \to 0$，单代对数抽样方差收敛并饱和于尺度无关常数 $1/k$。在多代更新传播累加下，各代相互独立的抽样方差线性累加，即严格证得方差下界式 (\ref{eq:pop_floor})。
-证毕。
+
+在宏观聚合估计模型中，单代观测估计量 $\hat{I}$ 的相对平方变异系数为 $\text{Var}(\hat{I})/(\mathbb{E}[\hat{I}])^2 = 1/\mu + 1/k$（负二项抽样层，$\mu$ 为平均规模）。对数变换的一阶 Delta 展开给出 $\text{Var}(\log\hat{I}) \approx 1/\mu + 1/k$。当宏观监测发病规模充分大（$\mu \gg k$）时，泊松项 $1/\mu \to 0$ 被聚合抹平，单代对数方差饱和于过度离散常数 $1/k$。对 $h$ 代累计量 $\tilde{I}_h$，沿用定理 5 的对数增量分解 $\log\tilde{I}_h = \log\tilde{I}_0 + \sum_{t=1}^{h}(\eta_t + \xi_t)$：在 $\{\xi_t\}$ 跨代独立的假定（定理 5 的显式前提）下 $\text{Var}(\sum_t \xi_t) \approx h/k$，可与环境噪声项 $hv^2$ 线性叠加；本推论聚焦纯抽样地板（$v=0$）情形，故 $\text{Var}(\log\tilde{I}_h) \sim h/k$，其中符号已从单代的 $\hat{I}$ 换为累计量的 $\tilde{I}_h$ 以明确对象。必须强调该式是 $\sim$ 意义下的一阶渐近累积律而非逐点不等式下界：Delta 展开余项的符号未受控，跨代独立假定在真实监测序列上仅近似成立。证毕。
 
 \clearpage
 \phantomsection
@@ -1028,7 +1028,7 @@ s_e^2 \sum_{j=1}^h j^2 = \frac{s_e^2 h(h+1)(2h+1)}{6} = \frac{s_e^2 (2h^3 + 3h^2
     {\zihao{3}\heiti\bfseries Predictability Horizons, Fundamental Limits, and Empirical Analysis of Epidemic Transmission Dynamics} \\[1.0em]
 \end{center}
 
-\noindent{\textbf{Abstract:}} Prospective forecasting of major infectious diseases frequently suffers from severe skill degradation near epidemic thresholds. Grounded in negative-binomial branching processes, this study derives an additive decomposition of prospective relative mean squared error under explicitly stated assumptions, maps an error tolerance $\tau$ to a predictability horizon through closed-form leading-order solutions and exact numerical roots under lognormal parameter propagation, and gives a Cram\'er--Rao sample-size bound together with an $O(N^{1/2})$ critical slowing-down scaling for near-critical finite populations (the latter positioned as an application of classical density-dependent branching diffusion results rather than an independent spectral-gap proof). Empirical evaluations across US CDC respiratory surveillance (finalized data vintage) show that demographic stochasticity contributes at most 0.74\% of the squared tolerance at national aggregate scales, so horizons are governed by inference signal-to-noise and generation intervals; theoretical horizons during early exponential growth span 7.9--21.2 weeks for the non-RSV phases, with extrapolation factors over the five-week inference window reported per phase (up to 4.2 for Delta and 13.6 for RSV), while the RSV 2025--26 season, whose window case total falls below the cluster count suggested by a model-mismatched Cram\'er--Rao heuristic (ratio $\approx 1.48$; an order-of-magnitude diagnostic, not a strict information-theoretic violation), yields uncapped mathematical extrapolation roots of 41.5--67.8 weeks that exceed the 16--20-week span of a single season and must be read as model artifacts. A descriptive four-term error accounting over rolling forecast origins shows that modeled mechanistic terms under-explain observed error at most mid- to long-horizon configurations (unattributed residuals $\approx$ 40\%--99\%), while at short horizons on low-count series the drift proxy over-explains and closure residuals turn negative ($-54\%$ to $-297\%$, reported unclipped as a calibration diagnostic); pseudo-prospective rolling benchmarks with moving-block bootstrap confirm that skill relative to a \emph{persistence} baseline degrades to parity within 1.8--5.3 weeks (Delta 3.5, Omicron 1.8, influenza 5.3), a conclusion that is baseline-dependent (no crossing occurs against a local-linear baseline within $h \le 8$; seasonal-naive crossings are 2.78 and 1.71 weeks for Delta and Omicron), with per-wave effective bootstrap counts disclosed. These results propose a two-tier, exploratory benchmark framework (three waves, six origins each) separating model- and tolerance-dependent theoretical horizons from empirically attainable operational lead times, and provide a reproducible quantitative reference for shifting epidemic early warning away from blind long-range extrapolation toward limits-informed decision-making.
+\noindent{\textbf{Abstract:}} Prospective forecasting of major infectious diseases frequently suffers from severe skill degradation near epidemic thresholds. Grounded in negative-binomial branching processes, this study derives an additive decomposition of prospective relative mean squared error under explicitly stated assumptions, maps an error tolerance $\tau$ to a predictability horizon through closed-form leading-order solutions and exact numerical roots under lognormal parameter propagation, and gives a Cram\'er--Rao sample-size bound together with an $O(N^{1/2})$ critical slowing-down scaling for near-critical finite populations (the latter positioned as an application of classical density-dependent branching diffusion results rather than an independent spectral-gap proof). Empirical evaluations across US CDC respiratory surveillance (finalized data vintage) show that demographic stochasticity contributes at most 0.74\% of the squared tolerance at national aggregate scales, so horizons are governed by inference signal-to-noise and generation intervals; theoretical horizons during early exponential growth span 7.9--21.2 weeks for the non-RSV phases, with extrapolation factors over the five-week inference window reported per phase (up to 4.2 for Delta and 13.6 for RSV), while the RSV 2025--26 season, whose window case total falls below the cluster count suggested by a model-mismatched Cram\'er--Rao heuristic (ratio $\approx 1.48$; an order-of-magnitude diagnostic, not a strict information-theoretic violation), yields uncapped mathematical extrapolation roots of 41.5--67.8 weeks that exceed the 16--20-week span of a single season and must be read as model artifacts. A descriptive four-term error accounting over rolling forecast origins shows positive unattributed structural residuals in 9 of 12 configurations (6.2\%--99.2\%, exceeding 40\% in 8 of the 9), while at three short-horizon low-count configurations the drift proxy over-explains and closure residuals turn negative ($-54\%$ to $-297\%$, reported unclipped as a calibration diagnostic); pseudo-prospective rolling benchmarks with moving-block bootstrap confirm that skill relative to a \emph{persistence} baseline degrades to parity within 1.8--5.3 weeks (Delta 3.5, Omicron 1.8, influenza 5.3), a conclusion that is baseline-dependent (no crossing occurs against a local-linear baseline within $h \le 8$; seasonal-naive crossings are 2.78 and 1.71 weeks for Delta and Omicron), with per-wave effective bootstrap counts disclosed. These results propose a two-tier, exploratory benchmark framework (three waves, six origins each) separating model- and tolerance-dependent theoretical horizons from empirically attainable operational lead times, and provide a reproducible quantitative reference for shifting epidemic early warning away from blind long-range extrapolation toward limits-informed decision-making.
 
 \vspace{0.8em}
 \noindent{\textbf{Keywords:}} Epidemic forecasting; Predictability horizon; Branching process; Demographic stochasticity; Near-critical dynamics; Fisher information; Model misspecification
