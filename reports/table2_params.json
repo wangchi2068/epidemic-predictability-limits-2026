@@ -1,0 +1,374 @@
+{
+  "manifest": {
+    "seed": 20260807,
+    "B": 2000,
+    "tau": 0.5,
+    "k_cap": 1000.0,
+    "inputs": {
+      "covid_final_weekly.csv.gz": "b9eaf862b5081dc1eb870da08793eecbb0a986bd7f0de82ddc95a180cf831b6d",
+      "flu_final_weekly.csv.gz": "2adff0b1d04d61f77459329c0a9f04a4625136de72df67a3909b7c003518ba27",
+      "rsv_final_weekly.csv.gz": "93e4878abc869bdfaa9747f76a7b1f48908e7dc9748c3fc5263f64eb89e3591d"
+    }
+  },
+  "table2": {
+    "Delta": {
+      "window": [
+        "2021-07-03",
+        "2021-07-31"
+      ],
+      "n_weeks": 5,
+      "b_week": 0.3149,
+      "se_slope": 0.0201,
+      "mu_g_days": 4.7,
+      "delta_g": 0.6714,
+      "R_gen": 1.2355,
+      "s_gen": 0.0135,
+      "k_agg": 167.1,
+      "I0": 28347,
+      "I0_total": 141735,
+      "h_star_gen": 31.63,
+      "h_star_weeks": 21.24,
+      "ci95_weeks": [
+        11.62,
+        80.06
+      ],
+      "boot_se_weeks": 20.04,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.427,
+      "display": "COVID-19 Delta 暴发期"
+    },
+    "Omicron": {
+      "window": [
+        "2021-12-04",
+        "2022-01-01"
+      ],
+      "n_weeks": 5,
+      "b_week": 0.1564,
+      "se_slope": 0.0541,
+      "mu_g_days": 3.0,
+      "delta_g": 0.4286,
+      "R_gen": 1.0693,
+      "s_gen": 0.0232,
+      "k_agg": 20.6,
+      "I0": 66275,
+      "I0_total": 331377,
+      "h_star_gen": 18.45,
+      "h_star_weeks": 7.91,
+      "ci95_weeks": [
+        4.33,
+        29.8
+      ],
+      "boot_se_weeks": 7.46,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.427,
+      "display": "COVID-19 Omicron 达峰期"
+    },
+    "JN1": {
+      "window": [
+        "2023-12-16",
+        "2024-01-13"
+      ],
+      "n_weeks": 5,
+      "b_week": 0.0506,
+      "se_slope": 0.0395,
+      "mu_g_days": 3.5,
+      "delta_g": 0.5,
+      "R_gen": 1.0256,
+      "s_gen": 0.0198,
+      "k_agg": 45.4,
+      "I0": 31453,
+      "I0_total": 157266,
+      "h_star_gen": 21.62,
+      "h_star_weeks": 10.81,
+      "ci95_weeks": [
+        5.92,
+        40.6
+      ],
+      "boot_se_weeks": 10.18,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.427,
+      "display": "COVID-19 JN.1 流行期"
+    },
+    "flu22": {
+      "window": [
+        "2022-10-08",
+        "2022-11-05"
+      ],
+      "n_weeks": 5,
+      "b_week": 0.4138,
+      "se_slope": 0.0394,
+      "mu_g_days": 3.2,
+      "delta_g": 0.4571,
+      "R_gen": 1.2083,
+      "s_gen": 0.018,
+      "k_agg": 37.5,
+      "I0": 3116,
+      "I0_total": 15579,
+      "h_star_gen": 23.67,
+      "h_star_weeks": 10.82,
+      "ci95_weeks": [
+        5.92,
+        40.78
+      ],
+      "boot_se_weeks": 10.21,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.427,
+      "display": "流感 2022-23 暴发早期"
+    },
+    "flu24": {
+      "window": [
+        "2024-11-23",
+        "2024-12-21"
+      ],
+      "n_weeks": 5,
+      "b_week": 0.4026,
+      "se_slope": 0.0273,
+      "mu_g_days": 3.2,
+      "delta_g": 0.4571,
+      "R_gen": 1.2021,
+      "s_gen": 0.0125,
+      "k_agg": 83.5,
+      "I0": 7586,
+      "I0_total": 37932,
+      "h_star_gen": 34.25,
+      "h_star_weeks": 15.65,
+      "ci95_weeks": [
+        8.57,
+        59.01
+      ],
+      "boot_se_weeks": 14.77,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.427,
+      "display": "流感 2024-25 流行季"
+    },
+    "rsv24": {
+      "window": [
+        "2024-11-09",
+        "2024-12-07"
+      ],
+      "n_weeks": 5,
+      "b_week": 0.2404,
+      "se_slope": 0.0103,
+      "mu_g_days": 8.4,
+      "delta_g": 1.2,
+      "R_gen": 1.3345,
+      "s_gen": 0.0124,
+      "k_agg": 803.6,
+      "I0": 4409,
+      "I0_total": 22047,
+      "h_star_gen": 34.56,
+      "h_star_weeks": 41.48,
+      "ci95_weeks": [
+        22.7,
+        156.35
+      ],
+      "boot_se_weeks": 39.14,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.427,
+      "display": "RSV 2024-25 流行季"
+    },
+    "rsv25": {
+      "window": [
+        "2025-11-08",
+        "2025-12-06"
+      ],
+      "n_weeks": 5,
+      "b_week": 0.213,
+      "se_slope": 0.0063,
+      "mu_g_days": 8.4,
+      "delta_g": 1.2,
+      "R_gen": 1.2913,
+      "s_gen": 0.0075,
+      "k_agg": 1000.0,
+      "I0": 1868,
+      "I0_total": 9341,
+      "h_star_gen": 56.48,
+      "h_star_weeks": 67.77,
+      "ci95_weeks": [
+        37.1,
+        255.47
+      ],
+      "boot_se_weeks": 63.96,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.426,
+      "display": "RSV 2025-26 流行季"
+    }
+  },
+  "table3": {
+    "Delta_growth": {
+      "window": [
+        "2021-07-03",
+        "2021-07-31"
+      ],
+      "n_weeks": 5,
+      "b_week": 0.3149,
+      "se_slope": 0.0201,
+      "mu_g_days": 4.7,
+      "delta_g": 0.6714,
+      "R_gen": 1.2355,
+      "s_gen": 0.0135,
+      "k_agg": 167.1,
+      "I0": 28347,
+      "I0_total": 141735,
+      "h_star_gen": 31.63,
+      "h_star_weeks": 21.24,
+      "ci95_weeks": [
+        11.62,
+        80.06
+      ],
+      "boot_se_weeks": 20.04,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.427
+    },
+    "Delta_peak": {
+      "window": [
+        "2021-08-28",
+        "2021-10-02"
+      ],
+      "n_weeks": 6,
+      "b_week": -0.0985,
+      "se_slope": 0.0132,
+      "mu_g_days": 4.7,
+      "delta_g": 0.6714,
+      "R_gen": 0.936,
+      "s_gen": 0.0089,
+      "k_agg": 310.1,
+      "I0": 73364,
+      "I0_total": 440183,
+      "h_star_gen": 47.85,
+      "h_star_weeks": 32.13,
+      "ci95_weeks": [
+        19.17,
+        69.02
+      ],
+      "boot_se_weeks": 13.31,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.424
+    },
+    "Delta_decline": {
+      "window": [
+        "2021-10-09",
+        "2021-11-13"
+      ],
+      "n_weeks": 6,
+      "b_week": -0.0573,
+      "se_slope": 0.0162,
+      "mu_g_days": 4.7,
+      "delta_g": 0.6714,
+      "R_gen": 0.9623,
+      "s_gen": 0.0109,
+      "k_agg": 189.0,
+      "I0": 40561,
+      "I0_total": 243365,
+      "h_star_gen": 39.06,
+      "h_star_weeks": 26.22,
+      "ci95_weeks": [
+        15.59,
+        72.95
+      ],
+      "boot_se_weeks": 14.91,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.426
+    },
+    "Omicron_growth": {
+      "window": [
+        "2021-12-04",
+        "2022-01-01"
+      ],
+      "n_weeks": 5,
+      "b_week": 0.1564,
+      "se_slope": 0.0541,
+      "mu_g_days": 3.0,
+      "delta_g": 0.4286,
+      "R_gen": 1.0693,
+      "s_gen": 0.0232,
+      "k_agg": 20.6,
+      "I0": 66275,
+      "I0_total": 331377,
+      "h_star_gen": 18.45,
+      "h_star_weeks": 7.91,
+      "ci95_weeks": [
+        4.33,
+        29.8
+      ],
+      "boot_se_weeks": 7.46,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.427
+    },
+    "Omicron_decline": {
+      "window": [
+        "2022-01-08",
+        "2022-02-05"
+      ],
+      "n_weeks": 5,
+      "b_week": -0.1026,
+      "se_slope": 0.037,
+      "mu_g_days": 3.0,
+      "delta_g": 0.4286,
+      "R_gen": 0.957,
+      "s_gen": 0.0159,
+      "k_agg": 48.3,
+      "I0": 130362,
+      "I0_total": 651810,
+      "h_star_gen": 26.95,
+      "h_star_weeks": 11.55,
+      "ci95_weeks": [
+        6.33,
+        41.7
+      ],
+      "boot_se_weeks": 9.15,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.427
+    },
+    "flu22_growth": {
+      "window": [
+        "2022-10-08",
+        "2022-11-05"
+      ],
+      "n_weeks": 5,
+      "b_week": 0.4138,
+      "se_slope": 0.0394,
+      "mu_g_days": 3.2,
+      "delta_g": 0.4571,
+      "R_gen": 1.2083,
+      "s_gen": 0.018,
+      "k_agg": 37.5,
+      "I0": 3116,
+      "I0_total": 15579,
+      "h_star_gen": 23.67,
+      "h_star_weeks": 10.82,
+      "ci95_weeks": [
+        5.92,
+        40.78
+      ],
+      "boot_se_weeks": 10.21,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.427
+    },
+    "flu22_decline": {
+      "window": [
+        "2022-12-03",
+        "2022-12-31"
+      ],
+      "n_weeks": 5,
+      "b_week": -0.0846,
+      "se_slope": 0.012,
+      "mu_g_days": 3.2,
+      "delta_g": 0.4571,
+      "R_gen": 0.9621,
+      "s_gen": 0.0055,
+      "k_agg": 407.9,
+      "I0": 22230,
+      "I0_total": 111149,
+      "h_star_gen": 75.49,
+      "h_star_weeks": 34.51,
+      "ci95_weeks": [
+        19.39,
+        64.17
+      ],
+      "boot_se_weeks": 12.09,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.413
+    }
+  }
+}

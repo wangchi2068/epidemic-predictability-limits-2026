@@ -1,0 +1,44 @@
+{
+ "Delta": {
+  "C_req": 6829,
+  "window_total": 141735,
+  "ratio": 0.048,
+  "violates": false
+ },
+ "Omicron": {
+  "C_req": 2090,
+  "window_total": 331377,
+  "ratio": 0.006,
+  "violates": false
+ },
+ "JN1": {
+  "C_req": 2675,
+  "window_total": 157266,
+  "ratio": 0.017,
+  "violates": false
+ },
+ "flu22": {
+  "C_req": 3849,
+  "window_total": 15579,
+  "ratio": 0.247,
+  "violates": false
+ },
+ "flu24": {
+  "C_req": 7804,
+  "window_total": 37932,
+  "ratio": 0.206,
+  "violates": false
+ },
+ "rsv24": {
+  "C_req": 8694,
+  "window_total": 22047,
+  "ratio": 0.394,
+  "violates": false
+ },
+ "rsv25": {
+  "C_req": 22986,
+  "window_total": 9341,
+  "ratio": 2.461,
+  "violates": true
+ }
+}

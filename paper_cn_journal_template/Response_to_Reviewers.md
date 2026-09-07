@@ -1,114 +1,74 @@
-# 对审稿人同行评审意见（Review 9）的逐条详细答复说明
-# Comprehensive Response to Peer Review Comments (Round 9)
+# Response to Reviewers
 
-**稿件题目**：传染病传播动力学的可预测视界、理论极限与实证研究  
-**稿件编号**：EPID-PRED-2026-FINAL-R9  
-**评审轮次**：第 9 轮同行评议（Round 9 Major Revision / Resubmission）  
+We thank the reviewer for the detailed audit. This revision rebuilds the submission around a single-source-of-truth build chain and regenerates every headline number from the deposited data. Below we respond point-by-point. Each item cites the exact revised location (main.tex line numbers of the current source) and the generating artifact. We mark items **implemented and verified by the build's consistency tests** versus items that remain **limitations**.
 
----
-
-## 尊敬的审稿专家与编辑部老师：
-
-首先，作者团队衷心感谢审稿专家在第 9 轮评审中投入的大量精力和卓越的学术洞察力。我们由衷赞叹并感谢审稿专家在本次审稿中所展现的极高专业素养——特别是专家团队编写了独立的 Python 求解脚本（40 节点高斯–厄米特积分器与 Brentq 非线性求根），对本文表 2、表 3、表 4、表 5、表 6 及理论精确根进行了完全从零开始的严格交叉复算，并给出了 **全部 8 项核心数理检验完全吻合、零数学瑕疵** 的极高评价！
-
-这一来自审稿专家的独立代码验证，确立了本文核心数理框架与实证计算的坚实基础。针对专家在第 9 轮评审中指出的 6 项重大问题（Major M-1 至 M-6）、11 项次要问题（Minor m-1 至 m-11）以及 10 项具体技术提问（Q1 至 Q10），我们以高度敬畏科学的态度逐条进行了彻底、全面的深度修订与理论完善。
+**Repository state for this response:** `scripts_v2/` is the only build path; `MANIFEST.md` at the package root records input SHA-256 hashes, the step table, and per-stage runtimes. `python scripts_v2/make_all.py` runs estimation → rolling evaluation → error accounting → verification → figures → table bodies → consistency tests, and fails on any divergence. Legacy scripts are quarantined under `scripts/legacy/` and are not part of the build.
 
 ---
 
-# 一、针对 6 项重大问题（Major M-1 至 M-6）的逐条落实说明
+## Major Comment 1 — Table 2 confidence intervals were not reproducible
 
-### **M-1. 平台达峰期理论视界求解与参数披露（表 3 补列 k 与 I_0，更正 Delta 达峰视界为 7.8 周）**
-> **审稿专家意见**：表 3 Delta 平台达峰期精确视界原载 6.4 周 (9.5 代)，经 40 节点 Gauss–Hermite 积分与非负截断正态求根复算，即便令 CV² ≡ 0 取理论上界，根仍为 11.60 代 = 7.79 周（7.8 周），偏差约 18%。且表 3 未披露各相位的过度离散度 k 与初始发病数 I_0，导致读者无法按论文口径复核。
+**Implemented.** The parametric bootstrap now exists end-to-end in `scripts_v2/pipeline.py`: each replicate resamples log-scale residuals around the fitted line (B = 2000, seed 20260807), refits the slope and its OLS standard error, re-estimates k* (moment estimator) and I0* on the resampled counts, re-solves the horizon equation, and returns percentile intervals. Table 2 (main.tex 733–739), its note (745), Figure 5 (`reports/figures_v2/fig4a_real_horizons.png`), Table 5's theoretical column, and the abstract/conclusion ranges are generated from `reports/table2_params.json`. The old t-endpoint variant and all hard-coded intervals were deleted together with `extract_cdc_data.py` and `reproduce_all_tables.py` (moved to `scripts/legacy/`). `check_consistency.py` asserts that the generated bodies match the JSON and that the abstract range equals the JSON extremes.
 
-**作者答复与修订**：
-专家的复算完全精确！我们深刻反思并彻底更正了该项问题：
-1. **表 3 结构扩充与参数透明披露**：在表 3 中新增了“过度离散度 k”与“初始发病规模 I_0”两列（扩充为完整的 9 列结构），严格披露对应 4 周窗口内经 CDC 真实聚合序列标定的离散度与发病规模（Delta 阶段 k = 223.2, I_0 = 28,347；Omicron 阶段 k = 50.0, I_0 = 66,275；流感阶段 k = 38.6, I_0 = 21,568）。
-2. **更正数值并同步全文**：以 40 节点高斯–厄米特积分精确求根，Delta 平台达峰期精确视界更正为 **7.8 周（11.6 代）**。该数值与爬坡期的 13.5 周相比，物理收缩约 42%，依然鲜明地论证了达峰期视界受压的动力学必然性。
-3. **全篇文本与中英文摘要同步更新**：中英文摘要、正文第 4.2 节、结论节中所有“2.9–6.4 周”的旧表述已全部更新为“达峰拐点期显著收缩（Delta 降至 7.8 周）” / “significantly contract during peak plateaus (e.g., 7.8 weeks for Delta)”。
+**Honest consequence:** with a 5-week window (df = 3) the percentile intervals are wide (e.g., Delta 11.6–80.1 weeks). We now say so explicitly in Section 4.1 (main.tex 715) rather than presenting narrow intervals.
 
----
+## Major Comment 2 — Table 4 observed totals had no generator; −0.05 cross term
 
-### **M-2. 亚临界消退期动力学机制转移澄清（纠正“0 周”判据，阐明发病期望指数衰退向微观吸收态滑落）**
-> **审稿专家意见**：表 3 表注称 R < 1 时首步 relMSE²(1) > τ² = 0.25 导致视界退化为 0 周，经公式代入复算，三行消退期的 relMSE²(1) 仅为 0.00038 至 0.00344，比 0.25 小两个数量级，数学首破步长实际为 7.5 至 23.4 代，判据在论文参数下不成立。
+**Implemented.** `scripts_v2/error_budget_v2.py` computes the observed relative MSE directly from origin-level forecasts and observations with the exact printed normalization (denominator $(I_{0,t} R_t^{h_{\text{gen}}})^2$, M = 6 origins per phase; output `reports/table4_budget.json`). The −0.05 cross term and the at-zero clipping of residuals were removed; negative residuals are reported as diagnostics. The prior log-scale `observed` quantity and the two orphaned cached JSONs were deleted. Table 4 (main.tex 807–836), Figure 6, and every percentage statement are generated from the JSON. **The corrected accounting changes the empirical narrative**: modeled terms explain 0.4%–48.4% across the 12 configurations (structural residuals 51.2%–99.6%), and the earlier "88.7% mechanistic explanation at influenza 4 weeks" is retracted as an artifact of the previously inflated residual-mean standard error (Section 4.3, main.tex 846).
 
-**作者答复与修订**：
-感谢审稿专家直击本质的深刻指正！此前版本确存在将“亚临界不适用超临界连续外推”混同为“首步击穿误差门槛”的概念混淆。
-1. **更正表 3 数学精确根**：表 3 消退期严格按全方差临界方程求得并列出数学根：Delta 拐点消退期为 7.5 周 (11.1 代)，Omicron 达峰消退期为 3.3 周 (7.6 代)，流感消退期为 10.7 周 (23.4 代)。
-2. **阐释动力学机制转移（Regime Shift）**：在表 3 注释与第 4.2 节正文中详细论证：当 R < 1 时，系统虽存在数学正根，但发病期望值呈指数衰退并迅速跌入个位数/零病例的微观吸收壁；在此阶段，基于宏观连续大样本的分支过程方差公式失效，系统转由离散随机吸收、微观熄灭与外生输入主导（引用 Parag 等 2026 年关于亚临界阈值动力学的最新研究）。公卫业务在此阶段转入病例溯源与清零监测，而非宏观外推。
-3. **同步修订摘要与结论**：彻底清除了“消退期退化为 0 周”的硬性论断，修改为“消退期面临指数衰退与微观吸收态的动力学机制转移” / “undergo a dynamical regime shift toward micro-extinction and absorption during subcritical decline phases”。
+## Major Comment 3 — Data-to-parameter chain and time-scale convention
 
----
+**Implemented, with an explicitly documented input decision.** The estimation in `pipeline.py` fits the weekly log-scale OLS slope and its standard slope standard error (df = W−2), converts to the generation scale as $b_{gen} = \Delta_g b_{week}$, $s_{gen} = \Delta_g \mathrm{SE}(b_{week})$, $R = \exp(b_{gen})$, and uses those fitted quantities (not pre-entered values) in every table. Section 2.1 (main.tex 113) now states the conversion and proves the calendar-week invariance: solving directly in week units gives the identical weekly horizon (<0.01% difference), which removes the convention ambiguity behind the 13.5/15.2/18.4/20.1-week spread. Assertions in `check_consistency.py` tie manuscript values to the JSONs.
 
-### **M-3. 代间隔 μ_g 文献口径规范与 Omicron BA.1 / JN.1 取值锚定**
-> **审稿专家意见**：表 2 同一列混用了 intrinsic、realized 与家户实测口径；Omicron BA.1 改引 Park 等 (2023) 报告的是 realized GI (3.0d) 而非 intrinsic；JN.1 的 3.5 天为裸假设。
+**Not fully achievable:** the byte-exact raw vintage behind the three processed weekly series (March 2026 archive) could not be reconstructed from the live CDC APIs (later backfill; state-level RSV detections are no longer published at that granularity). We therefore pin the processed series as the frozen analytical inputs with SHA-256 hashes in `MANIFEST.md`, archive the 2026-09-07 raw API snapshots under `data/raw/` for reference, and document dataset identifiers, retrieval dates, and the vintage caveat in the Data Availability statement (main.tex 996) and `MANIFEST.md`. The RSV 2025-26 backfill-period caveat is carried into Sections 2.1 and 4.1.
 
-**作者答复与修订**：
-我们对代间隔的文献支撑与口径规范进行了系统性梳理：
-1. **Omicron BA.1 口径精准标定**：在表 2 表注中明确标明 Park 等 (2023) 测得的为实现代间隔（realized generation interval, 3.0 天，95% CrI 2.7–3.2 天）；并在正文补充了敏感性对照说明：若采用其内在代间隔潜在上界 3.4 天，对应的周度视界微调为 3.3 周，不改变 2.9–13.5 周的量级范围。
-2. **JN.1 取值文献锚定**：引用 Chan 等 (2026, Scientific Reports) 关于美国家户前瞻队列最新测得的 Omicron XBB 亚分支内在世代时间 3.5 天（95% CrI 3.1–3.9 天），使 JN.1 的 3.5 天参数从经验假设升级为具备同行评审文献支持的客观基准。
-3. **口径透明度声明**：在表 2 注中全面列出每一病原体的代间隔口径来源与物理意义。
+## Major Comment 4 — Stale Figure 7 and rolling-protocol mismatch
 
----
+**Implemented.** One script (`rolling_eval_v2.py`) generates the rolling JSON, Figure 7 (`reports/figures_v2/fig7_skill_decay.png`), and the values consumed by Table 5; `main.tex` references only `reports/figures_v2/`, and the four duplicate figure directories were archived to `_archive/`. `check_consistency.py` fails the build if a referenced figure is missing or if same-named PNGs diverge anywhere outside `_archive/`. The horizon range is fixed at h = 1–8 weeks (stated in the protocol paragraph, main.tex 856, and the Figure 7 caption). Dependence-aware uncertainty is a moving-block bootstrap (block length 3, 1000 resamples, seed 20260807) over the origin sequence, documented at main.tex 860. The seasonal-naive baseline is implemented (52-week lag) and its coverage limitation is stated (main.tex 860): for the influenza wave the 52-week lag predates the deposited series, so the formal comparison uses the persistence baseline. We now report percentile intervals, and for Omicron state explicitly that its 95% interval (1.1–7.4 weeks) spans nearly the whole evaluated range (Section 4.4, main.tex 869).
 
-### **M-4. RSV 2025–26 联邦政府停摆真空期留一敏感性分析**
-> **审稿专家意见**：RSV 2025–26 的推断窗口（2025-W40 至 W44）落在联邦政府停摆真空期内，无一周有实时发布，且数据集 rgnm-fkqb 每周整体重发不保留修订历史，无法验证回填质量。
+## Major Comment 5 — RSV Cramér–Rao formula and invalid comparison
 
-**作者答复与修订**：
-针对审稿专家的严谨质询，我们补充了完整的留一敏感性检验（Leave-One-Out Sensitivity Analysis）：
-1. **留一重算与区间稳健性**：在第 4.1 节新增留一敏感性分析段落，明确报告：若完全剔除受联邦停摆影响的 RSV 2025–26 流行季，其余 6 个流行阶段的理论视界精确根依然严格落在 2.9–43.9 周（非 RSV 阶段严格为 2.9–13.5 周）；表 4 的短程未归因余项依然严格覆盖 72.6%–94.2%（全量程达 95.4%）。
-2. **数据源特殊性标注**：在表 2、表 4 及数据局限性中增设了专项标注，向读者如实交代 2025 年秋季联邦公共卫生监测数据回填的历史背景，表明该阶段仅作为宏观平稳低增长极端情景的数理对照。
+**Implemented.** The required-cluster count is derived once from Theorem 4's relative-variance bound: $C_{req} = (1/R + 1/k)/s^2$ with $s = \delta R/R$ (Section 4.1, main.tex 717). The comparison now uses the same-window 5-week case totals (22,047 and 9,341), not weekly means. The recomputed conclusion is reported as it falls out: RSV 2024–25 does **not** violate the bound (C_req = 8,694 vs. total 22,047, ratio 0.39); RSV 2025–26 does (22,986 vs. 9,341, ratio 2.46). We present this as a layered conclusion — a season-span truncation judgment for both seasons, plus an information-level diagnosis specific to 2025–26 — and note that treating reported cases as independent clusters ($\bar m_c = 1$) is the most optimistic mapping. Generated artifact: `reports/crb_analysis.json`; asserted by `check_consistency.py`. The abstract (main.tex 67), Table 2 note, and conclusion were updated accordingly.
 
----
+## Major Comment 6 — Theorem 5R validation and Corollary 1 error domain
 
-### **M-5. 滚动评估不确定性量化与 Omicron 比值倒挂机理检验**
-> **审稿专家意见**：滚动评估建立在 M=5 个评估原点上，三位有效数字穿越点（4.5, 4.1, 3.8）存在线性插值近似误差；Omicron 倒挂（3.8 周 > 2.9 周）缺乏统计检验。
+**Implemented.** Theorem 5R validation was rebuilt in `scripts_v2/verify_suite.py` (output `reports/verify_t5R_v2.json`). Experiment A measures $\mathrm{Var}(\sum r)$ on stationary-initialized AR(1) paths directly: ratios 0.982–1.020 across $\phi \in \{0, 0.5, 0.8, 0.95\}$, h = 1..10 — the closed form is verified where it applies. Experiment B (renewal with an NB observation layer) shows ratios 0.27–1.02 with a systematic decline in $\phi$; the revised text (Section 3, main.tex 674) reports both and attributes the damping to renewal-kernel lag smoothing rather than describing it as a first-step conditioning artifact. The contradictory 0.58/0.92–1.08 passage was deleted.
 
-**作者答复与修订**：
-1. **有效数字与插值误差界定**：正文明确指出穿越点按 1 周步长离散推进，并使用线性插值近似确定交叉点；在报告穿越点时统一保留一位小数并附带基于 2,000 次移动块 Bootstrap（Block Bootstrap）的标准误（4.5 ± 0.4 周、4.1 ± 0.4 周、3.8 ± 0.3 周），明确指出其实际业务含义为“约 4 周”。
-2. **Omicron 比值倒挂的动力学机理**：在第 4.4 节深入剖析了双层判据的本质差异：第一层是绝对误差容忍物理边界（受超分散推断方差强力挤压至 2.9 周），第二层是相对业务基线优势区间（在 Omicron 陡峭拐点期持续性基线自身灾难性崩溃导致相对优势被动延展）。正文补充了方差比与非参数秩和检验说明，证实两层判据互不矛盾且各具独特公卫价值。
+Corollary 1: the unsupported "≤13.6% for k ≥ 0.5, |ε| ≤ 0.2" claim was replaced by a predeclared 144-cell grid (`reports/corollary1_grid.json`, regenerated by `verify_suite.py`). Over the declared domain the quadratic root errs by up to 48.6% (underestimate at the |ε| = 0.2, I0 = 50 corner); in the narrow band |ε| ≤ 0.05, I0 ≥ 200, s ≤ 0.05, k ≥ 0.5 the maximum is 15.8%. The revised text (proof of Corollary 1, main.tex 405) presents the two error sources and states the closed form is a qualitative near-critical guide. The h/k law is restated as a conditional asymptotic approximation (Theorem 5 proof, main.tex 583). The Theorem 4 Monte Carlo is relabeled a numerical sanity check of the formula's implementation (Section 3, main.tex 673).
+
+## Major Comment 7 — Envelope claim contradicted by Table 5
+
+**Implemented.** With the regenerated parameters, all three empirical crossings (1.82–5.34 weeks) now fall below their theoretical horizons (7.9–21.2 weeks; ratios 2.03–6.03), so the specific numeric contradiction is gone — but we do not resurrect a strong envelope claim. Table 5's note and the closing paragraph of Section 4.4 (main.tex 887–895) present the comparison as exploratory: wide intervals on both layers, three waves and six origins only, Omicron's interval spanning the evaluated range, and finalized-vintage backtests not constituting real-time performance estimates. The abstract says "双层探索性基准框架" (two-tier exploratory framework). A general envelope claim would require a larger, prospectively versioned multi-season evaluation.
+
+## Major Comment 8 — Assumptions and estimands need tighter qualification
+
+**Implemented.** "Orthogonal" is replaced by "additive under (A4)"; Theorem 1 now displays the cross term before imposing (A4) and states where it vanishes (main.tex 342–347 and proof). The unverified "empirical perturbation < 1.5%" sentence was removed; the section instead states the shared-window dependence qualitatively (main.tex 858). Theorem 2 carries explicit non-degeneracy and finite-moment conditions (main.tex 412). The CV² saturation limit is qualified to R > 1 in Lemma 2 and Theorem 1 where relevant. Theorem 3 now describes the reflecting-boundary construction as an approximation to quasi-stationary behavior supported by the numerical CV comparisons, not as the exact QSD (main.tex 450). The near-extinction interpretation is clarified in Table 3's note (mechanism shift; mathematical roots are not operational lead times).
+
+## Major Comment 9 — Novelty attribution and bibliography integrity
+
+**Implemented.** The introduction now cites Petchey et al. for the threshold-crossing horizon concept, Drake (2006) for branching-process forecast-precision limits (previously uncited), Penn et al.'s aleatoric/epistemic distinction, and Parag & Donnelly's detection-delay limits, and recasts the contribution as "a specific analytical instantiation" rather than inventing the concept (main.tex 82). Bibliography actions: `taylor2016stochasticity` removed (its DOI returns 404 and no bibliographic record was found); `suez2026baseline` corrected (Ehsan Suez, actual title, DOI 10.64898/2026.03.18.26348748, labeled preprint); `petchey2015ecological` repaired (the corrupted author tail is fixed; journal/volume/pages/DOI render); `chan2026estimating` corrected to the journal version DOI 10.1038/s41598-026-46596-6; `cohen2024respiratory` corrected to DOI 10.1038/s41467-023-44275-y; `parag2026threshold` given its journal DOI; DOIs added to 15 previously DOI-less cited records. The bibliography now contains exactly the 66 cited entries; the 32 uncited entries moved to `references_working_library.bib`. Generation-interval attributions were corrected: Park et al. is labeled Dutch transmission-pair data used as a proxy assumption for Omicron; the Hart et al. 3.4-day figure is no longer attributed as an Omicron intrinsic interval; Chan et al.'s XBB-based estimate is labeled a proxy assumption for JN.1 (main.tex 745).
+
+## Major Comment 10 — Single source of truth
+
+**Implemented.** The submission is rebuilt around one manifest and one command: `MANIFEST.md` (input hashes, step table, runtimes) and `python scripts_v2/make_all.py`. Table bodies are generated into `reports/table_bodies.tex`; all figures go to the single canonical directory `reports/figures_v2/`; `check_consistency.py` fails the build on stale literals, missing/divergent figures, or JSON–prose mismatches. This response letter cites files and line numbers rather than completion superlatives.
+
+**Remaining, stated as limitations:** the raw-vintage reconstruction gap (see Major 3) is documented rather than closed; the moving-block bootstrap block length is a design choice justified in-text; the Theorem-5R renewal damping factor is characterized empirically, not derived.
 
 ---
 
-### **M-6. 业务基线定位与相对朴素基线界定**
-> **审稿专家意见**：滚动评估采用朴素基线，技能比 > 1 的门槛偏低。
+## Minor Comments
 
-**作者答复与修订**：
-1. **对齐 CDC 官方基线口径**：在第 4.4 节与表 5 注释中明确澄清：本文滚动评估采用的点预测相对均方误差技能比，与 CDC FluSight 和 COVID-19 Forecast Hub 的官方基线中位数预测完全对齐。
-2. **正文收窄业务主张**：正文明示该交叉点（3.8–4.6 周）是相对于无外生协变量的单序列持续性基线的技能优势区间上限，为复杂集合预测模型提供了基底性能参考。
+1. **Repeated numerical summaries aligned.** MLE/CRB ratio now uniformly 0.9956–1.0024 (from `reports/verify_t4.json`) in Sections 3 and 6; structural-residual ranges uniformly 51.2%–99.6% from `table4_budget.json` (main.tex 703, 846, 988).
+2. **Tables 2/3 parameter difference explained.** Table 3's note (main.tex 784) states that every phase window is independently re-estimated; rows that share a window with Table 2 have identical values by construction.
+3. **I0 and origin-count terminology.** I0 is defined as the arithmetic mean of weekly counts (main.tex 111, Table 2 note); M = 6 origins per wave is stated in Sections 4.3–4.4 and matches `rolling_results.json`.
+4. **Bilingual abstracts aligned.** The English abstract was rewritten to mirror the Chinese one claim-by-claim (0.74%, RSV ratios and caveat, per-pathogen crossings, moving-block bootstrap) — main.tex 67 vs. 1024.
+5. **Overstatement and duplication removed.** "物理硬上限/第一性原理/客观物理标尺/严格验证" are replaced with model-scoped wording; the duplicated E_drift sentence in the Theorem 5 proof was removed (main.tex 583).
+6. **Generation-interval labels qualified.** Table 2's note labels each estimand (intrinsic vs. realized forward vs. household), study population, geography, and marks cross-variant substitutions as proxy assumptions with sensitivity notes (main.tex 745).
+7. **Portability.** The PDF compiles under tectonic/XeLaTeX; `MANIFEST.md` lists per-stage runtimes and the environment file includes torch. A container recipe is future work (stated).
+8. **Journal formatting.** Manual-bold usages retained are template-mandated (captions/notes of the Chinese-journal template); non-mandated manual formatting was removed where encountered.
 
----
+## Verification of previous-round items
 
-# 二、针对 11 项次要问题（Minor m-1 至 m-11）的逐条落实说明
-
-- **m-1（Melikechi 等 [10] 引用客观测定）**：引言中更正为“针对基本易感–感染–康复（SIR）模型通过摄动渐近展开表明，预峰期发病数据对传播速率与移出速率存在实用不可识别性困难”，杜绝了过度概括。
-- **m-2（Scarpino & Petri [1] 原文结论完整呈现）**：引言全面补全了该文结论，指出其虽然揭示了排列熵信息屏障，但也指出单次暴发时间尺度内预测仍有望取得成功，准确反映了文献原貌。
-- **m-3（Rosenkrantz 等 [17] 补充算法进展）**：补充说明了该文虽然证明了最坏情况下的 #P-hard 复杂度，但同时也设计了针对特定图结构的高效近似算法。
-- **m-4（区间端点与高精度复算对齐）**：正文第 4.1 节自报的闭式偏差区间订正为 11.6%–16.1%，信噪比区间订正为 0.4283–0.4479，高精度小数全面对齐。
-- **m-5（表 6 表注指称修正）**：表 6 表注更正为“基于全方差临界方程数值精确根算法求解”，彻底消除了将式 (18) 闭式解与精确积分方程混淆的笔误。
-- **m-6（MLP 重复实验细节前移）**：第 3.3 节正文方法处直接写明 50 次独立随机初始化重复实验、均值 6.69 ± 0.42 与 95% 置信区间 [6.27, 7.11]。
-- **m-7（推断窗口敏感性参数与序列口径说明）**：在第 4.1 节说明了推断窗口敏感性测试所采用的序列起始周与参数估计设置。
-- **m-8（蒙特卡洛随机模拟主种子披露）**：表 1 与第 3.1 节明确标注全部模拟主种子统一固定为 Seed 42。
-- **m-9（表 4 记账抽样不确定性全要素覆盖）**：表 4 注释中全面披露了 M=5 个评估原点下九行各分量的抽样标准误与极差分布。
-- **m-10（参考文献库规范化清理）**：全面核查补全了 57 条参考文献的卷、期、页码及 DOI；补全了省略的共同作者姓名；清除了 2 组历史重复条目（park2021forward / white2008likelihood）。
-- **m-11（WIS 与区间覆盖率局限性探讨）**：在第 5.4 节局限性第 10 条中深入讨论了从点预测均方误差向加权区间评分（WIS）与区间覆盖率拓展的方法论路径。
-
----
-
-# 三、针对 10 项具体技术提问（Q1 至 Q10）的深度解答
-
-1. **Q1（定理 3 临界慢化尺度）**：明确指出大样本国家级聚合（N ~ 3.3 亿）下相变窗口半宽仅约 5 × 10^(-5)，实证阶段均在窗口之外；定理 3 严格刻画的是孤立社区、微观机构暴发与消除阶段的动力学约束。
-2. **Q2（定理 4 蒙特卡洛抽样误差棒）**：基于 n = 50,000 样本方差理论抽样分布推导了相对标准误差 (SE ≈ 0.00632)，图 4 柱状图全部补充了 ±0.0125 的 95% 理论置信区间误差棒，全部稳健覆盖 1.000。
-3. **Q3（AR(1) 首步预热比值 0.58 数理解析）**：给出了条件方差与无条件方差理论解析比值 (1 - φ² = 0.36)，解释了有限预热步长下首步测得 0.58 向遍历平稳态过渡的物理本质。
-4. **Q4（MLP 估计器统计效率）**：明确指出 6.69 的比值代表小样本浅层神经网络面对高噪声分支过程时的统计估计效率折损，非全类算法固有上限。
-5. **Q5（代间隔敏感性与无量纲世代视界）**：确立了世代视界 h*_gen 作为跨病原体客观比较的内在标尺，日历周视界严格正比于代间隔。
-6. **Q6（三相位对照与达峰消退动力学）**：新增表 3 分层对照，量化了达峰期视界收缩（Delta 降至 7.8 周）与消退期向微观吸收态的机制转移。
-7. **Q7（四项记账流感与 RSV 机制异质性）**：揭示了代间隔标度核心作用——流感短代间隔（3.2 天）导致 4 周跨越 8.75 代使外推误差剧增至 88.7%，而 RSV（8.4 天）4 周仅 3.33 代使外生残差依然占 95.1%–95.4%。
-8. **Q8（Omicron 阶段双层比值反转机理）**：剖析了第一层绝对物理容忍极限与第二层相对业务朴素基线时效的解耦机理。
-9. **Q9（表 6 决策容忍度近似线性标度）**：揭示了容忍度 τ 放宽一倍、理论可用时效大致延长一倍的简洁实用标度规律。
-10. **Q10（代码可用性与计算硬件规格）**：完整披露了 AMD Ryzen 9 7950X / Intel Core i9-13900K 规格与 15 分钟运行耗时，并提供了匿名化代码仓库。
-
----
-
-## 总结
-
-经过本次从数理底座、文献溯源、参数标定、实证复核到全篇文字的彻底重构，手稿的所有 6 项重大问题（M-1 至 M-6）与 11 项次要问题（m-1 至 m-11）均已得到彻底、完备的解决。全篇 4 套 LaTeX 编译 PDF 与 4 份 Word .docx 终稿均已达到最高学术与出版规范。再次由衷感谢审稿专家的严谨审阅！
+- Resolved as claimed: broken citation repair, CV² maximum (now 0.74% under the regenerated parameters), MLP ratio 6.69 scoping, Table 5/JSON agreement, `0.0574`/`±1.82%` remnants absent, non-prescriptive disclaimers in Sections 5.1–5.2.
+- Now additionally resolved: parametric bootstrap (Major 1), Table 4 generator (Major 2), stale Figure 7 (Major 4), CRB formula/units (Major 5), Theorem 5R/Corollary 1 conflicts (Major 6), bibliography repairs (Major 9), single build graph (Major 10).
+- Not achievable in this round and documented instead: byte-level raw-vintage reconstruction (Major 3); prospective multi-season rolling evaluation to establish any general envelope claim (Major 7).

@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "process": "logistic birth-death (birth R*i*(1-i/N), death i) at critical R=1",
+    "seed": 20260807,
+    "protocol": "start from established population i0=ceil(0.5N), measure time to extinction",
+    "literature": "Doering, Sargsyan & Sander (2005): critical mean time to extinction is O(N^{1/2}); subcritical O(log N); supercritical exponential",
+    "conclusion": "Measured scaling T ~ N^{0.51} ~ N^{1/2}, NOT O(N). The paper's 'factor of 7.3 for N: 500->4000' is not reproducible."
+  },
+  "cells": {
+    "500": {
+      "N": 500,
+      "i0": 250,
+      "reps": 30000,
+      "mean_ext_time": 41.91817722825136,
+      "median_ext_time": 36.468042445189795,
+      "n_censored": 0
+    },
+    "1000": {
+      "N": 1000,
+      "i0": 500,
+      "reps": 30000,
+      "mean_ext_time": 60.22706393477642,
+      "median_ext_time": 52.45542897265259,
+      "n_censored": 0
+    },
+    "2000": {
+      "N": 2000,
+      "i0": 1000,
+      "reps": 30000,
+      "mean_ext_time": 85.3637674947806,
+      "median_ext_time": 74.75799659244004,
+      "n_censored": 0
+    },
+    "4000": {
+      "N": 4000,
+      "i0": 2000,
+      "reps": 30000,
+      "mean_ext_time": 122.69527698361543,
+      "median_ext_time": 107.81465263459566,
+      "n_censored": 0
+    },
+    "8000": {
+      "N": 8000,
+      "i0": 4000,
+      "reps": 30000,
+      "mean_ext_time": 174.35446577447163,
+      "median_ext_time": 152.30016879802713,
+      "n_censored": 0
+    }
+  },
+  "scaling_exponent_by_pair": {
+    "500->1000": 0.5228359453225861,
+    "1000->2000": 0.5032119209687449,
+    "2000->4000": 0.523383959717724,
+    "4000->8000": 0.5069436014631782
+  },
+  "ratio_mean_ext_time_500_to_4000": 2.927018422473847,
+  "n_ratio": 8.0
+}
