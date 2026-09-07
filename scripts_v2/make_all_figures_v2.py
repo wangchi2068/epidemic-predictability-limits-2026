@@ -98,22 +98,45 @@ def gen_fig2():
 # ------------------------------------------------------------- fig T3
 def gen_fig_t3():
     d = json.loads((REPORTS / "verify_t3.json").read_text(encoding="utf-8"))
-    # keep the old verified figure content; regenerate from JSON if fields present
-    cfg = d.get("cv", d)
-    fig, ax = plt.subplots(figsize=(7.2, 4.8))
+    # verify_t3.json schema (sim_verify_t3.py): top-level "stationary_cv" holds
+    # per-eps dicts each with a "ratio" field (empirical/theory CV).
+    cfg = d.get("stationary_cv", {})
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(11.5, 4.6))
     labels, ratios = [], []
-    for key, val in (cfg.items() if isinstance(cfg, dict) else []):
+    for key, val in cfg.items():
         if isinstance(val, dict) and "ratio" in val:
             labels.append(key)
             ratios.append(val["ratio"])
-    if labels:
-        ax.bar(range(len(labels)), ratios, color="#4c72b0", alpha=0.85)
-        ax.axhline(1.0, color="#d9534f", ls="--")
-        ax.set_xticks(range(len(labels)))
-        ax.set_xticklabels(labels, rotation=20, fontsize=8)
-        ax.set_ylabel("经验/理论变异系数比值")
-    ax.set_title("图 3：拟平稳扩散密度验证（verify_t3.json）")
+    if not labels:
+        raise SystemExit("verify_t3.json has no stationary_cv ratios — refusing to emit an empty fig_t3")
+    ax.bar(range(len(labels)), ratios, color="#4c72b0", alpha=0.85)
+    ax.axhline(1.0, color="#d9534f", ls="--")
+    ax.set_xticks(range(len(labels)))
+    ax.set_xticklabels(labels, rotation=20, fontsize=8)
+    ax.set_ylabel("经验/理论变异系数比值")
+    ax.set_ylim(min(ratios) - 0.05, max(max(ratios), 1.0) + 0.05)
+    ax.set_title("(a) 拟平稳 CV：经验/理论比值")
     ax.grid(alpha=0.3, axis="y")
+    est = d.get("establishment") or {}
+    elabels, emp, theo, lo_ci, hi_ci = [], [], [], [], []
+    for key, val in est.items():
+        if isinstance(val, dict) and "emp" in val:
+            elabels.append(key)
+            emp.append(val["emp"])
+            theo.append(val.get("theory_2eps_over_R"))
+            lo_ci.append(val["ci"][0]); hi_ci.append(val["ci"][1])
+    if elabels:
+        x = np.arange(len(elabels))
+        ax2.errorbar(x, emp, yerr=[np.array(emp) - lo_ci, np.array(hi_ci) - np.array(emp)],
+                     fmt="o", color="#4c72b0", capsize=3, label="经验定殖概率（95% Beta 区间）")
+        ax2.plot(x, theo, "s--", color="#dd8452", label="理论 $2\\varepsilon/R$")
+        ax2.set_xticks(x)
+        ax2.set_xticklabels(elabels, rotation=35, fontsize=7)
+        ax2.set_ylabel("定殖概率")
+        ax2.set_title("(b) 定殖概率（Poisson 分支）：经验 vs 理论")
+        ax2.legend(fontsize=8)
+        ax2.grid(alpha=0.3, axis="y")
+    fig.suptitle("图 3：拟平稳扩散密度与定殖概率验证（verify_t3.json）")
     plt.tight_layout()
     plt.savefig(FIGS / "fig_t3_quasistationary.png", dpi=200)
     plt.close()

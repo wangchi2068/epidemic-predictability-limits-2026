@@ -165,15 +165,19 @@ PHASES = [
     ("rsv25",    "rsv",   "2025-11-08", "2025-12-06", 8.4, "RSV 2025-26 流行季"),
 ]
 
-# Table 3 (phase-comparison) windows. I0/k are re-estimated on each window.
+# Table 3 (phase-comparison) windows: 3 pathogens x 3 phases, matching the
+# manuscript table. Growth windows coincide with Table 2; peak/decline use
+# extended 6-week windows independently re-estimated.
 PHASES_T3 = [
-    ("Delta_growth",   "covid", "2021-07-03", "2021-07-31", 4.7),
-    ("Delta_peak",     "covid", "2021-08-28", "2021-10-02", 4.7),
-    ("Delta_decline",  "covid", "2021-10-09", "2021-11-13", 4.7),
-    ("Omicron_growth", "covid", "2021-12-04", "2022-01-01", 3.0),
-    ("Omicron_decline","covid", "2022-01-08", "2022-02-05", 3.0),
-    ("flu22_growth",   "flu",   "2022-10-08", "2022-11-05", 3.2),
-    ("flu22_decline",  "flu",   "2022-12-03", "2022-12-31", 3.2),
+    ("Delta_growth",    "covid", "2021-07-03", "2021-07-31", 4.7),
+    ("Delta_peak",      "covid", "2021-08-21", "2021-10-02", 4.7),
+    ("Delta_decline",   "covid", "2021-10-02", "2021-11-13", 4.7),
+    ("Omicron_growth",  "covid", "2021-12-04", "2022-01-01", 3.0),
+    ("Omicron_peak",    "covid", "2022-01-01", "2022-01-29", 3.0),
+    ("Omicron_decline", "covid", "2022-01-29", "2022-03-12", 3.0),
+    ("flu22_growth",    "flu",   "2022-10-08", "2022-11-05", 3.2),
+    ("flu22_peak",      "flu",   "2022-11-26", "2022-12-24", 3.2),
+    ("flu22_decline",   "flu",   "2022-12-24", "2023-02-04", 3.2),
 ]
 
 
@@ -218,6 +222,17 @@ def analyze_phase(series, w0, w1, mu_g):
     return out
 
 
+def crb_analysis(rec: dict) -> dict:
+    """Theorem-4 required independent-cluster count for the observed relative SE.
+    s_gen is ALREADY the relative standard error on the log scale (Delta_g * SE(b_week),
+    see manuscript Table 2 note), so C_req = (1/R + 1/k) / s^2 exactly as printed."""
+    s_rel = rec["s_gen"]
+    c_req = (1.0 / rec["R_gen"] + 1.0 / rec["k_agg"]) / s_rel ** 2
+    return {"C_req": round(c_req), "window_total": rec["I0_total"],
+            "ratio": round(c_req / rec["I0_total"], 3),
+            "violates": bool(c_req > rec["I0_total"])}
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     manifest = {"seed": SEED, "B": B_BOOT, "tau": TAU, "k_cap": K_CAP,
@@ -248,15 +263,11 @@ def main():
     path.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"saved {path}", flush=True)
 
+    crb = {k: crb_analysis(r) for k, r in table2.items()}
+    crb_path = REPORTS / "crb_analysis.json"
+    crb_path.write_text(json.dumps(crb, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"saved {crb_path}", flush=True)
+
 
 if __name__ == "__main__":
     main()
-
-
-def crb_analysis(rec: dict) -> dict:
-    """Theorem-4 required independent-cluster count for the observed relative SE."""
-    s_rel = rec["s_gen"] / rec["R_gen"]
-    c_req = (1.0 / rec["R_gen"] + 1.0 / rec["k_agg"]) / s_rel ** 2
-    return {"C_req": round(c_req), "window_total": rec["I0_total"],
-            "ratio": round(c_req / rec["I0_total"], 3),
-            "violates": bool(c_req > rec["I0_total"])}

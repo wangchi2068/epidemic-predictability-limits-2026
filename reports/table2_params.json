@@ -222,53 +222,53 @@
     },
     "Delta_peak": {
       "window": [
-        "2021-08-28",
+        "2021-08-21",
         "2021-10-02"
       ],
-      "n_weeks": 6,
-      "b_week": -0.0985,
-      "se_slope": 0.0132,
+      "n_weeks": 7,
+      "b_week": -0.0803,
+      "se_slope": 0.0141,
       "mu_g_days": 4.7,
       "delta_g": 0.6714,
-      "R_gen": 0.936,
-      "s_gen": 0.0089,
-      "k_agg": 310.1,
-      "I0": 73364,
-      "I0_total": 440183,
-      "h_star_gen": 47.85,
-      "h_star_weeks": 32.13,
+      "R_gen": 0.9475,
+      "s_gen": 0.0094,
+      "k_agg": 231.5,
+      "I0": 75184,
+      "I0_total": 526289,
+      "h_star_gen": 45.07,
+      "h_star_weeks": 30.26,
       "ci95_weeks": [
-        19.17,
-        69.02
+        18.64,
+        67.9
       ],
-      "boot_se_weeks": 13.31,
+      "boot_se_weeks": 12.74,
       "n_boot_ok": 2000,
-      "hs_ratio": 0.424
+      "hs_ratio": 0.426
     },
     "Delta_decline": {
       "window": [
-        "2021-10-09",
+        "2021-10-02",
         "2021-11-13"
       ],
-      "n_weeks": 6,
-      "b_week": -0.0573,
-      "se_slope": 0.0162,
+      "n_weeks": 7,
+      "b_week": -0.0666,
+      "se_slope": 0.0127,
       "mu_g_days": 4.7,
       "delta_g": 0.6714,
-      "R_gen": 0.9623,
-      "s_gen": 0.0109,
-      "k_agg": 189.0,
-      "I0": 40561,
-      "I0_total": 243365,
-      "h_star_gen": 39.06,
-      "h_star_weeks": 26.22,
+      "R_gen": 0.9563,
+      "s_gen": 0.0085,
+      "k_agg": 223.2,
+      "I0": 42438,
+      "I0_total": 297064,
+      "h_star_gen": 49.89,
+      "h_star_weeks": 33.5,
       "ci95_weeks": [
-        15.59,
-        72.95
+        20.67,
+        73.72
       ],
-      "boot_se_weeks": 14.91,
+      "boot_se_weeks": 13.75,
       "n_boot_ok": 2000,
-      "hs_ratio": 0.426
+      "hs_ratio": 0.425
     },
     "Omicron_growth": {
       "window": [
@@ -295,30 +295,55 @@
       "n_boot_ok": 2000,
       "hs_ratio": 0.427
     },
-    "Omicron_decline": {
+    "Omicron_peak": {
       "window": [
-        "2022-01-08",
-        "2022-02-05"
+        "2022-01-01",
+        "2022-01-29"
       ],
       "n_weeks": 5,
-      "b_week": -0.1026,
-      "se_slope": 0.037,
+      "b_week": 0.0321,
+      "se_slope": 0.0507,
       "mu_g_days": 3.0,
       "delta_g": 0.4286,
-      "R_gen": 0.957,
-      "s_gen": 0.0159,
-      "k_agg": 48.3,
-      "I0": 130362,
-      "I0_total": 651810,
-      "h_star_gen": 26.95,
-      "h_star_weeks": 11.55,
+      "R_gen": 1.0138,
+      "s_gen": 0.0217,
+      "k_agg": 26.7,
+      "I0": 132538,
+      "I0_total": 662690,
+      "h_star_gen": 19.68,
+      "h_star_weeks": 8.43,
       "ci95_weeks": [
-        6.33,
-        41.7
+        4.62,
+        31.75
       ],
-      "boot_se_weeks": 9.15,
+      "boot_se_weeks": 7.95,
       "n_boot_ok": 2000,
       "hs_ratio": 0.427
+    },
+    "Omicron_decline": {
+      "window": [
+        "2022-01-29",
+        "2022-03-12"
+      ],
+      "n_weeks": 7,
+      "b_week": -0.3275,
+      "se_slope": 0.0058,
+      "mu_g_days": 3.0,
+      "delta_g": 0.4286,
+      "R_gen": 0.869,
+      "s_gen": 0.0025,
+      "k_agg": 698.4,
+      "I0": 58662,
+      "I0_total": 410631,
+      "h_star_gen": 53.33,
+      "h_star_weeks": 22.86,
+      "ci95_weeks": [
+        22.16,
+        23.59
+      ],
+      "boot_se_weeks": 0.36,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.131
     },
     "flu22_growth": {
       "window": [
@@ -345,30 +370,55 @@
       "n_boot_ok": 2000,
       "hs_ratio": 0.427
     },
-    "flu22_decline": {
+    "flu22_peak": {
       "window": [
-        "2022-12-03",
-        "2022-12-31"
+        "2022-11-26",
+        "2022-12-24"
       ],
       "n_weeks": 5,
-      "b_week": -0.0846,
-      "se_slope": 0.012,
+      "b_week": -0.0065,
+      "se_slope": 0.057,
       "mu_g_days": 3.2,
       "delta_g": 0.4571,
-      "R_gen": 0.9621,
-      "s_gen": 0.0055,
-      "k_agg": 407.9,
-      "I0": 22230,
-      "I0_total": 111149,
-      "h_star_gen": 75.49,
-      "h_star_weeks": 34.51,
+      "R_gen": 0.997,
+      "s_gen": 0.026,
+      "k_agg": 16.2,
+      "I0": 21966,
+      "I0_total": 109828,
+      "h_star_gen": 16.39,
+      "h_star_weeks": 7.49,
       "ci95_weeks": [
-        19.39,
-        64.17
+        4.1,
+        27.81
       ],
-      "boot_se_weeks": 12.09,
+      "boot_se_weeks": 7.0,
       "n_boot_ok": 2000,
-      "hs_ratio": 0.413
+      "hs_ratio": 0.427
+    },
+    "flu22_decline": {
+      "window": [
+        "2022-12-24",
+        "2023-02-04"
+      ],
+      "n_weeks": 7,
+      "b_week": -0.3921,
+      "se_slope": 0.0353,
+      "mu_g_days": 3.2,
+      "delta_g": 0.4571,
+      "R_gen": 0.8359,
+      "s_gen": 0.0161,
+      "k_agg": 18.4,
+      "I0": 10014,
+      "I0_total": 70099,
+      "h_star_gen": 24.35,
+      "h_star_weeks": 11.13,
+      "ci95_weeks": [
+        7.3,
+        15.4
+      ],
+      "boot_se_weeks": 2.16,
+      "n_boot_ok": 2000,
+      "hs_ratio": 0.392
     }
   }
 }

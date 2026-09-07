@@ -13,10 +13,11 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 
 STEPS = [
-    ("pipeline.py", "参数估计 + Bootstrap CI"),
+    ("pipeline.py", "参数估计 + Bootstrap CI + Cramér--Rao 界"),
     ("rolling_eval_v2.py", "滚动评估 (Table 5 / Fig 7)"),
     ("error_budget_v2.py", "四项误差记账 (Table 4 / Fig 6)"),
     ("verify_suite.py", "定理 5R + 推论 1 验证"),
+    ("sim_verify_t3.py", "定理 3 拟平稳 + 定殖概率验证"),
     ("make_all_figures_v2.py", "全部图件"),
     ("make_tables_v2.py", "LaTeX 表体"),
     ("check_consistency.py", "一致性测试"),
@@ -25,7 +26,7 @@ STEPS = [
 def main():
     fast = "--fast" in sys.argv
     for script, desc in STEPS:
-        if fast and script == "verify_suite.py":
+        if fast and script in ("verify_suite.py", "sim_verify_t3.py"):
             print(f"[skip] {script} (--fast)")
             continue
         print(f"\n=== {script} — {desc} ===", flush=True)

@@ -10,10 +10,18 @@ I0_t = Z_t (last observed count at the origin), R_t = exp(Delta_g * b_t) with b_
 4-week in-window OLS log-slope, h_gen = h_week / Delta_g, and M = number of origins.
 
 Components:
-  CV^2(h_gen)          — Lemma 2, from the phase-level Table-2 parameters.
-  E_drift(h)           = h_gen * v_drift^2, v_drift = SD of 4-week-smoothed weekly
+  CV^2(h_gen)          — Lemma 2, from the phase-level Table-2 parameters. I0 is the
+                         window-mean count from Table 2 (the phase's characteristic initial
+                         size); the observed relMSE^2 above uses per-origin I0_t = Z_t for
+                         its own normalization, which is an intentional, documented
+                         distinction (backtest at each origin vs. phase-level theoretical
+                         floor), NOT a shared quantity.
+  E_drift(h)           = h_gen * v_drift, v_drift = variance of the 4-week-smoothed weekly
                          log-growth increments in a calibration band around the window
-                         (Theorem 5 linear accumulation, empirical proxy).
+                         (Theorem 5 linear accumulation, empirical proxy). v_drift is
+                         already a variance (drift_volatility returns np.var), so it enters
+                         linearly — h_gen * v_drift — matching the printed formula
+                         E_drift = h_gen * v^2 at main.tex.
   P(h)                 = (h_gen * s_gen)^2 — Lemma 3 first-order (s_gen from Table 2).
   E_misspec(h)         = relMSE^2_obs(h) - [CV^2 + E_drift + P]  (closure; may be negative
                          and is NOT clipped — a negative residual is itself diagnostic).
@@ -45,8 +53,8 @@ PHASES = [
     ("rsv25",   "rsv",   ["2025-11-08", "2025-11-15", "2025-11-22", "2025-11-29", "2025-12-06", "2025-12-13"], 8.4),
 ]
 
-HORIZONS = {"Delta": [1, 4, 8], "Omicron": [1, 4, 8], "flu22": [1, 4],
-            "rsv24": [2, 4], "rsv25": [2, 4]}
+HORIZONS = {"Delta": [1, 2, 4], "Omicron": [1, 2, 4], "flu22": [1, 2, 4],
+            "rsv24": [2, 4], "rsv25": [2]}
 
 DRIFT_CALIB_START = {"Delta": "2021-07-03", "Omicron": "2021-12-04", "flu22": "2022-10-08",
                      "rsv24": "2024-11-09", "rsv25": "2025-11-08"}
@@ -123,7 +131,7 @@ def main():
                 continue
             obs = float(np.mean(np.array(errs) / np.array(norms)))
             cv2_h = p_lognorm_slow(h_gen, R_phase, k, I0_phase)
-            e_drift = h_gen * v_drift ** 2
+            e_drift = h_gen * v_drift  # v_drift is already the variance v^2 (see docstring)
             p_h = (h_gen * s_gen) ** 2
             e_mis = obs - (cv2_h + e_drift + p_h)
             per_h[str(h_wk)] = {
@@ -168,25 +176,25 @@ def make_fig6(out):
     plt.rcParams["axes.unicode_minus"] = False
 
     fig, ax = plt.subplots(figsize=(8.5, 5.0))
-    labels, cv2s, drifts, ps, miss = [], [], [], [], []
+    labels, cv2s, drifts, ps, tot_below = [], [], [], [], []
     for key, rec in out.items():
-        for hw, r in rec["horizons"].items():
+        for hw, r in sorted(rec["horizons"].items(), key=lambda kv: int(kv[0])):
             labels.append(f"{key}\nh={hw}wk")
             cv2s.append(r["share_cv2"] * 100)
             drifts.append(r["share_drift"] * 100)
             ps.append(r["share_p"] * 100)
-            miss.append(r["share_misspec"] * 100)
+            tot_below.append(r["share_misspec"] * 100 < 0)
     x = np.arange(len(labels))
     ax.bar(x, cv2s, label="群体随机性 CV²", color="#4c72b0")
     ax.bar(x, drifts, bottom=cv2s, label="时变漂移", color="#dd8452")
     ax.bar(x, ps, bottom=np.array(cv2s) + np.array(drifts), label="参数外推 P", color="#55a868")
-    ax.bar(x, miss, bottom=np.array(cv2s) + np.array(drifts) + np.array(ps),
-           label="未归因余项", color="#c44e52")
+    ax.axhline(100.0, color="#c44e52", ls="--", lw=1.2,
+               label="实测总误差（100%）；堆叠柱低于虚线 ⇒ 已建模项过解释（负闭合残差）")
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=8)
     ax.set_ylabel("占实测总相对均方误差的百分比 (%)")
     ax.set_title("图 6：四项预测误差记账实测分解（生成自 table4_budget.json）")
-    ax.legend(fontsize=9)
+    ax.legend(fontsize=8)
     ax.grid(alpha=0.3, axis="y")
     plt.tight_layout()
     plt.savefig(FIGS / "fig6_error_budget.png", dpi=200)
