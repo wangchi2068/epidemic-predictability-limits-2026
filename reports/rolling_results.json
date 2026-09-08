@@ -94,6 +94,7 @@
     "crossing": {
       "pers": {
         "point": 3.52,
+        "direction": "up",
         "ci95": [
           1.74,
           6.85
@@ -101,9 +102,13 @@
         "n_boot_ok": 975
       },
       "lin": {
-        "point": null,
-        "ci95": null,
-        "n_boot_ok": 0
+        "point": 5.33,
+        "direction": "down",
+        "ci95": [
+          2.91,
+          7.39
+        ],
+        "n_boot_ok": 773
       }
     },
     "per_origin": [
@@ -582,6 +587,7 @@
     "crossing": {
       "pers": {
         "point": 1.82,
+        "direction": "up",
         "ci95": [
           1.05,
           7.37
@@ -589,9 +595,13 @@
         "n_boot_ok": 652
       },
       "lin": {
-        "point": null,
-        "ci95": null,
-        "n_boot_ok": 0
+        "point": 1.16,
+        "direction": "down",
+        "ci95": [
+          1.14,
+          7.42
+        ],
+        "n_boot_ok": 565
       }
     },
     "per_origin": [
@@ -1070,6 +1080,7 @@
     "crossing": {
       "pers": {
         "point": 5.34,
+        "direction": "up",
         "ci95": [
           4.2,
           7.69
@@ -1078,6 +1089,7 @@
       },
       "lin": {
         "point": null,
+        "direction": null,
         "ci95": null,
         "n_boot_ok": 0
       }

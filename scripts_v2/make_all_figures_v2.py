@@ -96,12 +96,37 @@ def gen_fig2():
 
 
 # ------------------------------------------------------------- fig T3
+def _panel_est(ax, est, theory_key, title, xtickmap=None):
+    elabels, emp, theo, lo_ci, hi_ci = [], [], [], [], []
+    for key, val in est.items():
+        if isinstance(val, dict) and "emp" in val:
+            disp = xtickmap.get(key, key) if xtickmap else key
+            elabels.append(disp)
+            emp.append(val["emp"])
+            theo.append(val.get(theory_key))
+            lo_ci.append(val["ci"][0]); hi_ci.append(val["ci"][1])
+    if not elabels:
+        raise SystemExit(f"{title}: no establishment data — refusing to emit a decorated-empty subplot")
+    x = np.arange(len(elabels))
+    ax.errorbar(x, emp, yerr=[np.array(emp) - lo_ci, np.array(hi_ci) - np.array(emp)],
+                fmt="o", color="#4c72b0", capsize=3, label="经验定殖概率（95% Beta 区间）")
+    ax.plot(x, theo, "s--", color="#dd8452", label="理论")
+    ax.set_xticks(x)
+    ax.set_xticklabels(elabels, rotation=45, fontsize=6.5)
+    ax.set_ylabel("定殖概率")
+    ax.set_title(title)
+    ax.legend(fontsize=7)
+    ax.grid(alpha=0.3, axis="y")
+
+
 def gen_fig_t3():
     d = json.loads((REPORTS / "verify_t3.json").read_text(encoding="utf-8"))
-    # verify_t3.json schema (sim_verify_t3.py): top-level "stationary_cv" holds
-    # per-eps dicts each with a "ratio" field (empirical/theory CV).
     cfg = d.get("stationary_cv", {})
-    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(11.5, 4.6))
+    fig = plt.figure(figsize=(13.5, 4.6))
+    gs = fig.add_gridspec(1, 3, width_ratios=[1, 1.15, 1.35])
+    ax = fig.add_subplot(gs[0])
+    ax2 = fig.add_subplot(gs[1])
+    ax3 = fig.add_subplot(gs[2])
     labels, ratios = [], []
     for key, val in cfg.items():
         if isinstance(val, dict) and "ratio" in val:
@@ -117,25 +142,27 @@ def gen_fig_t3():
     ax.set_ylim(min(ratios) - 0.05, max(max(ratios), 1.0) + 0.05)
     ax.set_title("(a) 拟平稳 CV：经验/理论比值")
     ax.grid(alpha=0.3, axis="y")
-    est = d.get("establishment") or {}
-    elabels, emp, theo, lo_ci, hi_ci = [], [], [], [], []
-    for key, val in est.items():
-        if isinstance(val, dict) and "emp" in val:
-            elabels.append(key)
-            emp.append(val["emp"])
-            theo.append(val.get("theory_2eps_over_R"))
-            lo_ci.append(val["ci"][0]); hi_ci.append(val["ci"][1])
-    if elabels:
-        x = np.arange(len(elabels))
-        ax2.errorbar(x, emp, yerr=[np.array(emp) - lo_ci, np.array(hi_ci) - np.array(emp)],
-                     fmt="o", color="#4c72b0", capsize=3, label="经验定殖概率（95% Beta 区间）")
-        ax2.plot(x, theo, "s--", color="#dd8452", label="理论 $2\\varepsilon/R$")
-        ax2.set_xticks(x)
-        ax2.set_xticklabels(elabels, rotation=35, fontsize=7)
-        ax2.set_ylabel("定殖概率")
-        ax2.set_title("(b) 定殖概率（Poisson 分支）：经验 vs 理论")
-        ax2.legend(fontsize=8)
-        ax2.grid(alpha=0.3, axis="y")
+
+    _panel_est(ax2, d.get("establishment") or {}, "theory_2eps_over_R",
+               "(b) 定殖概率（Poisson 分支）：经验 vs $2\\varepsilon/R$")
+
+    # Negative-binomial establishment (Corollary 2's actual NB predictions).
+    # 5 of 12 theory values fall inside the empirical 95% Beta interval; the NB
+    # theory is systematically below the empirical values, most strongly at N=500.
+    # Reported here so the corollary's k-dependence claim carries its own evidence.
+    nb = d.get("establishment_nb") or {}
+    keymap = {k: k.replace("N", "N=").replace("_eps", ", ε=").replace("_k", ", k=")
+              for k in nb}
+    _panel_est(ax3, nb, "theory_nb",
+               "(c) 定殖概率（负二项分支，推论 2）：经验 vs $2\\varepsilon/[R(1+R/k)]$",
+               xtickmap=keymap)
+    # coverage annotation
+    inside = sum(1 for v in nb.values()
+                 if v["ci"][0] <= v["theory_nb"] <= v["ci"][1])
+    ax3.text(0.02, 0.97, f"理论落入经验 95% 区间：{inside}/{len(nb)}",
+             transform=ax3.transAxes, fontsize=7, va="top",
+             bbox=dict(facecolor="white", alpha=0.85, edgecolor="grey"))
+
     fig.suptitle("图 3：拟平稳扩散密度与定殖概率验证（verify_t3.json）")
     plt.tight_layout()
     plt.savefig(FIGS / "fig_t3_quasistationary.png", dpi=200)
@@ -170,13 +197,9 @@ def gen_fig4a():
     order = ["Delta", "Omicron", "JN1", "flu22", "flu24", "rsv24", "rsv25"]
     disp = ["Delta", "Omicron", "JN.1", "流感 22-23", "流感 24-25", "RSV 24-25", "RSV 25-26"]
     hs = [d[k]["h_star_weeks"] for k in order]
-    los = [d[k]["h_star_weeks"] - d[k]["ci95_weeks"][0] for k in order]
-    his = [d[k]["ci95_weeks"][1] - d[k]["h_star_weeks"] for k in order]
     fig, ax = plt.subplots(figsize=(8.5, 5.0))
     x = np.arange(len(order))
     ax.bar(x, hs, color="#177072", alpha=0.9, label="理论视界精确根 $h^*_{\\mathrm{exact}}$（周）")
-    ax.errorbar(x, hs, yerr=[los, his], fmt="none", ecolor="#333", capsize=4,
-                label="95% 参数化 Bootstrap 置信区间")
     ax.axhspan(16, 20, color="gray", alpha=0.15)
     ax.axhline(16, color="gray", ls="--", lw=1.0)
     ax.axhline(20, color="gray", ls="--", lw=1.0)

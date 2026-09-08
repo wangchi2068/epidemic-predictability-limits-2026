@@ -23,10 +23,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pipeline import solve_hstar  # noqa: E402
 
 TABSPECS = {
-    "table2": ("lccccccrrrl", r"\textbf{病原体 / 流行阶段} & $R$ & $s$ & $k_{\text{agg}}$ & $I_0$ & $\mu_g$ (天) & $h^*_{\text{approx}}$ (代/周) & $h^*_{\text{exact}}$ (代/周, 95\% CI) & $\text{CV}^2$ 贡献率 & $h^*/W$ & \textbf{单流行季截断}"),
-    "table3": ("llccccccrr", r"\textbf{病原体 / 阶段} & \textbf{动力学相位} & \textbf{观测时间窗口} & $R$ & $s$ & $k_{\text{agg}}$ & $I_0$ & $\mu_g$ (天) & $h^*_{\text{exact}}$ (周, 95\% CI) & $\text{CV}^2$ 贡献率"),
+    "table2": ("lccccccrrrl", r"\textbf{病原体 / 流行阶段} & $R$ & $s$ & $k_{\text{agg}}$ & $I_0$ & $\mu_g$ (天) & $h^*_{\text{approx}}$ (代/周) & $h^*_{\text{exact}}$ (代/周) & $\text{CV}^2$ 贡献率 & $h^*/W$ & \textbf{单流行季截断}"),
+    "table3": ("llccccccrr", r"\textbf{病原体 / 阶段} & \textbf{动力学相位} & \textbf{观测时间窗口} & $R$ & $s$ & $k_{\text{agg}}$ & $I_0$ & $\mu_g$ (天) & $h^*_{\text{exact}}$ (周) & $\text{CV}^2$ 贡献率"),
     "table4": ("llccccc", r"\textbf{病原体 / 流行阶段} & \textbf{前瞻步长 $h$ (周)} & \textbf{微观内在方差 $\text{CV}^2$} & \textbf{时变漂移方差 $\mathcal{E}_{\text{drift}}$} & \textbf{参数估计误差 $P$} & \textbf{未建模结构残差 $\mathcal{E}_{\text{misspec}}$} & \textbf{实测总误差 $\text{relMSE}^2_{\text{obs}}$}"),
-    "table5": ("lcccr", r"\textbf{流行阶段 / 病原体} & \textbf{第一层：理论机制视界 $h^*_{\text{exact}}$} & \textbf{第二层：实测业务交叉点 $h_{\text{cross}}$} & \textbf{比值（第一层 / 第二层）} & $n_{\text{boot}}/1000$"),
+    "table5": ("lcccr", r"\textbf{流行阶段 / 病原体} & \textbf{第一层：理论机制视界 $h^*_{\text{exact}}$} & \textbf{第二层：实测业务交叉点 $h_{\text{cross}}$ (95\% 区间)} & \textbf{比值（第一层 / 第二层）} & $n_{\text{boot}}/1000$"),
     "table6": ("lccccl", r"\textbf{流行波次 / 决策场景} & $\tau=0.20$ (刚性生命线) & $\tau=0.35$ (资源调配线) & $\tau=0.50$ (群体干预线) & $\tau=0.70$ (战略规划线) & \textbf{推荐业务预测与公共卫生风控策略}"),
 }
 
@@ -66,7 +66,7 @@ def table2_rows():
         rows.append(
             f"{r['display']} & {r['R_gen']:.4f} & {r['s_gen']:.4f} & {k_disp} & "
             f"{int(r['I0']):,} & {r['mu_g_days']:.1f} & {hgen_approx:.1f} / {hwk_approx:.1f} & "
-            f"{hgen:.1f} / {hwk:.1f} ({fmt_ci(r['ci95_weeks'])}) & {share:.2f}\\% & "
+            f"{hgen:.1f} / {hwk:.1f} & {share:.2f}\\% & "
             f"{ratio:.1f}× & {trunc.get(k, '--')} \\\\")
     return rows
 
@@ -97,7 +97,7 @@ def table3_rows():
         rows.append(
             f"{path} & {phase} & {window} & {r['R_gen']:.4f} & {r['s_gen']:.4f} & "
             f"{k_disp} & {int(r['I0']):,} & {r['mu_g_days']:.1f} & "
-            f"{r['h_star_weeks']:.1f} ({fmt_ci(r['ci95_weeks'])}){star} & {share} \\\\")
+            f"{r['h_star_weeks']:.1f}{star} & {share} \\\\")
         if key.endswith("decline") and key != "flu22_decline":
             rows.append("\\midrule")
     return rows
@@ -134,17 +134,16 @@ def table5_rows():
     rows = []
     for wave, key in [("Delta", "Delta"), ("Omicron", "Omicron"), ("Flu_22_23", "flu22")]:
         th = t2[key]["h_star_weeks"]
-        ci = t2[key]["ci95_weeks"]
         c = rr[wave]["crossing"]["pers"]
         n_ok = c.get("n_boot_ok", 0)
         name = {"Delta": "COVID-19 Delta 阶段", "Omicron": "COVID-19 Omicron 阶段",
                 "Flu_22_23": "流感 2022--23 阶段"}[wave]
         if c["point"] is None:
-            rows.append(f"{name} & {th:.1f} 周 ({fmt_ci(ci)} 周) & 未穿越 & -- & {n_ok} \\\\")
+            rows.append(f"{name} & {th:.1f} 周 & 未穿越 & -- & {n_ok} \\\\")
             continue
         ratio = th / c["point"]
         rows.append(
-            f"{name} & {th:.1f} 周 ({fmt_ci(ci)} 周) & "
+            f"{name} & {th:.1f} 周 & "
             f"{c['point']:.2f} 周 ({fmt_ci(c['ci95'])} 周) & {ratio:.2f} 倍 & {n_ok} \\\\")
     return rows
 

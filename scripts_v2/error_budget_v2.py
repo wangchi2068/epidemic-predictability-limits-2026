@@ -16,12 +16,14 @@ Components:
                          its own normalization, which is an intentional, documented
                          distinction (backtest at each origin vs. phase-level theoretical
                          floor), NOT a shared quantity.
-  E_drift(h)           = h_gen * v_drift, v_drift = variance of the 4-week-smoothed weekly
-                         log-growth increments in a calibration band around the window
-                         (Theorem 5 linear accumulation, empirical proxy). v_drift is
-                         already a variance (drift_volatility returns np.var), so it enters
-                         linearly — h_gen * v_drift — matching the printed formula
-                         E_drift = h_gen * v^2 at main.tex.
+  E_drift(h)           = h_week * v_drift, v_drift = variance of the 4-week-smoothed weekly
+                         log-growth increments in a calibration band around the window.
+                         v_drift is measured on the WEEKLY series (drift_volatility returns
+                         np.var of weekly log-increments), and the accumulation is over
+                         h_week calendar weeks, so the dimensional form is
+                         h_week * v_drift (= h_gen * Delta_g * v_drift). This matches the
+                         printed formula E_drift = h_gen * v^2 with v^2 read as the per-week
+                         environment-noise variance, converted consistently to week units.
   P(h)                 = (h_gen * s_gen)^2 — Lemma 3 first-order (s_gen from Table 2).
   E_misspec(h)         = relMSE^2_obs(h) - [CV^2 + E_drift + P]  (closure; may be negative
                          and is NOT clipped — a negative residual is itself diagnostic).
@@ -131,7 +133,7 @@ def main():
                 continue
             obs = float(np.mean(np.array(errs) / np.array(norms)))
             cv2_h = p_lognorm_slow(h_gen, R_phase, k, I0_phase)
-            e_drift = h_gen * v_drift  # v_drift is already the variance v^2 (see docstring)
+            e_drift = h_wk * v_drift  # v_drift is the WEEKLY variance; accumulate over weeks
             p_h = (h_gen * s_gen) ** 2
             e_mis = obs - (cv2_h + e_drift + p_h)
             per_h[str(h_wk)] = {
@@ -189,7 +191,7 @@ def make_fig6(out):
     ax.bar(x, drifts, bottom=cv2s, label="时变漂移", color="#dd8452")
     ax.bar(x, ps, bottom=np.array(cv2s) + np.array(drifts), label="参数外推 P", color="#55a868")
     ax.axhline(100.0, color="#c44e52", ls="--", lw=1.2,
-               label="实测总误差（100%）；堆叠柱低于虚线 ⇒ 已建模项过解释（负闭合残差）")
+               label="实测总误差（100%）；堆叠柱低于虚线表示已建模项过解释（负闭合残差）")
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=8)
     ax.set_ylabel("占实测总相对均方误差的百分比 (%)")

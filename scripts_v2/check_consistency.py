@@ -117,7 +117,10 @@ def main():
     stale = ["13.5 周", "43.9 周", "70.1 周", "8.9--20.0", "1.8--6.0",
              "27.9--65.0", "46.2--95.0", "88.7", "0.0574", "物理硬上限",
              "客观物理标尺", "第一性原理", "违背倍数达 2.46", "51.2\\%--99.6",
-             "22,986", "8,694", "完全实测", "100\\% 严密自洽"]
+             "22,986", "8,694", "完全实测", "100\\% 严密自洽",
+             "6.2\\%--99.2", "9 of 12", "8/9 个正残差", "-54.2\\%", "-297.4\\%",
+             "均无穿越", "三波次均不穿越", "0.9570", "0.9621", "11.6--34.5",
+             "16.5\\%--17.6", "16.7\\%--18.0", "视界收缩至零"]
     for s in stale:
         check(f"stale literal removed: '{s}'", s not in tex)
 
@@ -126,6 +129,27 @@ def main():
     check("rsv25 CRB ratio recomputed ~1.48 (R^2 bug fixed)",
           abs(crb["rsv25"]["ratio"] - 1.476) < 0.02, f"got {crb['rsv25']['ratio']}")
     check("rsv24 CRB ratio < 1 (no violation)", crb["rsv24"]["ratio"] < 1.0)
+
+    # ---- 7. E_drift time scale: e_drift must equal h_week * v_drift (per-week variance),
+    # not h_gen * v_drift. Round-14 §3.1 dimensional fix, guarded against regression.
+    b4 = json.loads((REPORTS / "table4_budget.json").read_text(encoding="utf-8"))
+    scale_fail = []
+    for key, rec in b4.items():
+        v = rec["v_drift"]
+        for hw, r in rec["horizons"].items():
+            expected = int(hw) * v
+            if abs(r["e_drift"] - expected) > 1e-9 * max(expected, 1.0):
+                scale_fail.append(f"{key} h={hw}: e_drift={r['e_drift']:.3e} != h_week*v={expected:.3e}")
+    check("E_drift uses h_week * v_drift (week/generation scale)",
+          not scale_fail, "; ".join(scale_fail[:3]))
+
+    # ---- 8. two-way crossing detector: local-linear crossings must exist for Delta/Omicron
+    rr = json.loads((REPORTS / "rolling_results.json").read_text(encoding="utf-8"))
+    for w in ["Delta", "Omicron"]:
+        lin = rr[w]["crossing"]["lin"]
+        check(f"{w} local-linear crossing detected (two-way detector)",
+              lin["point"] is not None and lin["direction"] == "down",
+              f"got {lin}")
 
     print()
     if FAILURES:

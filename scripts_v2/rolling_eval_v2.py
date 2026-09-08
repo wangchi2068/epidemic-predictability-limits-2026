@@ -82,13 +82,19 @@ def fit4(y):
 
 
 def cross_point(skill):
-    """Linear-interpolated crossing of 1.0; None if never crosses."""
+    """Linear-interpolated crossing of 1.0 in either direction (rising or falling
+    skill curve); None if never crosses. Returns (h, direction) where direction is
+    'up' (model improves past the baseline) or 'down' (model falls to baseline).
+    A one-sided detector would silently report null for falling curves; both
+    branches are required (Round-14 finding §3.2)."""
     for i in range(len(skill) - 1):
         h0, h1 = HORIZONS[i], HORIZONS[i + 1]
         s0, s1 = skill[i], skill[i + 1]
         if s0 <= 1.0 < s1:
-            return h0 + (1.0 - s0) / (s1 - s0)
-    return None
+            return h0 + (1.0 - s0) / (s1 - s0), "up"
+        if s1 <= 1.0 < s0:
+            return h0 + (1.0 - s0) / (s1 - s0), "down"
+    return None, None
 
 
 def run_wave(w, s, cfg):
@@ -157,7 +163,7 @@ def run_wave(w, s, cfg):
         for m in boot_cross:
             sk = [bm["model"][i] / bm[m][i] if bm[m][i] > 0 else np.nan
                   for i in range(len(HORIZONS))]
-            c = cross_point(sk)
+            c, _dir = cross_point(sk)
             if c is not None:
                 boot_cross[m].append(c)
     res = {
@@ -172,16 +178,18 @@ def run_wave(w, s, cfg):
         "per_origin": per_origin,
     }
     for m in ["pers", "lin"]:
-        c = cross_point(skill[m])
+        c, cdir = cross_point(skill[m])
         if c is not None and boot_cross[m]:
             lo, hi = np.percentile(boot_cross[m], [2.5, 97.5])
             res["crossing"][m] = {
                 "point": round(c, 2),
+                "direction": cdir,
                 "ci95": [round(float(lo), 2), round(float(hi), 2)],
                 "n_boot_ok": len(boot_cross[m]),
             }
         else:
-            res["crossing"][m] = {"point": None, "ci95": None, "n_boot_ok": 0}
+            res["crossing"][m] = {"point": None, "direction": None,
+                                  "ci95": None, "n_boot_ok": 0}
     return res
 
 
@@ -218,12 +226,17 @@ def make_fig7(out):
         h = rec["horizons"]
         sk = [rec["skill_persistence"][i] for i in h]
         c = rec["crossing"]["pers"]
-        lab = (f"{disp[key]} (穿越点 {c['point']:.2f} 周)"
+        lab = (f"{disp[key]} (持续性基线穿越 {c['point']:.2f} 周)"
                if c["point"] is not None else f"{disp[key]}（未穿越）")
         ax.plot(h, sk, marks[key] + "-", color=colors[key], lw=2, ms=6, label=lab)
+        cl = rec["crossing"]["lin"]
+        linlab = None
+        if key in ("Delta", "Omicron") and cl["point"] is not None:
+            linlab = (f"{disp[key]} 相对局部线性基线（下穿 {cl['point']:.2f} 周）")
+        elif key == "Flu_22_23":
+            linlab = f"{disp[key]} 相对局部线性基线（h≤8 内不穿越）"
         ax.plot(h, [rec["skill_linear"][i] for i in h], ":", color=colors[key],
-                lw=1.1, alpha=0.7,
-                label=f"{disp[key]} 相对局部线性基线" if key in ("Delta", "Flu_22_23") else None)
+                lw=1.1, alpha=0.7, label=linlab)
     ax.axhline(1.0, color="#d9534f", ls="--", lw=1.5, label="Skill = 1.0")
     ax.set_yscale("log")
     ax.set_xlabel("前瞻预测步长 $h$（周）")
