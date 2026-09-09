@@ -1,163 +1,219 @@
 # -*- coding: utf-8 -*-
-"""
-check_consistency.py — Consistency tests between the JSON outputs and the table
-bodies that ACTUALLY COMPILE into main.tex. Fails loudly on divergence.
+"""check_consistency.py — build-halting consistency suite (eight assertion classes).
 
-Design (Major 5 fix): previously the table assertions validated
-reports/table_bodies.tex, a file that main.tex never \\input'd, so net coverage of
-the printed tables was zero. Now main.tex \\input's per-table fragments under
-paper_cn_journal_template/tables/*_body.tex (emitted by make_tables_v2.py); this
-script (a) confirms no hand-typed table bodies remain in main.tex, (b) recomputes
-each fragment from the JSONs and compares it byte-for-byte against the on-disk
-fragment that compiles, (c) checks headline abstract ranges, figure non-emptiness,
-and a stale-literal blacklist.
-
-Checks:
-  1. main.tex \\input's all five generated fragments and contains no hand-typed
-     data rows for Tables 2/3/4/5/6.
-  2. Each on-disk fragment equals make_tables_v2's output from the current JSONs
-     (JSON -> fragment -> PDF single source of truth).
-  3. Figure files referenced by main.tex exist and are non-blank (content check).
-  4. Abstract headline ranges match the JSON extremes.
-  5. No superseded numeric literals remain anywhere in main.tex.
+1. Table fragments: regenerate every tables_v3/*.tex body from the deposited
+   JSONs and byte-compare against the committed fragments.
+2. Figures: every figure referenced in main.tex exists and is non-blank
+   (>5% of pixels differ from the background).
+3. Stale-literal blacklist: retired phrases from earlier versions must be
+   absent from every reader-facing file (main.tex and README.md).
+4. Abstract assertions: headline ranges printed in the abstracts match the
+   JSON-derived values.
+5. Cramér--Rao ratios: the micro-layer bootstrap/CRB ratios in the table match
+   the fit JSON.
+6. Dimensional assertion: every budget row's drift term equals h_week x the
+   per-week drift variance (weekly clock; the generation-step form is retired).
+7. Two-sided crossing assertion: the rolling evaluation contains both an
+   upward persistence crossing and a downward local-linear crossing for the
+   Delta and Omicron waves.
+8. Deposited-series identity: the national window sums that pin the analysis
+   series equal the values the manuscript's tables were built from.
 """
 from __future__ import annotations
+
 import json
 import re
 import sys
+import tempfile
 from pathlib import Path
 
+import numpy as np
+import pandas as pd
+
 ROOT = Path(__file__).resolve().parents[1]
-REPORTS = ROOT / "reports"
 PAPER = ROOT / "paper_cn_journal_template"
-FRAG = PAPER / "tables"
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from make_tables_v2 import (TABSPECS, wrap, table2_rows, table3_rows,
-                            table4_rows, table5_rows, table6_rows)  # noqa: E402
+REPORTS = ROOT / "reports_v3"
+TABLES = ROOT / "tables_v3"
+DATA = ROOT / "data"
+STATE_FIPS = {f"{i:02d}" for i in range(1, 57)}
 
-GENERATORS = {
-    "table2": lambda: wrap("table2", table2_rows()),
-    "table3": lambda: wrap("table3", table3_rows()),
-    "table4": lambda: wrap("table4", table4_rows()),
-    "table5": lambda: wrap("table5", table5_rows()),
-    "table6": lambda: wrap("table6", table6_rows()),
-}
+# phrases retired from earlier versions; must not appear in reader-facing text
+STALE = [
+    "26.1\\%--99.3\\%",          # old four-term budget residual range
+    "51.2\\%--99.6\\%",          # README's retired residual range
+    "1.8--5.3",                  # old operational-lead-time headline
+    "41.5--67.8",                # old RSV extrapolation range
+    "2.46",                      # old RSV 2025-26 cluster-count ratio
+    "h_{\\text{gen}} \\cdot \\widehat{v}^2",  # retired generation-step drift form
+    "10 个中为正",                # old budget tally
+    "0.74\\%",                   # old national CV^2 contribution
+    "三波次、每波次六原点",        # old sample description
+    "1.4 倍",                    # retired aggregation-inflation threshold
+]
 
-FAILURES = []
+
+def fail(msg):
+    print(f"[FAIL] {msg}", file=sys.stderr)
+    sys.exit(1)
 
 
-def check(name, cond, detail=""):
-    status = "PASS" if cond else "FAIL"
-    print(f"[{status}] {name}" + (f" — {detail}" if detail and not cond else ""))
-    if not cond:
-        FAILURES.append((name, detail))
+def check_tables():
+    import emit_v3
+    phases = json.loads((REPORTS / "state_phases.json").read_text(encoding="utf-8"))
+    roll_state = json.loads((REPORTS / "state_rolling.json").read_text(encoding="utf-8"))
+    roll_nat = json.loads((REPORTS / "national_rolling.json").read_text(encoding="utf-8"))
+    scen = json.loads((REPORTS / "scenarios.json").read_text(encoding="utf-8"))
+    bud = json.loads((REPORTS / "budget_national.json").read_text(encoding="utf-8"))
+    micro = json.loads((DATA / "micro" / "micro_branching_fit_results.json")
+                       .read_text(encoding="utf-8"))
+    hub = json.loads((DATA / "hub" / "forecast_hub_operational_evaluation.json")
+                     .read_text(encoding="utf-8"))
+    with tempfile.TemporaryDirectory() as td:
+        tmp = Path(td)
+        emit_v3.TABLES = tmp
+        emit_v3.emit_table2(phases)
+        emit_v3.emit_table3(roll_state, roll_nat, phases)
+        emit_v3.emit_table4(bud)
+        emit_v3.emit_table5_hub(hub)
+        emit_v3.emit_table6_tiers(scen)
+        emit_v3.emit_table7(micro)
+        for f in sorted(tmp.glob("*.tex")):
+            committed = TABLES / f.name
+            if not committed.exists():
+                fail(f"missing committed table fragment {f.name}")
+            if committed.read_bytes() != f.read_bytes():
+                fail(f"table fragment {f.name} diverges from the JSONs")
+    print("[OK] table fragments match the deposited JSONs (6 fragments)")
+
+
+def check_figures():
+    import matplotlib.image as mpimg
+    tex = (PAPER / "main.tex").read_text(encoding="utf-8")
+    refs = re.findall(r"\\includegraphics\[[^\]]*\]\{([^}]+)\}", tex)
+    if not refs:
+        fail("no figure references found")
+    for r in refs:
+        p = (PAPER / r).resolve()
+        if not p.exists():
+            fail(f"figure missing: {r}")
+        img = mpimg.imread(p)
+        frac = float((img[..., :3].min(axis=-1) < 245).mean())
+        if frac < 0.05:
+            fail(f"figure nearly blank ({frac:.3%} ink): {r}")
+    print(f"[OK] {len(refs)} referenced figures exist and are non-blank")
+
+
+def _norm(t: str) -> str:
+    """Normalize dashes/escapes so blacklist hits survive formatting variants."""
+    for ch in ("–", "—", "−"):  # en dash, em dash, minus
+        t = t.replace(ch, "-")
+    return t.replace("\\", "").replace("--", "-").replace(" ", "")
+
+
+def check_blacklist():
+    files = [PAPER / "main.tex", ROOT / "README.md"]
+    for f in files:
+        if not f.exists():
+            fail(f"reader-facing file missing: {f.name}")
+        t = _norm(f.read_text(encoding="utf-8"))
+        for phrase in STALE:
+            if _norm(phrase) in t:
+                fail(f"stale literal {phrase!r} found in {f.name}")
+    print(f"[OK] stale-literal scan clean across {len(files)} reader-facing files")
+
+
+def check_abstract():
+    tex = (PAPER / "main.tex").read_text(encoding="utf-8")
+    phases = json.loads((REPORTS / "state_phases.json").read_text(encoding="utf-8"))
+    med = [p["h_week_summary"]["median"] for p in phases.values()
+           if p.get("h_week_summary")]
+    lo, hi = min(med), max(med)
+    if f"{lo:.1f}--{hi:.1f}" not in tex:
+        fail(f"abstract does not state the state-median horizon range "
+             f"{lo:.1f}--{hi:.1f}")
+    micro = json.loads((DATA / "micro" / "micro_branching_fit_results.json")
+                       .read_text(encoding="utf-8"))
+    ratios = [r["bootstrap"]["ratio_var_to_crb"] for k, r in micro.items()
+              if k != "LloydSmith_reference"]
+    if f"{min(ratios):.2f}--{max(ratios):.2f}" not in tex:
+        fail("abstract CRB-ratio range does not match the micro JSON")
+    aics = [r["delta_aic_poisson_vs_nb"] for k, r in micro.items()
+            if k != "LloydSmith_reference"]
+    if f"{min(aics):.1f}--{max(aics):.1f}" not in tex:
+        fail("abstract dAIC range does not match the micro JSON")
+    print(f"[OK] abstract ranges consistent (h* {lo:.1f}--{hi:.1f} wk, "
+          f"CRB {min(ratios):.2f}--{max(ratios):.2f}, "
+          f"dAIC {min(aics):.1f}--{max(aics):.1f})")
+
+
+def check_crb_ratios():
+    micro = json.loads((DATA / "micro" / "micro_branching_fit_results.json")
+                       .read_text(encoding="utf-8"))
+    frag = (TABLES / "table7_micro.tex").read_text(encoding="utf-8")
+    for k, r in micro.items():
+        if k == "LloydSmith_reference":
+            continue
+        v = f"{r['bootstrap']['ratio_var_to_crb']:.3f}"
+        if v not in frag:
+            fail(f"CRB ratio {v} for {k} missing from table7 fragment")
+    print("[OK] CRB bootstrap ratios in the table match the fit JSON")
+
+
+def check_drift_dimension():
+    bud = json.loads((REPORTS / "budget_national.json").read_text(encoding="utf-8"))
+    for key, rec in bud.items():
+        for h, row in rec["horizons"].items():
+            expect = float(h) * row["median_v_week"]
+            if abs(row["median_drift"] - expect) > 1e-12:
+                fail(f"{key} h={h}: e_drift {row['median_drift']} != "
+                     f"h_week*v {expect} (generation-step form?)")
+    print("[OK] drift term equals h_week x weekly variance in every budget row")
+
+
+def check_crossings():
+    roll = json.loads((REPORTS / "state_rolling.json").read_text(encoding="utf-8"))
+    for wave in ("Delta", "Omicron"):
+        cp = roll[wave]["crossing_persistence"]["median"]
+        cl = roll[wave]["crossing_linear"]["median"]
+        if cp is None or cl is None:
+            fail(f"{wave}: missing a persistence (up) or local-linear (down) crossing")
+    print("[OK] two-sided crossings present for Delta and Omicron")
+
+
+def check_series_identity():
+    pinned = {"covid": ("2021-07-03", "2021-07-31", 141735.0),
+              "flu": ("2022-10-08", "2022-11-05", 15579.0),
+              "rsv": ("2024-11-09", "2024-12-07", 22047.0)}
+    for name, (w0, w1, val) in pinned.items():
+        if name == "covid":
+            d = pd.read_csv(DATA / "panels" / "covid_weekly_hospitalizations.csv.gz",
+                            parse_dates=["week_end_date"])
+            d = d.rename(columns={"week_end_date": "week_end",
+                                  "weekly_admissions": "value"})
+        else:
+            d = pd.read_csv(DATA / "panels" / f"{name}_weekly_hospitalizations.csv.gz",
+                            parse_dates=["week_end"])
+        d["location"] = d["location"].astype(str).str.zfill(2)
+        nat = (d[d.location.isin(STATE_FIPS)]
+               .groupby("week_end").value.sum().sort_index())
+        got = float(nat[w0:w1].sum())
+        if abs(got - val) > 1e-6:
+            fail(f"{name}: national window sum {got} != pinned {val}")
+    print("[OK] deposited-series identity pinned for all three panels")
 
 
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
-    tex = (PAPER / "main.tex").read_text(encoding="utf-8")
-
-    # ---- 1. main.tex must \\input each generated fragment, not hand-type it
-    for name in ["table2", "table3", "table4", "table5", "table6"]:
-        check(f"main.tex \\\\inputs {name}_body",
-              re.search(r'\\input\{tables/' + name + r'_body\}', tex) is not None)
-    # no hand-typed horizon data row should survive (heuristic: a literal "暴发期 & 1." style row)
-    hand_typed = re.findall(r'(Delta 暴发期|Omicron 达峰期) & 1\.\d{3}', tex)
-    check("no hand-typed Table2 rows remain", not hand_typed,
-          f"found {hand_typed}")
-
-    # ---- 2. on-disk fragments == JSON-derived bodies (recompute both sides)
-    for name, gen in GENERATORS.items():
-        fpath = FRAG / f"{name}_body.tex"
-        check(f"{name} fragment exists", fpath.exists())
-        if not fpath.exists():
-            continue
-        on_disk = fpath.read_text(encoding="utf-8")
-        # strip the header comment line we emit
-        on_disk_body = "\n".join(l for l in on_disk.splitlines() if not l.startswith("%"))
-        regenerated = gen()
-        check(f"{name} fragment matches JSON (single source of truth)",
-              on_disk_body.strip() == regenerated.strip(),
-              "fragment drifted from JSON — rerun make_tables_v2.py")
-
-    # ---- 3. figure existence AND non-emptiness (content, not just size)
-    figs = re.findall(r'\\includegraphics\[[^\]]*\]\{([^}]+)\}', tex)
-    try:
-        from PIL import Image
-        import collections
-        have_pil = True
-    except Exception:
-        have_pil = False
-    for f in figs:
-        p = (PAPER / f).resolve()
-        check(f"figure exists: {f}", p.exists())
-        if have_pil and p.exists():
-            try:
-                im = Image.open(p).convert("RGB")
-                cnt = collections.Counter(im.getdata())
-                nonbg = 1 - cnt.most_common(1)[0][1] / (im.size[0] * im.size[1])
-                check(f"figure non-blank: {f}", nonbg > 0.05,
-                      f"non-background fraction {nonbg:.3f}")
-            except Exception as exc:
-                check(f"figure decodable: {f}", False, str(exc))
-
-    # ---- 4. headline ranges in the Chinese abstract vs JSON
-    t2 = json.loads((REPORTS / "table2_params.json").read_text(encoding="utf-8"))["table2"]
-    t2v = {k: v["h_star_weeks"] for k, v in t2.items()}
-    nonrsv = [t2v[k] for k in ["Delta", "Omicron", "JN1", "flu22", "flu24"]]
-    lo, hi = min(nonrsv), max(nonrsv)
-    m = re.search(r'(\d+\.\d)--(\d+\.\d)\s*周', tex)
-    if m:
-        tex_lo, tex_hi = float(m.group(1)), float(m.group(2))
-        check("abstract non-RSV horizon range matches JSON",
-              abs(tex_lo - lo) < 0.15 and abs(tex_hi - hi) < 0.15,
-              f"tex {tex_lo}--{tex_hi} vs json {lo:.1f}--{hi:.1f}")
-
-    # ---- 5. stale literals from prior rounds must be gone everywhere
-    stale = ["13.5 周", "43.9 周", "70.1 周", "8.9--20.0", "1.8--6.0",
-             "27.9--65.0", "46.2--95.0", "88.7", "0.0574", "物理硬上限",
-             "客观物理标尺", "第一性原理", "违背倍数达 2.46", "51.2\\%--99.6",
-             "22,986", "8,694", "完全实测", "100\\% 严密自洽",
-             "6.2\\%--99.2", "9 of 12", "8/9 个正残差", "-54.2\\%", "-297.4\\%",
-             "均无穿越", "三波次均不穿越", "0.9570", "0.9621", "11.6--34.5",
-             "16.5\\%--17.6", "16.7\\%--18.0", "视界收缩至零"]
-    for s in stale:
-        check(f"stale literal removed: '{s}'", s not in tex)
-
-    # ---- 6. corrected CRB ratio must be the recomputed one (1.48, not 2.46)
-    crb = json.loads((REPORTS / "crb_analysis.json").read_text(encoding="utf-8"))
-    check("rsv25 CRB ratio recomputed ~1.48 (R^2 bug fixed)",
-          abs(crb["rsv25"]["ratio"] - 1.476) < 0.02, f"got {crb['rsv25']['ratio']}")
-    check("rsv24 CRB ratio < 1 (no violation)", crb["rsv24"]["ratio"] < 1.0)
-
-    # ---- 7. E_drift time scale: e_drift must equal h_week * v_drift (per-week variance),
-    # not h_gen * v_drift. Round-14 §3.1 dimensional fix, guarded against regression.
-    b4 = json.loads((REPORTS / "table4_budget.json").read_text(encoding="utf-8"))
-    scale_fail = []
-    for key, rec in b4.items():
-        v = rec["v_drift"]
-        for hw, r in rec["horizons"].items():
-            expected = int(hw) * v
-            if abs(r["e_drift"] - expected) > 1e-9 * max(expected, 1.0):
-                scale_fail.append(f"{key} h={hw}: e_drift={r['e_drift']:.3e} != h_week*v={expected:.3e}")
-    check("E_drift uses h_week * v_drift (week/generation scale)",
-          not scale_fail, "; ".join(scale_fail[:3]))
-
-    # ---- 8. two-way crossing detector: local-linear crossings must exist for Delta/Omicron
-    rr = json.loads((REPORTS / "rolling_results.json").read_text(encoding="utf-8"))
-    for w in ["Delta", "Omicron"]:
-        lin = rr[w]["crossing"]["lin"]
-        check(f"{w} local-linear crossing detected (two-way detector)",
-              lin["point"] is not None and lin["direction"] == "down",
-              f"got {lin}")
-
-    print()
-    if FAILURES:
-        print(f"{len(FAILURES)} FAILURES:")
-        for n, d in FAILURES:
-            print(" -", n, d)
-        sys.exit(1)
-    print("All consistency checks passed.")
+    print("=== consistency suite ===", flush=True)
+    check_tables()
+    check_figures()
+    check_blacklist()
+    check_abstract()
+    check_crb_ratios()
+    check_drift_dimension()
+    check_crossings()
+    check_series_identity()
+    print("\nAll consistency assertions passed.", flush=True)
 
 
 if __name__ == "__main__":

@@ -159,8 +159,8 @@ def gen_fig_t3():
     # coverage annotation
     inside = sum(1 for v in nb.values()
                  if v["ci"][0] <= v["theory_nb"] <= v["ci"][1])
-    ax3.text(0.02, 0.97, f"理论落入经验 95% 区间：{inside}/{len(nb)}",
-             transform=ax3.transAxes, fontsize=7, va="top",
+    ax3.text(0.02, 0.03, f"理论落入经验 95% 区间：{inside}/{len(nb)}",
+             transform=ax3.transAxes, fontsize=7, va="bottom",
              bbox=dict(facecolor="white", alpha=0.85, edgecolor="grey"))
 
     fig.suptitle("图 3：拟平稳扩散密度与定殖概率验证（verify_t3.json）")
@@ -219,11 +219,9 @@ def gen_fig4a():
 
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
-    gen_fig1()
     gen_fig2()
     gen_fig_t3()
     gen_fig_t4()
-    gen_fig4a()
     print("All v2 figures generated into reports/figures_v2/", flush=True)
 
 
