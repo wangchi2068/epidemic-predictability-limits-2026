@@ -60,7 +60,7 @@
 \end{center}
 
 % Abstract & Keywords Box
-\noindent{\heiti\bfseries 摘要：}重大呼吸道传染病前瞻预测在近临界阶段频繁遭遇系统性失效难题。本文借鉴生态学预测视界思想，将其形式化拓展至分支过程动力学，推导了前瞻预测相对均方误差在假定 (A1)--(A4) 下的正交可加分解，定义了相对均方误差 $\text{RelMSE}(h)$ 与相对均方根误差 $\text{RelRMSE}(h) \le \tau$，建立了可预测视界闭式解映射，并在对数正态参数传播下求解精确数值根；将近临界动力学分解为微观宿主种群内在方差下界与初始外推放大不确定性，导出了负二项分支似然下的 Cram\'er--Rao 最小整数样本量门槛（$C \ge 1{,}429$），并在有限种群反射正则化辅助扩散下分析了 $O(N^{1/2})$ 候选临界慢化时间标度。实证部分采用三层数据设计：\textbf{个体传播链层}（香港 COVID-19 接触追踪队列与几内亚埃博拉传播网络）在个体层面直接检验负二项生成假设与信息论下界——Poisson 对照被压倒性拒绝（$\Delta\text{AIC}$ 达 93.9--244.0），离散度估计 $\hat{k}=0.11$--$0.43$ 落入文献区间，$R$ 估计量的自助抽样方差与 Cram\'er--Rao 下界之比为 0.98--1.06；\textbf{州级面板层}（美国 51 个州级辖区、三大呼吸道病原七个流行阶段）给出理论视界的空间分布，州级中位视界为 4.5--10.9 周，在七个阶段中的六个阶段短于国家级聚合值（7.9--67.8 周；唯一例外为 Omicron，两者基本相等），表明聚合平滑对视界存在系统性高估；四项综合误差记账在州级逐州执行，未归因闭合余项的跨州中位占比在所报告配置中介于 20.9\%--97.0\%（在 1--2 周短程配置中跨州中位介于 20.9\%--86.9\%），并在多数 COVID-19、流感及中长提前量配置中占据实测误差的主要份额；该余项在 62\%--100\% 的州为正。逐州滚动样本外回测显示，相对持续性基线的可操作预测技能在 1.0--4.3 周（州级中位）内衰减至基线水平，国家级对应值为 1.0--5.3 周；以 COVID-19 预测枢纽官方集成的 12 个真实预测原点作外部对照，顶级集成模型的州级技能同样在 1--2 周内退化至与基线相当（12 个原点中 11 个的中位穿越点为 1.0--1.4 周，1 个在 4 周内未穿越），表明短业务时效并非仅由本文自设模型的有限调参预算所致。上述结果支持“理论机制视界为业务时效的宽松包络”的双层探索性基准框架，为传染病预警从盲目远期外推转向极限知情的科学决策提供一种可复算的数理参照。
+\noindent{\heiti\bfseries 摘要：}重大呼吸道传染病前瞻预测在近临界阶段频繁遭遇系统性失效难题。本文借鉴生态学预测视界思想，将其形式化拓展至分支过程动力学，推导了前瞻预测相对均方误差在假定 (A1)--(A4) 下的正交可加分解，定义了相对均方误差 $\text{RelMSE}(h)$ 与相对均方根误差 $\text{RelRMSE}(h) \le \tau$，建立了可预测视界闭式解映射，并在对数正态参数传播下求解精确数值根；将近临界动力学分解为微观宿主种群内在方差下界与初始外推放大不确定性，给出了基于 Cram\'er--Rao 信息下界与正态功效近似的理想整数样本量基准（$C \ge 1{,}429$），并在有限种群反射正则化辅助扩散下分析了 $O(N^{1/2})$ 候选临界慢化时间标度。实证部分采用三层数据设计：\textbf{个体传播链层}（香港 COVID-19 接触追踪队列与几内亚埃博拉传播网络）在个体层面直接检验负二项生成假设与信息论下界——在 AIC 模型选择中 Poisson 模型受到强烈不支持（$\Delta\text{AIC}$ 达 93.9--244.0），离散度估计 $\hat{k}=0.11$--$0.43$ 落入文献区间，$R$ 估计量的自助抽样方差与 Cram\'er--Rao 下界之比为 0.98--1.06；\textbf{州级面板层}（美国 51 个州级辖区、三大呼吸道病原七个流行阶段）给出理论视界的空间分布，州级中位视界为 4.5--10.9 周，在七个阶段中的六个阶段短于国家级聚合值（7.9--67.8 周；唯一例外为 Omicron，两者基本相等），表明聚合平滑对视界存在系统性高估；四项综合误差记账在州级逐州执行，未归因闭合余项的跨州中位占比在所报告配置中介于 20.9\%--97.0\%（在 1--2 周短程配置中跨州中位介于 20.9\%--86.9\%），并在多数 COVID-19、流感及中长提前量配置中占据实测误差的主要份额；该余项在 62\%--100\% 的州为正。逐州滚动样本外回测显示，相对持续性基线的可操作预测技能在 1.0--4.3 周（州级中位）内衰减至基线水平，国家级对应值为 1.0--5.3 周；以 COVID-19 预测枢纽官方集成的 12 个真实预测原点作外部对照，顶级集成模型的州级技能同样在 1--2 周内退化至与基线相当（12 个原点中 11 个的中位穿越点为 1.0--1.4 周，1 个在 4 周内未穿越），表明短业务时效并非仅由本文自设模型的有限调参预算所致。上述结果支持“理论机制视界为业务时效的宽松包络”的双层探索性基准框架，为传染病预警从盲目远期外推转向极限知情的科学决策提供一种可复算的数理参照。
 
 \vspace{0.8em}
 \noindent{\heiti\bfseries 关键词：}传染病预测；可预测视界；分支过程；内在随机性；近临界动力学；Fisher 信息量；模型误设
@@ -94,9 +94,9 @@
 针对上述理论空白与现实困境，本文的主要贡献体现在以下四个方面：
 \begin{enumerate}
 \item \textbf{相对均方误差理论正交分解与视界闭式映射}：从负二项分支过程的生成性假设出发，推导了预测相对均方误差在条件正交假定 (A4) 下微观--宏观分量的正交可加分解（定理 1），定义无量纲相对均方误差 $\text{RelMSE}(h)$ 与相对均方根误差 $\text{RelRMSE}(h) \le \tau$，导出了超临界传播体制下的领先阶渐近闭式解 $h^*$ 与基于对数正态参数传播的精确数值求根方程，并证明了误差函数关于前瞻步长的严格单调递增性（定理 2）。
-\item \textbf{有限种群过程重标度与 Cram\'er--Rao 信息论下限}：解析构建了带单病例反射正则化的辅助扩散过程，给出近临界相变窗口内特征时间随种群规模以 $O(N^{1/2})$ 扩张的候选标度（命题 3）；明确了推论 2 单种子建群概率在负二项离散生成下的精确母函数不动点方程与其扩散近似方向性；推导了负二项分支过程的 Fisher 信息量与 Cram\'er--Rao 最小样本量门槛（定理 4，最小整数样本量 $C \ge 1{,}429$），确立了早期参数识别的数据充分性判据。
-\item \textbf{四项全要素误差记账与宏观方差累积律}：建立了整合微观内在方差、时变漂移方差、参数外推误差与未归因综合实测闭合余项的四项全要素记账架构（定理 5/5R 与式 (\ref{eq:full_budget})），证明了宏观更新模型在固定离散度 $k_{\text{agg}}$ 下方差的 $h/k_{\text{agg}}$ 线性累积律及代际到日历周尺度的跨周近似不变性。
-\item \textbf{三层真实数据实证与双层基准框架}：以个体传播链（香港 COVID-19、几内亚埃博拉）、州级住院面板（美国 51 个州级辖区、三大呼吸道病原七个流行阶段）与预测枢纽官方集成预测（COVIDhub-ensemble 共 12 个真实预测原点）三层数据，分别在个体层面检验负二项生成假设与 Cram\'er--Rao 下界、在州级尺度给出理论视界的空间分布、在真实业务预测上外部验证技能衰减，揭示“理论机制视界为业务时效的宽松包络”的双层探索性分析框架（假定 (A4) 于有限样本下仅近似成立，二者为探索性对照而非同一随机条件下的严格实验室验证，见第 2.1 节与第 4.5 节），并提出了连接理论视界与公卫分级应急预警规则的运筹转化机制。
+\item \textbf{有限种群过程重标度与 Cram\'er--Rao 信息论下限}：解析构建了带单病例反射正则化的辅助扩散过程，给出近临界相变窗口内特征时间随种群规模以 $O(N^{1/2})$ 扩张的候选标度（命题 3）；明确了推论 2 单种子建群概率在负二项离散生成下的精确母函数不动点方程与其扩散近似方向性；推导了负二项分支过程的 Fisher 信息量与 Cram\'er--Rao 理想样本量基准（定理 4，理想整数样本量 $C \ge 1{,}429$），确立了早期参数识别的数据充分性判据。
+\item \textbf{四项描述性误差记账架构与宏观方差累积律}：建立了整合微观内在方差、时变漂移方差、参数外推误差与未归因综合实测闭合余项的四项描述性记账架构（定理 5/5R 与式 (\ref{eq:full_budget})），证明了宏观更新模型在固定离散度 $k_{\text{agg}}$ 下方差的 $h/k_{\text{agg}}$ 线性累积律及代际到日历周尺度的跨周近似不变性。
+\item \textbf{三层真实数据实证与双层基准框架}：以个体传播链（香港 COVID-19、几内亚埃博拉）、州级住院面板（美国 51 个州级辖区、三大呼吸道病原七个流行阶段）与预测枢纽官方集成预测（COVIDhub-ensemble 共 12 个真实预测原点）三层数据，分别在个体层面检验负二项生成假设与 Cram\'er--Rao 下界、在州级尺度给出理论视界的空间分布、在真实业务预测上外部验证技能衰减，揭示“理论机制视界为业务时效的宽松包络”的双层探索性分析框架（假定 (A4) 于有限样本下仅近似成立，二者为探索性对照而非同一随机条件下的严格实验室验证，见第 2.1 节与第 4.5 节），并提出了连接理论视界与公卫分级应急预警规则的示意性运筹转化框架。
 \end{enumerate}
 
 本文的结构安排如下：第 1 节为引言，阐述现实背景、科学问题、文献脉络与核心贡献；第 2 节建立负二项分支过程理论模型，推导相对均方误差可加分解、视界闭式解与核心极限定理（定理 1--5R 与推论 1--3，详细代数推导见附录）；第 3 节介绍高通量蒙特卡洛随机模拟设计与机器学习算法基准检验；第 4 节介绍美国 CDC 监测数据来源，报告三大呼吸道传染病典型阶段的理论视界测算、四项预测误差记账与伪实时滚动样本外评估结果；第 5 节深入探讨从理论视界到公卫预警规则的决策转化机制、健康公平性考量及动力学局限；第 6 节总结全文主要结论。
@@ -165,7 +165,7 @@
         \node[subblock, text width=6.6cm] (hsub) {
             \textbf{\color{navyMain} 理论视界闭式解与解析正根}\\[4pt]
             \footnotesize \textbf{超临界闭式解（定理 1，周度尺度）：}\\[3pt]
-            \scalebox{0.76}{$\boxed{\displaystyle h^*_{\text{周}} \approx \frac{\mu_g}{7}\cdot\frac{\sqrt{\tau^2 - \frac{1+R/k}{I_0(R-1)}}}{s_{\log R}}}$}\\[5pt]
+            \scalebox{0.76}{$\boxed{\displaystyle h^*_{\text{周}} \approx \frac{\mu_g}{7}\cdot\frac{\sqrt{\tau^2 - \text{CV}_\infty^2}}{s_{\log R}}}$}\\[5pt]
             \footnotesize \textbf{近临界解析根（推论 1，$R \to 1$）：}\\[3pt]
             \scalebox{0.76}{$\boxed{\displaystyle h^*_{\text{gen}} \approx \frac{\sqrt{b^2 + 4 s^2\tau^2} - b}{2 s^2}}, \quad b = \frac{1+1/k}{I_0}$}
         };
@@ -201,7 +201,7 @@
 
 \end{tikzpicture}%
 }
-\caption{\textbf{传染病传播动力学与预测视界理论推导原理图。}展示双源随机性输入（群体内在随机性方差下界与外在参数推断放大）、预测均方误差可加分解（定理 1 与单调性定理 2，在假定 (A4) 下交叉项消失）以及由此导出的理论可预测视界 $h^*$（含超临界闭式与近临界推论 1 解析解）和核心理论推论（命题 3 候选时间标度、定理 4 信息论辨识下限与定理 5/5R 时变误差记账）。}
+\caption{\textbf{传染病传播动力学与预测视界理论推导原理图。}展示双源随机性输入（群体内在随机性方差下界与外在参数推断放大）、预测均方误差可加分解（定理 1 与单调性定理 2，在假定 (A4) 下交叉项消失）以及由此导出的理论可预测视界 $h^*$（含超临界闭式与近临界推论 1 解析解）和核心理论推论（命题 3 候选时间标度、定理 4 信息论辨识下限与定理 5/5R 时变误差记账）。图中 $\text{CV}_\infty^2 = \frac{1+R/k}{I_0(R-1)}$ 为内在渐近方差饱和极限，$s_{\log R} = \text{SE}(\log\hat{R}) \approx \delta R / R$ 为对数标准误。}
 \label{fig:framework_cn}
 \end{figure}
 
@@ -400,7 +400,7 @@ P_{\text{est}} \approx \frac{2(R - 1)}{G''(1)} = \frac{2\varepsilon}{R^2(1 + 1/k
 \subsection{状态辨识的信息论极限与 Cram\'er--Rao 界}
 
 \begin{theorem}[负二项似然下的 Fisher 信息量与辨识下限]\label{thm:fisher}
-在负二项分支子代分布的似然模型下，基本再生数 $R$ 的任意无偏统计估计量 $\hat{R}$ 的 Fisher 信息量严格满足 $I(R) = C \cdot k / [R(R+k)]$（其中 $C$ 为完整进入传播风险集并具有二代子代计数记录的独立感染者数量，包括零子代个体；且由似然二阶交叉偏导期望为零 $\mathcal{I}_{Rk} = -\mathbb{E}[\partial^2 \ell / (\partial R \partial k)] = 0$，参数渐近正交，联合估计下关于 $R$ 的 Cram\'er--Rao 下界保持 $[\mathcal{I}(R,k)^{-1}]_{RR} = \frac{R(R+k)}{Ck}$），给出 Cram\'er--Rao 参数推断相对方差下界：
+在负二项分支子代分布的似然模型下，基本再生数 $R$ 的样本 Fisher 信息量满足 $I(R) = C \cdot k / [R(R+k)]$（其中 $C$ 为完整进入传播风险集并具有二代子代计数记录的独立感染者数量，包括零子代个体；且由似然二阶交叉偏导期望为零 $\mathcal{I}_{Rk} = -\mathbb{E}[\partial^2 \ell / (\partial R \partial k)] = 0$，参数渐近正交，联合估计下关于 $R$ 的 Cram\'er--Rao 下界保持 $[\mathcal{I}(R,k)^{-1}]_{RR} = \frac{R(R+k)}{Ck}$），给出 Cram\'er--Rao 参数推断相对方差下界：
 \begin{equation}
 \frac{\text{Var}(\hat{R})}{R^2} \ge \frac{1/R + 1/k}{C}.
 \label{eq:cramer_cn}
@@ -409,7 +409,7 @@ P_{\text{est}} \approx \frac{2(R - 1)}{G''(1)} = \frac{2\varepsilon}{R^2(1 + 1/k
 \begin{equation}
 C \ge \left\lceil \frac{(z_{1-\alpha} + z_{1-\beta})^2 R^2 (1/R + 1/k)}{\varepsilon^2} \right\rceil \approx \left\lceil \frac{6.18 \cdot R^2 (1/R + 1/k)}{\varepsilon^2} \right\rceil.
 \end{equation}
-以临界近端 $\varepsilon = 0.1$（$R = 1.1$）且中度过度离散 $k = 1.0$ 的典型呼吸道疫情为例：在单位信噪比基准（$z=1$）下，最小独立病例数门槛为 $C \ge 231$ 簇；而在满足常规统计功效（80\% 功效与 5\% 显著性）下，理论计算值为 $1{,}428.7$，上取整给出必须累计观测至少 $C \ge 1{,}429$ 簇独立传播事件。若监测网络存在稀疏抽样，仅有比例为 $\rho \in (0, 1]$ 的病例被实际报告，则宏观实际所需报告病例数按稀疏抽样标度律刚性膨胀：
+以临界近端 $\varepsilon = 0.1$（$R = 1.1$）且中度过度离散 $k = 1.0$ 的典型呼吸道疫情为例：在理想单位信噪比基准（$z=1$）下，需要至少 $C \ge 231$ 个独立个体子代计数观测；而在常规统计功效近似（80\% 功效与 5\% 显著性）下，理论计算值为 $1{,}428.7$，向上取整给出理想样本量基准为至少 $C \ge 1{,}429$ 个独立个体子代计数观测。若监测网络存在稀疏抽样，仅有比例为 $\rho \in (0, 1]$ 的病例被实际报告，则宏观实际所需报告病例数按稀疏抽样标度律刚性膨胀：
 \begin{equation}
 C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \label{eq:sparse_sampling}
@@ -419,7 +419,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 以 Fisher 信息作为精度度量并据此优化流行病模型的直接先例见 Parag 与 Donnelly\citep{parag2020adaptive}。
 
 \begin{proof}
-\textbf{证明概要与机理阐释：}对单代二阶矩良定的负二项对数似然求二阶导数并取负期望，直接解析导出单簇 Fisher 信息量为 $I_1(R) = k / [R(R+k)]$。由 $C$ 个独立样本的 Fisher 信息可加性并代入 Cram\'er--Rao 矩阵反演定理，即得相对方差下界式 (\ref{eq:cramer_cn})。利用渐近正态检验功效统计量反解 $C$，即严格导出最小独立样本量门槛。（详细求导见附录 D。）
+\textbf{证明概要与机理阐释：}对单代二阶矩良定的负二项对数似然求二阶导数并取负期望，直接解析导出单样本个体 Fisher 信息量为 $I_1(R) = k / [R(R+k)]$。由 $C$ 个独立样本的 Fisher 信息可加性并代入 Cram\'er--Rao 矩阵反演定理，即得相对方差下界式 (\ref{eq:cramer_cn})。利用渐近正态检验功效统计量反解 $C$，即严格导出最小独立样本量门槛。（详细求导见附录 D。）
 \end{proof}
 
 \subsection{时变传播扰动与宏观聚合方差累积律}
@@ -484,13 +484,16 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \midrule
 定理 1 / 定理 2 & 可加分解与方差下界 & 20,000 & $(1.5, 5.0, 100, 0.10)$, $(1.5, 0.3, 100, 0.15)$ & 12 代 & 经验/理论相对比值收敛于 1.0 \\
 & 近临界强离散检验 & 20,000 & $(1.1, 1.0, 50, 0.05)$, $(2.0, 5.0, 30, 0.20)$ & 10--15 代 & 参数化 Bootstrap 经验分位数对比 \\
-命题 3 & 拟平稳扩散 QSD 密度 & 60--120 & $N=2000, \varepsilon \in \{0.005, 0.01\}$ (近临界), $\{0.2, 0.4\}$ (超临界) & 50k--250k 拟平稳长程抽样 & 直方图与稳态扩散理论密度重合 \\
+命题 3 & 反射正则化辅助扩散平稳密度与过程重标度 & 60--120 & $N=2000, \varepsilon \in \{0.005, 0.01\}$ (近临界), $\{0.2, 0.4\}$ (超临界) & 50k--250k 辅助扩散长程抽样 & 直方图与稳态扩散理论密度重合 \\
 推论 2 & 单种子建群概率 & 400 & $N \in \{500, 1000\}, \varepsilon \in \{0.02, 0.05, 0.10, 0.20\}$ & 阈值 $\lceil 0.05N \rceil$ & 95\% Beta 后验置信区间包含理论值 \\
-定理 4 & Cram\'er--Rao 辨识下限 & 50,000 & $(1.05, 1.0, 200/1428)$, $(1.10, 1.0, 231/1428)$, $(1.3, 1.0, 500/2000)$, $(1.5, 0.3, 500/2000)$ & 固定样本量 $C$ & 数值 MLE 经验方差逼近理论界 \\
+定理 4 & Cram\'er--Rao 信息基准与功效近似 & 50,000 & $(1.05, 1.0, 200/1428)$, $(1.10, 1.0, 231/1428)$, $(1.3, 1.0, 500/2000)$, $(1.5, 0.3, 500/2000)$ & 固定样本量 $C$ & 数值 MLE 经验方差逼近理论界 \\
 定理 5 / 5R & 时变传播方差累积 & 300--400 & $\phi \in \{0, 0.5, 0.8, 0.95\}, \mu=\log 1.05$ & 8--10 代 & 滚动 AR(1) 路径自协方差累加比值 \\
 \bottomrule
 \end{tabular}%
 }
+\vspace{2pt}
+\begin{flushleft}
+\scriptsize \textbf{注：}定理 4 模拟采用紧邻 80\% 功效连续理论门槛 1,428.7 的离散工作点 $C=1{,}428$；向上取整的严格最小整数基准为 $1{,}429$。\end{flushleft}
 \end{table}
 
 \subsection{模拟验证结果与图表展示}
@@ -513,26 +516,26 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.96\textwidth]{../reports/figures_v2/fig_t3_quasistationary.png}
-\caption{\textbf{拟平稳扩散密度与定殖概率的近临界相变模拟验证（数据来源 \texttt{verify\_t3.json}，重建自 \texttt{scripts\_v2/sim\_verify\_t3.py}）。}(a) 理论平稳密度 $\pi(x) \propto x^{-1}\exp(c_1x-c_2x^2)$ 在宿主种群 $N=2000$ 下的经验/理论变异系数比值（柱序自左至右按偏离量递增）：临界过渡窗口内（$|\varepsilon| \le O(N^{-1/2}) \approx 0.022$）$(\varepsilon, R) \in \{(0.005, 1.005), (0.01, 1.01)\}$ 为 0.976 与 0.950，超临界区 $(\varepsilon, R) \in \{(0.2, 1.2), (0.4, 1.4)\}$ 为 0.9995 与 0.9991。(b) 单种子定殖概率的 Poisson 分支 Galton--Watson 模拟（8 组，每组 400 次重复）与理论 $2\varepsilon/R$ 的对照，7/8 组的理论值落入经验 95\% Beta 区间。(c) 推论 2 的负二项分支设定（12 组，$k\in\{0.5,1.0\}$，每组 2,500 次重复）：展示有限种群首达概率与连续扩散代理 $2\varepsilon/[R(1+R/k)]$（它与式 (\ref{eq:establishment_prob}) 的离散母函数展开在近临界 $R \to 1^+$ 处领先阶等价）的对照；$k$ 抑制方向与经验一致，但由于有限种群首达有限规模（$\lceil 0.05N \rceil$）与无界种群终极逃逸灭绝的截断定义差异，一阶理论值仅 5/12 落入经验 95\% Beta 区间且整体偏低（$N=500$ 时经验/理论达 $1.07\text{--}1.61$），故推论 2 仅作过度离散负向抑制的方向性验证。}
+\caption{\textbf{拟平稳扩散密度与定殖概率的近临界相变模拟验证（数据来源 \texttt{verify\_t3.json}，重建自 \texttt{scripts\_v2/sim\_verify\_t3.py}）。}(a) 反射正则化辅助扩散平稳密度 $\pi(x) \propto x^{-1}\exp(c_1x-c_2x^2)$ 在宿主种群 $N=2000$ 下的经验/理论变异系数比值（柱序自左至右按偏离量递增）：临界过渡窗口内（$|\varepsilon| \le O(N^{-1/2}) \approx 0.022$）$(\varepsilon, R) \in \{(0.005, 1.005), (0.01, 1.01)\}$ 为 0.976 与 0.950，超临界区 $(\varepsilon, R) \in \{(0.2, 1.2), (0.4, 1.4)\}$ 为 0.9995 与 0.9991。(b) 单种子定殖概率的 Poisson 分支 Galton--Watson 模拟（8 组，每组 400 次重复）与理论 $2\varepsilon/R$ 的对照，7/8 组的理论值落入经验 95\% Beta 区间。(c) 有限种群首达概率与连续扩散建群概率代理比较（推论 2 设定，12 组，$k\in\{0.5,1.0\}$，每组 2,500 次重复）：展示有限种群首达概率与连续扩散代理 $2\varepsilon/[R(1+R/k)]$（它与式 (\ref{eq:establishment_prob}) 的离散母函数展开在近临界 $R \to 1^+$ 处领先阶等价）的对照；$k$ 抑制方向与经验一致，但由于有限种群首达有限规模（$\lceil 0.05N \rceil$）与无界种群终极逃逸灭绝的截断定义差异，一阶理论值仅 5/12 落入经验 95\% Beta 区间且整体偏低（$N=500$ 时经验/理论达 $1.07\text{--}1.61$），故推论 2 仅作过度离散负向抑制的方向性验证。}
 \label{fig:t3_cn}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{../reports/figures_v2/fig_t4_fisher_bound.png}
-\caption{\textbf{负二项分支似然下的 Cram\'er--Rao 辨识界模拟验证。}展示在定理 4 的固定观测设定下，不同参数（$R \in \{1.05, 1.10, 1.30, 1.50\}$, $k \in \{0.3, 1.0\}$，含关键样本量 231 与模拟工作点 1,428（对应 80\% 功效连续理论值 1,428.7，向上取整严格最小整数门槛为 1,429）等）下无偏 MLE 经验方差与 CRB 下界的比值（该比值围绕 1.000 波动，区间 0.9931--1.0104，虚线为理论下界），证实了数值实验的精确性。}
+\caption{\textbf{负二项分支似然下的 Cram\'er--Rao 辨识界模拟验证。}展示在定理 4 的固定观测设定下，不同参数（$R \in \{1.05, 1.10, 1.30, 1.50\}$, $k \in \{0.3, 1.0\}$，含关键样本量 231 与模拟工作点 1,428（对应 80\% 功效连续理论值 1,428.7，向上取整严格最小整数门槛为 1,429）等）下极大似然估计量（MLE）经验抽样方差与 CRB 基准之比（该比值围绕 1.000 波动，区间 0.9931--1.0104，虚线为理论下界），证实了数值实验的精确性。}
 \label{fig:t4_cn}
 \end{figure}
 
 \subsection{机器学习算法基准检验}\label{sec:ml}
 
-为检验现代机器学习与深度学习算法在确定性生成设定下的预测表现，本文设置了对照基准实验：
+为检验现代机器学习与深度学习算法在受控机制生成设定下的预测表现，本文设置了对照基准实验：
 \begin{itemize}
-\item \textbf{多层感知机（MLP）神经网络}：在细粒度负二项分支生成数据上训练 MLP 神经网络（架构 2 个隐藏层，每层 64 神经元，Tanh 激活函数，Adam 优化器，学习率 $\eta=3\times 10^{-3}$，训练 40 轮，在 40,000/8,000/8,000 条合成轨迹上划分训练/验证/测试集，种子 20260807；超参数为单次配置而非系统搜索，未做网格或自动调参）。基准测试显示：端到端浅层 MLP 神经网络对点位预测的经验方差与 CRB 下界之比均值为 6.69，反映出小样本高离散分支过程下的统计有效性损失；而在第一阶段参数辨识任务中，有效正则化的统计推断模型能够紧密贴合 CRB 下界（8 组参数测试下的均值比值范围为 0.9956--1.0024，中位数 1.0000）。须如实界定该比较的推断边界：Cram\'er--Rao 下界约束的是\textbf{无偏估计量}，端到端点预测为有偏预测器，原则上可能低于无偏界，故本实验的正确读法是\textbf{在本调参预算下两个基准均远未逼近理论下界（比值 6.69）}，而非“算法优化不能突破理论极限”的一般性断言；如需后者须借助覆盖有偏估计量的 Bayesian Cram\'er--Rao 或 van Trees 界，本文不作此主张。
+\item \textbf{多层感知机（MLP）神经网络}：在细粒度负二项分支生成数据上训练 MLP 神经网络（架构 2 个隐藏层，每层 64 神经元，Tanh 激活函数，Adam 优化器，学习率 $\eta=3\times 10^{-3}$，训练 40 轮，在 40,000/8,000/8,000 条合成轨迹上划分训练/验证/测试集，种子 20260807；超参数为单次配置而非系统搜索，未做网格或自动调参）。基准测试显示：端到端浅层 MLP 神经网络点位预测误差方差与参数估计 CRB 基准之比均值为 6.69（该比较仅为数量级尺度参照，非严格无偏检验），反映出小样本高离散分支过程下的统计有效性损失；而在第一阶段参数辨识任务中，有效正则化的统计推断模型能够紧密贴合 CRB 下界（8 组参数测试下的均值比值范围为 0.9956--1.0024，中位数 1.0000）。须如实界定该比较的推断边界：Cram\'er--Rao 下界约束的是\textbf{无偏估计量}，端到端点预测为有偏预测器，原则上可能低于无偏界，故本实验的正确读法是\textbf{在本调参预算下两个基准均远未逼近理论下界（比值 6.69）}，而非“算法优化不能突破理论极限”的一般性断言；如需后者须借助覆盖有偏估计量的 Bayesian Cram\'er--Rao 或 van Trees 界，本文不作此主张。
 \item \textbf{LightGBM 梯度提升多步预测}：在 200 条合成时间序列上（每条 52 周前瞻点），构建包含 300 棵树的回归模型（叶节点数 15，叶节点最小样本数 50，学习率 0.05，种子 20260807）评估 LightGBM 的多步前瞻预测性能。测试表明：LightGBM 在多步预测中 log-RMSE 随步长迅速上升，在预测窗口内标准误比值由 0.59--0.99 上升至 1.06--1.44，表明其在长程外推中同样受到宿主种群内在方差下界与无外生特征断层下的泛化瓶颈约束。
 \end{itemize}
 
-这些基准实验表明：在纯机制分支生成机制下、在本节的调参预算内，所测试的算法配置均未逼近（更未突破）模型理论下界；而在现实复杂监测中，由于公众自适应行为引发的结构性残差占据主导（见第 4 节），灵活的非参数机器学习模型能够有效捕捉非机制性结构波动，与机理分支模型在双层视界体系中形成互补。
+这些基准实验表明：在纯机制分支生成机制下、在本文设定的有限调参预算和特征输入下，所测试的算法配置未能达到模型内无偏 Fisher 信息基准；这一探索性基准对照不构成对所有机器学习算法泛化能力的普遍性理论上限断言；而在现实复杂监测中，由于公众自适应行为引发的结构性残差占据主导（见第 4 节），灵活的非参数机器学习模型能够有效捕捉非机制性结构波动，与机理分支模型在双层视界体系中形成互补。
 
 \section{三层真实数据实证与误差记账}
 
@@ -549,10 +552,10 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 
 实证分析严格覆盖七大典型流行阶段：COVID-19 Delta 暴发期（2021-07-03 至 2021-07-31）、Omicron 达峰期（2021-12-04 至 2022-01-01）、JN.1 流行期（2023-12-16 至 2024-01-13）；季节性流感 2022--23 流行季（2022-10-08 至 2022-11-05）、2024--25 流行季（2024-11-23 至 2024-12-21）；RSV 2024--25 流行季（2024-11-09 至 2024-12-07）及 2025--26 流行季（2025-11-08 至 2025-12-06）。（注：2025 年 10 月至 11 月联邦政府停摆期间的监测序列经 CDC 事后回填，历史回测基于回填固化后的最终序列 Finalized Data Vintage，作为评估理论可预测性上限的基准序列。）三大病原七阶段均采用 NHSN 周度住院同一指标口径（见上），不存在跨指标拼接。另注：数据快照以各预测枢纽终版目标数据的最终发布版本为准（COVID-19 枢纽终版为 2024-04-28 release，FluSight 与 RSV 枢纽为 2026 年 9 月检索时的终版归档），本分析的直接输入为三个经整理的州级周度面板文件（SHA-256 校验和与版本标识在代码仓库清单 \texttt{MANIFEST.md} 中存档），全部参数估计、区间生成、表格与图件均由统一脚本链从该输入出发自动生成；从原始快照到分析输入的数据整理脚本（\texttt{ingest\_and\_aggregate.py}）、原始数据源地址与检索日期随代码一并开源。
 
-数据预处理以各阶段起步期连续 5 个周度观测（$W=5$）作为推断窗口，采用对数线性回归估计净增长率与再生数 $R$ 及其标准误（斜率标准误自由度 $\text{df}=5-2=3$），结合负二项二阶矩法求解宏观过度离散度 $k_{\text{agg}}$（该估计法与负二项过度离散的关系与偏倚讨论见 Ho 等\citep{ho2023simultaneous}；若误用 Poisson 假设将如 Němcová 等\citep{nemcova2026unjustified} 所示系统性高估推断精度，本文选择负二项矩估计正是为规避此偏倚）。需注意：第 4.5 节伪实时滚动回测另用 $W=4$ 的更短滑动窗口在逐周原点上在线重估 $\hat{R}_t$，二者是分析目的不同的两套窗口（表~\ref{tab:horizons} 的点估计基于 $W=5$ 单次拟合，误差记账的实测项基于 $W=4$ 滚动原点），本文各表已注明各自口径。关于核心参数的口径定义与敏感性规范如下：
+数据预处理以各阶段起步期连续 5 个周度观测（$W=5$）作为推断窗口，采用对数线性回归估计净增长率与再生数 $R$ 及其标准误（斜率标准误自由度 $\text{df}=5-2=3$。须说明该推断窗口是在突发疫情早期暴发爬坡期数据积累有限与参数估计稳定之间的现实权衡；小样本回归标准误的抽样波动主要反映在各阶段州级视界分布的四分位距上，而跨州中位数展现出较好的聚合稳定性），结合负二项二阶矩法求解宏观过度离散度 $k_{\text{agg}}$（该估计法与负二项过度离散的关系与偏倚讨论见 Ho 等\citep{ho2023simultaneous}；若误用 Poisson 假设将如 Němcová 等\citep{nemcova2026unjustified} 所示系统性高估推断精度，本文选择负二项矩估计正是为规避此偏倚）。需注意：第 4.5 节伪实时滚动回测另用 $W=4$ 的更短滑动窗口在逐周原点上在线重估 $\hat{R}_t$，二者是分析目的不同的两套窗口（表~\ref{tab:horizons} 的点估计基于 $W=5$ 单次拟合，误差记账的实测项基于 $W=4$ 滚动原点），本文各表已注明各自口径。关于核心参数的口径定义与敏感性规范如下：
 \begin{enumerate}
 \item \textbf{初始发病规模 $I_0$ 的口径定义与数值刚性}：在表~\ref{tab:horizons} 中，$I_0$ 采用推断窗口内周度报告计数的算术平均值（州级中位数如 COVID-19 Delta 阶段为 297；国家级 51 州合计为 28,347、Omicron 为 66,275），其量纲为“周报告住院数”，而非未平滑的单日发病水平。理论与数值灵敏度分析表明，在国家级聚合序列上群体内在方差地板 $\text{CV}_\infty^2 = \frac{1+R/k_{\text{agg}}}{I_0(R-1)} \le 0.002$，远低于预设容忍度方差 $\tau^2 = 0.25$；州级尺度上该地板相应抬升（中位 $I_0$ 降至 37--757 例），但仍远低于 $\tau^2$。因此即便将 $I_0$ 替换为窗口累计数或其它合理口径，视界精确根 $h^*_{\text{exact}}$ 的相对变动幅度仍小于 0.01\%，实证视界结论对 $I_0$ 选取口径具有极强的数值刚性。
-\item \textbf{代间隔 $\mu_g$ 的文献区间与敏感性}：Delta 阶段基准值取文献报道的内在代间隔（Intrinsic Generation Time）4.7 天（95\% CrI 4.1--5.6 天）\citep{hart2022generation}；作为对比，同篇文献报告的家庭接触代间隔（Household Generation Time）为 3.2 天（95\% CI 2.5--4.2 天）。当代间隔在文献报道区间 3.2--5.6 天内变动时，Delta 理论视界（以周计）相应按 $\mu_g/7$ 的比例线性缩放（基准 21.2 周对应区间约 14.4--25.3 周）；RSV 在南非家户基准 8.4 天\citep{cohen2024respiratory}与日托高频接触敏感性对照 3.2 天之间变动时，视界相应大幅平移。这表明世代视界 $h^*_{\text{gen}}$ 构成了跨病原体客观比较的内在尺度，而日历周视界严格正比于代间隔大小。
+\item \textbf{代间隔 $\mu_g$ 的文献区间与敏感性}：Delta 阶段基准值取文献报道的内在代间隔（Intrinsic Generation Time）4.7 天（95\% CrI 4.1--5.6 天）\citep{hart2022generation}；作为对比，同篇文献报告的家庭接触代间隔（Household Generation Time）为 3.2 天（95\% CI 2.5--4.2 天）。当代间隔在文献报道区间 3.2--5.6 天内变动时，Delta 理论视界（以周计）相应按 $\mu_g/7$ 的比例线性缩放（基准 21.2 周对应区间约 14.4--25.3 周）；RSV 在南非家户基准 8.4 天\citep{cohen2024respiratory}与日托高频接触敏感性对照 3.2 天之间变动时，视界相应大幅平移。这表明世代视界 $h^*_{\text{gen}}$ 构成了跨病原体客观比较的内在尺度；而在固定代际机制参数、采用固定代间隔转换且离散化误差可忽略的近似条件下，连续日历周视界与平均代间隔近似成正比。
 \item \textbf{参数不确定性的评估协议}：目标容忍度设为 $\tau = 0.5$（对应相对均方根误差 50\%）。不确定性分两层评估：微观传播链层以 2,000 次参数化 Bootstrap（固定随机种子 20260807）从拟合的负二项分布重抽样并重估参数，用于检验 $R$ 估计量的抽样方差与 Cram\'er--Rao 下界（第 4.2 节）；州级面板层则以跨 51 个辖区的参数与视界分布直接刻画不确定性（表~\ref{tab:horizons} 的中位数与四分位距），不再逐列印刷单序列区间——5 周窗口的斜率信息量本身有限，其相对宽度主要由自由度支配，逐列印刷会误导跨阶段比较。
 \end{enumerate}
 
@@ -563,13 +566,13 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 对每个数据集以极大似然拟合负二项分布 $\text{NB}(R,k)$（均值 $R$、方差 $R+R^2/k$），并以 Poisson 为对照计算 $\Delta\text{AIC}$；同时以参数化自助法（$B=2{,}000$、种子 20260807）从拟合分布重抽样并重估参数，用 $R$ 估计量的经验抽样方差与定理 4 的 Cramér--Rao 下界比较（表~\ref{tab:micro} 与图~\ref{fig:micro}）。结果如下：
 
 \begin{enumerate}
-\item \textbf{负二项生成假设在个体层面得到强支持}：三组数据的 Poisson 对照均被压倒性拒绝（$\Delta\text{AIC}$ 分别为 93.9、223.4 与 244.0），个体子代数呈显著过度离散，超级传播异质性真实存在。
+\item \textbf{负二项生成假设在个体层面得到强支持}：三组数据在 AIC 模型选择中 Poisson 对照模型均受到强烈不支持（$\Delta\text{AIC}$ 分别为 93.9、223.4 与 244.0），个体子代数呈显著过度离散，超级传播异质性真实存在。
 \item \textbf{离散度参数落入文献区间}：香港本地子群 $\hat{k} = 0.434$，与 Adam 等\citep{adam2020clustering} 原刊报告的 $k \approx 0.45$ 处于同一量级；埃博拉 $\hat{k} = 0.182$，刻画了埃博拉传播极端聚集的已知特征。两者均远小于 1，从个体层面支撑了本文以 $k$ 刻画超扩散的必要性。
-\item \textbf{内在方差闭式解的量级得到验证，且方向偏保守}：引理 2 在 $h=1$、$I_0=1$ 处给出 $\text{CV}^2(1) = 1/R + 1/k$。香港本地数据经验 $\text{CV}^2 = 5.46$ 对理论值 4.42（高出约 24\%），埃博拉经验 6.41 对理论 6.56（低约 2\%）。香港本地序列的经验相对方差高于拟合负二项值，说明简单负二项模型可能低估真实传播链的尾部波动；这会使基于该模型得到的机制视界偏长，从而进一步支持将其仅解释为经验宽松包络，而非严格可用时效。
+\item \textbf{内在方差闭式解的量级得到验证}：引理 2 在 $h=1$、$I_0=1$ 处给出 $\text{CV}^2(1) = 1/R + 1/k$。香港本地数据经验 $\text{CV}^2 = 5.46$ 对理论值 4.42（高出约 24\%），埃博拉经验 6.41 对理论 6.56（低约 2\%）。香港本地序列的经验相对方差高于拟合负二项值，说明简单负二项模型可能低估真实传播链的尾部波动；这会使基于该模型得到的机制视界偏长，从而进一步支持将其仅解释为经验宽松包络，而非严格可用时效。
 \item \textbf{定理 4 的下界得到模型内自洽性数值检验}：自助经验抽样方差与解析 Cramér--Rao 下界之比分别为 1.059、1.027 与 0.984。这一结果表明在负二项分支似然设定下，无偏极大似然估计量的经验方差紧密逼近逆 Fisher 信息量下界，验证了定理 4 在渐近有效性层面的数理自洽性。
 \end{enumerate}
 
-同时需要指明个体级检验的数据特征与分析边界：首先，传播链数据来源于回顾性接触追踪，传播对归因不可避免存在一定不确定性；其次，香港子代序列中未观察到后续传播的病例记为零子代，在回顾性流调中可能受到接触追踪截断与漏报偏倚（downward reporting bias）的影响，其统计性质不同于生存分析中的标准右删失；再次，定理 4 确立的 Cram\'er--Rao 下界严格适用于独立同分布的子代样本，在接触追踪队列中有效样本量应以纳入统计的独立病例簇数审慎解释。此外，埃博拉拟合得到的近临界状态（$\hat{R} = 0.954$）亦为推论 1 与命题 3 的近临界动力学体制提供了真实的实证参照锚点。
+同时需要指明个体级检验的数据特征与分析边界：首先，传播链数据来源于回顾性接触追踪，传播对归因不可避免存在一定不确定性；其次，香港子代序列中未观察到后续传播的病例记为零子代，在回顾性流调中可能受到接触追踪截断与漏报偏倚（downward reporting bias）的影响，其统计性质不同于生存分析中的标准右删失；再次，定理 4 确立的 Cram\'er--Rao 下界严格适用于独立同分布的子代样本，在接触追踪队列中有效样本量应以纳入统计的独立个体子代计数观测数审慎解释。此外，埃博拉拟合得到的近临界状态（$\hat{R} = 0.954$）亦为推论 1 与命题 3 的近临界动力学体制提供了真实的实证参照锚点。
 
 \begin{table}[htbp]
 \centering
@@ -581,7 +584,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 }
 \vspace{2pt}
 \begin{flushleft}
-\scriptsize \textbf{注：}$\hat{R}$ 与 $\hat{k}$ 为负二项分布（均值 $R$、方差 $R+R^2/k$）的极大似然估计；经验 $\text{CV}^2$ 为子代计数的方差均值平方比，理论 $\text{CV}^2 = 1/\hat{R} + 1/\hat{k}$ 为引理 2 在 $h=1$、$I_0=1$ 处的闭式值；$\Delta\text{AIC}$ 为 Poisson 与负二项拟合的 AIC 之差；自助/CRB 列为 $R$ 估计量的自助经验方差与定理 4 解析下界之比（$B=2{,}000$，种子 20260807）。香港数据源为 Adam 等\citep{adam2020clustering} 的接触追踪队列（本地子群 $N=355$、全体 $N=1{,}038$），埃博拉数据源为 Faye 等\citep{faye2015chains} 的 Conakry 传播网络（$N=152$）。\end{flushleft}
+\scriptsize \textbf{注：}$\hat{R}$ 与 $\hat{k}$ 为负二项分布（均值 $R$、方差 $R+R^2/k$）的极大似然估计；经验 $\text{CV}^2$ 为子代计数的方差均值平方比，理论 $\text{CV}^2 = 1/\hat{R} + 1/\hat{k}$ 为引理 2 在 $h=1$、$I_0=1$ 处的闭式值；$\Delta\text{AIC}$ 为 Poisson 与负二项拟合的 AIC 之差；自助/CRB 列为 $R$ 估计量的自助经验方差与定理 4 解析下界之比（$B=2{,}000$，种子 20260807）。香港数据源为 Adam 等\citep{adam2020clustering} 的接触追踪队列（本地子群 $N=355$、全体 $N=1{,}038$），埃博拉数据源为 Faye 等\citep{faye2015chains} 的 Conakry 传播网络（$N=152$）。样本量 $N$ 表示进入活跃传播风险集的个体总数，在具有完整子代调查的设定下亦作为有效子代计数样本量（$C=N$，包含零子代个体）；CRB 计算使用 $C$。\end{flushleft}
 \end{table}
 
 \begin{figure}[htbp]
@@ -617,20 +620,20 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \label{fig:state_horizons}
 \end{figure}
 
-\subsection{四项预测误差记账的州级分解}\label{sec:budget}
+\subsection{四项描述性误差记账与未归因闭合余项}\label{sec:budget}
 
 四项误差记账架构（式 (\ref{eq:full_budget})）在州级面板上逐州逐阶段执行，得到闭合残差占比的跨州分布（表~\ref{tab:budget_four}）：
 \begin{equation}
 \text{RelMSE}_{\text{obs}}(h) = \text{CV}^2(h) + \mathcal{E}_{\text{drift}}(h) + P(h) + \mathcal{E}_{\text{res}}(h).
 \label{eq:full_budget}
 \end{equation}
-各分量口径与第 4.1 节一致：$\text{CV}^2(h)$ 取引理 2 式 (\ref{eq:cv_floor})，$I_0$ 为该州阶段级窗口均值；$\mathcal{E}_{\text{drift}}(h) = h_{\text{周}} \cdot \widehat{v}^2_{\text{周}}$ 取定理 5 线性累加项的经验代理（$\widehat{v}^2_{\text{周}}$ 为周度对数增长增量围绕其 4 周中心滑动均值的残差方差，在含推断窗口的 16 周校准带内逐州估计）；$P(h) = (h_{\text{gen}} s_{\text{gen}})^2$ 取引理 3 一阶形式；实测项 $\text{RelMSE}_{\text{obs}}(h)$ 由该州自身的滚动原点（$W=4$ 在线重估、以模型预测为归一化分母）直接计算；$\mathcal{E}_{\text{res}}(h)$ 为定义为恒等闭合残差的未归因综合实测闭合余项（Unattributed Empirical Residual）：
+各分量口径与第 4.1 节一致：$\text{CV}^2(h)$ 取引理 2 式 (\ref{eq:cv_floor})，$I_0$ 为该州阶段级窗口均值；$\mathcal{E}_{\text{drift}}(h) = h_{\text{周}} \cdot \widehat{v}^2_{\text{周}}$ 取定理 5 线性累加项的经验代理（$\widehat{v}^2_{\text{周}}$ 为周度对数增长增量围绕其 4 周中心滑动均值的残差方差，在含推断窗口的 16 周校准带内逐州估计）；$P(h) = (h_{\text{gen}} s_{\text{gen}})^2$ 取引理 3 一阶形式；实测项 $\text{RelMSE}_{\text{obs}}(h)$ 由该州自身的滚动原点（$W=4$ 在线重估、以模型预测为归一化分母）直接计算；$\mathcal{E}_{\text{res}}(h)$ 为定义为恒等闭合残差的未归因综合实测闭合余项（Unattributed Empirical Residual）。须强调式 (\ref{eq:full_budget}) 是实证描述性记账恒等式，而非具有独立因果识别的预测理论；该闭合余项在代数上吸收了机制模型前三项未解释的全部实测差异，包括公众自适应行为、未建模结构偏差、协方差交叉项与归一化分母尺度转换差异：
 \begin{equation}
 \mathcal{E}_{\text{res}}(h) \equiv \text{RelMSE}_{\text{obs}}(h) - \left[ \text{CV}^2(h) + \mathcal{E}_{\text{drift}}(h) + P(h) \right].
 \end{equation}
 式 (\ref{eq:full_budget}) 为实证描述性记账恒等式；该余项不施加非负截断，除吸收公众与医疗系统非线性自适应行为、报告延迟波动及模型误设外，由于实测项 $\text{RelMSE}_{\text{obs}}(h)$ 采用预测点位平方为归一化分母、而理论分量采用理论期望平方为归一化分母，未归因闭合余项在统计上同时完整吸收了该分母尺度转换差异以及各分量间的协方差交叉项。
 
-州级分解给出了比单条国家级序列稳健得多的结论。\textbf{未归因综合实测闭合余项随前瞻步长单调上升并主导实测误差}：中位残差占比在 Delta 阶段由 $h=1$ 的 74.8\% 升至 $h=4$ 的 97.0\%，Omicron 由 64.3\% 升至 88.6\%，流感 2022--23 由 44.4\% 升至 81.3\%；在 $h=4$ 处，COVID-19 与流感三个阶段的中位残差占比均超过 80\%（Delta 97.0\%、Omicron 88.6\%、流感 2022--23 81.3\%），RSV 2024--25 为 41.9\%（其 $h=4$ 目标周计数较低、漂移代理项相对偏宽）。\textbf{为正占比高}：各阶段--步长配置中，残差为正的州占比介于 62\% 与 100\% 之间，即结构性余项的主导地位不是少数州驱动的。\textbf{已建模三项的量级符合理论预期}：$\text{CV}^2$ 在各阶段中位占比为 $\tau^2$ 的 0.4\%--24\%（州级 $I_0$ 虽小，但 $R$ 与 $k$ 的匹配使其仍远低于 $\tau^2$），漂移项随 $h$ 线性增长，且在州级尺度上成为最大的已建模分量（州级序列噪声使每周漂移方差高于国家级；例如 Delta 在 $h=4$ 时漂移项中位 345.21$\times10^{-4}$，参数项 $P$ 为 222.41$\times10^{-4}$，内在方差 $\text{CV}^2$ 为 132.73$\times10^{-4}$）；参数项 $P$ 随 $h^2$ 增长但量级次之。\textbf{短程配置的负残差被如实保留}：流感 2022--23 与两季 RSV 的 $h=2$ 行四分位下界为负，系 16 周校准带对短程工作点偏宽、漂移代理项高估所致，属结构性诊断信号而非记账错误，不作截断。
+州级分解给出了比单条国家级序列稳健得多的结论。\textbf{在多数报告阶段中，未归因综合实测闭合余项的跨州中位占比随前瞻步长上升，并在多数中长程配置中占据实测误差的主要份额}：中位残差占比在 Delta 阶段由 $h=1$ 的 74.8\% 升至 $h=4$ 的 97.0\%，Omicron 由 64.3\% 升至 88.6\%，流感 2022--23 由 44.4\% 升至 81.3\%；在 $h=4$ 处，COVID-19 与流感三个阶段的中位残差占比均超过 80\%（Delta 97.0\%、Omicron 88.6\%、流感 2022--23 81.3\%），RSV 2024--25 为 41.9\%（其 $h=4$ 目标周计数较低、漂移代理项相对偏宽）。\textbf{为正占比高}：各阶段--步长配置中，残差为正的州占比介于 62\% 与 100\% 之间，即结构性余项的主导地位不是少数州驱动的。\textbf{已建模三项的量级符合理论预期}：$\text{CV}^2$ 在各阶段中位占比为 $\tau^2$ 的 0.4\%--24\%（州级 $I_0$ 虽小，但 $R$ 与 $k$ 的匹配使其仍远低于 $\tau^2$），漂移项随 $h$ 线性增长，且在州级尺度上成为最大的已建模分量（州级序列噪声使每周漂移方差高于国家级；例如 Delta 在 $h=4$ 时漂移项中位 345.21$\times10^{-4}$，参数项 $P$ 为 222.41$\times10^{-4}$，内在方差 $\text{CV}^2$ 为 132.73$\times10^{-4}$）；参数项 $P$ 随 $h^2$ 增长但量级次之。\textbf{短程配置的负残差被如实保留}：流感 2022--23 与两季 RSV 的 $h=2$ 行四分位下界为负，系 16 周校准带对短程工作点偏宽、漂移代理项高估所致，属结构性诊断信号而非记账错误，不作截断。
 
 \begin{table}[htbp]
 \centering
@@ -726,13 +729,13 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \hat{I}_{t+h|t} - \kappa \cdot \text{RMSE}(h) \ge I_{\text{alert}}, \quad (h \le h^*),
 \label{eq:alert_rule}
 \end{equation}
-其中 $\kappa = z_{1-\alpha}$（如 $\kappa = 1.645$ 对应示意性 95\% 单侧下界），$\text{RMSE}(h) = I_{0,t} R_t^h \cdot \text{RelRMSE}(h)$。需要指出，由于参数传播包含插入式点预测偏差且真实预测分布具有右偏性，此规则仅在预测误差近似对称无偏时作为示意性充分规则，而非一般意义下的严格充要条件。
+其中 $\kappa = z_{1-\alpha}$（如 $\kappa = 1.645$ 对应示意性 95\% 单侧下界），$\text{RMSE}(h) = I_{0,t} R_t^h \cdot \text{RelRMSE}(h)$ 为模型内预测误差的均方根尺度（而非一般情况下的真实预测标准差）。需要指出，由于参数传播包含插入式点预测偏差且真实预测分布具有右偏性，此规则仅在预测误差近似对称时作为简化工程实现的示意性保守触发准则，而非一般意义下的严格充要条件。
 
 该规则具有明确的公共卫生运筹意义：
 \begin{enumerate}
-\item \textbf{有效预警提前量（Alert Lead Time）}：实际业务中的有效预警提前期并非单纯的 $h^*$，而是 $\Delta t_{\text{alert}} = h^* - t_{\text{detect}}$，其中 $t_{\text{detect}}$ 为系统从暴发萌芽到跨越定理 4 确立的 Cram\'er--Rao 最小统计样本量门槛（231/1,429 例）所需的确认耗时。若早期监测网络稀疏导致确认延迟过长，则即便理论视界 $h^*$ 较长，留给公卫应对的真实提前量也将被压缩殆尽。（此映射基于簇结构对有效样本量的折减这一统计学结论。）
+\item \textbf{有效预警提前量（Alert Lead Time）}：实际业务中的有效预警提前期并非单纯的 $h^*$，而是 $\Delta t_{\text{alert}} = h^* - t_{\text{detect}}$，其中 $t_{\text{detect}}$ 为系统从暴发萌芽到跨越定理 4 确立的 Cram\'er--Rao 理想样本量基准（231/1,429 个独立个体子代计数观测）所需的确认耗时。若早期监测网络稀疏导致确认延迟过长，则即便理论视界 $h^*$ 较长，留给公卫应对的真实提前量也将被压缩殆尽。（此映射基于簇结构对有效样本量的折减这一统计学结论。）
 \item \textbf{假阳性与假阴性风险的非对称权衡}：定理 1 揭示的不可约内在随机性方差下界表明，在任何前瞻预测中均存在无法消除的基底离散度。提高预警敏感性（降低触发门槛）会不可避免地放大由微观超级传播涨落引起的“假阳性虚惊”（False Alarm），造成严重的行政调配浪费与社会恐慌；而提高特异性（提高门槛）则增加“假阴性漏报”（Missed Detection）导致医疗资源被击穿的灾难性风险。式 (\ref{eq:alert_rule}) 表明，必须在 $h \le h^*$ 的有效视界区间内，结合表~\ref{tab:scenarios} 的分级成本矩阵对参数 $\kappa$ 实施动态优化。
-\item \textbf{宏观聚合报告数与微观独立簇的映射}：定理 4 推导的 Cram\'er--Rao 门槛要求 $C \ge 231$（单位信噪比）与 $C \ge 1{,}429$（80\% 功效）例独立个体子代计数样本。若将宏观聚合发病数映射为有效样本量，标准调查设计效应表明 $C_{\text{eff}} \approx \frac{n}{1 + (\bar{m}_c - 1)\rho_{\text{ICC}}}$，其中 $\bar{m}_c$ 为平均簇规模，$\rho_{\text{ICC}}$ 为簇内相关系数。若在极端启发式设定下假定簇内完全相关（$\rho_{\text{ICC}} \approx 1$），则有效样本量近似折减为 $C \approx I_0 / \bar{m}_c$；在聚集性暴发显著的机构或社区，若 $\bar{m}_c \approx 5\text{--}10$，则对应需要累积约 $1{,}150\text{--}2{,}310$ 例报告病例才能获得等效的判定信噪比（该数量级仅作为极端簇相关假设下的示意性推演，实际公卫监测需结合真实流调网络校准）。
+\item \textbf{宏观聚合报告数与微观独立簇的映射}：以下数量级仅用于说明簇内相关可能造成的有效信息损失，不构成从宏观病例数到独立子代观测数的普遍换算公式。定理 4 推导的 Cram\'er--Rao 理想基准要求 $C \ge 231$（单位信噪比）与 $C \ge 1{,}429$（80\% 功效）例独立个体子代计数观测。若将宏观聚合发病数映射为有效样本量，标准调查设计效应表明 $C_{\text{eff}} \approx \frac{n}{1 + (\bar{m}_c - 1)\rho_{\text{ICC}}}$，其中 $\bar{m}_c$ 为平均簇规模，$\rho_{\text{ICC}}$ 为簇内相关系数。若在极端启发式设定下假定簇内完全相关（$\rho_{\text{ICC}} \approx 1$），则有效样本量近似折减为 $C \approx I_0 / \bar{m}_c$；在聚集性暴发显著的机构或社区，若 $\bar{m}_c \approx 5\text{--}10$，则对应需要累积约 $1{,}150\text{--}2{,}310$ 例报告病例才能获得等效的判定信噪比（该数量级仅作为极端簇相关假设下的示意性推演，实际公卫监测需结合真实流调网络校准）。
 \end{enumerate}
 
 \subsection{健康公平性与伦理监测考量}
@@ -746,8 +749,9 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 代入可预测视界闭式解式 (\ref{eq:horizon_cn})，参数估计标准误的大幅膨胀将直接导致边缘化人群的可预测视界发生不成比例的剧烈压缩：
 \begin{equation}
 h^*_{\text{marginalized}} \approx \sqrt{\frac{\rho_{\text{low}}}{\rho_0}} \cdot h^*_{\text{affluent}}.
+\label{eq:sparse_horizon}
 \end{equation}
-这一数理关系揭示了深层的健康公平性陷阱：监测系统的结构性不平等会直接转化为可预测能力的代际赤字。高收入群体凭借高密度检测网络享有长达数周的可靠预警缓冲期，能够从容调度重症医疗资源；而资源匮乏群体不仅面临更高的感染脆弱性，还被剥夺了前瞻预警的时效保障，迫使其只能在疫情逼近失控的极限窗口内仓促应对。这一严酷现实要求公卫决策者在分配流调与检测资源时，必须实施倾斜性的“预测正义”（Predictive Justice）补偿策略，通过向边缘化区域优先注资移动检测与常态化哨点，填补有效样本量缺口，修复系统性的可预测性断层。
+需指出，式 (\ref{eq:sparse_sampling}) 与式 (\ref{eq:sparse_horizon}) 仅适用于参数估计不确定性主导且其他动力学和观测参数保持不变的近似情形；当内在过程方差、初值误差或报告偏倚不可忽略时，视界不再严格按平方根比例缩放。这一数理关系揭示了深层的健康公平性风险：若不同社区在检测捕获率、报告及时性与有效独立样本量上存在系统性差异，则动力学极限推导表明其前瞻预警能力可能出现不平等分布。公卫决策者在分配流调与检测资源时，应关注欠抽样社区的数据代表性，通过向监测薄弱区域补充常态化哨点与移动抽样，防范由于数据稀疏诱发的可预测性断层。
 
 \subsection{研究局限性与未来动力学拓展方向}
 
@@ -761,7 +765,7 @@ h^*_{\text{marginalized}} \approx \sqrt{\frac{\rho_{\text{low}}}{\rho_0}} \cdot 
 
 \section{结论}
 
-科学理解传染病前瞻预测的时效极限与误差机制，是计算流行病学与公共卫生运筹学的重大前沿命题。本文从负二项分支过程的生成性假设出发，推导了相对均方误差在假定 (A1)--(A4) 下的正交可加分解，确立了理论可预测视界的闭式解映射与单调性定理，给出了有限宿主种群在相变附近的 $O(N^{1/2})$ 候选时间标度（作为连续反射扩散重标度下的动力学时标）与 Cram\'er--Rao 最小整数样本量界（$C \ge 1{,}429$）。实证部分以三层真实数据重构：个体传播链数据在个体层面确认了负二项生成假设（Poisson 被压倒性拒绝，$\Delta\text{AIC}$ 达 93.9--244.0）并在个体层面进行了模型内部自洽性数值检验与下界验证（自助抽样方差与下界之比 0.98--1.06）；州级面板给出理论视界的空间分布，州级中位视界（4.5--10.9 周）在七个阶段中的六个阶段短于国家级聚合值（7.9--67.8 周；唯一例外为 Omicron），表明聚合平滑对视界存在系统性高估；四项全要素误差记账在州级逐州执行，未归因综合实测闭合余项占比跨州中位数在 1--2 周短程配置中为 20.9\%--86.9\%（全量程介于 20.9\%--97.0\%），且在 62\%--100\% 的州为正，并在多数配置中占据实测误差主要份额。逐州滚动回测显示，相对持续性基线的伪实时业务时效收缩至 1.0--4.3 周（州级中位；国家级 1.0--5.3 周）；以预测枢纽官方集成的 12 个真实预测原点作外部对照，顶级集成模型的州级技能同样在 1--2 周内退化至与基线相当，表明短业务时效并非仅由本文自设模型的有限调参预算所致。上述发现共同支持“理论机制视界为业务时效的宽松包络”的双层基准框架，为推动预警系统向“极限知情、分级响应、稳健兜底”的现代公共卫生运筹范式转型提供一种可复算的数理参照。
+科学理解传染病前瞻预测的时效极限与误差机制，是计算流行病学与公共卫生运筹学的重大前沿命题。本文从负二项分支过程的生成性假设出发，推导了相对均方误差在假定 (A1)--(A4) 下的正交可加分解，确立了理论可预测视界的闭式解映射与单调性定理，给出了有限宿主种群在相变附近的 $O(N^{1/2})$ 候选时间标度（作为连续反射扩散重标度下的动力学时标）与 Cram\'er--Rao 理想整数样本量基准（$C \ge 1{,}429$）。实证部分以三层真实数据重构：个体传播链数据在个体层面确认了负二项生成假设（Poisson 模型在 AIC 比较中受到强烈不支持，$\Delta\text{AIC}$ 达 93.9--244.0）并在个体层面进行了模型内部自洽性数值检验与下界验证（自助抽样方差与下界之比 0.98--1.06）；州级面板给出理论视界的空间分布，州级中位视界（4.5--10.9 周）在七个阶段中的六个阶段短于国家级聚合值（7.9--67.8 周；唯一例外为 Omicron），表明空间聚合对视界存在系统性抬升；四项描述性误差记账在州级逐州执行，未归因综合实测闭合余项占比跨州中位数在 1--2 周短程配置中为 20.9\%--86.9\%（全量程介于 20.9\%--97.0\%），且在 62\%--100\% 的州为正，并在多数中长程配置中占据实测误差主要份额，证实了未建模结构波动对预测时效的主导性约束。逐州滚动回测显示，相对持续性基线的伪实时业务时效收缩至 1.0--4.3 周（州级中位；国家级 1.0--5.3 周）；以预测枢纽官方集成的 12 个真实预测原点作外部对照，顶级集成模型的州级技能同样在 1--2 周内退化至与基线相当，表明短业务时效并非仅由本文自设模型的有限调参预算所致。上述发现共同支持“理论机制视界为业务时效的宽松包络”的双层基准框架，为推动预警系统向“极限知情、分级响应、稳健兜底”的现代公共卫生运筹范式转型提供一种可复算的数理参照。
 
 \clearpage
 \appendix
@@ -855,7 +859,7 @@ Z_h - \hat{Z}_h = (Z_h - \mathbb{E}[Z_h]) + (\mathbb{E}[Z_h] - \hat{Z}_h).
 \end{equation}
 将两端同除以理论期望平方 $(\mathbb{E}[Z_h])^2 = (I_0 R^h)^2$，代入引理 2 与引理 3 的解析式，即严格确立了加性分解式 (\ref{eq:relmse_decomp})。
 
-进而分析可预测视界的解析性质。根据定理 2 的单调性证明，相对均方误差函数 $\text{RelMSE}(h)$ 关于前瞻步长 $h$ 严格单调递增。因此，离散视界存在正整数解（$h^*_{\text{gen}} \ge 1$）的充要条件在于首代单步前瞻误差不超过预设容忍度门槛，即 $\text{RelMSE}(1) \le \tau^2$。代入引理 2 在 $h=1$ 处的取值及参数一阶项，直接导出非零视界充要判据式 (\ref{eq:h_exist_cond})。在预设容忍度高于渐近方差饱和极限（$\tau^2 > \text{CV}^2_\infty$）的超临界状态下，将渐近方差近似值代入临界方程 $\text{RelMSE}(h^*) = \tau^2$，移项求解正根并结合平均代间隔换算因子 $\mu_g/7$，即可导出领先阶渐近闭式解式 (\ref{eq:horizon_cn})。而在容忍度极为严苛（$\tau^2 \le \text{CV}^2_\infty$）的情境下，即便参数估计达到无误差的理想状态（$\delta R = 0$），微观生灭过程自身的内在随机性亦将在有限步长内触及容忍度边界。通过令纯随机项满足 $\text{CV}^2(h) = \tau^2$，移项取对数，即可严格导出纯内在随机性视界上限式 (\ref{eq:h_stoch_bound})。
+进而分析可预测视界的解析性质。根据定理 2 的单调性证明，相对均方误差函数 $\text{RelMSE}(h)$ 关于前瞻步长 $h$ 严格单调递增。因此，离散视界存在正整数解（$h^*_{\text{gen}} \ge 1$）的充要条件在于首代单步前瞻误差不超过预设容忍度门槛，即 $\text{RelMSE}(1) \le \tau^2$。代入引理 2 在 $h=1$ 处的取值及参数一阶项，直接导出非零视界充要判据式 (\ref{eq:h_exist_cond})。在预设容忍度高于渐近方差饱和极限（$\tau^2 > \text{CV}^2_\infty$）的超临界状态下，将渐近方差近似值代入临界方程 $\text{RelMSE}(h^*) = \tau^2$，移项求解正根并结合平均代间隔换算因子 $\mu_g/7$，即可导出领先阶渐近闭式解式 (\ref{eq:horizon_cn})。对于纯内在随机性极限（参数估计无误差，$\delta R \to 0$ 或 $s_{\log R} \to 0$）：当 $\text{CV}^2(1) \le \tau^2 < \text{CV}^2_\infty$ 时，纯内在生灭涨落将在有限步长内触及容忍度边界，令 $\text{CV}^2(h) = \tau^2$ 移项取对数并向下取整导出式 (\ref{eq:h_stoch_bound})；当 $\tau^2 = \text{CV}^2_\infty$ 时，误差仅在步长趋于无穷时渐近趋近容忍度；当 $\tau^2 > \text{CV}^2_\infty$ 时，纯内在随机性在有限步长内永不超过容忍度。
 证毕。
 
 \vspace{0.8em}
@@ -982,7 +986,7 @@ q = 1 + R(q-1) + \frac{1}{2} R^2\left(1 + \frac{1}{k}\right)(q-1)^2 + O(|q-1|^3)
 \begin{align}
 \mathbb{E}\left[ \frac{\partial^2 \ell}{\partial R^2} \right] &= - \frac{k R (2R + k)}{R^2 (R+k)^2} + \frac{k}{(R+k)^2} = \frac{-k(2R+k) + k R}{R(R+k)^2} = \frac{-k(R+k)}{R(R+k)^2} = - \frac{k}{R(R+k)}.
 \end{align}
-由 Fisher 信息量的定义 $I_1(R) = -\mathbb{E}[\partial^2 \ell / \partial R^2]$，单样本的 Fisher 信息量为 $I_1(R) = \frac{k}{R(R+k)}$。对于 $C$ 个相互独立的传播簇，由 Fisher 信息的加性性质，总体样本的 Fisher 信息量为：
+由 Fisher 信息量的定义 $I_1(R) = -\mathbb{E}[\partial^2 \ell / \partial R^2]$，单样本的 Fisher 信息量为 $I_1(R) = \frac{k}{R(R+k)}$。对于 $C$ 个相互独立的个体子代观测，由 Fisher 信息的加性性质，总体样本的 Fisher 信息量为：
 \begin{equation}
 I(R) = C \cdot I_1(R) = \frac{C \cdot k}{R(R+k)}.
 \end{equation}
@@ -1047,7 +1051,7 @@ s_e^2 \sum_{j=1}^h j^2 = \frac{s_e^2 h(h+1)(2h+1)}{6} = \frac{s_e^2 (2h^3 + 3h^2
     {\zihao{3}\heiti\bfseries Predictability Horizons, Fundamental Limits, and Empirical Analysis of Epidemic Transmission Dynamics} \\[1.0em]
 \end{center}
 
-\noindent{\textbf{Abstract:}} Prospective forecasting of major infectious diseases frequently suffers from severe skill degradation near epidemic thresholds. Grounded in negative-binomial branching processes, this study derives an orthogonal additive decomposition of prospective relative mean squared error under explicitly stated assumptions, maps an error tolerance $\tau$ to a predictability horizon through closed-form leading-order solutions and exact numerical roots under lognormal parameter propagation, and gives an integer Cram\'er--Rao sample-size threshold ($C \ge 1{,}429$) together with an $O(N^{1/2})$ candidate critical slowing-down time scaling under a reflecting-regularized auxiliary diffusion. The empirical layer uses a three-tier design. First, \emph{individual transmission chains} (a Hong Kong COVID-19 contact-tracing cohort and the Guinea Ebola transmission network) test the negative-binomial generating assumption and the information-theoretic bound directly at the individual level: Poisson is rejected overwhelmingly ($\Delta\text{AIC}$ 93.9--244.0), dispersion estimates $\hat{k}=0.11$--$0.43$ fall in the published range, and the bootstrap sampling variance of $\hat{R}$ relative to the Cram\'er--Rao bound is 0.98--1.06. Second, a \emph{state-level panel} (51 US jurisdictions, seven epidemic phases across three respiratory pathogens) yields the spatial distribution of the theoretical horizon: state-level median horizons of 4.5--10.9 weeks are shorter than the national aggregates (7.9--67.8 weeks) in six of the seven phases (the exception is Omicron, where the two are essentially equal), showing that aggregation inflates horizons. Four-term comprehensive error accounting, executed per state, shows that the state-level median share of the unattributed empirical residual ranges from 20.9\% to 97.0\% across all evaluated configurations (20.9\%--86.9\% at 1--2 week horizons), accounting for the major share of observed error in most COVID-19, influenza, and longer-horizon settings; the residual is positive in 62\%--100\% of states. Third, per-state rolling backtests show operational skill against a persistence baseline decaying to parity within 1.0--4.3 weeks (state medians; national 1.0--5.3 weeks), and the official COVIDhub-ensemble forecasts degrade to parity within 1--2 weeks as well (11 of 12 origins cross at a median of 1.0--1.4 weeks; one does not cross within four weeks), indicating that the short operational lead time is not solely attributable to the limited tuning budget of our benchmark model. These results support a two-tier, exploratory benchmark framework in which the theoretical mechanistic horizon serves as an empirical loose envelope for operational forecasting timeliness, providing a reproducible quantitative reference for limits-informed public health decision-making.
+\noindent{\textbf{Abstract:}} Prospective forecasting of major infectious diseases frequently suffers from severe skill degradation near epidemic thresholds. Grounded in negative-binomial branching processes, this study derives an orthogonal additive decomposition of prospective relative mean squared error under explicitly stated assumptions, maps an error tolerance $\tau$ to a predictability horizon through closed-form leading-order solutions and exact numerical roots under lognormal parameter propagation, and provides an idealized integer sample-size benchmark ($C \ge 1{,}429$) based on the Cram\'er--Rao bound and normal power approximation together with an $O(N^{1/2})$ candidate critical slowing-down time scaling under a reflecting-regularized auxiliary diffusion. The empirical layer uses a three-tier design. First, \emph{individual transmission chains} (a Hong Kong COVID-19 contact-tracing cohort and the Guinea Ebola transmission network) test the negative-binomial generating assumption and the information-theoretic bound directly at the individual level: the Poisson model is strongly unsupported in AIC comparisons ($\Delta\text{AIC}$ 93.9--244.0), dispersion estimates $\hat{k}=0.11$--$0.43$ fall in the published range, and the bootstrap sampling variance of $\hat{R}$ relative to the Cram\'er--Rao bound is 0.98--1.06. Second, a \emph{state-level panel} (51 US jurisdictions, seven epidemic phases across three respiratory pathogens) yields the spatial distribution of the theoretical horizon: state-level median horizons of 4.5--10.9 weeks are shorter than the national aggregates (7.9--67.8 weeks) in six of the seven phases (the exception is Omicron, where the two are essentially equal), showing that aggregation inflates horizons. Four-term comprehensive error accounting, executed per state, shows that the state-level median share of the unattributed empirical residual ranges from 20.9\% to 97.0\% across all evaluated configurations (20.9\%--86.9\% at 1--2 week horizons), accounting for the major share of observed error in most COVID-19, influenza, and longer-horizon settings; the residual is positive in 62\%--100\% of states. Third, per-state rolling backtests show operational skill against a persistence baseline decaying to parity within 1.0--4.3 weeks (state medians; national 1.0--5.3 weeks), and the official COVIDhub-ensemble forecasts degrade to parity within 1--2 weeks as well (11 of 12 origins cross at a median of 1.0--1.4 weeks; one does not cross within four weeks), indicating that the short operational lead time is not solely attributable to the limited tuning budget of our benchmark model. These results support a two-tier, exploratory benchmark framework in which the theoretical mechanistic horizon serves as an empirical loose envelope for operational forecasting timeliness, providing a reproducible quantitative reference for limits-informed public health decision-making.
 
 \vspace{0.8em}
 \noindent{\textbf{Keywords:}} Epidemic forecasting; Predictability horizon; Branching process; Demographic stochasticity; Near-critical dynamics; Fisher information; Model misspecification
