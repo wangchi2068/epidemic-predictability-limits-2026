@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""check_consistency.py — build-halting consistency suite (eight assertion classes).
+"""check_consistency.py — build-halting consistency suite (nine assertion classes).
 
 1. Table fragments: regenerate every tables_v3/*.tex body from the deposited
    JSONs and byte-compare against the committed fragments.
@@ -18,6 +18,8 @@
    Delta and Omicron waves.
 8. Deposited-series identity: the national window sums that pin the analysis
    series equal the values the manuscript's tables were built from.
+9. Document-declared paths: every file, directory, or glob pattern declared in
+   README.md and MANIFEST.md must exist on disk.
 """
 from __future__ import annotations
 
@@ -202,6 +204,37 @@ def check_series_identity():
     print("[OK] deposited-series identity pinned for all three panels")
 
 
+def check_doc_paths():
+    doc_files = [ROOT / "README.md", ROOT / "MANIFEST.md"]
+    checked = 0
+    prefixes = ("data/", "tables_v3/", "reports/", "reports_v3/", "scripts_v2/",
+                "derivations/", "paper_cn_journal_template/", "presentation/", "docs/")
+    extensions = (".pdf", ".tex", ".docx", ".md", ".json", ".csv", ".gz", ".py", ".png", ".txt")
+
+    for doc in doc_files:
+        if not doc.exists():
+            fail(f"document missing: {doc.name}")
+        text = doc.read_text(encoding="utf-8")
+        raw_paths = re.findall(r"`([^`]+)`", text)
+        for rp in raw_paths:
+            rp = rp.strip()
+            if " " in rp:
+                rp = rp.split()[0]
+            if not (any(rp.startswith(pfx) for pfx in prefixes) or rp.endswith(extensions)):
+                continue
+            if "*" in rp:
+                matches = list(ROOT.glob(rp))
+                if not matches:
+                    fail(f"glob pattern in {doc.name} matched 0 files: {rp}")
+                checked += 1
+            else:
+                p = (ROOT / rp).resolve()
+                if not p.exists():
+                    fail(f"path in {doc.name} does not exist: {rp}")
+                checked += 1
+    print(f"[OK] {checked} document-declared paths verified in README.md and MANIFEST.md")
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     print("=== consistency suite ===", flush=True)
@@ -213,7 +246,8 @@ def main():
     check_drift_dimension()
     check_crossings()
     check_series_identity()
-    print("\nAll consistency assertions passed.", flush=True)
+    check_doc_paths()
+    print("\nAll 9 consistency assertions passed.", flush=True)
 
 
 if __name__ == "__main__":
