@@ -315,7 +315,7 @@ def emit_table4(bud):
     body = ("\\begin{tabular}{lcccccccc}\n"
             "\\toprule\n"
             "阶段 & $h_{\\text{周}}$ & $n_{\\text{州}}$ & "
-            "$\\text{relMSE}^2_{\\text{obs}}$ & $\\text{CV}^2$ & "
+            "$\\text{RelMSE}_{\\text{obs}}$ & $\\text{CV}^2$ & "
             "$\\mathcal{E}_{\\text{drift}}$ & $P$ & "
             "闭合残差占比 (IQR) & 为正占比 \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
@@ -334,7 +334,7 @@ def emit_table5_hub(hub):
     body = ("\\begin{tabular}{llcccccc}\n"
             "\\toprule\n"
             "波次 & 预测原点 & $h$ (周) & $n_{\\text{州}}$ & "
-            "中位 relMSE & $\\ge 1$ 占比 & 中位 WIS & 中位绝对误差 \\\\\n"
+            "中位 MSE 比率 & $\\ge 1$ 占比 & 中位 WIS & 中位绝对误差 \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
     (TABLES / "table5_hub.tex").write_text(body, encoding="utf-8")
 
