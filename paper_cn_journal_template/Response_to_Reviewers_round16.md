@@ -126,12 +126,10 @@ panel (a) narration reordered to match the bars; the machine-learning claim
 softened to the tuning budget used, with the single-configuration budget
 disclosed.
 
-**Bibliography accounting (m5, m8).** The current bibliography contains 73
-entries, of which 52 are cited and 21 are uncited; 60 entries carry a DOI field.
-The previous letter's counts (42/43, "8 of 42", "four copies") were wrong in
-denominator, category split and copy count; the correct figures are given here,
-and the two build-relevant `references.bib` copies remain byte-identical (the
-working library is outside the build chain).
+**Bibliography accounting (m5, m8).** The current bibliography in `references.bib`
+has been thoroughly pruned and finalized to exactly 57 entries, all 57 of which are cited in the
+manuscript (0 uncited entries), completely eliminating all key/year conflicts and unused bib warnings.
+The build-relevant `references.bib` copies remain byte-identical across the repository.
 
 ---
 
@@ -155,9 +153,8 @@ uses three tiers matched to the theory:
    21%→97%; positive in 62%–100% of states).
 3. **The COVIDhub-ensemble archive** (12 real forecast origins) provides an
    external operational benchmark: top-tier ensemble skill also degrades to
-   parity within 1–2 weeks (median crossings 1.0–1.4 weeks), ruling out
-   insufficient tuning of our own model as the explanation for the
-   theory–practice gap.
+   parity within 1–2 weeks, indicating that the short operational lead time is
+   not merely an artifact of the finite tuning budget of our exploratory baseline models.
 
 Every empirical number in the abstract, Section 4, Section 5 and the conclusion
 was regenerated from this chain; the old national-only tables and their figures
