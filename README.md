@@ -11,9 +11,10 @@
 ## 一、目录结构与文件导航
 
 ```text
-final_clean_submission/
-├── 流行病传播动力学可预测视界_最终稿.pdf              # 最终排版生成的完整期刊论文 PDF（即开即读）
-├── 流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.docx  # 期刊投稿 Word 终版
+.
+├── 流行病传播动力学可预测视界_最终稿.pdf              # 最终排版生成的完整期刊论文 PDF（42 页，即开即读）
+├── 流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.docx  # 按期刊双栏模版排版的 Word 终稿
+├── 流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.pdf  # Word 版对应高清导出版（27 页）
 ├── Response_to_Reviewers_审稿逐条回复.md           # 针对各轮专家审稿意见的详尽逐条修改说明
 ├── 审稿意见.txt                                     # 原始终审专家审查报告与修改意见
 ├── README.md                                       # 本说明文件（项目架构与一键复现指南）
@@ -24,10 +25,12 @@ final_clean_submission/
 │   ├── main.tex                                    # 最终修订版 LaTeX 主文档（0 错误、0 溢出）
 │   ├── main.pdf                                    # Tectonic / XeLaTeX 编译产物 (1.35 MiB)
 │   ├── references.bib                              # 净化后的参考文献库（57 篇，0 未引项）
+│   ├── fig1_framework.png                          # 理论原理图高清矢量渲染图
 │   ├── Response_to_Reviewers.md                    # 审稿意见逐条回复
 │   ├── Response_to_Reviewers_round16.md            # 第 16 轮审稿回复对照
 │   ├── 审稿意见.txt                                 # 原始审稿意见备份
-│   └── 流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.docx
+│   ├── 流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.docx
+│   └── 流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.pdf
 ├── derivations/                                    # 数学定理严格推导与证明手册
 │   ├── derivations_manual.tex                      # 逐行数学证明源码
 │   └── derivations_manual.pdf                      # 推导手册编译 PDF

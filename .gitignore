@@ -1,26 +1,26 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-.ruff_cache/
-env/
-venv/
-.venv/
-
-# LaTeX build artifacts (keep main.pdf and final PDFs!)
+# LaTeX build artifacts
 *.aux
 *.bbl
 *.blg
 *.log
 *.out
 *.toc
-*.synctex.gz
 *.fls
 *.fdb_latexmk
+*.synctex.gz
+*.upa
+*.upb
 
-# OS artifacts
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+
+# OS / Editor artifacts
 .DS_Store
 Thumbs.db
-desktop.ini
+*.swp
+*~
+~$*.docx
