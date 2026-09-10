@@ -508,21 +508,21 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.88\textwidth]{../reports/figures_v2/fig2_cv_verify.png}
+\includegraphics[width=0.88\textwidth]{reports/figures_v2/fig2_cv_verify.png}
 \caption{\textbf{负二项分支过程内在相对方差与理论下界蒙特卡洛模拟验证。}在典型超临界传播设定下（$R=1.5, k=0.3, I_0=100$），展示群体内在相对方差 $\text{CV}^2(h)$ 随代际步长 $h$ 演化并收敛于渐近饱和值。蓝色实线为引理 2 闭式解 $\text{CV}^2(h)$，红色散点为 20,000 条独立模拟轨迹的经验统计，灰色虚线为 $\text{CV}^2_\infty$；闭式曲线与模拟经验高度吻合。}
 \label{fig:t1_verify_cn}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.96\textwidth]{../reports/figures_v2/fig_t3_quasistationary.png}
+\includegraphics[width=0.96\textwidth]{reports/figures_v2/fig_t3_quasistationary.png}
 \caption{\textbf{拟平稳扩散密度与定殖概率的近临界相变模拟验证（数据来源 \texttt{verify\_t3.json}，重建自 \texttt{scripts\_v2/sim\_verify\_t3.py}）。}(a) 反射正则化辅助扩散平稳密度 $\pi(x) \propto x^{-1}\exp(c_1x-c_2x^2)$ 在宿主种群 $N=2000$ 下的经验/理论变异系数比值（柱序自左至右按偏离量递增）：临界过渡窗口内（$|\varepsilon| \le O(N^{-1/2}) \approx 0.022$）$(\varepsilon, R) \in \{(0.005, 1.005), (0.01, 1.01)\}$ 为 0.976 与 0.950，超临界区 $(\varepsilon, R) \in \{(0.2, 1.2), (0.4, 1.4)\}$ 为 0.9995 与 0.9991。(b) 单种子定殖概率的 Poisson 分支 Galton--Watson 模拟（8 组，每组 400 次重复）与理论 $2\varepsilon/R$ 的对照，7/8 组的理论值落入经验 95\% Beta 区间。(c) 有限种群首达概率与连续扩散建群概率代理比较（推论 2 设定，12 组，$k\in\{0.5,1.0\}$，每组 2,500 次重复）：展示有限种群首达概率与连续扩散代理 $2\varepsilon/[R(1+R/k)]$（它与式 (\ref{eq:establishment_prob}) 的离散母函数展开在近临界 $R \to 1^+$ 处领先阶等价）的对照；$k$ 抑制方向与经验一致，但由于有限种群首达有限规模（$\lceil 0.05N \rceil$）与无界种群终极逃逸灭绝的截断定义差异，一阶理论值仅 5/12 落入经验 95\% Beta 区间且整体偏低（$N=500$ 时经验/理论达 $1.07\text{--}1.61$），故推论 2 仅作过度离散负向抑制的方向性验证。}
 \label{fig:t3_cn}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.75\textwidth]{../reports/figures_v2/fig_t4_fisher_bound.png}
+\includegraphics[width=0.75\textwidth]{reports/figures_v2/fig_t4_fisher_bound.png}
 \caption{\textbf{负二项分支似然下的 Cram\'er--Rao 辨识界模拟验证。}展示在定理 4 的固定观测设定下，不同参数（$R \in \{1.05, 1.10, 1.30, 1.50\}$, $k \in \{0.3, 1.0\}$，含关键样本量 231 与模拟工作点 1,428（对应 80\% 功效连续理论值 1,428.7，向上取整严格最小整数门槛为 1,429）等）下极大似然估计量（MLE）经验抽样方差与 CRB 基准之比（该比值围绕 1.000 波动，区间 0.9931--1.0104，虚线为理论下界），证实了数值实验的精确性。}
 \label{fig:t4_cn}
 \end{figure}
@@ -580,7 +580,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \caption{微观传播链层的子代分布极大似然拟合与信息论下界检验}
 \label{tab:micro}
 \resizebox{\textwidth}{!}{%
-\input{../tables_v3/table7_micro}%
+\input{tables_v3/table7_micro}%
 }
 \vspace{2pt}
 \begin{flushleft}
@@ -589,7 +589,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.92\textwidth]{../reports_v3/figures/fig_micro.png}
+\includegraphics[width=0.92\textwidth]{reports_v3/figures/fig_micro.png}
 \caption{\textbf{个体子代分布的负二项拟合。}三组传播链数据的拟合负二项概率质量函数与拟合参数（$\hat{R}$、$\hat{k}$、$\Delta\text{AIC}$）：香港 COVID-19 本地子群（左）、香港全队列（中）与几内亚埃博拉（右）。埃博拉的近临界均值（$\hat{R}=0.954$）与极低离散度（$\hat{k}=0.182$）共同刻画了强超级传播的传播网络。}
 \label{fig:micro}
 \end{figure}
@@ -606,7 +606,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \caption{州级面板各阶段动力学参数与理论可预测视界分布（中位数与四分位距）}
 \label{tab:horizons}
 \resizebox{\textwidth}{!}{%
-\input{../tables_v3/table2_state}%
+\input{tables_v3/table2_state}%
 }
 \vspace{2pt}
 \begin{flushleft}
@@ -615,7 +615,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.88\textwidth]{../reports_v3/figures/fig_state_horizons.png}
+\includegraphics[width=0.88\textwidth]{reports_v3/figures/fig_state_horizons.png}
 \caption{\textbf{各阶段理论视界的州级分布与国家级聚合值对比。}箱线图为州级辖区 $h^*_{\text{exact}}$（周，对数纵轴）的中位数与四分位距，红色菱形为 51 州求和的国家级序列在同一窗口的视界。国家级值在七个阶段中的六个高于州级中位数（唯一例外是 Omicron，两者基本相等），直观展示聚合平滑对视界的系统性高估及其边界。灰色带标示呼吸道病毒单流行季 16--20 周的自然跨度。}
 \label{fig:state_horizons}
 \end{figure}
@@ -641,7 +641,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \caption{四项预测误差记账的州级分解（各分量绝对值 $\times 10^{-4}$ 的中位数与闭合残差占比分布）}
 \label{tab:budget_four}
 \resizebox{\textwidth}{!}{%
-\input{../tables_v3/table4_budget}%
+\input{tables_v3/table4_budget}%
 }
 \vspace{2pt}
 \begin{flushleft}
@@ -662,7 +662,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \caption{理论机制视界与伪实时滚动业务时效的州级双层对照}
 \label{tab:rolling}
 \resizebox{\textwidth}{!}{%
-\input{../tables_v3/table3_rolling}%
+\input{tables_v3/table3_rolling}%
 }
 \vspace{2pt}
 \begin{flushleft}
@@ -683,7 +683,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \caption{COVIDhub-ensemble 集成预测的州级技能衰减（12 个预测原点）}
 \label{tab:hub}
 \resizebox{\textwidth}{!}{%
-\input{../tables_v3/table5_hub}%
+\input{tables_v3/table5_hub}%
 }
 \vspace{2pt}
 \begin{flushleft}
@@ -692,7 +692,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.80\textwidth]{../reports_v3/figures/fig_hub_skill.png}
+\includegraphics[width=0.80\textwidth]{reports_v3/figures/fig_hub_skill.png}
 \caption{\textbf{COVIDhub-ensemble 集成预测的州级技能衰减。}纵轴为跨州中位 MSE 比率 $\text{MSERatio}$（相对持续性基线），横轴为前瞻周数，黑色虚线为与持续性基线平价（$\text{MSERatio} = 1$）。Delta 与 Omicron 两波共 12 个预测原点：两波的中位 MSE 比率均在 1--2 周内越过或逼近平价线，与本文自设模型给出的业务时效区间一致。}
 \label{fig:hub_skill}
 \end{figure}
@@ -709,7 +709,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 \caption{公共卫生决策分级场景、多档容忍度理论可预测视界（州级中位数）与风控策略推荐}
 \label{tab:scenarios}
 \resizebox{\textwidth}{!}{%
-\input{../tables_v3/table6_tiers}%
+\input{tables_v3/table6_tiers}%
 }
 \vspace{2pt}
 \begin{flushleft}

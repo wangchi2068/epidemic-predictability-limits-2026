@@ -33,7 +33,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-PAPER = ROOT / "paper_cn_journal_template"
+PAPER = ROOT
 REPORTS = ROOT / "reports_v3"
 TABLES = ROOT / "tables_v3"
 DATA = ROOT / "data"
