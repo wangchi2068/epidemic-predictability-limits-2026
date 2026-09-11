@@ -34,6 +34,8 @@
 | `tables_v3/table3_state.tex` | **表 3**：州级面板各阶段动力学参数与理论可预测视界分布 | `scripts_v2/emit_v3.py` <- `reports_v3/state_phases.json` |
 | `tables_v3/table4_budget.tex` | **表 4**：四项预测误差记账的州级分解 | `scripts_v2/emit_v3.py` <- `reports_v3/budget_national.json` |
 | `tables_v3/table5_rolling.tex` | **表 5**：理论机制视界与伪实时滚动业务时效的州级双层对照 | `scripts_v2/emit_v3.py` <- `reports_v3/state_rolling.json` |
+| `reports_v3/sensitivity_v4.json` | 视界方程的三项补充敏感性结果（k_agg 窗口/截断、个体级 k、周代求根） |
+| `reports_v3/rolling_bootstrap.json` | 滚动穿越点的原点级自助区间 |
 | `tables_v3/table6_hub.tex` | **表 6**：COVIDhub-ensemble 集成预测的州级技能衰减 | `scripts_v2/emit_v3.py` <- `data/hub/forecast_hub_operational_evaluation.json` |
 | `tables_v3/table7_tiers.tex` | **表 7**：公共卫生决策分级场景、理论可预测视界与风控策略推荐 | `scripts_v2/emit_v3.py` <- `reports_v3/scenarios.json` |
 
@@ -81,6 +83,8 @@
 | `scripts_v2/sim_verify_t3.py` | 定理 3（拟平稳分布与定殖概率尺度）数值模拟验证 |
 | `scripts_v2/sim_verify_t4.py` | 定理 4（Fisher 信息量与 Cramér–Rao 下界）数值模拟验证 |
 | `scripts_v2/micro_reanalysis.py` | 微观传播链层再分析：$\hat R$、$\hat k$ 自助置信区间、负二项拟合优度检验、零膨胀敏感性、非参数自助对照 |
+| `scripts_v2/sensitivity_v4.py` | k_agg 窗口/截断敏感性、个体级 k 替换敏感性、周度-代际求根差异量化 |
+| `scripts_v2/rolling_bootstrap.py` | 滚动回测穿越点的原点级自助置信区间（B=2000） |
 | `scripts_v2/verify_suite.py` | 定理 5R（环境噪声自回归）与推论 1 验证套件 |
 
 ---

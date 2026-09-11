@@ -23,7 +23,9 @@ STEPS = [
     ("verify_suite.py", "定理 5R + 推论 1 验证"),
     ("sim_verify_t3.py", "定理 3 拟平稳 + 定殖概率验证"),
     ("make_all_figures_v2.py", "第 3 节图件"),
-    ("check_consistency.py", "一致性测试（八类断言）"),
+    ("sensitivity_v4.py", "视界方程敏感性（k_agg 窗口/截断、个体 k、周代求根）"),
+    ("rolling_bootstrap.py", "滚动穿越点原点级自助"),
+    ("check_consistency.py", "一致性测试（九类断言）"),
 ]
 
 
