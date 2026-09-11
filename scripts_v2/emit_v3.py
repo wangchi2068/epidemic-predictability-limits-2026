@@ -383,9 +383,9 @@ def emit_table3(roll_state, roll_nat, phases, bud=None):
             f"{_fmt(hp['median'],1)} \\\\")
     body = ("\\begin{tabular}{lccccccc}\n"
             "\\toprule\n"
-            "阶段 & $n_{\\text{州}}$ & 州级持续性穿越 [IQR] & "
-            "州级局部线性穿越 & 州级实测视界 & 国家级持续性 & 国家级局部线性 & "
-            "州级 $h^*$ 中位数 \\\\\n"
+            "阶段 & $n_{\\text{州}}$ & 州级持续性 [IQR] & "
+            "州级局部线性 & 州级实测视界 & 国家级持续性 & 国家级局部线性 & "
+            "$h^*$ 中位数 \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
     (TABLES / "table5_rolling.tex").write_text(body, encoding="utf-8")
 
