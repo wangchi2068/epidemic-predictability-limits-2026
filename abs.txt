@@ -1,0 +1,11 @@
+摘要：}重大呼吸道传染病前瞻预测在近临界阶段频繁遭遇系统性失效难题。本文在负二项分支过程框架下推导了前瞻预测相对均方误差的正交可加分解，建立了可预测视界的闭式解映射与对数正态参数传播下的精确数值求根方程，并给出基于 Cramér--Rao 信息下界的理想整数样本量基准（按本文实测过度离散 $k \in [0.11, 0.43]$ 为 $C \ge 2{,}162$--$6{,}593$，居中参照值 $k=1$ 下为 1,300）。实证采用三层数据设计，证据基础以美国 51 个州级辖区的三类呼吸道病原（COVID-19、流感、RSV）周度住院监测为主，辅以两组个体传播链队列与 COVID-19 预测枢纽的 12 个预测原点；所报结论以该证据基础为限。\textbf{个体传播链层}在个体层面支持负二项生成假设（Poisson 在 AIC 模型选择中受到强烈不支持，$\Delta\text{AIC}$ 达 93.9--244.0），$R$ 估计量的参数化自助方差与 Cramér--Rao 下界之比为 0.98--1.06（模型内自洽性检验）。\textbf{州级面板层}给出理论视界的空间分布，州级中位视界为 4.5--10.9 周，在七个阶段中的六个短于国家级聚合值，而按同一定义计算的实测绝对误差视界仅约 1.2--3.9 周，定量表明机制视界是实测业务时效的宽松包络。\textbf{预测枢纽层}以 12 个真实预测原点作外部对照，高水平业务集成基准的州级技能同样在 1--2 周内退化至与持续性基线相当。逐州滚动回测表明，终报数据下的业务时效上界为相对持续性基线 1.0--4.3 周，而相对更强的局部线性基线则七个阶段中六个塌缩至 1.0 周。上述结果支持“机制代理视界为业务时效经验宽松包络候选”的双层探索性基准框架（该关系为本文数据与口径范围内的经验观察），为极限知情、分级响应的公卫预警提供可复算的数理参照。
+
+\vspace{0.8em}
+\noindent{\heiti\bfseries 关键词：}传染病预测；可预测视界；分支过程；内在随机性；Fisher 信息量
+
+\clearpage
+\begin{center}
+    {\zihao{3}\heiti\bfseries Predictability Horizons, Fundamental Limits, and Empirical Analysis of Epidemic Transmission Dynamics} \\[1.0em]
+\end{center}
+
+\noindent{\textbf{Abstract:}} Prospective forecasting of major infectious diseases frequently suffers from severe skill degradation near epidemic thresholds. Grounded in negative-binomial branching processes, this study derives an orthogonal additive decomposition of prospective relative mean squared error, establishes an exact-numerical-root horizon mapping (with a closed-form leading-order scaling reference) unde

@@ -52,6 +52,7 @@
 │   ├── sim_verify_t4.py                            # 定理 4 Cramér–Rao 下界数值验证脚本
 │   ├── micro_reanalysis.py                         # 微观层再分析：自助CI、拟合优度、零膨胀敏感性、非参数自助
 │   ├── sensitivity_v4.py                           # 视界方程敏感性（k_agg 窗口/截断、个体 k、周代求根）
+│   ├── caliber_table.py                           # 七阶段多口径视界对照
 │   ├── macro_cv_check.py                          # 宏观固定 k_agg 模型的 CV² 方差律核验
 │   ├── coarsegrain_check.py                        # 个体 k → 宏观 k_agg 粗粒化核验
 │   ├── rolling_bootstrap.py                        # 滚动穿越点的原点级自助区间

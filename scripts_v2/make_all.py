@@ -27,6 +27,7 @@ STEPS = [
     ("rolling_bootstrap.py", "滚动穿越点原点级自助"),
     ("coarsegrain_check.py", "个体 k → 宏观 k_agg 粗粒化核验"),
     ("macro_cv_check.py", "宏观固定 k_agg 模型方差律核验"),
+    ("caliber_table.py", "七阶段多口径视界对照"),
     ("check_consistency.py", "一致性测试（九类断言）"),
 ]
 
