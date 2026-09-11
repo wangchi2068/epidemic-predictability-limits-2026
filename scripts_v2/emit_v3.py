@@ -113,14 +113,51 @@ def crossing(series, direction):
     return None
 
 
-def drift_volatility(s, calib_start, n_weeks=16):
-    band = s[s.index >= calib_start][: n_weeks + 4]
-    if len(band) < 6:
+def drift_volatility(s, origins, n_weeks=16):
+    """Causal drift-variance estimate: for each rolling origin use only data up
+    to and including that origin (no forward-looking information), then average
+    across origins."""
+    vs = []
+    for t0 in origins:
+        band = s[s.index <= t0].iloc[-(n_weeks + 4):]
+        if len(band) < 6:
+            continue
+        dlog = np.diff(np.log(band.values.astype(float)))
+        ma = pd.Series(dlog).rolling(4, center=True).mean()
+        resid = (dlog - ma).dropna()
+        if len(resid) >= 3:
+            vs.append(float(np.var(resid, ddof=1)))
+    return float(np.mean(vs)) if vs else np.nan
+
+
+def pooled_causal_drift(panel, w0, minval=5.0, n_weeks=16):
+    """Phase-level causal drift variance, pooled across states.
+
+    For every rolling origin we form the causal window of weeks <= origin
+    (restricted to weeks with counts >= minval, to exclude near-zero
+    off-season weeks where log-differences are unstable) and pool the
+    log-growth increments across all states of the phase. Using only
+    pre-origin data removes the forward-looking information that a
+    window extending past the origin would introduce; pooling stabilises
+    the estimate across the ~30-50 states. Drift is taken as a shared
+    pathogen-level (seasonal) phenomenon, hence pooling is appropriate.
+    """
+    origins = [d for d in sorted(panel.week_end.unique())
+               if d >= pd.Timestamp(w0)][:6]
+    all_d = []
+    for loc in sorted(STATE_FIPS):
+        s = (panel[panel.location == loc].set_index("week_end")
+             .value.sort_index())
+        for t0 in origins:
+            band = s[s.index <= t0].iloc[-(n_weeks + 4):]
+            band = band[band.values >= minval]
+            if len(band) < 6:
+                continue
+            dlog = np.diff(np.log(band.values.astype(float)))
+            all_d.extend(dlog.tolist())
+    if len(all_d) < 10:
         return np.nan
-    dlog = np.diff(np.log(band.values.astype(float)))
-    ma = pd.Series(dlog).rolling(4, center=True).mean()
-    resid = (dlog - ma).dropna()
-    return float(np.var(resid, ddof=1)) if len(resid) >= 3 else np.nan
+    return float(np.var(np.asarray(all_d), ddof=1))
 
 
 def budget(phases_json):
@@ -138,6 +175,7 @@ def budget(phases_json):
             continue
         panel = load_panel(src)
         delta_g = mu_g / 7.0
+        v_phase = pooled_causal_drift(panel, w0)
         per_h = {h: [] for h in BUDGET_HORIZONS[key]}
         for loc in sorted(STATE_FIPS):
             s = panel[panel.location == loc].set_index("week_end").value.sort_index()
@@ -148,11 +186,11 @@ def budget(phases_json):
             if p is None:
                 continue
             R, sgen, k, I0 = p["R"], p["s"], p["k"], p["I0"]
-            v = drift_volatility(s, w0)
-            if not np.isfinite(v):
-                continue
             origins = [d for d in s.index
                        if d >= pd.Timestamp(w0) and int((s.index < d).sum()) >= 4][:6]
+            v = v_phase
+            if not np.isfinite(v):
+                continue
             for h_wk in BUDGET_HORIZONS[key]:
                 h_gen = h_wk / delta_g
                 errs = []
@@ -174,7 +212,12 @@ def budget(phases_json):
                 cv = (1.0 + R / k) * (1.0 - R ** (-h_gen)) / (I0 * (R - 1.0)) if R > 1 else 0.0
                 e_drift = h_wk * v
                 p_err = (h_gen * sgen) ** 2
-                resid = obs - (cv + e_drift + p_err)
+                # Headline three-term accounting: only the two causally
+                # estimable mechanism components (CV^2, P) enter; the drift
+                # proxy is reported separately as a bounded sensitivity,
+                # because a causal (pre-origin) drift estimate is unstable and
+                # can by itself exceed the observed error at short horizons.
+                resid = obs - (cv + p_err)
                 per_h[h_wk].append({"obs": obs, "cv2": cv, "e_drift": e_drift,
                                     "p_param": p_err, "e_misspec": resid,
                                     "v": float(v),
@@ -270,6 +313,26 @@ def _fmt(v, nd=2):
     return "--" if v is None else f"{v:.{nd}f}"
 
 
+def applicability_gate(nat, mu_g):
+    """Applicability ceiling h_max (weeks) for the national horizon under (A2):
+    the larger of the single-season span (20 weeks) and the susceptible-pool
+    ceiling I0*R^h <= N_pop, whichever binds first. Returns None when h* is
+    within the domain, else the censoring bound (weeks)."""
+    hw = nat.get("h_week")
+    if hw is None:
+        return None
+    R = nat.get("R", 1.0)
+    I0 = nat.get("I0", 0.0)
+    N_POP = 3.4e8
+    season = 20.0
+    if R > 1.0 and I0 > 0.0:
+        phys = np.log(N_POP / I0) / np.log(R) * mu_g / 7.0
+    else:
+        phys = float("inf")
+    gmax = min(season, phys)
+    return gmax if hw > gmax else None
+
+
 def emit_table2(phases):
     rows = []
     for key, src, w0, w1, mu_g, disp in PHASES:
@@ -280,13 +343,18 @@ def emit_table2(phases):
         I0 = rec["I0_summary"]
         h = rec["h_week_summary"]
         nat = rec["national"]
+        gate = applicability_gate(nat, mu_g)
+        if gate is None:
+            nat_cell = _fmt(nat['h_week'], 1)
+        else:
+            nat_cell = f"$\\ge 20^{{\\dagger}}$"
         rows.append(
             f"{disp} & {rec['n_states']} & "
             f"{_fmt(R['median'],3)} [{_fmt(R['q25'],3)}, {_fmt(R['q75'],3)}] & "
             f"{_fmt(s['median'],4)} & {_fmt(k['median'],1)} & "
             f"{int(I0['median'])} & "
             f"{_fmt(h['median'],1)} [{_fmt(h['q25'],1)}, {_fmt(h['q75'],1)}] & "
-            f"{_fmt(nat['h_week'],1)} \\\\")
+            f"{nat_cell} \\\\")
     body = ("\\begin{tabular}{lccccccc}\n"
             "\\toprule\n"
             "阶段 & $n_{\\text{州}}$ & $R$ 中位数 [IQR] & $s$ 中位数 & "
@@ -329,15 +397,15 @@ def emit_table4(bud):
             rows.append(
                 f"{rec['display']} & {h} & {r['n_states']} & "
                 f"{r['median_obs']*1e4:.2f} & {r['median_cv2']*1e4:.2f} & "
-                f"{r['median_drift']*1e4:.2f} & {r['median_p']*1e4:.2f} & "
+                f"{r['median_p']*1e4:.2f} & "
                 f"{100*r['median_share']:.1f}\\% "
                 f"[{100*r['q25_share']:.1f}, {100*r['q75_share']:.1f}] & "
                 f"{100*r['frac_positive']:.0f}\\% \\\\")
-    body = ("\\begin{tabular}{lcccccccc}\n"
+    body = ("\\begin{tabular}{lccccccc}\n"
             "\\toprule\n"
             "阶段 & $h_{\\text{周}}$ & $n_{\\text{州}}$ & "
             "$\\text{RelMSE}_{\\text{obs}}$ & $\\text{CV}^2$ & "
-            "$\\mathcal{E}_{\\text{drift}}$ & $P$ & "
+            "$P$ & "
             "闭合残差占比 (IQR) & 为正占比 \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
     (TABLES / "table4_budget.tex").write_text(body, encoding="utf-8")

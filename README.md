@@ -4,7 +4,7 @@
 
 > **工作目录与稿件规范说明：**
 > 1. 本目录即为论文主稿的根目录，核心 LaTeX 文档为根目录下的 **`main.tex`**，编译输出为 **`main.pdf`**（48 页，Tectonic 编译）。
-> 2. `Response_to_Reviewers_round17.md` 为针对本轮评审报告（Major M1--M16 / Minor m1--m13 / 格式 F1--F15 / 文献 R1--R9）的逐条回应与落实清单；内部评审材料（审稿意见原文、评审报告与旧版回复信）已从本工作区移除，避免随复现包外泄。
+> 2. 内部评审材料（审稿意见、评审报告与作者回复信）均不纳入本公开复现包，以避免双盲匿名性泄漏。
 
 ---
 
@@ -15,7 +15,6 @@
 ├── main.tex                                        # 最终修订版 LaTeX 论文主文档源码（0 错误、0 溢出）
 ├── main.pdf                                        # Tectonic 编译产物 (48 页完整期刊论文)
 ├── references.bib                                  # 净化后的参考文献库（60 篇，双向完全闭合）
-├── Response_to_Reviewers_round17.md                # 针对本轮评审报告的逐条回应与落实清单
 ├── README.md                                       # 本说明文件：项目架构、自洽规范与复现指南
 ├── MANIFEST.md                                     # 全量有效交付文件与磁盘真实路径全量对照表
 ├── environment.yml                                 # Conda 运行环境配置文件
@@ -84,4 +83,4 @@ python scripts_v2/check_consistency.py
 ```bash
 tectonic main.tex
 ```
-当前指标：**0 Errors, 0 Overfull hboxes, 0 Undefined References**。\n
+当前指标：**0 Errors、0 Undefined References；仅 1 处 0.54 pt 的中文标点右悬挂（视觉不可见，非真正 overfull）**。

@@ -10,7 +10,6 @@
 | `main.tex` | LaTeX 源码 | 论文主文档源码：含定理 1、2、4、5、5R、命题 3 与推论 1--3、四项描述性误差记账与完整实证分析（0 错误、0 溢出） |
 | `main.pdf` | PDF 文档 | 论文编译主产物（48 页，由 Tectonic 从当前 `main.tex` 编译生成） |
 | `references.bib` | BibTeX | 净化后的参考文献库（60 篇，双向完全闭合：0 缺失、0 未引项） |
-| `Response_to_Reviewers_round17.md` | Markdown | 针对本轮评审报告（Major M1--M16 / Minor m1--m13 / 格式 F1--F15 / 文献 R1--R9）的逐条回应与落实清单 |
 | `README.md` | Markdown | 项目自洽指南、架构说明与复现指南 |
 | `MANIFEST.md` | Markdown | 本文件：全量有效交付文件与磁盘真实路径对照表 |
 | `environment.yml` | YAML | Conda 运行环境依赖定义 |

@@ -173,12 +173,24 @@ def gen_fig_t4():
     d = json.loads((REPORTS / "verify_t4.json").read_text(encoding="utf-8"))
     labels = list(d.keys())
     ratios = [d[k]["ratio"] for k in labels]
-    fig, ax = plt.subplots(figsize=(8.0, 4.6))
+
+    def pretty(name):
+        # "R1.10_k0.434_C2162" -> "R=1.10\nk=0.434\nC=2,162"
+        parts = name.split("_")
+        R = parts[0][1:]
+        k = parts[1][1:]
+        C = parts[2][1:]
+        C = f"{int(C):,}"
+        return f"R={R}\nk={k}\nC={C}"
+
+    pretty_labels = [pretty(k) for k in labels]
+    fig, ax = plt.subplots(figsize=(9.0, 5.0))
     ax.bar(range(len(labels)), ratios, color="#55a868", alpha=0.9)
     ax.axhline(1.0, color="#d9534f", ls="--", lw=1.4, label="理论 CRB 下界")
     ax.set_xticks(range(len(labels)))
-    ax.set_xticklabels(labels, rotation=30, fontsize=8)
+    ax.set_xticklabels(pretty_labels, fontsize=7.5)
     ax.set_ylabel("经验方差 / CRB 下界")
+    ax.set_xlabel("参数组（$R$、$k$、样本量 $C$）")
     ax.set_ylim(0.95, 1.05)
     ax.legend()
     ax.grid(alpha=0.3, axis="y")
