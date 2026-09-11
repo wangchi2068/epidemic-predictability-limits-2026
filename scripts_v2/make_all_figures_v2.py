@@ -111,7 +111,7 @@ def _panel_est(ax, est, theory_key, title, xtickmap=None):
                 fmt="o", color="#4c72b0", capsize=3, label="经验定殖概率（95% Beta 区间）")
     ax.plot(x, theo, "s--", color="#dd8452", label="理论")
     ax.set_xticks(x)
-    ax.set_xticklabels(elabels, rotation=45, fontsize=6.5)
+    ax.set_xticklabels(elabels, fontsize=7.5)
     ax.set_ylabel("定殖概率")
     ax.set_title(title)
     ax.legend(fontsize=7)
@@ -136,7 +136,7 @@ def gen_fig_t3():
     ax.bar(range(len(labels)), ratios, color="#4c72b0", alpha=0.85)
     ax.axhline(1.0, color="#d9534f", ls="--")
     ax.set_xticks(range(len(labels)))
-    ax.set_xticklabels(labels, rotation=20, fontsize=8)
+    ax.set_xticklabels([k.replace("eps", "ε=") for k in labels], fontsize=9)
     ax.set_ylabel("经验/理论变异系数比值")
     ax.set_ylim(min(ratios) - 0.05, max(max(ratios), 1.0) + 0.05)
     ax.set_title("(a) 拟平稳 CV：经验/理论比值")
@@ -150,8 +150,13 @@ def gen_fig_t3():
     # theory is systematically below the empirical values, most strongly at N=500.
     # Reported here so the corollary's k-dependence claim carries its own evidence.
     nb = d.get("establishment_nb") or {}
-    keymap = {k: k.replace("N", "N=").replace("_eps", ", ε=").replace("_k", ", k=")
-              for k in nb}
+    def _pretty_c(k):
+        parts = k.split("_")
+        N = parts[0][1:]
+        eps = parts[1][3:]
+        kk = parts[2][2:]
+        return f"N={N}\nε={eps}, k={kk}"
+    keymap = {k: _pretty_c(k) for k in nb}
     _panel_est(ax3, nb, "theory_nb",
                "(c) 定殖概率（负二项分支，推论 2）：经验 vs $2\\varepsilon/[R(1+R/k)]$",
                xtickmap=keymap)

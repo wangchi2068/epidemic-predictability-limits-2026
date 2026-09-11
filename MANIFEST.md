@@ -36,6 +36,7 @@
 | `tables_v3/table5_rolling.tex` | **表 5**：理论机制视界与伪实时滚动业务时效的州级双层对照 | `scripts_v2/emit_v3.py` <- `reports_v3/state_rolling.json` |
 | `reports_v3/sensitivity_v4.json` | 视界方程的三项补充敏感性结果（k_agg 窗口/截断、个体级 k、周代求根） |
 | `reports_v3/rolling_bootstrap.json` | 滚动穿越点的原点级自助区间 |
+| `reports_v3/coarsegrain_check.json` | 粗粒化核验：微观分支模拟反解 k_agg 与隐含聚合因子 M |
 | `tables_v3/table6_hub.tex` | **表 6**：COVIDhub-ensemble 集成预测的州级技能衰减 | `scripts_v2/emit_v3.py` <- `data/hub/forecast_hub_operational_evaluation.json` |
 | `tables_v3/table7_tiers.tex` | **表 7**：公共卫生决策分级场景、理论可预测视界与风控策略推荐 | `scripts_v2/emit_v3.py` <- `reports_v3/scenarios.json` |
 
@@ -85,6 +86,7 @@
 | `scripts_v2/micro_reanalysis.py` | 微观传播链层再分析：$\hat R$、$\hat k$ 自助置信区间、负二项拟合优度检验、零膨胀敏感性、非参数自助对照 |
 | `scripts_v2/sensitivity_v4.py` | k_agg 窗口/截断敏感性、个体级 k 替换敏感性、周度-代际求根差异量化 |
 | `scripts_v2/rolling_bootstrap.py` | 滚动回测穿越点的原点级自助置信区间（B=2000） |
+| `scripts_v2/coarsegrain_check.py` | 个体级 k 到宏观 k_agg 的粗粒化机制数值核验 |
 | `scripts_v2/verify_suite.py` | 定理 5R（环境噪声自回归）与推论 1 验证套件 |
 
 ---
