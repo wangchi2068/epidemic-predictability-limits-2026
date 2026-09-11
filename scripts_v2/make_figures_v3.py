@@ -15,12 +15,14 @@ ROOT = Path(__file__).resolve().parents[1]
 REPORTS = ROOT / "reports_v3"
 FIGS = ROOT / "reports_v3" / "figures"
 FIGS.mkdir(parents=True, exist_ok=True)
-plt.rcParams.update({"font.size": 9, "axes.grid": True, "grid.alpha": 0.3})
+plt.rcParams.update({"font.size": 9, "axes.grid": True, "grid.alpha": 0.3,
+                     "font.sans-serif": ["Microsoft YaHei", "SimHei", "DejaVu Sans"],
+                     "axes.unicode_minus": False})
 
 PHASE_ORDER = ["Delta", "Omicron", "JN1", "flu22", "flu24", "rsv24", "rsv25"]
 PHASE_LABEL = {"Delta": "Delta", "Omicron": "Omicron", "JN1": "JN.1",
-               "flu22": "Flu 22--23", "flu24": "Flu 24--25",
-               "rsv24": "RSV 24--25", "rsv25": "RSV 25--26"}
+               "flu22": "流感 22-23", "flu24": "流感 24-25",
+               "rsv24": "RSV 24-25", "rsv25": "RSV 25-26"}
 
 
 def fig_state_horizons(phases):
@@ -37,10 +39,10 @@ def fig_state_horizons(phases):
     for p in bp["boxes"]:
         p.set_facecolor("#cfe3f5")
     ax.plot(range(1, len(nat) + 1), nat, "D", color="#b2182b",
-            label="National aggregate", zorder=5)
+            label="国家级聚合", zorder=5)
     ax.axhspan(16, 20, color="grey", alpha=0.12)
-    ax.text(0.6, 18, "single-season span", color="grey", fontsize=8, va="center")
-    ax.set_ylabel(r"$h^*$ (weeks, exact root, $\tau=0.5$)")
+    ax.text(0.6, 18, "单流行季跨度", color="grey", fontsize=8, va="center")
+    ax.set_ylabel(r"可预测视界 $h^*$（周，精确根，$\tau=0.5$）")
     ax.set_yscale("log")
     ax.legend(loc="upper left", frameon=False)
     fig.tight_layout()
@@ -50,9 +52,9 @@ def fig_state_horizons(phases):
 
 def fig_micro(micro):
     fig, axes = plt.subplots(1, 3, figsize=(8.4, 2.8), sharey=False)
-    series = [("Hong_Kong_COVID19_Local", "HK COVID-19 (local)", "#2166ac"),
-              ("Hong_Kong_COVID19_All", "HK COVID-19 (all)", "#67a9cf"),
-              ("Guinea_Ebola_2014", "Guinea Ebola 2014", "#b2182b")]
+    series = [("Hong_Kong_COVID19_Local", "香港 COVID-19（本地）", "#2166ac"),
+              ("Hong_Kong_COVID19_All", "香港 COVID-19（全体）", "#67a9cf"),
+              ("Guinea_Ebola_2014", "几内亚埃博拉 2014", "#b2182b")]
     for ax, (key, label, color) in zip(axes, series):
         rec = micro[key]
         # reconstruct offspring counts from the stored moments is not possible;
@@ -62,13 +64,13 @@ def fig_micro(micro):
         from scipy.stats import nbinom
         p = k / (k + R)
         pmf = nbinom.pmf(xs, k, p)
-        ax.bar(xs, pmf, color=color, alpha=0.75, label="NB fit")
+        ax.bar(xs, pmf, color=color, alpha=0.75, label="负二项拟合")
         ax.axhline(0, color="black", lw=0.5)
         ax.set_title(f"{label}\n$\\hat R$={R:.2f}, $\\hat k$={k:.2f}, "
                      f"$\\Delta$AIC={rec['delta_aic_poisson_vs_nb']:.0f}", fontsize=8)
-        ax.set_xlabel("secondary cases")
+        ax.set_xlabel("二代病例数")
         if ax is axes[0]:
-            ax.set_ylabel("probability")
+            ax.set_ylabel("概率")
     fig.tight_layout()
     fig.savefig(FIGS / "fig_micro.png", dpi=300)
     plt.close(fig)
@@ -82,11 +84,11 @@ def fig_hub(hub):
         med = [np.median([h["median_relMSE"] for r in recs
                           for h in r["horizons"] if h["h_weeks"] == x])
                for x in hs]
-        ax.plot(hs, med, "-o", color=color, label=f"{wave} (median across origins)")
+        ax.plot(hs, med, "-o", color=color, label=f"{wave} 波（跨原点中位）")
     ax.axhline(1.0, color="black", ls="--", lw=0.9)
-    ax.text(0.05, 1.05, "parity with persistence", fontsize=8, color="grey")
-    ax.set_xlabel("forecast horizon (weeks)")
-    ax.set_ylabel("median state-level relMSE")
+    ax.text(0.05, 1.05, "与持续性基线平价", fontsize=8, color="grey")
+    ax.set_xlabel("前瞻周数")
+    ax.set_ylabel("州级中位 MSE 比率")
     ax.legend(frameon=False)
     fig.tight_layout()
     fig.savefig(FIGS / "fig_hub_skill.png", dpi=300)

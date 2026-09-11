@@ -3,9 +3,8 @@
 本工作目录为论文研究与正式投稿的**唯一核心权威工作区** (`final_clean_submission/`)，所有历史草稿、冗余副本及中间构建垃圾已全面剔除。
 
 > **工作目录与稿件规范说明：**
-> 1. 本目录即为论文主稿的根目录，核心 LaTeX 文档为根目录下的 **`main.tex`**，编译输出为 **`main.pdf`**（与根目录 **`流行病传播动力学可预测视界_最终稿.pdf`** 完全一致）。
-> 2. 根目录下的 `流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.docx` 及对应导出的 PDF 为期刊双栏格式排版衍生副本。
-> 3. `Response_to_Reviewers.md` 为针对审稿意见（含 19 项问题）的官方逐条修改落实说明（唯一官方外送回复信）；`审稿意见.txt` 为内部留存之专家审查意见。
+> 1. 本目录即为论文主稿的根目录，核心 LaTeX 文档为根目录下的 **`main.tex`**，编译输出为 **`main.pdf`**（48 页，Tectonic 编译）。
+> 2. `Response_to_Reviewers_round17.md` 为针对本轮评审报告（Major M1--M16 / Minor m1--m13 / 格式 F1--F15 / 文献 R1--R9）的逐条回应与落实清单；内部评审材料（审稿意见原文、评审报告与旧版回复信）已从本工作区移除，避免随复现包外泄。
 
 ---
 
@@ -14,20 +13,15 @@
 ```text
 .
 ├── main.tex                                        # 最终修订版 LaTeX 论文主文档源码（0 错误、0 溢出）
-├── main.pdf                                        # Tectonic 编译产物 (42 页完整期刊论文)
-├── references.bib                                  # 净化后的参考文献库（57 篇，0 未引项）
-├── fig1_framework.png                              # 理论原理与双层基准框架图高清矢量渲染图
-├── 流行病传播动力学可预测视界_最终稿.pdf              # 唯一官方权威终稿 PDF（与 main.pdf 字节哈希完全相同，即开即读）
-├── 流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.docx  # 按期刊双栏模版排版的 Word 终稿（衍生副本）
-├── 流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.pdf  # Word 版对应导出版（27 页，衍生副本）
-├── Response_to_Reviewers.md                           # 针对终审意见（19 项问题）的官方逐条修改落实说明（外送回复信）
-├── 审稿意见.txt                                     # 内部留存：原始终审专家审查报告与修改意见
+├── main.pdf                                        # Tectonic 编译产物 (48 页完整期刊论文)
+├── references.bib                                  # 净化后的参考文献库（60 篇，双向完全闭合）
+├── Response_to_Reviewers_round17.md                # 针对本轮评审报告的逐条回应与落实清单
 ├── README.md                                       # 本说明文件：项目架构、自洽规范与复现指南
 ├── MANIFEST.md                                     # 全量有效交付文件与磁盘真实路径全量对照表
 ├── environment.yml                                 # Conda 运行环境配置文件
 ├── LICENSE                                         # 开源学术授权协议
 ├── derivations/                                    # 数学定理严格推导与证明手册
-│   ├── derivations_manual.tex                      # 逐行数学证明源码（统一 C >= 1,429）
+│   ├── derivations_manual.tex                      # 逐行数学证明源码（统一 C >= 1,300）
 │   └── derivations_manual.pdf                      # 推导手册编译就绪 PDF
 ├── presentation/                                   # 成果报告与展示材料
 │   ├── epidemic_predictability_masterclass.pptx    # Masterclass 汇报幻灯片
@@ -57,6 +51,7 @@
 │   ├── sim_verify_t1.py                            # 定理 1/2 分支过程模拟验证脚本
 │   ├── sim_verify_t3.py                            # 定理 3 拟平稳分布数值验证脚本
 │   ├── sim_verify_t4.py                            # 定理 4 Cramér–Rao 下界数值验证脚本
+│   ├── micro_reanalysis.py                         # 微观层再分析：自助CI、拟合优度、零膨胀敏感性、非参数自助
 │   └── verify_suite.py                             # 定理 5R 与推论 1 验证脚本
 ├── reports/                                        # 基础理论数值模拟输出与图件
 │   ├── *.json                                      # 数值模拟输出结果
@@ -65,12 +60,12 @@
 │   ├── *.json                                      # 州级视界、四项误差记账与预测枢纽实证结果
 │   └── figures/                                    # 实证结果高清图件 (微观拟合, 州级视界, Hub 技能衰减)
 └── tables_v3/                                      # 导出的独立 LaTeX 表格源码片段
-    ├── table7_micro.tex                            # 正文表 2: 微观极大似然与 CRB 检验
-    ├── table2_state.tex                            # 正文表 3: 51 州可预测视界空间分布
+    ├── table2_micro.tex                            # 正文表 2: 微观极大似然与 CRB 检验
+    ├── table3_state.tex                            # 正文表 3: 51 州可预测视界空间分布
     ├── table4_budget.tex                           # 正文表 4: 四项描述性误差记账分解
-    ├── table3_rolling.tex                          # 正文表 5: 伪实时滚动业务时效双层对照
-    ├── table5_hub.tex                              # 正文表 6: 预测枢纽集成预测技能衰减
-    └── table6_tiers.tex                            # 正文表 7: 分级预警响应策略推荐
+    ├── table5_rolling.tex                          # 正文表 5: 伪实时滚动业务时效双层对照
+    ├── table6_hub.tex                              # 正文表 6: 预测枢纽集成预测技能衰减
+    └── table7_tiers.tex                            # 正文表 7: 分级预警响应策略推荐
 ```
 
 ---

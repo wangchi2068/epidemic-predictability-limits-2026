@@ -74,7 +74,7 @@ def check_tables():
         tmp = Path(td)
         emit_v3.TABLES = tmp
         emit_v3.emit_table2(phases)
-        emit_v3.emit_table3(roll_state, roll_nat, phases)
+        emit_v3.emit_table3(roll_state, roll_nat, phases, bud)
         emit_v3.emit_table4(bud)
         emit_v3.emit_table5_hub(hub)
         emit_v3.emit_table6_tiers(scen)
@@ -151,7 +151,7 @@ def check_abstract():
 def check_crb_ratios():
     micro = json.loads((DATA / "micro" / "micro_branching_fit_results.json")
                        .read_text(encoding="utf-8"))
-    frag = (TABLES / "table7_micro.tex").read_text(encoding="utf-8")
+    frag = (TABLES / "table2_micro.tex").read_text(encoding="utf-8")
     for k, r in micro.items():
         if k == "LloydSmith_reference":
             continue

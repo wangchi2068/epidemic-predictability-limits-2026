@@ -45,6 +45,21 @@ PINNED = {
     "rsv": ("2024-11-09", "2024-12-07", 22047.0),
 }
 
+# Deposited-input identity: SHA-256 of the frozen analytical inputs, mirrored in
+# MANIFEST.md section 10. A swap of the underlying series cannot pass silently.
+PINNED_HASHES = {
+    "data/panels/covid_weekly_hospitalizations.csv.gz":
+        "4ee61b27d547f8dbee3db139705316a951e2b431d45585a4bdd530c67e88476a",
+    "data/panels/flu_weekly_hospitalizations.csv.gz":
+        "05e7fc87a3362efcb0afb05b9a33d0579eda86f90e56319d18d63a782657048f",
+    "data/panels/rsv_weekly_hospitalizations.csv.gz":
+        "22c0f0fa1f38a551cf2ab880bb306b2cad7f5d1d8777d46ceaa9ae1627cdc5f8",
+    "data/panels/us_state_daily_hospitalizations.csv":
+        "90c9d057b9561c4ce26ac591a61c0e174df52acfbd3a695d35b09fac963ae338",
+    "data/micro/micro_branching_fit_results.json":
+        "2369cf1cce28be1c1e7f7cdc304098df06e682f081a94626fec4656fdce51977",
+}
+
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -110,9 +125,21 @@ def main():
               flush=True)
 
     print("\n=== input checksums (for MANIFEST.md) ===", flush=True)
+    bad = 0
     for p in sorted(PANELS.glob("*")) + sorted((DATA / "micro").glob("*")):
         if p.is_file():
-            print(f"{sha256(p)}  {p.relative_to(ROOT)}", flush=True)
+            got = sha256(p)
+            rel = str(p.relative_to(ROOT)).replace("\\", "/")
+            expect = PINNED_HASHES.get(rel)
+            mark = ""
+            if expect is not None:
+                if got == expect:
+                    mark = "  [OK pinned]"
+                else:
+                    mark = f"  [MISMATCH expected {expect}]"
+                    bad += 1
+            print(f"{got}  {rel}{mark}", flush=True)
+    assert bad == 0, f"{bad} input checksum(s) diverged from MANIFEST.md"
 
     print("\nAll data-integrity checks passed.", flush=True)
 

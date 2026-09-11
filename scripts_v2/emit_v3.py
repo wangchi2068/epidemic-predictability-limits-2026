@@ -30,9 +30,10 @@ PHASES = [
     ("rsv24",   "rsv",   "2024-11-09", "2024-12-07", 8.4, "RSV 2024--25 流行季"),
     ("rsv25",   "rsv",   "2025-11-08", "2025-12-06", 8.4, "RSV 2025--26 流行季"),
 ]
-BUDGET_PHASES = ["Delta", "Omicron", "flu22", "rsv24", "rsv25"]
-BUDGET_HORIZONS = {"Delta": [1, 2, 4], "Omicron": [1, 2, 4], "flu22": [1, 2, 4],
-                   "rsv24": [2, 4], "rsv25": [2]}
+BUDGET_PHASES = ["Delta", "Omicron", "JN1", "flu22", "flu24", "rsv24", "rsv25"]
+BUDGET_HORIZONS = {"Delta": [1, 2, 4], "Omicron": [1, 2, 4], "JN1": [1, 2, 4],
+                   "flu22": [1, 2, 4], "flu24": [1, 2, 4], "rsv24": [1, 2, 4],
+                   "rsv25": [1, 2, 4]}
 
 
 def load_panel(name):
@@ -198,6 +199,24 @@ def budget(phases_json):
                 "median_v_week": float(np.median([r["v"] for r in rows])),
             }
         out[key] = {"display": disp, "horizons": summary}
+        # observed horizon: first h where the state-median observed RelRMSE
+        # (sqrt of median RelMSE_obs) reaches tau = 0.5, linearly interpolated
+        # between the evaluated weekly grid points.
+        hs_sorted = sorted((int(h), r) for h, r in summary.items())
+        if not hs_sorted:
+            out[key]["obs_horizon_weeks"] = None
+            continue
+        rmses = [(h, float(np.sqrt(r["median_obs"]))) for h, r in hs_sorted]
+        obs_h = None
+        for i, (h, rm) in enumerate(rmses):
+            if rm >= TAU:
+                if i == 0:
+                    obs_h = float(h)
+                else:
+                    h0, r0 = rmses[i - 1]
+                    obs_h = float(h0 + (TAU - r0) / (rm - r0) * (h - h0))
+                break
+        out[key]["obs_horizon_weeks"] = obs_h
     return out
 
 
@@ -239,7 +258,7 @@ def main():
     # ---------------------------------------------------------------- tables
     print("\n=== emitting LaTeX tables ===", flush=True)
     emit_table2(phases)
-    emit_table3(roll_state, roll_nat, phases)
+    emit_table3(roll_state, roll_nat, phases, bud)
     emit_table4(bud)
     emit_table5_hub(hub)
     emit_table6_tiers(scen)
@@ -274,10 +293,10 @@ def emit_table2(phases):
             "$k_{\\text{agg}}$ 中位数 & $I_0$ 中位数 & "
             "$h^*_{\\text{周}}$ 中位数 [IQR] & 国家级 $h^*_{\\text{周}}$ \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
-    (TABLES / "table2_state.tex").write_text(body, encoding="utf-8")
+    (TABLES / "table3_state.tex").write_text(body, encoding="utf-8")
 
 
-def emit_table3(roll_state, roll_nat, phases):
+def emit_table3(roll_state, roll_nat, phases, bud=None):
     rows = []
     for key, src, w0, w1, mu_g, disp in PHASES:
         rs = roll_state[key]
@@ -285,20 +304,22 @@ def emit_table3(roll_state, roll_nat, phases):
         cp = rs["crossing_persistence"]
         cl = rs["crossing_linear"]
         hp = phases[key]["h_week_summary"]
+        oh = bud[key]["obs_horizon_weeks"] if bud else None
         rows.append(
             f"{disp} & {rs['n_states']} & "
             f"{_fmt(cp['median'],1)} [{_fmt(cp['q25'],1)}, {_fmt(cp['q75'],1)}] & "
             f"{_fmt(cl['median'],1)} & "
+            f"{_fmt(oh,2)} & "
             f"{_fmt(rn['crossing_persistence'],2)} & "
             f"{_fmt(rn['crossing_linear'],2)} & "
             f"{_fmt(hp['median'],1)} \\\\")
-    body = ("\\begin{tabular}{lcccccc}\n"
+    body = ("\\begin{tabular}{lccccccc}\n"
             "\\toprule\n"
             "阶段 & $n_{\\text{州}}$ & 州级持续性穿越 [IQR] & "
-            "州级局部线性穿越 & 国家级持续性 & 国家级局部线性 & "
+            "州级局部线性穿越 & 州级实测视界 & 国家级持续性 & 国家级局部线性 & "
             "州级 $h^*$ 中位数 \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
-    (TABLES / "table3_rolling.tex").write_text(body, encoding="utf-8")
+    (TABLES / "table5_rolling.tex").write_text(body, encoding="utf-8")
 
 
 def emit_table4(bud):
@@ -336,7 +357,7 @@ def emit_table5_hub(hub):
             "波次 & 预测原点 & $h$ (周) & $n_{\\text{州}}$ & "
             "中位 MSE 比率 & $\\ge 1$ 占比 & 中位 WIS & 中位绝对误差 \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
-    (TABLES / "table5_hub.tex").write_text(body, encoding="utf-8")
+    (TABLES / "table6_hub.tex").write_text(body, encoding="utf-8")
 
 
 def emit_table6_tiers(scen):
@@ -353,25 +374,32 @@ def emit_table6_tiers(scen):
             "\\toprule\n"
             "阶段 & $\\tau=0.20$ & $\\tau=0.35$ & $\\tau=0.50$ & $\\tau=0.70$ \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
-    (TABLES / "table6_tiers.tex").write_text(body, encoding="utf-8")
+    (TABLES / "table7_tiers.tex").write_text(body, encoding="utf-8")
 
 
 def emit_table7(micro):
+    rean = json.loads((REPORTS / "micro_reanalysis.json").read_text(encoding="utf-8"))
     rows = []
     for name, rec in micro.items():
         if name == "LloydSmith_reference":
             continue
+        ra = rean.get(name, {})
+        r_ci = ra.get("parametric_ci_R")
+        k_ci = ra.get("parametric_ci_k")
+        r_lo, r_hi = (f"{r_ci[0]:.2f}", f"{r_ci[1]:.2f}") if r_ci else ("--", "--")
+        k_lo, k_hi = (f"{k_ci[0]:.2f}", f"{k_ci[1]:.2f}") if k_ci else ("--", "--")
         rows.append(
             f"{name.replace('_', ' ')} & {rec['N']} & {rec['R_mle']:.3f} & "
-            f"{rec['k_mle']:.3f} & {rec['empirical_CV2']:.2f} & "
-            f"{rec['theory_CV2']:.2f} & {rec['delta_aic_poisson_vs_nb']:.1f} & "
+            f"{r_lo}--{r_hi} & {rec['k_mle']:.3f} & {k_lo}--{k_hi} & "
+            f"{rec['empirical_CV2']:.2f} & {rec['theory_CV2']:.2f} & "
+            f"{rec['delta_aic_poisson_vs_nb']:.1f} & "
             f"{rec['bootstrap']['ratio_var_to_crb']:.3f} \\\\")
-    body = ("\\begin{tabular}{lccccccc}\n"
+    body = ("\\begin{tabular}{lcc c c c cc c c}\n"
             "\\toprule\n"
-            "数据集 & $N$ & $\\hat R$ & $\\hat k$ & 经验 $\\text{CV}^2$ & "
-            "理论 $\\text{CV}^2$ & $\\Delta\\text{AIC}$ & 自助/CRB \\\\\n"
+            "数据集 & $N$ & $\\hat R$ & 95\\% CI & $\\hat k$ & 95\\% CI & "
+            "经验 $\\text{CV}^2$ & 理论 $\\text{CV}^2$ & $\\Delta\\text{AIC}$ & 自助/CRB \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
-    (TABLES / "table7_micro.tex").write_text(body, encoding="utf-8")
+    (TABLES / "table2_micro.tex").write_text(body, encoding="utf-8")
 
 
 if __name__ == "__main__":

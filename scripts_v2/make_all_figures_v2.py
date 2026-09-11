@@ -86,7 +86,6 @@ def gen_fig2():
                label="渐近饱和 $\\mathrm{CV}^2_\\infty$")
     ax.set_xlabel("前瞻步长 $h$（代际数）")
     ax.set_ylabel("群体内在相对方差 $\\mathrm{CV}^2(h)$")
-    ax.set_title("图 2：群体内在随机性方差下界的蒙特卡洛验证")
     ax.legend(loc="lower right", fontsize=10)
     ax.grid(alpha=0.3)
     plt.tight_layout()
@@ -163,7 +162,6 @@ def gen_fig_t3():
              transform=ax3.transAxes, fontsize=7, va="bottom",
              bbox=dict(facecolor="white", alpha=0.85, edgecolor="grey"))
 
-    fig.suptitle("图 3：拟平稳扩散密度与定殖概率验证（verify_t3.json）")
     plt.tight_layout()
     plt.savefig(FIGS / "fig_t3_quasistationary.png", dpi=200)
     plt.close()
@@ -182,7 +180,6 @@ def gen_fig_t4():
     ax.set_xticklabels(labels, rotation=30, fontsize=8)
     ax.set_ylabel("经验方差 / CRB 下界")
     ax.set_ylim(0.95, 1.05)
-    ax.set_title("图 4：负二项似然下 Cramér–Rao 辨识界验证（50,000 次蒙特卡洛）")
     ax.legend()
     ax.grid(alpha=0.3, axis="y")
     plt.tight_layout()

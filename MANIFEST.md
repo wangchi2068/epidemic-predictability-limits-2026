@@ -7,15 +7,10 @@
 ## 1. 核心文书与手稿
 | 磁盘文件路径 | 文件类型 | 说明与用途 |
 |---|---|---|
-| `main.tex` | LaTeX 源码 | 论文主文档源码：含定理 1--5R、四项描述性误差记账与完整实证分析（0 错误、0 溢出） |
-| `main.pdf` | PDF 文档 | 论文编译主产物（42 页，与 `流行病传播动力学可预测视界_最终稿.pdf` 哈希完全一致） |
-| `references.bib` | BibTeX | 净化后的参考文献库（57 篇，0 未引项，0 格式冲突） |
-| `fig1_framework.png` | 图像 | 理论原理与双层基准框架图高清矢量渲染图 |
-| `流行病传播动力学可预测视界_最终稿.pdf` | PDF 文档 | 唯一官方权威终稿：基于最新 `main.tex` 编译生成之完整期刊论文（42 页，即开即读） |
-| `流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.docx` | Word 文档 | 期刊双栏排版衍生副本（按期刊 Word 双栏模版排版） |
-| `流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.pdf` | PDF 文档 | Word 衍生版对应高清导出版（27 页） |
-| `Response_to_Reviewers.md` | Markdown | 针对最新终审意见（含 19 项问题）的官方详尽逐条修改说明与落实报告（唯一官方外送回复信） |
-| `审稿意见.txt` | 纯文本 | 内部留存：原始终审专家对抗性审查报告与修改意见（外送编辑部时可从包内剔除） |
+| `main.tex` | LaTeX 源码 | 论文主文档源码：含定理 1、2、4、5、5R、命题 3 与推论 1--3、四项描述性误差记账与完整实证分析（0 错误、0 溢出） |
+| `main.pdf` | PDF 文档 | 论文编译主产物（48 页，由 Tectonic 从当前 `main.tex` 编译生成） |
+| `references.bib` | BibTeX | 净化后的参考文献库（60 篇，双向完全闭合：0 缺失、0 未引项） |
+| `Response_to_Reviewers_round17.md` | Markdown | 针对本轮评审报告（Major M1--M16 / Minor m1--m13 / 格式 F1--F15 / 文献 R1--R9）的逐条回应与落实清单 |
 | `README.md` | Markdown | 项目自洽指南、架构说明与复现指南 |
 | `MANIFEST.md` | Markdown | 本文件：全量有效交付文件与磁盘真实路径对照表 |
 | `environment.yml` | YAML | Conda 运行环境依赖定义 |
@@ -26,7 +21,7 @@
 ## 2. 数学推导手册 (`derivations/`)
 | 磁盘文件路径 | 说明 |
 |---|---|
-| `derivations/derivations_manual.tex` | 数学定理“显微镜式”逐行代数证明源码（已统一 C >= 1,429） |
+| `derivations/derivations_manual.tex` | 数学定理“显微镜式”逐行代数证明源码（已统一 C >= 1,300） |
 | `derivations/derivations_manual.pdf` | 数学推导手册编译就绪 PDF |
 
 ---
@@ -36,12 +31,12 @@
 
 | 磁盘文件名 | 正文表序与标题 | 对应数据来源 / 生成脚本 |
 |---|---|---|
-| `tables_v3/table7_micro.tex` | **表 2**：微观传播链层的子代分布极大似然拟合与信息论下界检验 | `scripts_v2/emit_v3.py` <- `data/micro/micro_branching_fit_results.json` |
-| `tables_v3/table2_state.tex` | **表 3**：州级面板各阶段动力学参数与理论可预测视界分布 | `scripts_v2/emit_v3.py` <- `reports_v3/state_phases.json` |
+| `tables_v3/table2_micro.tex` | **表 2**：微观传播链层的子代分布极大似然拟合与信息论下界检验 | `scripts_v2/emit_v3.py` <- `data/micro/micro_branching_fit_results.json` |
+| `tables_v3/table3_state.tex` | **表 3**：州级面板各阶段动力学参数与理论可预测视界分布 | `scripts_v2/emit_v3.py` <- `reports_v3/state_phases.json` |
 | `tables_v3/table4_budget.tex` | **表 4**：四项预测误差记账的州级分解 | `scripts_v2/emit_v3.py` <- `reports_v3/budget_national.json` |
-| `tables_v3/table3_rolling.tex` | **表 5**：理论机制视界与伪实时滚动业务时效的州级双层对照 | `scripts_v2/emit_v3.py` <- `reports_v3/state_rolling.json` |
-| `tables_v3/table5_hub.tex` | **表 6**：COVIDhub-ensemble 集成预测的州级技能衰减 | `scripts_v2/emit_v3.py` <- `data/hub/forecast_hub_operational_evaluation.json` |
-| `tables_v3/table6_tiers.tex` | **表 7**：公共卫生决策分级场景、理论可预测视界与风控策略推荐 | `scripts_v2/emit_v3.py` <- `reports_v3/scenarios.json` |
+| `tables_v3/table5_rolling.tex` | **表 5**：理论机制视界与伪实时滚动业务时效的州级双层对照 | `scripts_v2/emit_v3.py` <- `reports_v3/state_rolling.json` |
+| `tables_v3/table6_hub.tex` | **表 6**：COVIDhub-ensemble 集成预测的州级技能衰减 | `scripts_v2/emit_v3.py` <- `data/hub/forecast_hub_operational_evaluation.json` |
+| `tables_v3/table7_tiers.tex` | **表 7**：公共卫生决策分级场景、理论可预测视界与风控策略推荐 | `scripts_v2/emit_v3.py` <- `reports_v3/scenarios.json` |
 
 ---
 
@@ -50,7 +45,7 @@
 |---|---|
 | `reports/figures_v2/fig2_cv_verify.png` | **图 2**：负二项分支过程单代及全代变异系数平方 CV²(h) 理论曲线与模拟验证 |
 | `reports/figures_v2/fig_t3_quasistationary.png` | **图 3**：反射正则化辅助扩散平稳密度与首达建群概率模拟对比 |
-| `reports/figures_v2/fig_t4_fisher_bound.png` | **图 4**：Fisher 信息量与 Cramér–Rao 样本量基准 (C >= 1,429) 验证 |
+| `reports/figures_v2/fig_t4_fisher_bound.png` | **图 4**：Fisher 信息量与 Cramér–Rao 样本量基准 (C >= 1,300) 验证 |
 | `reports_v3/figures/fig_micro.png` | **图 5**：三组真实个体传播链数据集负二项生成假设似然检验 |
 | `reports_v3/figures/fig_state_horizons.png` | **图 6**：全美 51 个州级辖区在七个流行阶段下的理论可预测视界空间分布 |
 | `reports_v3/figures/fig_hub_skill.png` | **图 7**：COVID-19 预测枢纽顶级集成模型在 12 个真实预测原点下的技能衰减 |
@@ -86,6 +81,7 @@
 | `scripts_v2/sim_verify_t1.py` | 定理 1（分支过程两阶段递推）与定理 2（单调性极限）蒙特卡洛数值验证 |
 | `scripts_v2/sim_verify_t3.py` | 定理 3（拟平稳分布与定殖概率尺度）数值模拟验证 |
 | `scripts_v2/sim_verify_t4.py` | 定理 4（Fisher 信息量与 Cramér–Rao 下界）数值模拟验证 |
+| `scripts_v2/micro_reanalysis.py` | 微观传播链层再分析：$\hat R$、$\hat k$ 自助置信区间、负二项拟合优度检验、零膨胀敏感性、非参数自助对照 |
 | `scripts_v2/verify_suite.py` | 定理 5R（环境噪声自回归）与推论 1 验证套件 |
 
 ---
@@ -115,8 +111,49 @@
 
 ---
 
-## 9. 历史归档与参考材料 (`docs/`)
-| 磁盘文件路径 | 说明 |
+## 10. 数据溯源、上游来源与 SHA-256 完整性校验
+
+本节登记论文实证分析所用的冻结输入及其上游来源，供第三方核验手中数据与本文所用是否为同一份。
+
+### 10.1 上游数据来源与检索信息
+
+| 数据层 | 上游来源 | 版本 / release | 检索日期 |
+|---|---|---|---|
+| COVID-19 州级住院面板 | reichlab/covid19-forecast-hub（目标数据 `target-data`，NHSN 周度住院口径） | 终版 release 2024-04-28 | 2024-04-28 |
+| 季节性流感州级住院面板 | cdcepi/FluSight-forecast-hub（目标数据，NHSN 周度住院口径） | 终版归档 | 2026-09 |
+| RSV 州级住院面板 | cdcepi/RSV-forecast-hub（目标数据，NHSN 周度住院口径） | 终版归档 | 2026-09 |
+| COVIDhub-ensemble 预测归档 | reichlab/covid19-forecast-hub（`data-processed/COVIDhub-ensemble/`） | 逐周 12 个预测原点 | 2026-09 |
+| 香港 COVID-19 传播链 | Adam 等 (2020) 补充材料（接触追踪队列） | 公开发表版 | 2026-09 |
+| 几内亚埃博拉传播链 | Faye 等 (2015) 补充材料（Conakry 传播网络） | 公开发表版 | 2026-09 |
+
+### 10.2 SHA-256 校验和（分析输入）
+
+| 文件 | SHA-256 |
 |---|---|
-| `docs/Response_to_Reviewers_round16_archive.md` | 早期英文 Round 16 审稿回复历史归档（供内部查阅参考） |
-| `docs/流行病传播动力学的可预测视界、极限机制与实证研究_期刊模版版.docx` | 期刊 Word 模版排版原稿存档 |\n
+| `data/panels/covid_weekly_hospitalizations.csv.gz` | `4ee61b27d547f8dbee3db139705316a951e2b431d45585a4bdd530c67e88476a` |
+| `data/panels/flu_weekly_hospitalizations.csv.gz` | `05e7fc87a3362efcb0afb05b9a33d0579eda86f90e56319d18d63a782657048f` |
+| `data/panels/rsv_weekly_hospitalizations.csv.gz` | `22c0f0fa1f38a551cf2ab880bb306b2cad7f5d1d8777d46ceaa9ae1627cdc5f8` |
+| `data/panels/us_state_daily_hospitalizations.csv` | `90c9d057b9561c4ce26ac591a61c0e174df52acfbd3a695d35b09fac963ae338` |
+| `data/micro/micro_branching_fit_results.json` | `2369cf1cce28be1c1e7f7cdc304098df06e682f081a94626fec4656fdce51977` |
+| `data/hub/forecast_hub_operational_evaluation.json` | `4f6deb0852da027d699fa3512227a1a222b29344d9827eceff2e289abf953ac6` |
+
+### 10.3 SHA-256 校验和（COVIDhub-ensemble 逐文件）
+
+| 文件 | SHA-256 |
+|---|---|
+| `data/hub/2021-08-02-COVIDhub-ensemble.csv.gz` | `9dcbd1bee254c5235455aef93ba39a1fb8a3d6f0da83f9ae5d4451d367f13ebe` |
+| `data/hub/2021-08-09-COVIDhub-ensemble.csv.gz` | `7ea25fd5a883bd5c5023b8ede07a20075881164285ae7547468010b13a02f6bb` |
+| `data/hub/2021-08-16-COVIDhub-ensemble.csv.gz` | `95af3305e95ad4819cb2086672b58c29267e50c14a353b0faad50257541737ae` |
+| `data/hub/2021-08-23-COVIDhub-ensemble.csv.gz` | `25d81de69d82672bfa4370a47519214b96f7a1758bad6d4fe65bf35fed32bdc3` |
+| `data/hub/2021-08-30-COVIDhub-ensemble.csv.gz` | `4546e4d52de90b1549e8acb982f6a758e3f5f0cac2b7c8b316c7685f7e2f71e1` |
+| `data/hub/2021-09-06-COVIDhub-ensemble.csv.gz` | `a7ba1f34d3deacc553b2e871a5c09e7560ef7c4257d28783d93c3278c644b2a1` |
+| `data/hub/2021-12-06-COVIDhub-ensemble.csv.gz` | `ef5a7bb8d67c6b4081d8486dde24c48eecbd32c6b059a290b538aead31f391d8` |
+| `data/hub/2021-12-13-COVIDhub-ensemble.csv.gz` | `efd6378c85df167333c517385ffe2edc692d45bcfc5ee8d9f2b3ea05a48f76a8` |
+| `data/hub/2021-12-20-COVIDhub-ensemble.csv.gz` | `07b1e9cf35331c87c947b56c1a968644783d7c856423787fd1f4d77b7da2c0d2` |
+| `data/hub/2021-12-27-COVIDhub-ensemble.csv.gz` | `ce4f660b8a4ab9380a4abe8946ad9c0e1dda3169514da94df1a75ec6dcee17e9` |
+| `data/hub/2022-01-03-COVIDhub-ensemble.csv.gz` | `10874eb918fd471be524ec50dc9be70b01047127ef100a540cfb3368f5c70a84` |
+| `data/hub/2022-01-10-COVIDhub-ensemble.csv.gz` | `c0949b3719c237d4bc0f53db5242e24d9a372fed7559c8846d5ccd6ae71d6a2b` |
+
+### 10.4 校验方式
+
+`scripts_v2/ingest_and_aggregate.py` 为输入完整性校验脚本：它从逐日住院文件重导出周度 COVID 面板并与冻结副本比对，断言三个面板的结构不变量与国家级窗口合计锚点，并在标准输出打印上述各文件的 SHA-256 摘要以供回填核验。上游原始快照到冻结面板之间的整理链路不可在离线环境重放（三个预测枢纽的历史目标数据版本不可重建逐日快照），故本包以冻结面板加校验和的方式固化输入身份。
