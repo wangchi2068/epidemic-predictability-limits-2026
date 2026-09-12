@@ -3,7 +3,7 @@
 本工作目录为论文研究与正式投稿的**唯一核心权威工作区** (`final_clean_submission/`)，所有历史草稿、冗余副本及中间构建垃圾已全面剔除。
 
 > **工作目录与稿件规范说明：**
-> 1. 本目录即为论文主稿的根目录，核心 LaTeX 文档为根目录下的 **`main.tex`**，编译输出为 **`main.pdf`**（48 页，Tectonic 编译）。
+> 1. 本目录即为论文主稿的根目录，核心 LaTeX 文档为根目录下的 **`main.tex`**，编译输出为 **`main.pdf`**（58 页，Tectonic 编译）。
 > 2. 内部评审材料（审稿意见、评审报告与作者回复信）均不纳入本公开复现包，以避免双盲匿名性泄漏。
 
 ---
@@ -13,7 +13,7 @@
 ```text
 .
 ├── main.tex                                        # 最终修订版 LaTeX 论文主文档源码（0 错误、0 溢出）
-├── main.pdf                                        # Tectonic 编译产物 (48 页完整期刊论文)
+├── main.pdf                                        # Tectonic 编译产物 (58 页完整期刊论文)
 ├── references.bib                                  # 净化后的参考文献库（60 篇，双向完全闭合）
 ├── README.md                                       # 本说明文件：项目架构、自洽规范与复现指南
 ├── MANIFEST.md                                     # 全量有效交付文件与磁盘真实路径全量对照表
@@ -61,15 +61,15 @@
 │   ├── *.json                                      # 数值模拟输出结果
 │   └── figures_v2/                                 # 理论推导与下界验证图件 (图 2, 图 3, 图 4)
 ├── reports_v3/                                     # 经验实证分析产物与图件
-│   ├── *.json                                      # 州级视界、四项误差记账与预测枢纽实证结果
+│   ├── *.json                                      # 州级视界、三项误差记账与预测枢纽实证结果
 │   └── figures/                                    # 实证结果高清图件 (微观拟合, 州级视界, Hub 技能衰减)
 └── tables_v3/                                      # 导出的独立 LaTeX 表格源码片段
-    ├── table2_micro.tex                            # 正文表 2: 微观极大似然与 CRB 检验
-    ├── table3_state.tex                            # 正文表 3: 51 州可预测视界空间分布
-    ├── table4_budget.tex                           # 正文表 4: 四项描述性误差记账分解
-    ├── table5_rolling.tex                          # 正文表 5: 伪实时滚动业务时效双层对照
-    ├── table6_hub.tex                              # 正文表 6: 预测枢纽集成预测技能衰减
-    └── table7_tiers.tex                            # 正文表 7: 分级预警响应策略推荐
+    ├── table2_micro.tex                            # 正文表 4: 微观极大似然与 CRB 检验
+    ├── table3_state.tex                            # 正文表 6: 51 州机制代理视界空间分布
+    ├── table4_budget.tex                           # 正文表 7: 三项描述性误差记账分解
+    ├── table5_rolling.tex                          # 正文表 8: 伪实时滚动业务时效双层对照
+    ├── table6_hub.tex                              # 正文表 9: 预测枢纽集成预测技能衰减
+    └── table7_tiers.tex                            # 正文表 10: 分级预警响应策略推荐
 ```
 
 ---
@@ -88,4 +88,4 @@ python scripts_v2/check_consistency.py
 ```bash
 tectonic main.tex
 ```
-当前指标：**0 Errors、0 Undefined References；仅 1 处 0.54 pt 的中文标点右悬挂（视觉不可见，非真正 overfull）**。
+当前指标：**0 Errors、0 Undefined References、0 Overfull hbox**（仅余若干 \sloppy 段落内的 Underfull 松紧提示，视觉不可见）。

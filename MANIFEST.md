@@ -7,8 +7,8 @@
 ## 1. 核心文书与手稿
 | 磁盘文件路径 | 文件类型 | 说明与用途 |
 |---|---|---|
-| `main.tex` | LaTeX 源码 | 论文主文档源码：含定理 1、2、4、5、5R、命题 3 与推论 1--3、四项描述性误差记账与完整实证分析（0 错误、0 溢出） |
-| `main.pdf` | PDF 文档 | 论文编译主产物（48 页，由 Tectonic 从当前 `main.tex` 编译生成） |
+| `main.tex` | LaTeX 源码 | 论文主文档源码：含定理 1、2、4、5R、命题 3、命题 5 与推论 1--5、三项描述性误差记账与完整实证分析（0 错误、0 溢出、0 未定义引用） |
+| `main.pdf` | PDF 文档 | 论文编译主产物（58 页，由 Tectonic 从当前 `main.tex` 编译生成） |
 | `references.bib` | BibTeX | 净化后的参考文献库（60 篇，双向完全闭合：0 缺失、0 未引项） |
 | `README.md` | Markdown | 项目自洽指南、架构说明与复现指南 |
 | `MANIFEST.md` | Markdown | 本文件：全量有效交付文件与磁盘真实路径对照表 |
@@ -26,21 +26,21 @@
 ---
 
 ## 3. 表格源码片段与正文表号对应 (`tables_v3/`)
-正文中的表格采用 `\input{tables_v3/...}` 动态加载，磁盘文件编号与正文表序号映射关系如下：
+正文中的表格采用 `\input{tables_v3/...}` 动态加载。下表列出由片段文件加载的表格及其**实际编译表序**（表号按全文 `\caption` 出现顺序自动编号：表 1 主要符号、表 2 样本量基准、表 3 模拟参数设置为 `main.tex` 内联表；表 5 多口径对照为内联表）：
 
 | 磁盘文件名 | 正文表序与标题 | 对应数据来源 / 生成脚本 |
 |---|---|---|
-| `tables_v3/table2_micro.tex` | **表 2**：微观传播链层的子代分布极大似然拟合与信息论下界检验 | `scripts_v2/emit_v3.py` <- `data/micro/micro_branching_fit_results.json` |
-| `tables_v3/table3_state.tex` | **表 3**：州级面板各阶段动力学参数与理论可预测视界分布 | `scripts_v2/emit_v3.py` <- `reports_v3/state_phases.json` |
-| `tables_v3/table4_budget.tex` | **表 4**：四项预测误差记账的州级分解 | `scripts_v2/emit_v3.py` <- `reports_v3/budget_national.json` |
-| `tables_v3/table5_rolling.tex` | **表 5**：理论机制视界与伪实时滚动业务时效的州级双层对照 | `scripts_v2/emit_v3.py` <- `reports_v3/state_rolling.json` |
+| `tables_v3/table2_micro.tex` | **表 4**：微观传播链层的子代分布极大似然拟合与信息论下界检验 | `scripts_v2/emit_v3.py` <- `data/micro/micro_branching_fit_results.json` |
+| `tables_v3/table3_state.tex` | **表 6**：州级面板各阶段动力学参数与机制代理视界分布 | `scripts_v2/emit_v3.py` <- `reports_v3/state_phases.json` |
+| `tables_v3/table4_budget.tex` | **表 7**：三项描述性误差记账的州级分解 | `scripts_v2/emit_v3.py` <- `reports_v3/budget_national.json` |
+| `tables_v3/table5_rolling.tex` | **表 8**：机制代理视界与伪实时滚动业务时效的州级双层对照 | `scripts_v2/emit_v3.py` <- `reports_v3/state_rolling.json` |
 | `reports_v3/sensitivity_v4.json` | 视界方程的三项补充敏感性结果（k_agg 窗口/截断、个体级 k、周代求根） |
 | `reports_v3/rolling_bootstrap.json` | 滚动穿越点的原点级自助区间 |
 | `reports_v3/coarsegrain_check.json` | 粗粒化核验：微观分支模拟反解 k_agg 与隐含聚合因子 M |
 | `reports_v3/macro_cv_check.json` | 宏观固定离散度模型的 CV²(h) 模拟（相对引理闭式的低估倍数） |
 | `reports_v3/caliber_table.json` | 七阶段多口径视界与实测时效对照结果 |
-| `tables_v3/table6_hub.tex` | **表 6**：COVIDhub-ensemble 集成预测的州级技能衰减 | `scripts_v2/emit_v3.py` <- `data/hub/forecast_hub_operational_evaluation.json` |
-| `tables_v3/table7_tiers.tex` | **表 7**：公共卫生决策分级场景、理论可预测视界与风控策略推荐 | `scripts_v2/emit_v3.py` <- `reports_v3/scenarios.json` |
+| `tables_v3/table6_hub.tex` | **表 9**：COVIDhub-ensemble 集成预测的州级技能衰减 | `scripts_v2/emit_v3.py` <- `data/hub/forecast_hub_operational_evaluation.json` |
+| `tables_v3/table7_tiers.tex` | **表 10**：公共卫生决策分级场景、多档容忍度机制代理视界与风控策略推荐 | `scripts_v2/emit_v3.py` <- `reports_v3/scenarios.json` |
 
 ---
 
