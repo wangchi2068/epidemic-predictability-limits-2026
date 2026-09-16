@@ -1,0 +1,13 @@
+{
+  "schema": "theory_verification_v1",
+  "checks": {
+    "macro_recurrence_R_lt_eq_gt_one": true,
+    "macro_q_equals_R_removable_limit": true,
+    "shared_lognormal_mixture_quadrature": true,
+    "horizon_segments_and_supremum": true,
+    "conditional_and_unconditional_ar1_variance": true,
+    "wis_23_quantile_vectorization": true,
+    "moving_block_bootstrap_reproducibility_and_shape": true
+  },
+  "all_passed": true
+}

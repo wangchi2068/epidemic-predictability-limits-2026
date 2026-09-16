@@ -1,0 +1,48 @@
+{
+  "release_dir": "data\\flusight\\v1.1.0",
+  "rows": 9063,
+  "by_horizon": {
+    "1": {
+      "n_cells": 3021,
+      "n_origins": 57,
+      "n_states": 53,
+      "median_normalized_sq_loss": 0.08083429450211456,
+      "median_normalized_baseline_sq_loss": 0.1695501730103806,
+      "median_wis": 14.827438054005869,
+      "median_loss_difference": -0.08542095224054692,
+      "mean_loss_difference": -0.2802416061655011,
+      "state_bootstrap_95ci_mean_difference": [
+        -0.5262477602385414,
+        0.04634213898471785
+      ]
+    },
+    "2": {
+      "n_cells": 3021,
+      "n_origins": 57,
+      "n_states": 53,
+      "median_normalized_sq_loss": 0.10886038402111468,
+      "median_normalized_baseline_sq_loss": 0.3058250958458859,
+      "median_wis": 19.157511587788473,
+      "median_loss_difference": -0.1834319526627224,
+      "mean_loss_difference": -1.1653705612974465,
+      "state_bootstrap_95ci_mean_difference": [
+        -1.6347672901267392,
+        -0.7331653622677994
+      ]
+    },
+    "3": {
+      "n_cells": 3021,
+      "n_origins": 57,
+      "n_states": 53,
+      "median_normalized_sq_loss": 0.11371926437370057,
+      "median_normalized_baseline_sq_loss": 0.42533081285444235,
+      "median_wis": 22.657391304347826,
+      "median_loss_difference": -0.28125,
+      "mean_loss_difference": -2.9625095770374026,
+      "state_bootstrap_95ci_mean_difference": [
+        -3.967456911182425,
+        -2.1362592863054117
+      ]
+    }
+  }
+}

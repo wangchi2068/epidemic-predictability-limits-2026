@@ -1,0 +1,48 @@
+{
+  "release_dir": "data\\flusight\\v1.0.0",
+  "rows": 4293,
+  "by_horizon": {
+    "1": {
+      "n_cells": 1484,
+      "n_origins": 28,
+      "n_states": 53,
+      "median_normalized_sq_loss": 0.0922419648431025,
+      "median_normalized_baseline_sq_loss": 0.1228812641943395,
+      "median_wis": 12.820340192805709,
+      "median_loss_difference": -0.05320160051313416,
+      "mean_loss_difference": -0.3409553154727235,
+      "state_bootstrap_95ci_mean_difference": [
+        -0.5285478352051775,
+        -0.1555221974965107
+      ]
+    },
+    "2": {
+      "n_cells": 1431,
+      "n_origins": 27,
+      "n_states": 53,
+      "median_normalized_sq_loss": 0.13477798438934802,
+      "median_normalized_baseline_sq_loss": 0.22960069444444448,
+      "median_wis": 17.05996800698666,
+      "median_loss_difference": -0.11857280557953956,
+      "mean_loss_difference": -0.8018281676128647,
+      "state_bootstrap_95ci_mean_difference": [
+        -1.1236727415345757,
+        -0.46108800771556324
+      ]
+    },
+    "3": {
+      "n_cells": 1378,
+      "n_origins": 26,
+      "n_states": 53,
+      "median_normalized_sq_loss": 0.1662068358273398,
+      "median_normalized_baseline_sq_loss": 0.3212059921212256,
+      "median_wis": 21.4045857818596,
+      "median_loss_difference": -0.1884793927618273,
+      "mean_loss_difference": -1.8876367715298321,
+      "state_bootstrap_95ci_mean_difference": [
+        -2.5290587205025434,
+        -1.3560294466205958
+      ]
+    }
+  }
+}

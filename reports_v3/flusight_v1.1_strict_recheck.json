@@ -1,0 +1,76 @@
+{
+  "rows": 8262,
+  "models": [
+    "baseline",
+    "ensemble"
+  ],
+  "bootstrap": {
+    "B": 2000,
+    "block_weeks": 4
+  },
+  "by_horizon": {
+    "1": {
+      "n_cells": 2754,
+      "n_origins": 27,
+      "n_states": 51,
+      "by_model": {
+        "ensemble": {
+          "rows": 1377,
+          "wis_mean": 81.70594518644818,
+          "mae_mean": 115.42628903413217
+        },
+        "baseline": {
+          "rows": 1377,
+          "wis_mean": 119.81351394019765,
+          "mae_mean": 152.25853304284678
+        }
+      },
+      "bootstrap_ci95": [
+        48.666671741794545,
+        146.66888064791132
+      ]
+    },
+    "2": {
+      "n_cells": 2754,
+      "n_origins": 27,
+      "n_states": 51,
+      "by_model": {
+        "ensemble": {
+          "rows": 1377,
+          "wis_mean": 105.87939660888509,
+          "mae_mean": 147.94045025417574
+        },
+        "baseline": {
+          "rows": 1377,
+          "wis_mean": 163.8284828391904,
+          "mae_mean": 208.1045751633987
+        }
+      },
+      "bootstrap_ci95": [
+        72.8252627751868,
+        193.1607760461068
+      ]
+    },
+    "3": {
+      "n_cells": 2754,
+      "n_origins": 27,
+      "n_states": 51,
+      "by_model": {
+        "ensemble": {
+          "rows": 1377,
+          "wis_mean": 133.39275520191973,
+          "mae_mean": 183.76543209876544
+        },
+        "baseline": {
+          "rows": 1377,
+          "wis_mean": 208.36879574374032,
+          "mae_mean": 262.51706608569356
+        }
+      },
+      "bootstrap_ci95": [
+        93.83708125950722,
+        246.6875255754476
+      ]
+    }
+  }
+}

@@ -1,0 +1,392 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[UTF8,fontset=fandol]{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{left=2.3cm,right=2.3cm,top=2.6cm,bottom=2.6cm}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!70!black,urlcolor=blue!70!black}
+\raggedbottom
+
+\definecolor{boxbg}{RGB}{245,247,250}
+\definecolor{boxframe}{RGB}{15,34,64}
+\definecolor{accentteal}{RGB}{0,128,128}
+\newmdenv[backgroundcolor=boxbg,linecolor=boxframe,linewidth=1.5pt,roundcorner=6pt,
+innertopmargin=10pt,innerbottommargin=10pt,innerleftmargin=12pt,
+innerrightmargin=12pt,skipabove=12pt,skipbelow=12pt]{mathbox}
+\newmdenv[backgroundcolor=yellow!5,linecolor=accentteal,linewidth=1.2pt,roundcorner=4pt,
+innertopmargin=8pt,innerbottommargin=8pt,innerleftmargin=10pt,
+innerrightmargin=10pt,skipabove=10pt,skipbelow=10pt]{notebox}
+
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\newtheorem{definition}[theorem]{定义}
+\theoremstyle{remark}
+\newtheorem*{remark}{注记}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+
+\title{\textbf{\LARGE 过度离散传染病更新模型的条件预测风险与视界}\\[0.5em]
+\large \textit{Conditional Risk, Exact Macro Variance, and Forecast Horizons}}
+\author{理论推导与复现说明}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+本手册给出论文理论对象的逐步推导，并明确每个结论的适用域。核心对象是给定信息集、观测尺度、损失函数和预测规则后的条件风险，而不是不依赖模型的“基本上界”。首先证明任意平方损失的精确条件风险恒等式及其 sharp risk floor；随后用全方差定律把过程噪声、参数不确定性、状态不确定性和它们的协方差分开。对州级工作模型，推导固定 $k$ 宏观负二项更新的有限步方差，分别说明 $R<1$、$R=1$、$R>1$，并给出 $q\approx R$ 时的可去奇点。对共享对数正态增长率，使用幂矩得到有限步后验预测矩。另行推导平稳 AR(1) 与单位根边界的条件累积方差。Cramér--Rao 结果被限制为给定完整独立观测、已知离散度和指定效应大小的理想信息基准。反射扩散 QSD 形式和 $\mathcal O(N^{1/2})$ 标度放入明确标注的启发式附录；它们不参与主视界结论。
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{记号、对象与主张边界}
+设 $\mathcal F_t$ 是预测原点 $t$ 可用的信息集，$Y_{t+h}$ 是 $h$ 步后的目标，$\delta_h$ 是 $\mathcal F_t$ 可测的预测规则。所有条件期望和方差都相对于同一个信息集书写。个体层分支模型和观测层宏观模型是两个不同的随机对象：前者的条件方差与当前个体数成正比，后者允许条件方差含有 $Z_t^2$ 项。除非另行说明，$h$ 是整数更新步。
+
+本手册中的“机制视界”定义为指定模型和指定风险归一化下的阈值集合上界。它不自动等于实时业务预测的穿越点，也不对未列入信息集的预测器给出普适限制。任何实证校准都必须固定目标、分母、原点、参数估计方式和版本化数据。
+
+\begin{notebox}
+\textbf{适用域闸门。} 固定参数公式不能替代参数后验混合；五周窗口估计的 $k_{\rm agg}$ 是有效工作参数；个体队列的 $k$ 不可未经校准直接当作州级 $k_{\rm agg}$。
+\end{notebox}
+
+\section{负二项工作模型与两种更新方程}
+\subsection{Poisson--Gamma 混合与单代矩}
+令个体传染潜能 $\nu$ 服从形状为 $k$、尺度为 $R/k$ 的 Gamma 分布，并令
+\begin{equation}
+Y\mid\nu\sim\operatorname{Poisson}(\nu).
+\end{equation}
+于是 $\E[\nu]=R$、$\Var(\nu)=R^2/k$。全方差定律给出
+\begin{align}
+\E[Y]&=\E\{\E[Y\mid\nu]\}=R,\\
+\Var(Y)&=\E\{\Var(Y\mid\nu)\}+\Var\{\E[Y\mid\nu]\}
+=R+\frac{R^2}{k}.
+\end{align}
+积分掉 $\nu$ 得到均值为 $R$、形状为 $k$ 的负二项分布
+\begin{equation}
+\Pr(Y=y)=\frac{\Gamma(y+k)}{\Gamma(k)y!}
+\left(\frac{k}{k+R}\right)^k
+\left(\frac{R}{k+R}\right)^y,\qquad y=0,1,\ldots .
+\end{equation}
+
+\subsection{个体层 Galton--Watson 参考模型}
+在易感宿主充足且个体子代条件独立时，
+\begin{equation}
+Z_{t+1}=\sum_{i=1}^{Z_t}Y_{t,i},\qquad
+\E[Y_{t,i}]=R,\qquad \Var(Y_{t,i})=\sigma^2=R+R^2/k.
+\end{equation}
+给定 $Z_t=n$，
+\begin{equation}
+\E[Z_{t+1}\mid Z_t=n]=Rn,\qquad
+\Var(Z_{t+1}\mid Z_t=n)=n\sigma^2.\label{eq:micro_cond}
+\end{equation}
+
+\begin{lemma}[个体层全代方差]
+令 $Z_0=I_0$ 为确定值，$m_h=\E[Z_h]=I_0R^h$，$V_h=\Var(Z_h)$。则
+\begin{equation}
+V_h=I_0\sigma^2R^{h-1}
+\begin{cases}(R^h-1)/(R-1),&R\ne1,\\h,&R=1.\end{cases}\label{eq:micro_variance}
+\end{equation}
+\end{lemma}
+\begin{proof}
+由 \eqref{eq:micro_cond} 和全方差定律，
+\begin{equation}
+V_{h+1}=R^2V_h+\sigma^2m_h
+=R^2V_h+I_0\sigma^2R^h,\qquad V_0=0.
+\end{equation}
+迭代得到
+\begin{equation}
+V_h=I_0\sigma^2\sum_{j=0}^{h-1}R^{2(h-1-j)}R^j
+=I_0\sigma^2R^{h-1}\sum_{j=0}^{h-1}R^j.
+\end{equation}
+几何和在 $R=1$ 处的连续极限为 $h$，故结论成立。该式涵盖亚临界、临界和超临界情形，但不是下文住院观测层的方差公式。
+\end{proof}
+
+\subsection{宏观层固定离散度更新}
+州级观测层采用
+\begin{equation}
+Z_{t+1}\mid Z_t\sim\operatorname{NB}(RZ_t,k),\qquad
+\Var(Z_{t+1}\mid Z_t)=RZ_t+\frac{R^2Z_t^2}{k}.\label{eq:macro_model}
+\end{equation}
+这里 $R>0$ 是周度乘子，$k>0$ 是有效聚合离散度。二次项来自负二项均值 $RZ_t$，不能用个体层线性条件方差替代。
+
+定义 $c=1+1/k$、$q=R^2c$、$m_t=I_0R^t$、$V_t=\Var(Z_t)$。因为 $\E[Z_t^2]=V_t+m_t^2$，全方差定律给出
+\begin{align}
+V_{t+1}
+&=R m_t+\frac{R^2}{k}(V_t+m_t^2)+R^2V_t\nonumber\\
+&=qV_t+I_0R^{t+1}+\frac{I_0^2R^{2t+2}}{k}.\label{eq:macro_recurrence}
+\end{align}
+令
+\begin{equation}
+G_h(a,b)=\sum_{j=0}^{h-1}a^{h-1-j}b^j
+=\begin{cases}(a^h-b^h)/(a-b),&a\ne b,\\h a^{h-1},&a=b,\end{cases}
+\quad G_0(a,b)=0.
+\end{equation}
+
+\begin{theorem}[固定 $k$ 宏观模型的精确有限步方差]
+在 \eqref{eq:macro_model}、确定初值 $Z_0=I_0$ 和固定 $R,k$ 下，对所有 $R>0,k>0$ 和整数 $h\ge0$，
+\begin{align}
+V_h&=I_0R\,G_h(q,R)+\frac{I_0^2R^2}{k}\,G_h(q,R^2)\label{eq:macro_sum}\\
+&=I_0R\frac{q^h-R^h}{q-R}+I_0^2(q^h-R^{2h}),\qquad(q\ne R).\label{eq:macro_closed}
+\end{align}
+第一行的连续定义在所有可去重合点成立。
+\end{theorem}
+\begin{proof}
+迭代 \eqref{eq:macro_recurrence} 并用 $V_0=0$：
+\begin{equation}
+V_h=\sum_{j=0}^{h-1}q^{h-1-j}
+\left(I_0R^{j+1}+\frac{I_0^2R^{2j+2}}k\right).
+\end{equation}
+提取 $I_0R$ 和 $I_0^2R^2/k$ 后得到两个 $G_h$。又因 $q-R^2=R^2/k$，
+\begin{equation}
+\frac{I_0^2R^2}{k}G_h(q,R^2)
+=I_0^2(q^h-R^{2h}),
+\end{equation}
+即得第二行。
+\end{proof}
+
+将均值 $m_h=I_0R^h$ 代回，可同时得到一般 $R$ 的相对方差闭式
+\begin{equation}
+\operatorname{CV}_{\rm macro}^2(h)
+=\left(c^h-1\right)
++\frac{1}{I_0}\,
+\frac{q^h-R^h}{(q-R)R^{2h-1}},
+\qquad q\ne R. \label{eq:macro_cv}
+\end{equation}
+式 \eqref{eq:macro_cv} 的第一项是宏观负二项二次项累积，第二项是由有限初始规模和 Poisson 部分产生的修正；它不同于把个体层线性条件方差直接代入的 $\operatorname{CV}^2$。
+
+\paragraph{$0<R<1$.} 均值衰减，但 $q=R^2(1+1/k)$ 可小于、等于或大于 $1$；相对风险的单调性不能仅由 $R<1$ 推出。
+
+\paragraph{$R=1$.} 此时 $q=c$，连续化得到
+\begin{equation}
+V_h=(I_0k+I_0^2)(c^h-1),\qquad
+\operatorname{CV}_{\rm macro}^2(h)=\left(1+\frac{k}{I_0}\right)(c^h-1).\label{eq:macro_critical}
+\end{equation}
+
+\paragraph{$R>1$.} 此时 $q>R>1$，有限步方差由 $q^h$ 项控制；增长率取决于 $k$，不存在个体闭式中的普遍常数人口地板。
+
+\paragraph{$q\approx R$ 的可去奇点。} $q=R$ 等价于 $R=k/(k+1)$，并非模型发散。由 $G_h(q,R)\to hR^{h-1}$，
+\begin{equation}
+V_h=I_0hR^h+I_0^2(R^h-R^{2h}),\qquad q=R.\label{eq:q_equal_R}
+\end{equation}
+相应的相对方差为
+\begin{equation}
+\operatorname{CV}_{\rm macro}^2(h)
+=\frac{h}{I_0R^h}+R^{-h}-1,\qquad q=R.
+\label{eq:q_equal_R_cv}
+\end{equation}
+数值实现应使用 $G_h$ 或稳定差分商；直接计算两个接近幂的差会造成消去误差。
+
+\section{条件风险恒等式与 sharp risk floor}
+\begin{theorem}[精确条件平方风险恒等式]
+设 $Y\in L^2$，$\delta_h$ 是 $\mathcal F_t$ 可测，令
+$m_h=\E[Y\mid\mathcal F_t]$ 和 $V_h=\Var(Y\mid\mathcal F_t)$。则
+\begin{equation}
+\mathcal R_h(\delta_h\mid\mathcal F_t)
+:=\E[(Y-\delta_h)^2\mid\mathcal F_t]
+=V_h+(m_h-\delta_h)^2.\label{eq:risk_identity}
+\end{equation}
+因此条件均值 $\delta_h^\star=m_h$ 达到唯一（几乎处处）最小风险，
+\begin{equation}
+\inf_{\delta_h\ {\cal F}_t\text{-可测}}\mathcal R_h(\delta_h\mid\mathcal F_t)=V_h.
+\label{eq:sharp_floor}
+\end{equation}
+\end{theorem}
+\begin{proof}
+写 $Y-\delta_h=(Y-m_h)+(m_h-\delta_h)$，平方并条件化。交叉项为
+$2(m_h-\delta_h)\E[Y-m_h\mid\mathcal F_t]=0$，第一项为 $V_h$，第二项非负且仅在 $\delta_h=m_h$ 时为零。
+\end{proof}
+
+\begin{proposition}[阈值视界的定义]
+令 $a_h>0$ 为预先指定的归一化尺度，$\tau>0$ 为容忍度，$\mathcal H$ 为允许的整数步集合。对任意规则定义
+\begin{equation}
+H_\tau(\delta)=\sup\left\{h\in\mathcal H:
+\frac{\mathcal R_h(\delta\mid\mathcal F_t)}{a_h^2}\le\tau^2\right\}.\label{eq:horizon_set}
+\end{equation}
+只有当风险函数在 $\mathcal H$ 上单调时，该上界才等于首次穿越根；参数混合、季节性或状态耗竭可能产生多个穿越。
+\end{proposition}
+
+\section{后验参数、状态与协方差}
+令 $\theta$ 表示未知参数，$X_t$ 表示原点状态，定义
+\begin{equation}
+m_h(\theta,X_t)=\E[Y\mid\theta,X_t,\mathcal F_t],\qquad
+v_h(\theta,X_t)=\Var(Y\mid\theta,X_t,\mathcal F_t).
+\end{equation}
+
+\begin{theorem}[后验全方差分解]
+在后验 $p(\theta,X_t\mid\mathcal F_t)$ 存在且二阶矩有限时，
+\begin{equation}
+V_h=\E_{\theta,X_t\mid\mathcal F_t}[v_h(\theta,X_t)]
++\Var_{\theta,X_t\mid\mathcal F_t}[m_h(\theta,X_t)].\label{eq:posterior_total}
+\end{equation}
+进一步，
+\begin{align}
+\Var_{\theta,X_t\mid\mathcal F_t}(m_h)
+&=\E_{\theta\mid\mathcal F_t}\!\left[
+\Var_{X_t\mid\theta,\mathcal F_t}(m_h)\right]\nonumber\\
+&\quad+\Var_{\theta\mid\mathcal F_t}\!\left[
+\E_{X_t\mid\theta,\mathcal F_t}(m_h)\right].\label{eq:posterior_nested}
+\end{align}
+第二项包含参数传播，第一项包含状态不确定性；二者不要求独立。
+\end{theorem}
+\begin{proof}
+先相对于 $(\theta,X_t,\mathcal F_t)$ 使用全方差定律，再相对于 $\mathcal F_t$ 条件化，得到第一式；对 $m_h(\theta,X_t)$ 再以 $\theta$ 为条件变量应用同一定律，得到第二式。
+\end{proof}
+
+令 $\eta=(\theta^\top,X_t^\top)^\top$，$g=\nabla_\eta m_h$，$\Sigma_\eta=\Var(\eta\mid\mathcal F_t)$。局部 Delta 近似为
+\begin{equation}
+\Var(m_h(\eta)\mid\mathcal F_t)\approx g^\top\Sigma_\eta g
+=\sum_i g_i^2\Sigma_{ii}+2\sum_{i<j}g_ig_j\Sigma_{ij}.\label{eq:cov_expansion}
+\end{equation}
+特别地，参数--状态交叉项为
+\begin{equation}
+2\nabla_\theta m_h^\top\Cov(\theta,X_t\mid\mathcal F_t)\nabla_xm_h.
+\end{equation}
+若 $m_h(\theta,x)=a+b^\top\theta+d^\top x$ 对 $(\theta,x)$ 为仿射函数，上式连同两个边际二次型是精确的：
+\begin{equation}
+\Var(m_h\mid\mathcal F_t)
+=b^\top\Sigma_{\theta\theta}b+d^\top\Sigma_{xx}d
++2b^\top\Sigma_{\theta x}d.
+\label{eq:affine_cov_exact}
+\end{equation}
+对非线性 $m_h$，\eqref{eq:cov_expansion} 是局部 Delta 近似；令交叉项消失仍需要额外的条件独立或正交假设，不能作为一般恒等式。
+
+\subsection{共享对数正态增长率的精确混合矩}
+固定 $I_0,k$，令整个预测区间共享 $B=\log R\sim N(\mu_B,\sigma_B^2)$，并记 $c=1+1/k$。定义
+\begin{equation}
+M_a=\E[R^a]=\exp\left(a\mu_B+\frac12a^2\sigma_B^2\right).
+\label{eq:lognormal_moment}
+\end{equation}
+
+\begin{proposition}[共享对数正态参数下的后验预测矩]
+在宏观模型 \eqref{eq:macro_model} 下，
+\begin{align}
+\bar m_h&=\E_R[m_h(R)]=I_0M_h,\label{eq:ln_mean}\\
+\E_R[V_h(R)]
+&=I_0\sum_{j=0}^{h-1}c^{h-1-j}M_{2h-j-1}
++I_0^2(c^h-1)M_{2h},\label{eq:ln_process}\\
+\Var(Z_h\mid\mathcal F_t)
+&=I_0\sum_{j=0}^{h-1}c^{h-1-j}M_{2h-j-1}
++I_0^2\left(c^hM_{2h}-M_h^2\right).\label{eq:ln_total}
+\end{align}
+\end{proposition}
+\begin{proof}
+给定 $R$ 时，递推式的有限迭代为
+\begin{equation}
+V_h(R)=I_0\sum_{j=0}^{h-1}c^{h-1-j}R^{2h-j-1}
++I_0^2(c^h-1)R^{2h}.
+\end{equation}
+逐项使用 \eqref{eq:lognormal_moment} 得到过程方差的期望。又
+$\Var_R(m_h)=I_0^2(M_{2h}-M_h^2)$；与过程项相加即得总方差。
+\end{proof}
+若采用 plug-in 规则 $\delta_h=I_0e^{h\mu_B}$，则
+\begin{equation}
+\E[(Z_h-\delta_h)^2\mid\mathcal F_t]
+=\Var(Z_h\mid\mathcal F_t)+I_0^2(M_h-e^{h\mu_B})^2.
+\end{equation}
+参数混合造成的偏差平方不能与过程方差合并或删去。
+
+\section{AR(1) 增长率的条件累积方差}
+令 $x_t=r_t-\mu$ 满足
+\begin{equation}
+x_t=\phi x_{t-1}+\eta_t,\qquad
+\eta_t\stackrel{\mathrm{i.i.d.}}{\sim}N(0,s_e^2).\label{eq:ar1}
+\end{equation}
+未来累积和为 $S_h=\sum_{j=1}^hr_{t+j}$。必须区分给定原点状态的条件方差和把原点状态视为平稳随机变量后的无条件方差。
+
+\subsection{平稳情形 \texorpdfstring{$|\phi|<1$}{abs(phi)<1}}
+给定 $x_t$，
+\begin{equation}
+x_{t+j}=\phi^jx_t+\sum_{a=1}^j\phi^{j-a}\eta_{t+a}.
+\end{equation}
+创新 $\eta_{t+a}$ 在 $S_h$ 中的系数是 $(1-\phi^{h-a+1})/(1-\phi)$，所以
+\begin{equation}
+\Var(S_h\mid x_t)=\frac{s_e^2}{(1-\phi)^2}
+\left[h-\frac{2\phi(1-\phi^h)}{1-\phi}
++\frac{\phi^2(1-\phi^{2h})}{1-\phi^2}\right].\label{eq:ar_cond}
+\end{equation}
+若初值平稳，$\gamma_0=s_e^2/(1-\phi^2)$，则
+\begin{equation}
+\Var(S_h)=\gamma_0\left[h+2\sum_{\ell=1}^{h-1}(h-\ell)\phi^\ell\right]
+=\gamma_0h\frac{1+\phi}{1-\phi}+O(1),\qquad h\to\infty.\label{eq:ar_stationary}
+\end{equation}
+
+\subsection{单位根边界 \texorpdfstring{$\phi=1$}{phi=1}}
+当 $\phi=1$ 时过程是随机游走而非平稳 AR(1)。给定 $x_t$，
+\begin{align}
+\Var(S_h\mid x_t)
+&=s_e^2\sum_{a=1}^h(h-a+1)^2\nonumber\\
+&=s_e^2\frac{h(h+1)(2h+1)}6
+\sim\frac{s_e^2}{3}h^3.\label{eq:ar_unit}
+\end{align}
+若初值有方差 $v_0$，无条件式另加 $h^2v_0$。$h^3$ 是单位根边界的条件结果，不能代回平稳式，也不能把接近单位根的有限样本自动称为单位根。
+
+\section{Cramér--Rao 信息基准的适用条件}
+\subsection{条件负二项似然}
+考虑完整、独立的转移观测 $(y_t,n_t)$，其中 $n_t=Z_{t-1}$ 已知，且
+$Y_t\mid n_t\sim\operatorname{NB}(Rn_t,k)$、$k$ 已知。忽略与 $R$ 无关的项，
+\begin{equation}
+\ell_t(R)=y_t\log R-(y_t+k)\log(k+Rn_t)+\mathrm{const}.
+\end{equation}
+二阶导及其条件期望给出
+\begin{align}
+\ell_t''(R)&=-\frac{y_t}{R^2}+\frac{n_t^2(y_t+k)}{(k+Rn_t)^2},\\
+\mathcal I_t(R\mid n_t)&=-\E[\ell_t''(R)\mid n_t]
+=\frac{n_tk}{R(k+Rn_t)}.\label{eq:crb_general}
+\end{align}
+条件独立时总信息是
+\begin{equation}
+\mathcal I(R\mid n_{1:T})=\sum_{t=1}^T\frac{n_tk}{R(k+Rn_t)}.\label{eq:crb_sum}
+\end{equation}
+
+\subsection{单位暴露的理想基准}
+只有在每个观测都有 $n_t=1$、$k$ 已知、子代完整且转移独立时，才可写
+\begin{equation}
+\mathcal I_C(R)=C\frac{k}{R(R+k)},\qquad
+\Var(\widehat R)\ge\frac{R(R+k)}{Ck}.\label{eq:crb_unit}
+\end{equation}
+对指定单侧替代 $R_0$、$R_1=R_0+\varepsilon$，再加正态近似、显著性 $\alpha$ 和功效 $1-\beta$，得到情景特定的理想信息基准
+\begin{equation}
+C\ge\frac{\left[z_{1-\alpha}\sqrt{R_0(R_0+k)/k}
++z_{1-\beta}\sqrt{R_1(R_1+k)/k}\right]^2}{\varepsilon^2}.
+\label{eq:crb_power}
+\end{equation}
+例如 $R_0=1,R_1=1.1,k=1,\varepsilon=0.1$ 时，两个 $z$ 均为 $1$ 给出 $C\ge861$；$\alpha=0.05$、$1-\beta=0.8$ 给出约 $C\ge1300$。这些数值只回答上述理想 Fisher 信息问题，不包括删失、漏报、状态估计、$k$ 估计误差、序列相关或模型错设，也不能换算为现实检测时间、报告病例处方或宏观住院样本量。
+
+\begin{notebox}
+\textbf{CRB 主张边界。} 当 $n_t$ 不相等时使用 \eqref{eq:crb_sum}；当 $k$ 未知时使用联合信息矩阵并对 nuisance parameter 做 Schur 补；有漏报、截尾或依赖时，\eqref{eq:crb_power} 不再是相应数据生成过程的保证。本文只把它作为 scenario-specific ideal information benchmark。
+\end{notebox}
+
+\appendix
+\section{启发式附录：反射扩散与临界标度}
+本附录保留两种直觉工具，但它们不是主文定理，也不用于计算主视界。
+
+\subsection{带下截断的反射扩散辅助密度}
+考虑
+\begin{equation}
+dX=X\left(\varepsilon-\frac{R}{N}X\right)dt+\sqrt{(R+1)X}\,dW_t,
+\qquad X\ge x_{\min}>0.
+\end{equation}
+对在 $x_{\min}$ 处反射、无穷远处零通量的辅助过程，形式稳态密度为
+\begin{equation}
+\widetilde\pi(x)\propto x^{-1}
+\exp\left(\frac{2\varepsilon}{R+1}x-\frac{R}{N(R+1)}x^2\right),
+\qquad x\ge x_{\min}.\label{eq:heuristic_qsd}
+\end{equation}
+它来自零通量方程积分一次并代回 $\pi=u/[(R+1)x]$。当 $x_{\min}\downarrow0$ 时 $x^{-1}$ 导致归一化失败；真正的吸收过程 QSD 应由 killed semigroup 的主特征函数和边界条件定义。因此 \eqref{eq:heuristic_qsd} 只能称为反射、带截断的辅助平稳密度，不能称为一般吸收链 QSD，也不能由它推出视界必然坍塌为零。
+
+\subsection{\texorpdfstring{$\mathcal O(N^{1/2})$}{O(sqrt(N))} 的临界标度启发}
+某些近临界扩散缩放可通过平衡漂移、扩散和有限人口边界得到交叉时间量级
+\begin{equation}
+h_{\mathrm{cross}}=\mathcal O_{\mathrm{heuristic}}(N^{1/2}).
+\end{equation}
+该平衡依赖初始条件、边界、离散化和缩放方式；改变任一项即可改变指数或前因子。只有专门的极限定理或模拟覆盖率研究才能把它升级为可检验命题。它不参与 \eqref{eq:horizon_set} 的根求解、州级校准或外部评分解释。
+
+\section*{小结}
+式 \eqref{eq:risk_identity}--\eqref{eq:sharp_floor} 给出任意预测器的精确条件风险关系；式 \eqref{eq:macro_sum}--\eqref{eq:q_equal_R_cv} 给出宏观固定 $k$ 更新的全体有限步方差和相对方差，包括亚临界、临界、超临界及 $q\approx R$ 情形；式 \eqref{eq:ln_total} 与 \eqref{eq:ar_cond}--\eqref{eq:ar_unit} 展示参数混合和持续漂移如何改变风险。CRB、QSD 和临界标度均保留其明确的条件或启发式地位，不能越过这些假设解释为普适业务预测上界。
+\end{document}

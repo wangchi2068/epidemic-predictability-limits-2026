@@ -1,0 +1,48 @@
+{
+  "rows": 4131,
+  "models": [
+    "ensemble"
+  ],
+  "bootstrap": {
+    "B": 2000,
+    "block_weeks": 4
+  },
+  "by_horizon": {
+    "1": {
+      "n_cells": 1428,
+      "n_origins": 28,
+      "n_states": 51,
+      "wis_mean": 31.993769575261034,
+      "mae_mean": 50.07267395374707,
+      "persistence_mae_mean": 59.18977591036415,
+      "bootstrap_ci95": [
+        18.30224691136742,
+        43.5780018291024
+      ]
+    },
+    "2": {
+      "n_cells": 1377,
+      "n_origins": 27,
+      "n_states": 51,
+      "wis_mean": 42.808060241894495,
+      "mae_mean": 67.32178107954627,
+      "persistence_mae_mean": 83.04212055192447,
+      "bootstrap_ci95": [
+        25.421343867325515,
+        57.97613887088601
+      ]
+    },
+    "3": {
+      "n_cells": 1326,
+      "n_origins": 26,
+      "n_states": 51,
+      "wis_mean": 51.302592554138805,
+      "mae_mean": 79.19411213068972,
+      "persistence_mae_mean": 103.07616892911011,
+      "bootstrap_ci95": [
+        31.37586234126133,
+        70.05489599296581
+      ]
+    }
+  }
+}

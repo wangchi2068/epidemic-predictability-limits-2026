@@ -1,0 +1,1283 @@
+[
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/2024-01-06-FluSight-ensemble.csv",
+    "sha256": "B45584863813245C9E41330A9AC8AA453335E89A8E5CD16145D29BCCEEAFDD68",
+    "bytes": 522958
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-10-14-FluSight-baseline.csv",
+    "sha256": "316DB7DD47E88F6E401E54823503356637B34862378D3E07F568D71078C06364",
+    "bytes": 406474
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-10-21-FluSight-baseline.csv",
+    "sha256": "CA1F1925A284193F01E8FB011A3616318F354C8E32B73583787157A67AF2F020",
+    "bytes": 406073
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-10-28-FluSight-baseline.csv",
+    "sha256": "318DDEA06D877C010811066369618D2DEE7E913A2DEEB8ECEE97106E63C41AF9",
+    "bytes": 406331
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-11-04-FluSight-baseline.csv",
+    "sha256": "062C91E2483ED89F578EFBBD17A66019936ABCAD703C377552CCA8ABA60BEE04",
+    "bytes": 395877
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-11-11-FluSight-baseline.csv",
+    "sha256": "7C45C12AF92AA1C080CF22BD100935CEDC4CCB0B810F8978D2572F203A241433",
+    "bytes": 398119
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-11-18-FluSight-baseline.csv",
+    "sha256": "38BAC955FD16851752C5AF40F6DEE473B375B88A5403AD573C2F7D4C85095618",
+    "bytes": 399112
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-11-25-FluSight-baseline.csv",
+    "sha256": "5884F1A6F2B39AF133DE9691A3629B3A9EB709D48F22A874F0BCC3198E132647",
+    "bytes": 399301
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-12-02-FluSight-baseline.csv",
+    "sha256": "30804369D006BEC2EFB40AC80E5C459253903F885EA020879560FEC1950B0A6B",
+    "bytes": 400887
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-12-09-FluSight-baseline.csv",
+    "sha256": "B22C8D24E27DAF62E7AD2AE71EC881548A57E6A4812A1880DFA155DCDE79F356",
+    "bytes": 401516
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-12-16-FluSight-baseline.csv",
+    "sha256": "FC7FAD0A4E3F6617B060F7A4BE55EB4188F559C9643BF4DB29C002D259FD5F35",
+    "bytes": 403187
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-12-23-FluSight-baseline.csv",
+    "sha256": "BF91BC9870C5111A7B4AEF700E48FE3D8C529DE04B2FEA1878AEA7FDC219F7AA",
+    "bytes": 404928
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2023-12-30-FluSight-baseline.csv",
+    "sha256": "DA56751D0D906A0900526E9704FAD82FBF6994F421668F714FF76061030E7861",
+    "bytes": 407686
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-01-06-FluSight-baseline.csv",
+    "sha256": "4428247E5604EEF9D802934A57A1D86ACF613AAD0AEEDCCB7B061FA3F2FD22E7",
+    "bytes": 410005
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-01-13-FluSight-baseline.csv",
+    "sha256": "3BE802F352D07A6857EF9D9EAD796915388B8362BFB6C9D03F85DAAC59AC1E2F",
+    "bytes": 409804
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-01-20-FluSight-baseline.csv",
+    "sha256": "BA92DB6B45070842994AE49FC291D6CAEB769DCB387817F70B6076E89FF985FF",
+    "bytes": 409577
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-01-27-FluSight-baseline.csv",
+    "sha256": "068D082E5F76AA7DE124DB27DB3E2A96E40D0A27F3718BBA574B6149030055C5",
+    "bytes": 408442
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-02-03-FluSight-baseline.csv",
+    "sha256": "5C55A6A1255DD9BCD6E2A1355C1B5864A73E66D09E6B78261DB541083AF1593B",
+    "bytes": 408294
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-02-10-FluSight-baseline.csv",
+    "sha256": "AC394ABA311456DAB327BE4556953E8DA2E1AECEB6013A5F91C4E9300D9E9B99",
+    "bytes": 407808
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-02-17-FluSight-baseline.csv",
+    "sha256": "A6C71E2FD4A751FA6A79289991702A7949FD131F210C409AE70CC3F4C3434B94",
+    "bytes": 407251
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-02-24-FluSight-baseline.csv",
+    "sha256": "0D4E300AFD4D9C42DF428FFAE6545042FEABC74EAABE3954CFDFC2A69C11348F",
+    "bytes": 406962
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-03-02-FluSight-baseline.csv",
+    "sha256": "CFBD6882C45C6715412F5735CCC23FFDC9776275D3A4814AC862677E39ECF8A6",
+    "bytes": 407230
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-03-09-FluSight-baseline.csv",
+    "sha256": "0F833566938A8CC56797FBC7EC04C5BF05E50B2F9E13C970B4B2219464011E12",
+    "bytes": 407554
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-03-16-FluSight-baseline.csv",
+    "sha256": "542013C127E59832E9F9A772EE1F97BA3915F6AC5F4B512F5A68F476D644DE7E",
+    "bytes": 406770
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-03-23-FluSight-baseline.csv",
+    "sha256": "BC46950EAB29ACCD91AAADEDD2D4E389F54CAFE714B387F9020CEE436207E030",
+    "bytes": 405647
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-03-30-FluSight-baseline.csv",
+    "sha256": "5A3D541C69243766CA409D60010C079E07CAFAF3FEAC251F0655B5BCCF562642",
+    "bytes": 404238
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-04-06-FluSight-baseline.csv",
+    "sha256": "C7E1414AF10EFF8124B196D373001216E850E1D473FCA649B6F83C6825F5999D",
+    "bytes": 403775
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-04-13-FluSight-baseline.csv",
+    "sha256": "D1C743E9B4D7995F5C8727EBB12E03831904672476F04CBC1A94CA0269A88E83",
+    "bytes": 403541
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-04-20-FluSight-baseline.csv",
+    "sha256": "A5F8B3C214D2F407ADD4F6EFEF1F74F534CCEDA6D83B01A4B396865D7E939F09",
+    "bytes": 400999
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-04-27-FluSight-baseline.csv",
+    "sha256": "56492720915631835AFBD590441A464051DE3F02DE17CCE04599D3138BA38EAB",
+    "bytes": 400153
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/baseline/2024-05-04-FluSight-baseline.csv",
+    "sha256": "D2EDF83A1A49646629BB584ADB56B203E944B0068B9D238250481FF256C0C1D0",
+    "bytes": 399098
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-10-14-FluSight-ensemble.csv",
+    "sha256": "0495532D8FC3885FB64B62F541A35CC1AA851A6869F82480645A8C58831293BC",
+    "bytes": 524323
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-10-21-FluSight-ensemble.csv",
+    "sha256": "047C6086CE9ED1BB864C05CAF640FB028AFA8E22C3151210B43E5F664988E23A",
+    "bytes": 531866
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-10-28-FluSight-ensemble.csv",
+    "sha256": "9B6E7391CA116C160E0EFA34A07CDA890DFB5A2BCE060F092DBF1F0F30F42071",
+    "bytes": 524028
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-11-04-FluSight-ensemble.csv",
+    "sha256": "162B23402CED53430CC8E5F571680116C2E1F2E293B76D526A01A8AAAF07CA5B",
+    "bytes": 533097
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-11-11-FluSight-ensemble.csv",
+    "sha256": "F3609FA223906F681DDFFD6853C665B742FFC9BB04DC7DE63A4DE65FD38FF8F4",
+    "bytes": 525177
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-11-18-FluSight-ensemble.csv",
+    "sha256": "B334656EF393E5BE77816B23707CB8648BB006BE8921D0844B498C98C8830563",
+    "bytes": 523470
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-11-25-FluSight-ensemble.csv",
+    "sha256": "E6792783B4E6E1B16D1E85F19F0D41B5A4938326595C0245707AD505377425A9",
+    "bytes": 521218
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-12-02-FluSight-ensemble.csv",
+    "sha256": "2000F662432078C454819800A7B99AB1C195EA27214454C8C419B4D8FD851C3C",
+    "bytes": 524082
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-12-09-FluSight-ensemble.csv",
+    "sha256": "4383A58AA74BF4224097896BD5A9C983261B2862C4751F996F4ECE7ABBDC2AC5",
+    "bytes": 517894
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-12-16-FluSight-ensemble.csv",
+    "sha256": "818C7A84E68CFBB33821C6FEF34532E42D85429F1E1EE4413D44CA6E4FA2035F",
+    "bytes": 522581
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-12-23-FluSight-ensemble.csv",
+    "sha256": "D3EC72D524011F186D2B7F898A29E50606DC7E610A6A33D15E1AFFF6706751FE",
+    "bytes": 525370
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2023-12-30-FluSight-ensemble.csv",
+    "sha256": "00F5E92C2A024F657F101BCE5C8D1C14F5FEFB998748A3C8B43F4E8BA7F25772",
+    "bytes": 532102
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-01-06-FluSight-ensemble.csv",
+    "sha256": "B45584863813245C9E41330A9AC8AA453335E89A8E5CD16145D29BCCEEAFDD68",
+    "bytes": 522958
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-01-13-FluSight-ensemble.csv",
+    "sha256": "8C4291E70C5B47DD1475136DAA5FFDF9A833A3A9C567DD863EBC14BDCAB9951A",
+    "bytes": 530517
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-01-20-FluSight-ensemble.csv",
+    "sha256": "6389A83D3AFF69A8138B2220C10C7C21FD14D61DAF895DD42BC53B53A4479A6B",
+    "bytes": 524342
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-01-27-FluSight-ensemble.csv",
+    "sha256": "A9C200A1395433DEB24EC71EF2AE7210F9D7CBBA5B3B166CF04303B7629F01C3",
+    "bytes": 529998
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-02-03-FluSight-ensemble.csv",
+    "sha256": "C276963E4F30094E9DDD71C811349161D4A7AA1B97A2B8CC4CD162CAB09CCD10",
+    "bytes": 519229
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-02-10-FluSight-ensemble.csv",
+    "sha256": "B03FC33BABDE3F32EF15780FDBDDB603D7156379D2CC6663E4D6CA275B08C8F5",
+    "bytes": 532036
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-02-17-FluSight-ensemble.csv",
+    "sha256": "AB2ABA8CFAFF6FDC76E8D8C5224E44F12D465F63E02B4200E8A8510420142417",
+    "bytes": 519604
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-02-24-FluSight-ensemble.csv",
+    "sha256": "FD19DD168B080E56D593E1E2CEFEFCE893F4E5EFE1EE1C1739B5D65DD6DCFFE5",
+    "bytes": 525554
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-03-02-FluSight-ensemble.csv",
+    "sha256": "076D6E2876C2F4AF916020A7BEA7C5CF691B11420E4F3F06A7E35542512C87BE",
+    "bytes": 537652
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-03-09-FluSight-ensemble.csv",
+    "sha256": "618A5502E6C38E97F016CCA4889605289B3AABE7BE8FEFA3FA2CC83757F94F14",
+    "bytes": 526838
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-03-16-FluSight-ensemble.csv",
+    "sha256": "1F4FAC2368357D70C17D8D9A8DF18DFA4BFCD745D6934CDD8D9D44CFC9B55A7B",
+    "bytes": 527611
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-03-23-FluSight-ensemble.csv",
+    "sha256": "D569E10BAE9221350AB9DBB215C254E676D3A2A9376B81C04EBD2DEA237C1698",
+    "bytes": 514690
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-03-30-FluSight-ensemble.csv",
+    "sha256": "FDB9B4EC47E44BF7D5609EB6C6F8B1BE94AB51C7589DE126A555DE329FE97207",
+    "bytes": 529207
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-04-06-FluSight-ensemble.csv",
+    "sha256": "91B49E7B92A27FAECFCDC5CEEA76CFB140E4394D39F3C6BEC1519BDF9445C61F",
+    "bytes": 523289
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-04-13-FluSight-ensemble.csv",
+    "sha256": "80EEF2E9467EC5163381AD8896B974E694CBD4B73611508841FB51982655111E",
+    "bytes": 505669
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-04-20-FluSight-ensemble.csv",
+    "sha256": "B05295FB232F9E8526C1FA70A5BA07BBEAF809E6CC9051BADDF0DF2DF42A6E75",
+    "bytes": 517904
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-04-27-FluSight-ensemble.csv",
+    "sha256": "3730576ED02066EC7BD389972CB0D45E751CA1C3224EC0950CBF78DE59299ADE",
+    "bytes": 517120
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/ensemble/2024-05-04-FluSight-ensemble.csv",
+    "sha256": "EA5F0DEEBB7D16EB948F5D5ACB9CA2358FFD0A3E1B8F1DBA0B47117D441C1880",
+    "bytes": 516774
+  },
+  {
+    "release": "v1.0.0",
+    "path": "data/flusight/v1.0.0/target-hospital-admissions.csv",
+    "sha256": "7B28FD296F64132476C6192054F259311872B3A077E61DE444CE4B5323DBA41A",
+    "bytes": 332331
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2024-11-23-FluSight-baseline.csv",
+    "sha256": "7D460D6F6C095DE2080A3EB65C94CC1502B1A20F5205C1ACDF7524A4FD99AE3C",
+    "bytes": 1630441
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2024-11-30-FluSight-baseline.csv",
+    "sha256": "A1EB64106C02120BEBB0431851816EBA0FAA485BF9F55184B0A3800CA51D15DC",
+    "bytes": 1630779
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2024-12-07-FluSight-baseline.csv",
+    "sha256": "FCB6FCB6D453AE5B3FA611C2B7EB212328B017AA81D3F4D767B0096F395374F7",
+    "bytes": 1633308
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2024-12-14-FluSight-baseline.csv",
+    "sha256": "5190A3D2F704C0E72B7074DA9C0972EE21A4B3DE950B18BA96AB080C355CE068",
+    "bytes": 1637042
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2024-12-21-FluSight-baseline.csv",
+    "sha256": "253D8F25DC9A2AC92365CE929AF7472ED68D61F54FBEEAA3EC3D5D65CF27C3EF",
+    "bytes": 1645024
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2024-12-28-FluSight-baseline.csv",
+    "sha256": "121142D4EE088687CADC2276BCC5F1DCAAD6318E9A4C4B7A22849B6E7E137550",
+    "bytes": 1650184
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-01-04-FluSight-baseline.csv",
+    "sha256": "787ABA4D76D3DA77B7B201A93893E713D84B8D395D8E1C95BEFFCB2F053FE38A",
+    "bytes": 1658775
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-01-11-FluSight-baseline.csv",
+    "sha256": "1223F49DFB5B9C3F26011CABF106A68614755AC0905B7589BFA6CA7052AEC98B",
+    "bytes": 1665365
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-01-18-FluSight-baseline.csv",
+    "sha256": "81E51579355A306D5DE7013A6516E0CCD56B72FBF913987E38C1B80D83A5C512",
+    "bytes": 1662317
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-02-01-FluSight-baseline.csv",
+    "sha256": "7FCA165ECAEAA22018C276C884511AD5C0ED97DC9F5065B93DD3A2F35CC6CB9D",
+    "bytes": 1663102
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-02-08-FluSight-baseline.csv",
+    "sha256": "EC88A9DDEFD623824A773C19863EE0BC000BEC54CF91427F189AA87320007E9C",
+    "bytes": 1667604
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-02-15-FluSight-baseline.csv",
+    "sha256": "8202E9AF40C17A1825F124DDE4BD2A80C88B1F6A5A896DF81A53A9255AAFFAA8",
+    "bytes": 1669912
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-02-22-FluSight-baseline.csv",
+    "sha256": "BEAA143933E4D4930E8A53FC242443F57F86D930E3BDA66E3D48A516C1303C2E",
+    "bytes": 1667728
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-03-01-FluSight-baseline.csv",
+    "sha256": "A0A80DA67F08E57020342DB9EA07CDF20CF0A94C35D259E8005269F0DB5AD5CB",
+    "bytes": 1665909
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-03-08-FluSight-baseline.csv",
+    "sha256": "8F9BB5DB24B459BF8EC413BF3AD55BFBF060B058858D2072CB55E277D7C63CD9",
+    "bytes": 1663341
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-03-15-FluSight-baseline.csv",
+    "sha256": "D7E7FAE060678602178DAB68272C4C5D532D9D0D4EBF5B57EF06A42C608117D1",
+    "bytes": 1659596
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-03-22-FluSight-baseline.csv",
+    "sha256": "EA79007AA408B068652316CDC8C6DF8E43769943025962233A3FC349B7189B46",
+    "bytes": 1656259
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-03-29-FluSight-baseline.csv",
+    "sha256": "EB4687E2FD6D4184571BEF4BC6324D271A2D39DBF50318F50FA02054EA4CE339",
+    "bytes": 1650828
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-04-05-FluSight-baseline.csv",
+    "sha256": "5C1D7D29AC6767A514447B1BA610ABE76DCA5FB3D157298D05D160A4B06659E4",
+    "bytes": 1647408
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-04-12-FluSight-baseline.csv",
+    "sha256": "8DAC6BB42BAE5CDAD8775145738EB9B07EDACE5B14A3DA3E57853F96D0FA8020",
+    "bytes": 1642124
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-04-19-FluSight-baseline.csv",
+    "sha256": "2908D5AC3B26A573DE5F1E9C92043AFE068F666C4AFC041E3DF7E6D3FB9F6D66",
+    "bytes": 1636951
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-04-26-FluSight-baseline.csv",
+    "sha256": "9A41AF8ACA4DDF27EAEB43D0F341CBE5817D332C85552E21839291A7025E8EA2",
+    "bytes": 1635673
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-05-03-FluSight-baseline.csv",
+    "sha256": "9F9AF7CD20BF6505992F30422E2215AA250F8CDD1BDCF9F20A4947F8F9871DDC",
+    "bytes": 1633316
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-05-10-FluSight-baseline.csv",
+    "sha256": "036773AD20605D5CD415635A77ED47A5BCA3842E715111C9BFC54A8585624C34",
+    "bytes": 1631026
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-05-17-FluSight-baseline.csv",
+    "sha256": "3110CF38AB3BA8672F991FA3176BB6B3D4C1DEE55C4BF6F71B37E14463CA24A5",
+    "bytes": 1630081
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-05-24-FluSight-baseline.csv",
+    "sha256": "B98456A1765A7CE5855FEFBBC0DDA5D94D0FAA956743DEDCE4C1A6E82D8761F3",
+    "bytes": 1629012
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/baseline/2025-05-31-FluSight-baseline.csv",
+    "sha256": "A68C7605AE8FE80C5FE0FFD24C12FA6FCD1A199C33CFA711DC41687AD7E210C6",
+    "bytes": 1628794
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-10-14-FluSight-ensemble.csv",
+    "sha256": "0495532D8FC3885FB64B62F541A35CC1AA851A6869F82480645A8C58831293BC",
+    "bytes": 524323
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-10-21-FluSight-ensemble.csv",
+    "sha256": "047C6086CE9ED1BB864C05CAF640FB028AFA8E22C3151210B43E5F664988E23A",
+    "bytes": 531866
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-10-28-FluSight-ensemble.csv",
+    "sha256": "9B6E7391CA116C160E0EFA34A07CDA890DFB5A2BCE060F092DBF1F0F30F42071",
+    "bytes": 524028
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-11-04-FluSight-ensemble.csv",
+    "sha256": "162B23402CED53430CC8E5F571680116C2E1F2E293B76D526A01A8AAAF07CA5B",
+    "bytes": 533097
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-11-11-FluSight-ensemble.csv",
+    "sha256": "F3609FA223906F681DDFFD6853C665B742FFC9BB04DC7DE63A4DE65FD38FF8F4",
+    "bytes": 525177
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-11-18-FluSight-ensemble.csv",
+    "sha256": "B334656EF393E5BE77816B23707CB8648BB006BE8921D0844B498C98C8830563",
+    "bytes": 523470
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-11-25-FluSight-ensemble.csv",
+    "sha256": "E6792783B4E6E1B16D1E85F19F0D41B5A4938326595C0245707AD505377425A9",
+    "bytes": 521218
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-12-02-FluSight-ensemble.csv",
+    "sha256": "2000F662432078C454819800A7B99AB1C195EA27214454C8C419B4D8FD851C3C",
+    "bytes": 524082
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-12-09-FluSight-ensemble.csv",
+    "sha256": "4383A58AA74BF4224097896BD5A9C983261B2862C4751F996F4ECE7ABBDC2AC5",
+    "bytes": 517894
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-12-16-FluSight-ensemble.csv",
+    "sha256": "818C7A84E68CFBB33821C6FEF34532E42D85429F1E1EE4413D44CA6E4FA2035F",
+    "bytes": 522581
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-12-23-FluSight-ensemble.csv",
+    "sha256": "D3EC72D524011F186D2B7F898A29E50606DC7E610A6A33D15E1AFFF6706751FE",
+    "bytes": 525370
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2023-12-30-FluSight-ensemble.csv",
+    "sha256": "00F5E92C2A024F657F101BCE5C8D1C14F5FEFB998748A3C8B43F4E8BA7F25772",
+    "bytes": 532102
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-01-06-FluSight-ensemble.csv",
+    "sha256": "B45584863813245C9E41330A9AC8AA453335E89A8E5CD16145D29BCCEEAFDD68",
+    "bytes": 522958
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-01-13-FluSight-ensemble.csv",
+    "sha256": "8C4291E70C5B47DD1475136DAA5FFDF9A833A3A9C567DD863EBC14BDCAB9951A",
+    "bytes": 530517
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-01-20-FluSight-ensemble.csv",
+    "sha256": "6389A83D3AFF69A8138B2220C10C7C21FD14D61DAF895DD42BC53B53A4479A6B",
+    "bytes": 524342
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-01-27-FluSight-ensemble.csv",
+    "sha256": "A9C200A1395433DEB24EC71EF2AE7210F9D7CBBA5B3B166CF04303B7629F01C3",
+    "bytes": 529998
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-02-03-FluSight-ensemble.csv",
+    "sha256": "C276963E4F30094E9DDD71C811349161D4A7AA1B97A2B8CC4CD162CAB09CCD10",
+    "bytes": 519229
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-02-10-FluSight-ensemble.csv",
+    "sha256": "B03FC33BABDE3F32EF15780FDBDDB603D7156379D2CC6663E4D6CA275B08C8F5",
+    "bytes": 532036
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-02-17-FluSight-ensemble.csv",
+    "sha256": "AB2ABA8CFAFF6FDC76E8D8C5224E44F12D465F63E02B4200E8A8510420142417",
+    "bytes": 519604
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-02-24-FluSight-ensemble.csv",
+    "sha256": "FD19DD168B080E56D593E1E2CEFEFCE893F4E5EFE1EE1C1739B5D65DD6DCFFE5",
+    "bytes": 525554
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-03-02-FluSight-ensemble.csv",
+    "sha256": "076D6E2876C2F4AF916020A7BEA7C5CF691B11420E4F3F06A7E35542512C87BE",
+    "bytes": 537652
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-03-09-FluSight-ensemble.csv",
+    "sha256": "618A5502E6C38E97F016CCA4889605289B3AABE7BE8FEFA3FA2CC83757F94F14",
+    "bytes": 526838
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-03-16-FluSight-ensemble.csv",
+    "sha256": "1F4FAC2368357D70C17D8D9A8DF18DFA4BFCD745D6934CDD8D9D44CFC9B55A7B",
+    "bytes": 527611
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-03-23-FluSight-ensemble.csv",
+    "sha256": "D569E10BAE9221350AB9DBB215C254E676D3A2A9376B81C04EBD2DEA237C1698",
+    "bytes": 514690
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-03-30-FluSight-ensemble.csv",
+    "sha256": "FDB9B4EC47E44BF7D5609EB6C6F8B1BE94AB51C7589DE126A555DE329FE97207",
+    "bytes": 529207
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-04-06-FluSight-ensemble.csv",
+    "sha256": "91B49E7B92A27FAECFCDC5CEEA76CFB140E4394D39F3C6BEC1519BDF9445C61F",
+    "bytes": 523289
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-04-13-FluSight-ensemble.csv",
+    "sha256": "80EEF2E9467EC5163381AD8896B974E694CBD4B73611508841FB51982655111E",
+    "bytes": 505669
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-04-20-FluSight-ensemble.csv",
+    "sha256": "B05295FB232F9E8526C1FA70A5BA07BBEAF809E6CC9051BADDF0DF2DF42A6E75",
+    "bytes": 517904
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-04-27-FluSight-ensemble.csv",
+    "sha256": "3730576ED02066EC7BD389972CB0D45E751CA1C3224EC0950CBF78DE59299ADE",
+    "bytes": 517120
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-05-04-FluSight-ensemble.csv",
+    "sha256": "EA5F0DEEBB7D16EB948F5D5ACB9CA2358FFD0A3E1B8F1DBA0B47117D441C1880",
+    "bytes": 516774
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-11-23-FluSight-ensemble.csv",
+    "sha256": "C465C4C4F73CBB47F0BD7C412E3950216DC8A68CA3C1E66C4E1FB672A6D9050A",
+    "bytes": 647370
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-11-30-FluSight-ensemble.csv",
+    "sha256": "CEC0D545AB82B55A33C0AE57412B17E86AD513C291F8ED82967649277F498A99",
+    "bytes": 648016
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-12-07-FluSight-ensemble.csv",
+    "sha256": "A826062C33B865D9DB39ACAC987140BAE665D46A5F656CD7EA5807A08BB31AE7",
+    "bytes": 651959
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-12-14-FluSight-ensemble.csv",
+    "sha256": "8BD843FD80F396637ABD7427B5FB362BD2611DA105A61F919368194B85E62782",
+    "bytes": 578777
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-12-21-FluSight-ensemble.csv",
+    "sha256": "3B1FE87C177864B54C1BD4C299D63ABF33A30F7BC798B4E466502BEFE9C5C98C",
+    "bytes": 578999
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2024-12-28-FluSight-ensemble.csv",
+    "sha256": "37F739DCEEBDEEBA65D2FCE2533F8F0D6312ACE8B91990E374E2AABEB52F454D",
+    "bytes": 579036
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-01-04-FluSight-ensemble.csv",
+    "sha256": "49F23C3A385965D8A89D88EF5DF991289547CC78CA8B2F4F770E1BCD746C1308",
+    "bytes": 578838
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-01-11-FluSight-ensemble.csv",
+    "sha256": "2FE5B14B22C0ED20A51FE69D94DBAFADC4A44F6848592634841BD6B0F7574E6D",
+    "bytes": 579220
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-01-18-FluSight-ensemble.csv",
+    "sha256": "E5F43F74D8E8A996C2E38ED2C3410290C17FA64098231DC96BDCBCA8134ABA21",
+    "bytes": 579273
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-02-01-FluSight-ensemble.csv",
+    "sha256": "6C3B428EFBDF33B11FA322ED7D2953ACEA8C77BAF3312D4519D98A929723F5E4",
+    "bytes": 580492
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-02-08-FluSight-ensemble.csv",
+    "sha256": "0F0354C678F4D1E78BFE881528FE32F9DA2E22367BAB738F0C5AB8BEA392487A",
+    "bytes": 579023
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-02-15-FluSight-ensemble.csv",
+    "sha256": "07D438FA2F6105B0F013367F5CE5947ADE3D002275BC53ADDED995F6DBE48AA5",
+    "bytes": 577955
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-02-22-FluSight-ensemble.csv",
+    "sha256": "0F317CB957A4CFB192420D53D59A6875F4414E354373F8781DBC1E9737047ADE",
+    "bytes": 575922
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-03-01-FluSight-ensemble.csv",
+    "sha256": "627CE1611A7CEE45BA88A6EEA60528501F6DA24892E5733B16AC70DA358A7B96",
+    "bytes": 574775
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-03-08-FluSight-ensemble.csv",
+    "sha256": "5A1B40FA89E66F29639841004542A7F049C6E72B110C487845AE7E85B33AA772",
+    "bytes": 574077
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-03-15-FluSight-ensemble.csv",
+    "sha256": "FF14567DAB273B0E144EBBA04862D480C24860E56353801C116EDAFBE420ADB6",
+    "bytes": 578359
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-03-22-FluSight-ensemble.csv",
+    "sha256": "9762AEF907A36CDDE57302E0CF4850872D0B8CD9D48102930BA221014C1498BF",
+    "bytes": 577117
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-03-29-FluSight-ensemble.csv",
+    "sha256": "890BD69E772C98DE73E561474E0A2651B06FE948B698270301C2E12AE3888D31",
+    "bytes": 574936
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-04-05-FluSight-ensemble.csv",
+    "sha256": "C7C2DECD346A55D1AC80723052D3C7624146C5F9F89592AC5247F2AC01AA17C0",
+    "bytes": 564699
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-04-12-FluSight-ensemble.csv",
+    "sha256": "A0A0F2B399C954D496ED3CCDC47EC7B3745D4B4BF070FEF94332793726717B6A",
+    "bytes": 563788
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-04-19-FluSight-ensemble.csv",
+    "sha256": "9F3A441CE65D4876DB7E679337A723B59AF27B1EB2F77326B965BEC6795B4AAA",
+    "bytes": 560265
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-04-26-FluSight-ensemble.csv",
+    "sha256": "2D8F8C752966EEB7D4C04D7D0E0853F52302E47044F18F3BBC786E266653ABBA",
+    "bytes": 559180
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-05-03-FluSight-ensemble.csv",
+    "sha256": "E407D9DA602FE17AFD64A2FAE6977BF220F9EBD8DBAE6BD13273DB71422B4BCE",
+    "bytes": 559477
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-05-10-FluSight-ensemble.csv",
+    "sha256": "12EAC14F926880B54E807ACA7B60515ADE807A72358D3D9BC3FDD501ECE70293",
+    "bytes": 558024
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-05-17-FluSight-ensemble.csv",
+    "sha256": "DE768AF3CEE37EE49720616A045B238E6B93CDE7F0248B4918597843FFE951BD",
+    "bytes": 539493
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-05-24-FluSight-ensemble.csv",
+    "sha256": "6353466A39A2C90CF5C3ED1FF6526D006FFD47DD30C33ACF75206511964CF2F9",
+    "bytes": 537488
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/ensemble/2025-05-31-FluSight-ensemble.csv",
+    "sha256": "D8BD291CD55907E7E3DD56D01AA76B495105AC8975A18DFCA6B60CEDADE1983D",
+    "bytes": 538713
+  },
+  {
+    "release": "v1.1.0",
+    "path": "data/flusight/v1.1.0/target-hospital-admissions.csv",
+    "sha256": "A4993774BD1C2AC358B04A61DEA5CB5C8BAD6373C409068C141D49C31BE519CB",
+    "bytes": 447772
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2025-11-22-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2025-11-22-FluSight-baseline.csv",
+    "sha256": "D81864A0E7FA6986585BA16B53B3CDDB7E88D4C0F750004DAA3C464AAACD13A3",
+    "bytes": 2095667
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2025-11-29-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2025-11-29-FluSight-baseline.csv",
+    "sha256": "04D9522EFCBBFE0F2CFF56BDCF458F1FFC93B29A13827FC6A98C4852F55BF450",
+    "bytes": 2101657
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2025-12-06-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2025-12-06-FluSight-baseline.csv",
+    "sha256": "D4029DB612A28EDCDF545D1A071756F0C703C33224779048F6ECFFEC1E6CA86A",
+    "bytes": 2108813
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2025-12-13-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2025-12-13-FluSight-baseline.csv",
+    "sha256": "C53D6EFD52C39036979556D39CDB73DC41FD23EF2FBEB4EE20540A666BE4CCC5",
+    "bytes": 2112577
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2025-12-20-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2025-12-20-FluSight-baseline.csv",
+    "sha256": "9BBA687A2C3EBB3224E75F4DCF8ABD2A3EED6DFB76F5163928212EE4743BE672",
+    "bytes": 2121772
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2025-12-27-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2025-12-27-FluSight-baseline.csv",
+    "sha256": "99114CAD4808E9B81D9B46E28CA1B205B06B51424FB840A2109B899729C8895B",
+    "bytes": 2135006
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-01-03-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-01-03-FluSight-baseline.csv",
+    "sha256": "F038E249142424B11C534F2E0EE3C208BC7817EB7ACCCF3808812D347919E6C9",
+    "bytes": 2143236
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-01-10-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-01-10-FluSight-baseline.csv",
+    "sha256": "2E82F0B281F98B36EA56004468F94488C9600E96A1B7B84BDD982C9F8103FA4E",
+    "bytes": 2148142
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-01-17-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-01-17-FluSight-baseline.csv",
+    "sha256": "439226E660C8F64F26D15BDA1FD63A81E78C65F40AF3B8F32D08F0AAECAE22B4",
+    "bytes": 2144037
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-01-24-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-01-24-FluSight-baseline.csv",
+    "sha256": "3CDA588891658E4C50701FE7BEE70830C7558C3CB16E3C6FEBB4BC63231CB1F2",
+    "bytes": 2137020
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-01-31-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-01-31-FluSight-baseline.csv",
+    "sha256": "ED7D6FFC236C6FFEE9DC18EB23DDB3A7F71053712CF509870F6993E66C8F9A50",
+    "bytes": 2133154
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-02-07-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-02-07-FluSight-baseline.csv",
+    "sha256": "85F3483F727AB4024ECDDE94E1118B484005E06BA2F41ECC44540C30AC6A54EE",
+    "bytes": 2132788
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-02-14-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-02-14-FluSight-baseline.csv",
+    "sha256": "9685446A2782302246A5B670CE37A8E7B2499A05109905103EFE41F2BBE0F090",
+    "bytes": 2130669
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-02-21-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-02-21-FluSight-baseline.csv",
+    "sha256": "00C437D77BD5637C79FE800858CF60B1FCA58800977EC96E9B52E6FCFCCDD68E",
+    "bytes": 2129545
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-02-28-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-02-28-FluSight-baseline.csv",
+    "sha256": "DF503631D185B65BA802E639A9CD309016A83EC1A090F336B47D1791FE492499",
+    "bytes": 2129609
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-03-07-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-03-07-FluSight-baseline.csv",
+    "sha256": "DB312A7978652D828AC43E2B2D40EAF8D5F89414D93BDF7816539EFDF4093D18",
+    "bytes": 2126040
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-03-14-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-03-14-FluSight-baseline.csv",
+    "sha256": "07E3D5A2B7B2B00D89F2556F39078EB5DCDBDABF4246DE054EF8EDD559BEC117",
+    "bytes": 2123781
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-03-21-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-03-21-FluSight-baseline.csv",
+    "sha256": "8F1E98D76F334E154BDCDE688FFE26540230C5A207552D2C43DBDEFEC0921BEA",
+    "bytes": 2118880
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-03-28-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-03-28-FluSight-baseline.csv",
+    "sha256": "D3E4343FD8D7C1013B02F02E9B38D9859C47FE261479DE62B88BA8DA9B63F276",
+    "bytes": 2114684
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-04-04-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-04-04-FluSight-baseline.csv",
+    "sha256": "C80A552DBE51284E532D9DD43A58563D9036D7264E2A2CBF05C9B7C194EE8608",
+    "bytes": 2105902
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-04-11-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-04-11-FluSight-baseline.csv",
+    "sha256": "F1924EE6C4E48619D913C553D41E9A5D911A1FA75CFD970E9CF45026568DEA37",
+    "bytes": 2104678
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-04-18-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-04-18-FluSight-baseline.csv",
+    "sha256": "A26966E0BC8BF58083B45DE0FC484C070534B8D0854D32EC116B5AE5AAFE1305",
+    "bytes": 2100460
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-04-25-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-04-25-FluSight-baseline.csv",
+    "sha256": "7A7808357BCCFC49F2FC81B53FC13B0683F84F893FA912764FC457518EB46935",
+    "bytes": 2096886
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-05-02-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-05-02-FluSight-baseline.csv",
+    "sha256": "5CC151D16854330F4EE965CB8059F3ADA5D5E857AFA3852494D397775E70C9F7",
+    "bytes": 2095947
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-05-09-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-05-09-FluSight-baseline.csv",
+    "sha256": "30A5F0BD710527BC405FABDEB9060E9DBEB00067F9A655BBF15A5D3984FB158E",
+    "bytes": 2094222
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-05-16-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-05-16-FluSight-baseline.csv",
+    "sha256": "41D03E4C0AAF504397CBE03D335A06EFE6467A82AAC25D2071535F7C3AA8F7C2",
+    "bytes": 2091215
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-05-23-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-05-23-FluSight-baseline.csv",
+    "sha256": "350BC414A80E4AB332B48E07CD4AAEE039988C52752AE89A1D8A9D728CB54304",
+    "bytes": 2089890
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/baseline/2026-05-30-FluSight-baseline.csv",
+    "source_path": "model-output/FluSight-baseline/2026-05-30-FluSight-baseline.csv",
+    "sha256": "485134A2BD5BB796C84768E9C02E60E9ADD052E954046F149A6F33D00C16586C",
+    "bytes": 2087181
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2025-11-22-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2025-11-22-FluSight-ensemble.csv",
+    "sha256": "2D19A10CDD85F831DE5A260DE0B3D7F148E27924B6D5281FFFA759A1D6B798CB",
+    "bytes": 1079439
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2025-11-29-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2025-11-29-FluSight-ensemble.csv",
+    "sha256": "3FFEB280862E493E013D233A0D547A63B215FB6646F7D3EE0B9BA46D1E221148",
+    "bytes": 1072231
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2025-12-06-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2025-12-06-FluSight-ensemble.csv",
+    "sha256": "CD2E2D0E8EA216EDC6CA10E3E908F527547F9CCCDDBC5CF47384FF7A6E5A82C6",
+    "bytes": 1074040
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2025-12-13-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2025-12-13-FluSight-ensemble.csv",
+    "sha256": "5906B050DABDBF5398585E3BC1F8395211BC09D685E92BE4D50EF640A4E0D874",
+    "bytes": 1070826
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2025-12-20-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2025-12-20-FluSight-ensemble.csv",
+    "sha256": "EFA7628032DE99E259CE3B6AA694C2DC9B1164608F2456A3B02435E51EA0B1E2",
+    "bytes": 1073044
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2025-12-27-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2025-12-27-FluSight-ensemble.csv",
+    "sha256": "D3E601092FD7B2D3EAE3C7C80C00657513BFE1A4DBC84D0D585BB0BD17957CCB",
+    "bytes": 1073369
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-01-03-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-01-03-FluSight-ensemble.csv",
+    "sha256": "57DFF31D12C3EE5FEC130A5CA776F07FF8867CF38D5D5130EB9850F9DC5CBBEA",
+    "bytes": 1071826
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-01-10-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-01-10-FluSight-ensemble.csv",
+    "sha256": "B751A094026C1C1AA5283A52E415087D30B18162CB0B452BC5CD9FB7BEB5FB61",
+    "bytes": 1071584
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-01-17-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-01-17-FluSight-ensemble.csv",
+    "sha256": "CD5C92969C026E98DFE970A4E9202C1CF8D1DF19B41AD35021100243E7A4637F",
+    "bytes": 1073718
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-01-24-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-01-24-FluSight-ensemble.csv",
+    "sha256": "ABAE020EF585CC757675A9F576BCE84AF6DED942845BC52425D274A28A7B0735",
+    "bytes": 1071033
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-01-31-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-01-31-FluSight-ensemble.csv",
+    "sha256": "F610EF90C0E67BE7ADF2D26329143957F0EB6509DB337FB3BF8D9B7AB4A2ACD9",
+    "bytes": 1069118
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-02-07-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-02-07-FluSight-ensemble.csv",
+    "sha256": "CA9EB0414601063D707009A7F49F414BF3C8570C23A3A92683B293CB38D1C9ED",
+    "bytes": 1068783
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-02-14-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-02-14-FluSight-ensemble.csv",
+    "sha256": "10CE61E9E0151C828DBD92C0EA225157C367A433E7D4EB40F0D167C1C8B1AB00",
+    "bytes": 1070758
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-02-21-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-02-21-FluSight-ensemble.csv",
+    "sha256": "D79352CB78E501F14E611AF678F8EEF6CFFC391F55CA9C3B2493B229BFFB80AC",
+    "bytes": 1070008
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-02-28-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-02-28-FluSight-ensemble.csv",
+    "sha256": "DFC25AD8793C3F9AEE7B3BACB44CDA013281291057B847C4509E8DA8A3F9E8BB",
+    "bytes": 1069345
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-03-07-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-03-07-FluSight-ensemble.csv",
+    "sha256": "036DA39368381A2486800B802C8366BC3E09CBDC0EDFDFB073AD38F1F8B2645D",
+    "bytes": 1063666
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-03-14-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-03-14-FluSight-ensemble.csv",
+    "sha256": "3E41303EAA87D62CFB56D50FAD4B874351E446A37F4BE32309A434FEE726E3DC",
+    "bytes": 1063180
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-03-21-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-03-21-FluSight-ensemble.csv",
+    "sha256": "F7D2FBF4BDC35A40553D64907143936E3FD0A954C085922EDDDC449B7A537B84",
+    "bytes": 1060171
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-03-28-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-03-28-FluSight-ensemble.csv",
+    "sha256": "0689584E8261BFF56C3C6741D83F48F2A87763014B5AC007E20E406EA4410ABE",
+    "bytes": 1059173
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-04-04-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-04-04-FluSight-ensemble.csv",
+    "sha256": "A1F6FF7614A3614AD2407C203EF79B8A130264FAF9A88F79519380425BD9A0EC",
+    "bytes": 1055964
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-04-11-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-04-11-FluSight-ensemble.csv",
+    "sha256": "C37AE23060C6C075C054E75BC01922CFB90B665BA72AE8E4E731F0F198DA7AE0",
+    "bytes": 1049432
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-04-18-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-04-18-FluSight-ensemble.csv",
+    "sha256": "6CF2CDA4D4D33F00F19B78EED6F0FB379C956760D7AC9659A805F10385DB6DC5",
+    "bytes": 1044810
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-04-25-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-04-25-FluSight-ensemble.csv",
+    "sha256": "B7FFAAF10F5BC0FF2676A3B338BECEF15841AA06932C3497177234C88E3EDA4D",
+    "bytes": 1046490
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-05-02-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-05-02-FluSight-ensemble.csv",
+    "sha256": "B19EECDAED2C45BB266F076BEC9DB160E77B33D0DC86F7BFDD1324E4FAD0B943",
+    "bytes": 1043385
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-05-09-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-05-09-FluSight-ensemble.csv",
+    "sha256": "B9B893599F8F58EEF933457790FAC634E1BED23B027BCD9C7F7CF4CACC98B7FB",
+    "bytes": 1046806
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-05-16-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-05-16-FluSight-ensemble.csv",
+    "sha256": "5C50A161F5906B0A0692432177E8929A0AF60DF949EC012CBB729E47F7610F27",
+    "bytes": 1043383
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-05-23-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-05-23-FluSight-ensemble.csv",
+    "sha256": "8AE490AF6C6D6B8F4DFC62B58BC0A08FDD5E4AE7C4980E4E2736461BA18FB9B3",
+    "bytes": 1038724
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/ensemble/2026-05-30-FluSight-ensemble.csv",
+    "source_path": "model-output/FluSight-ensemble/2026-05-30-FluSight-ensemble.csv",
+    "sha256": "DA7F92CF11B1F05DF55913DCB0107E3FF1AFFCCD0DF5BF132D7BE42D2F1909C8",
+    "bytes": 1050062
+  },
+  {
+    "release": "v1.2.0",
+    "path": "data/flusight/v1.2.0/target-hospital-admissions.csv",
+    "source_path": "target-data/target-hospital-admissions.csv",
+    "sha256": "DC1BCEFFFD8284E4D7C7FF3DFBAE5FD0A9E8DDD2AA5D015275076001B24D2CB4",
+    "bytes": 573679
+  }
+]

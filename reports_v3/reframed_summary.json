@@ -1,0 +1,1070 @@
+{
+  "analysis": "reframed_v1",
+  "tau": 0.5,
+  "bootstrap": {
+    "unit": "state",
+    "B": 2000,
+    "seed": 20260807
+  },
+  "mechanistic_horizons": {
+    "Delta": {
+      "n_states": 50,
+      "horizon_weeks": {
+        "n": 50,
+        "median": 7.119820490841012,
+        "q25": 3.4018705227196495,
+        "q75": 12.14729185586479
+      },
+      "national_horizon_weeks": 16.99322669772828
+    },
+    "Omicron": {
+      "n_states": 51,
+      "horizon_weeks": {
+        "n": 51,
+        "median": 3.953263112847932,
+        "q25": 2.5023191312523583,
+        "q75": 8.046200658481975
+      },
+      "national_horizon_weeks": 3.8823632725650117
+    },
+    "JN1": {
+      "n_states": 51,
+      "horizon_weeks": {
+        "n": 51,
+        "median": 5.003277672488097,
+        "q25": 3.776182486779285,
+        "q75": 7.821939828547976
+      },
+      "national_horizon_weeks": 6.9533711779301735
+    },
+    "flu22": {
+      "n_states": 38,
+      "horizon_weeks": {
+        "n": 38,
+        "median": 2.2038730347506004,
+        "q25": 1.008788272551706,
+        "q75": 4.6284810115888515
+      },
+      "national_horizon_weeks": 6.30639853147015
+    },
+    "flu24": {
+      "n_states": 45,
+      "horizon_weeks": {
+        "n": 45,
+        "median": 2.5814524628629383,
+        "q25": 1.752843329899757,
+        "q75": 7.096877254337292
+      },
+      "national_horizon_weeks": 11.1237523634399
+    },
+    "rsv24": {
+      "n_states": 34,
+      "horizon_weeks": {
+        "n": 34,
+        "median": 5.817215495687841,
+        "q25": 2.6104743640299657,
+        "q75": 10.08662808040014
+      },
+      "national_horizon_weeks": 38.105204989933505
+    },
+    "rsv25": {
+      "n_states": 26,
+      "horizon_weeks": {
+        "n": 26,
+        "median": 3.8869006594531754,
+        "q25": 1.3595186463186621,
+        "q75": 9.05182082868517
+      },
+      "national_horizon_weeks": 60.43780824492126
+    }
+  },
+  "paired_losses": {
+    "Delta": {
+      "rows": 2448,
+      "by_horizon": {
+        "1": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 0.1627646386735105,
+          "persistence_loss": 0.22719069270164333,
+          "local_linear_loss": 0.27386775832660537,
+          "delta_model_minus_persistence": -0.06442605402813284,
+          "delta_model_minus_local_linear": -0.11110311965309488,
+          "bootstrap_95ci_delta_persistence": [
+            -0.08119402469129017,
+            -0.04879781072235608
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -0.24736399242832668,
+            -0.013695734522493744
+          ]
+        },
+        "2": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 0.8095327326984173,
+          "persistence_loss": 1.0832319927044392,
+          "local_linear_loss": 3.827630132729263,
+          "delta_model_minus_persistence": -0.27369926000602185,
+          "delta_model_minus_local_linear": -3.0180974000308454,
+          "bootstrap_95ci_delta_persistence": [
+            -0.343906603180852,
+            -0.1975281630656426
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -7.7789774021268725,
+            -0.17010295081837026
+          ]
+        },
+        "3": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 2.8432894078893156,
+          "persistence_loss": 3.1991750436994666,
+          "local_linear_loss": 72.8681064483136,
+          "delta_model_minus_persistence": -0.355885635810151,
+          "delta_model_minus_local_linear": -70.02481704042428,
+          "bootstrap_95ci_delta_persistence": [
+            -0.5877616511318389,
+            -0.12502293662191785
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -188.64715489023567,
+            -1.3701059962345412
+          ]
+        },
+        "4": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 7.509470619034239,
+          "persistence_loss": 6.657269908722479,
+          "local_linear_loss": 1627.3321037423455,
+          "delta_model_minus_persistence": 0.8522007103117604,
+          "delta_model_minus_local_linear": -1619.822633123311,
+          "bootstrap_95ci_delta_persistence": [
+            -0.14902009380852652,
+            1.9053407252151175
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -4504.376903588367,
+            -9.146439238464232
+          ]
+        },
+        "5": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 18.25582501402476,
+          "persistence_loss": 11.172265685766575,
+          "local_linear_loss": 37987.76976181255,
+          "delta_model_minus_persistence": 7.083559328258186,
+          "delta_model_minus_local_linear": -37969.513936798525,
+          "bootstrap_95ci_delta_persistence": [
+            3.440139807596312,
+            11.552634272917732
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -107671.46392615793,
+            -51.2330648648341
+          ]
+        },
+        "6": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 44.3508571765483,
+          "persistence_loss": 16.31521775138339,
+          "local_linear_loss": 906265.2300023474,
+          "delta_model_minus_persistence": 28.035639425164913,
+          "delta_model_minus_local_linear": -906220.8791451708,
+          "bootstrap_95ci_delta_persistence": [
+            14.587512695270494,
+            45.663185091151135
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -2608962.6114088604,
+            -271.7392538202909
+          ]
+        },
+        "7": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 112.3309565593614,
+          "persistence_loss": 20.585053411243702,
+          "local_linear_loss": 21896895.212058928,
+          "delta_model_minus_persistence": 91.74590314811769,
+          "delta_model_minus_local_linear": -21896782.88110237,
+          "bootstrap_95ci_delta_persistence": [
+            46.86976754966846,
+            151.12034162862597
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -63783506.484459884,
+            -1264.5615621126792
+          ]
+        },
+        "8": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 305.60228685344345,
+          "persistence_loss": 23.36772483074395,
+          "local_linear_loss": 533674759.1836511,
+          "delta_model_minus_persistence": 282.2345620226995,
+          "delta_model_minus_local_linear": -533674453.5813642,
+          "bootstrap_95ci_delta_persistence": [
+            129.251541575195,
+            487.3914758524299
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -1565971869.1171136,
+            -6064.358640586792
+          ]
+        }
+      }
+    },
+    "Omicron": {
+      "rows": 2448,
+      "by_horizon": {
+        "1": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 0.13528706322955197,
+          "persistence_loss": 0.1548897409395642,
+          "local_linear_loss": 0.12578694938869125,
+          "delta_model_minus_persistence": -0.01960267771001223,
+          "delta_model_minus_local_linear": 0.009500113840860719,
+          "bootstrap_95ci_delta_persistence": [
+            -0.029971299721396758,
+            -0.00998880619944289
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -0.007725440276955523,
+            0.027712094781048247
+          ]
+        },
+        "2": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 0.9235108060416539,
+          "persistence_loss": 0.8240790885629381,
+          "local_linear_loss": 1.2685605290634094,
+          "delta_model_minus_persistence": 0.09943171747871582,
+          "delta_model_minus_local_linear": -0.3450497230217555,
+          "bootstrap_95ci_delta_persistence": [
+            0.03540557008394912,
+            0.17229249657610196
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -0.6534187798141702,
+            -0.12912699128800773
+          ]
+        },
+        "3": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 3.4073270507659603,
+          "persistence_loss": 2.2519776928495423,
+          "local_linear_loss": 7.822494848878676,
+          "delta_model_minus_persistence": 1.155349357916418,
+          "delta_model_minus_local_linear": -4.415167798112716,
+          "bootstrap_95ci_delta_persistence": [
+            0.5182486378746648,
+            1.8982926898270636
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -8.35323883193904,
+            -1.9352226493927156
+          ]
+        },
+        "4": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 10.234860947826247,
+          "persistence_loss": 4.195929732306746,
+          "local_linear_loss": 45.32264551713,
+          "delta_model_minus_persistence": 6.038931215519501,
+          "delta_model_minus_local_linear": -35.08778456930375,
+          "bootstrap_95ci_delta_persistence": [
+            2.543331926179767,
+            10.223770097019937
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -74.18277026510916,
+            -11.219456952678359
+          ]
+        },
+        "5": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 30.338071846337602,
+          "persistence_loss": 5.488885726687273,
+          "local_linear_loss": 288.60040094053227,
+          "delta_model_minus_persistence": 24.84918611965033,
+          "delta_model_minus_local_linear": -258.2623290941947,
+          "bootstrap_95ci_delta_persistence": [
+            9.593631250525526,
+            43.18272829017576
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -603.5878834192887,
+            -60.301798505638104
+          ]
+        },
+        "6": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 98.28459660004289,
+          "persistence_loss": 5.329716123829446,
+          "local_linear_loss": 2031.2393603342437,
+          "delta_model_minus_persistence": 92.95488047621345,
+          "delta_model_minus_local_linear": -1932.9547637342007,
+          "bootstrap_95ci_delta_persistence": [
+            33.053926890408846,
+            168.15971352676306
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -4973.2634578565785,
+            -275.20508778469014
+          ]
+        },
+        "7": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 344.73924117597136,
+          "persistence_loss": 4.130733786295347,
+          "local_linear_loss": 15454.839684227654,
+          "delta_model_minus_persistence": 340.608507389676,
+          "delta_model_minus_local_linear": -15110.100443051682,
+          "bootstrap_95ci_delta_persistence": [
+            105.29796982065348,
+            618.3538548058773
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -40737.978329460355,
+            -1237.513484387229
+          ]
+        },
+        "8": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 1259.263161175076,
+          "persistence_loss": 2.663984034828291,
+          "local_linear_loss": 123924.62941039806,
+          "delta_model_minus_persistence": 1256.5991771402478,
+          "delta_model_minus_local_linear": -122665.36624922299,
+          "bootstrap_95ci_delta_persistence": [
+            391.1740640895759,
+            2353.2841764882446
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -345113.1613694153,
+            -5899.908075471234
+          ]
+        }
+      }
+    },
+    "JN1": {
+      "rows": 2448,
+      "by_horizon": {
+        "1": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 0.046739565610925994,
+          "persistence_loss": 0.04050350286310956,
+          "local_linear_loss": 0.05772020338827823,
+          "delta_model_minus_persistence": 0.006236062747816434,
+          "delta_model_minus_local_linear": -0.010980637777352233,
+          "bootstrap_95ci_delta_persistence": [
+            0.003330075573131315,
+            0.009606778575399232
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -0.020119088723738944,
+            -0.0028157232179262096
+          ]
+        },
+        "2": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 0.14708733001056276,
+          "persistence_loss": 0.09490466255740422,
+          "local_linear_loss": 0.22089251389028397,
+          "delta_model_minus_persistence": 0.05218266745315854,
+          "delta_model_minus_local_linear": -0.07380518387972121,
+          "bootstrap_95ci_delta_persistence": [
+            0.03939566219538541,
+            0.06492094700839092
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -0.11293914207320513,
+            -0.040304075868988126
+          ]
+        },
+        "3": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 0.3143482445670558,
+          "persistence_loss": 0.12726316276472005,
+          "local_linear_loss": 0.6124933618974548,
+          "delta_model_minus_persistence": 0.18708508180233574,
+          "delta_model_minus_local_linear": -0.29814511733039906,
+          "bootstrap_95ci_delta_persistence": [
+            0.14773509506611696,
+            0.22858284626759223
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -0.42999174699338777,
+            -0.18434156723940864
+          ]
+        },
+        "4": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 0.5978447716539936,
+          "persistence_loss": 0.14662557421340583,
+          "local_linear_loss": 1.5819154484291615,
+          "delta_model_minus_persistence": 0.4512191974405878,
+          "delta_model_minus_local_linear": -0.9840706767751679,
+          "bootstrap_95ci_delta_persistence": [
+            0.3452210553612662,
+            0.568075349496975
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -1.477981608534179,
+            -0.5721628029764814
+          ]
+        },
+        "5": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 1.0324901037272218,
+          "persistence_loss": 0.1615386572649151,
+          "local_linear_loss": 3.695995457368194,
+          "delta_model_minus_persistence": 0.8709514464623067,
+          "delta_model_minus_local_linear": -2.6635053536409723,
+          "bootstrap_95ci_delta_persistence": [
+            0.6529621329688983,
+            1.1226032759742361
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -4.1167130255682585,
+            -1.4236022096162162
+          ]
+        },
+        "6": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 1.6893804743155247,
+          "persistence_loss": 0.19584425614302708,
+          "local_linear_loss": 8.693700069421562,
+          "delta_model_minus_persistence": 1.4935362181724976,
+          "delta_model_minus_local_linear": -7.004319595106037,
+          "bootstrap_95ci_delta_persistence": [
+            1.0752088014328,
+            1.9361048768579472
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -11.355634771062423,
+            -3.6530678070010687
+          ]
+        },
+        "7": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 2.7047636578302026,
+          "persistence_loss": 0.22779960991181547,
+          "local_linear_loss": 20.384378840113826,
+          "delta_model_minus_persistence": 2.476964047918387,
+          "delta_model_minus_local_linear": -17.679615182283623,
+          "bootstrap_95ci_delta_persistence": [
+            1.7318886267640634,
+            3.334636924856478
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -30.75494906321151,
+            -8.027890990702424
+          ]
+        },
+        "8": {
+          "n_cells": 306,
+          "n_states": 51,
+          "model_loss": 4.299925628728561,
+          "persistence_loss": 0.2721337300581294,
+          "local_linear_loss": 49.234636111572236,
+          "delta_model_minus_persistence": 4.027791898670431,
+          "delta_model_minus_local_linear": -44.93471048284368,
+          "bootstrap_95ci_delta_persistence": [
+            2.7226452969573915,
+            5.53063602252939
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -78.81833396398117,
+            -18.436806042785005
+          ]
+        }
+      }
+    },
+    "flu22": {
+      "rows": 1960,
+      "by_horizon": {
+        "1": {
+          "n_cells": 245,
+          "n_states": 46,
+          "model_loss": 1.7169843772642674,
+          "persistence_loss": 1.9828720517975642,
+          "local_linear_loss": 3.3095977019225824,
+          "delta_model_minus_persistence": -0.26588767453329676,
+          "delta_model_minus_local_linear": -1.592613324658315,
+          "bootstrap_95ci_delta_persistence": [
+            -0.39429452571635787,
+            -0.15804424151929983
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -3.8537040437925194,
+            -0.37713214935785927
+          ]
+        },
+        "2": {
+          "n_cells": 245,
+          "n_states": 46,
+          "model_loss": 6.027466982984831,
+          "persistence_loss": 7.350450702575216,
+          "local_linear_loss": 286.60237273560017,
+          "delta_model_minus_persistence": -1.3229837195903853,
+          "delta_model_minus_local_linear": -280.57490575261534,
+          "bootstrap_95ci_delta_persistence": [
+            -2.457910894716863,
+            -0.3943047705120382
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -837.9270210748768,
+            -10.976191617794997
+          ]
+        },
+        "3": {
+          "n_cells": 245,
+          "n_states": 46,
+          "model_loss": 39.586937041873334,
+          "persistence_loss": 38.884874917239905,
+          "local_linear_loss": 68846.96474559279,
+          "delta_model_minus_persistence": 0.7020621246334287,
+          "delta_model_minus_local_linear": -68807.37780855091,
+          "bootstrap_95ci_delta_persistence": [
+            -4.651999912393262,
+            6.856292690125921
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -214893.55860459828,
+            -263.9645097105376
+          ]
+        },
+        "4": {
+          "n_cells": 245,
+          "n_states": 46,
+          "model_loss": 226.34834995997454,
+          "persistence_loss": 155.65148795134667,
+          "local_linear_loss": 17545165.321316443,
+          "delta_model_minus_persistence": 70.69686200862787,
+          "delta_model_minus_local_linear": -17544938.972966485,
+          "bootstrap_95ci_delta_persistence": [
+            26.334168921412754,
+            126.84878002024095
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -68204587.50684693,
+            -6015.6770076129105
+          ]
+        },
+        "5": {
+          "n_cells": 245,
+          "n_states": 46,
+          "model_loss": 1063.3011066534775,
+          "persistence_loss": 382.6910344678329,
+          "local_linear_loss": 4488414132.931515,
+          "delta_model_minus_persistence": 680.6100721856446,
+          "delta_model_minus_local_linear": -4488413069.630408,
+          "bootstrap_95ci_delta_persistence": [
+            272.7193574795592,
+            1250.9999640185356
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -14156936355.226599,
+            -154748.29599407275
+          ]
+        },
+        "6": {
+          "n_cells": 245,
+          "n_states": 46,
+          "model_loss": 6135.72623363057,
+          "persistence_loss": 739.6991590653423,
+          "local_linear_loss": 1148900647073.8567,
+          "delta_model_minus_persistence": 5396.027074565228,
+          "delta_model_minus_local_linear": -1148900640938.1304,
+          "bootstrap_95ci_delta_persistence": [
+            1998.3750386358724,
+            10639.781997485034
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -3624586009596.4346,
+            -3154647.621614911
+          ]
+        },
+        "7": {
+          "n_cells": 245,
+          "n_states": 46,
+          "model_loss": 41612.75781065165,
+          "persistence_loss": 1414.1731686758578,
+          "local_linear_loss": 294113562558387.8,
+          "delta_model_minus_persistence": 40198.584641975795,
+          "delta_model_minus_local_linear": -294113562516775.06,
+          "bootstrap_95ci_delta_persistence": [
+            12168.31202087834,
+            81898.2305259506
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -931779457836121.9,
+            -82375874.08057003
+          ]
+        },
+        "8": {
+          "n_cells": 245,
+          "n_states": 46,
+          "model_loss": 303508.6617919379,
+          "persistence_loss": 1824.6736616439287,
+          "local_linear_loss": 7.529286953939509e+16,
+          "delta_model_minus_persistence": 301683.98813029396,
+          "delta_model_minus_local_linear": -7.529286953909158e+16,
+          "bootstrap_95ci_delta_persistence": [
+            78275.93309189138,
+            708321.0884720862
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -2.3649672080357962e+17,
+            -2835522343.176856
+          ]
+        }
+      }
+    },
+    "flu24": {
+      "rows": 2256,
+      "by_horizon": {
+        "1": {
+          "n_cells": 282,
+          "n_states": 50,
+          "model_loss": 0.6653151974139679,
+          "persistence_loss": 1.0535359977001648,
+          "local_linear_loss": 1.2413836601783066,
+          "delta_model_minus_persistence": -0.3882208002861969,
+          "delta_model_minus_local_linear": -0.5760684627643387,
+          "bootstrap_95ci_delta_persistence": [
+            -0.47346774255388957,
+            -0.315528976060551
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -1.178503050587526,
+            -0.14483239222092364
+          ]
+        },
+        "2": {
+          "n_cells": 282,
+          "n_states": 50,
+          "model_loss": 5.581261348905187,
+          "persistence_loss": 6.403912862121578,
+          "local_linear_loss": 33.600764915941944,
+          "delta_model_minus_persistence": -0.8226515132163907,
+          "delta_model_minus_local_linear": -28.019503567036757,
+          "bootstrap_95ci_delta_persistence": [
+            -1.5935760104477998,
+            0.13268511205428404
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -64.44049082863182,
+            -4.433248182966706
+          ]
+        },
+        "3": {
+          "n_cells": 282,
+          "n_states": 50,
+          "model_loss": 35.31333670224741,
+          "persistence_loss": 24.938836704041506,
+          "local_linear_loss": 1435.472059317314,
+          "delta_model_minus_persistence": 10.374499998205906,
+          "delta_model_minus_local_linear": -1400.1587226150666,
+          "bootstrap_95ci_delta_persistence": [
+            2.5075867743071023,
+            22.157430077454556
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -3576.5862741501724,
+            -87.89478154742855
+          ]
+        },
+        "4": {
+          "n_cells": 282,
+          "n_states": 50,
+          "model_loss": 192.32072382543046,
+          "persistence_loss": 70.44872198944911,
+          "local_linear_loss": 76318.10606580395,
+          "delta_model_minus_persistence": 121.87200183598135,
+          "delta_model_minus_local_linear": -76125.78534197852,
+          "bootstrap_95ci_delta_persistence": [
+            44.58401870058577,
+            234.51066913403753
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -218116.97444874558,
+            -1716.6594225476465
+          ]
+        },
+        "5": {
+          "n_cells": 282,
+          "n_states": 50,
+          "model_loss": 1202.051810530152,
+          "persistence_loss": 136.84639951967432,
+          "local_linear_loss": 4446954.428666159,
+          "delta_model_minus_persistence": 1065.2054110104775,
+          "delta_model_minus_local_linear": -4445752.376855629,
+          "bootstrap_95ci_delta_persistence": [
+            320.54808538920236,
+            2201.857431422068
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -12787108.123089056,
+            -25847.1631436055
+          ]
+        },
+        "6": {
+          "n_cells": 282,
+          "n_states": 50,
+          "model_loss": 9362.721357662484,
+          "persistence_loss": 210.2804750356492,
+          "local_linear_loss": 269706739.4901387,
+          "delta_model_minus_persistence": 9152.440882626834,
+          "delta_model_minus_local_linear": -269697376.76878107,
+          "bootstrap_95ci_delta_persistence": [
+            1800.4009334089428,
+            20338.792582300935
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -774593630.5683042,
+            -576000.9919748266
+          ]
+        },
+        "7": {
+          "n_cells": 282,
+          "n_states": 50,
+          "model_loss": 82236.46896838196,
+          "persistence_loss": 249.5853025750026,
+          "local_linear_loss": 16691483984.249762,
+          "delta_model_minus_persistence": 81986.88366580696,
+          "delta_model_minus_local_linear": -16691401747.780794,
+          "bootstrap_95ci_delta_persistence": [
+            10896.9415782861,
+            205303.17709183885
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -49629607579.94092,
+            -10085573.848114984
+          ]
+        },
+        "8": {
+          "n_cells": 282,
+          "n_states": 50,
+          "model_loss": 762288.8295728916,
+          "persistence_loss": 347.15613800139624,
+          "local_linear_loss": 1045022015773.0171,
+          "delta_model_minus_persistence": 761941.6734348902,
+          "delta_model_minus_local_linear": -1045021253484.1875,
+          "bootstrap_95ci_delta_persistence": [
+            64091.701749803135,
+            2026380.3582746205
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -3122095227274.475,
+            -181552476.8696683
+          ]
+        }
+      }
+    },
+    "rsv24": {
+      "rows": 2312,
+      "by_horizon": {
+        "1": {
+          "n_cells": 289,
+          "n_states": 51,
+          "model_loss": 0.401954352533857,
+          "persistence_loss": 0.4111920680913784,
+          "local_linear_loss": 0.7817408811674956,
+          "delta_model_minus_persistence": -0.009237715557521453,
+          "delta_model_minus_local_linear": -0.37978652863363865,
+          "bootstrap_95ci_delta_persistence": [
+            -0.04446871685576899,
+            0.02509200277223654
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -0.6346352068473299,
+            -0.1899850453829048
+          ]
+        },
+        "2": {
+          "n_cells": 289,
+          "n_states": 51,
+          "model_loss": 1.1435733594256237,
+          "persistence_loss": 0.9817270010385435,
+          "local_linear_loss": 9.314817048975453,
+          "delta_model_minus_persistence": 0.16184635838708017,
+          "delta_model_minus_local_linear": -8.17124368954983,
+          "bootstrap_95ci_delta_persistence": [
+            0.005833756495493722,
+            0.3373306870021357
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -17.804434079039993,
+            -2.3392641654120436
+          ]
+        },
+        "3": {
+          "n_cells": 289,
+          "n_states": 51,
+          "model_loss": 3.689533674965937,
+          "persistence_loss": 1.9377120856584538,
+          "local_linear_loss": 217.70873731386723,
+          "delta_model_minus_persistence": 1.751821589307483,
+          "delta_model_minus_local_linear": -214.0192036389013,
+          "bootstrap_95ci_delta_persistence": [
+            1.1014037113360238,
+            2.5167347825115662
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -545.1601138893778,
+            -24.088134783776564
+          ]
+        },
+        "4": {
+          "n_cells": 289,
+          "n_states": 51,
+          "model_loss": 12.678606832632795,
+          "persistence_loss": 3.4103709562563127,
+          "local_linear_loss": 6605.313968445525,
+          "delta_model_minus_persistence": 9.268235876376483,
+          "delta_model_minus_local_linear": -6592.635361612892,
+          "bootstrap_95ci_delta_persistence": [
+            5.943687562270338,
+            13.32419336319892
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -18717.295944677327,
+            -224.65935452562042
+          ]
+        },
+        "5": {
+          "n_cells": 289,
+          "n_states": 51,
+          "model_loss": 45.50998646018663,
+          "persistence_loss": 3.2281248025605676,
+          "local_linear_loss": 221450.65612876695,
+          "delta_model_minus_persistence": 42.28186165762607,
+          "delta_model_minus_local_linear": -221405.14614230677,
+          "bootstrap_95ci_delta_persistence": [
+            24.994242240281913,
+            63.11237796083728
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -656837.822126672,
+            -2578.043973829075
+          ]
+        },
+        "6": {
+          "n_cells": 289,
+          "n_states": 51,
+          "model_loss": 161.63557909643592,
+          "persistence_loss": 3.1961423579793817,
+          "local_linear_loss": 7733298.000392783,
+          "delta_model_minus_persistence": 158.43943673845655,
+          "delta_model_minus_local_linear": -7733136.364813687,
+          "bootstrap_95ci_delta_persistence": [
+            85.81488268687771,
+            253.09728348981503
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -23081173.172905374,
+            -26859.818621553033
+          ]
+        },
+        "7": {
+          "n_cells": 289,
+          "n_states": 51,
+          "model_loss": 584.6201104950154,
+          "persistence_loss": 4.448586707253322,
+          "local_linear_loss": 274622062.5857521,
+          "delta_model_minus_persistence": 580.1715237877621,
+          "delta_model_minus_local_linear": -274621477.9656416,
+          "bootstrap_95ci_delta_persistence": [
+            281.30025454037036,
+            982.6057795104722
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -842715576.8996688,
+            -269699.93964535155
+          ]
+        },
+        "8": {
+          "n_cells": 289,
+          "n_states": 51,
+          "model_loss": 2155.947510898627,
+          "persistence_loss": 6.103938284379749,
+          "local_linear_loss": 9823067419.557829,
+          "delta_model_minus_persistence": 2149.8435726142475,
+          "delta_model_minus_local_linear": -9823065263.610317,
+          "bootstrap_95ci_delta_persistence": [
+            821.6842797667816,
+            3790.949459355134
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -29983157740.920166,
+            -2905674.208725033
+          ]
+        }
+      }
+    },
+    "rsv25": {
+      "rows": 1859,
+      "by_horizon": {
+        "1": {
+          "n_cells": 230,
+          "n_states": 44,
+          "model_loss": 0.47586424942616223,
+          "persistence_loss": 0.49199501518300115,
+          "local_linear_loss": 1.20516459209359,
+          "delta_model_minus_persistence": -0.016130765756838916,
+          "delta_model_minus_local_linear": -0.7293003426674278,
+          "bootstrap_95ci_delta_persistence": [
+            -0.06100034562848536,
+            0.033163866392955405
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -1.134273888825404,
+            -0.38787689640027834
+          ]
+        },
+        "2": {
+          "n_cells": 231,
+          "n_states": 45,
+          "model_loss": 1.4885224606999172,
+          "persistence_loss": 1.4459498906052253,
+          "local_linear_loss": 16.43626945862046,
+          "delta_model_minus_persistence": 0.04257257009469195,
+          "delta_model_minus_local_linear": -14.947746997920541,
+          "bootstrap_95ci_delta_persistence": [
+            -0.2481765841525583,
+            0.4130345969877681
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -28.511525242677408,
+            -5.443354508578101
+          ]
+        },
+        "3": {
+          "n_cells": 233,
+          "n_states": 45,
+          "model_loss": 5.1841960843452135,
+          "persistence_loss": 3.796970975021624,
+          "local_linear_loss": 380.51573755452574,
+          "delta_model_minus_persistence": 1.3872251093235897,
+          "delta_model_minus_local_linear": -375.3315414701805,
+          "bootstrap_95ci_delta_persistence": [
+            -0.24117663317418042,
+            3.6766601668049916
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -861.3609822840359,
+            -70.71375881189368
+          ]
+        },
+        "4": {
+          "n_cells": 233,
+          "n_states": 45,
+          "model_loss": 18.656135977836914,
+          "persistence_loss": 7.908386577657852,
+          "local_linear_loss": 10803.52252612971,
+          "delta_model_minus_persistence": 10.747749400179062,
+          "delta_model_minus_local_linear": -10784.866390151872,
+          "bootstrap_95ci_delta_persistence": [
+            1.5154806990404992,
+            25.27485200149643
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -26621.15856625223,
+            -1170.2352863897172
+          ]
+        },
+        "5": {
+          "n_cells": 233,
+          "n_states": 45,
+          "model_loss": 79.9003941708192,
+          "persistence_loss": 13.786215627574752,
+          "local_linear_loss": 336105.9355013689,
+          "delta_model_minus_persistence": 66.11417854324445,
+          "delta_model_minus_local_linear": -336026.03510719805,
+          "bootstrap_95ci_delta_persistence": [
+            11.726066039826918,
+            154.15592327575666
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -907554.3967028747,
+            -19304.77162871249
+          ]
+        },
+        "6": {
+          "n_cells": 233,
+          "n_states": 45,
+          "model_loss": 395.75770240088934,
+          "persistence_loss": 22.91890087826126,
+          "local_linear_loss": 11046542.736201908,
+          "delta_model_minus_persistence": 372.8388015226281,
+          "delta_model_minus_local_linear": -11046146.978499508,
+          "bootstrap_95ci_delta_persistence": [
+            58.86954775452903,
+            897.4012966115357
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -30804572.819663584,
+            -329975.14154206205
+          ]
+        },
+        "7": {
+          "n_cells": 233,
+          "n_states": 45,
+          "model_loss": 2045.085802240906,
+          "persistence_loss": 36.816631812869254,
+          "local_linear_loss": 375311100.0824334,
+          "delta_model_minus_persistence": 2008.269170428037,
+          "delta_model_minus_local_linear": -375309054.99663115,
+          "bootstrap_95ci_delta_persistence": [
+            235.11177976028176,
+            5115.312905609899
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -1095365625.3090312,
+            -6866532.8206845485
+          ]
+        },
+        "8": {
+          "n_cells": 233,
+          "n_states": 45,
+          "model_loss": 10866.58898221777,
+          "persistence_loss": 49.1424682749002,
+          "local_linear_loss": 13015558952.155409,
+          "delta_model_minus_persistence": 10817.44651394287,
+          "delta_model_minus_local_linear": -13015548085.566427,
+          "bootstrap_95ci_delta_persistence": [
+            898.0177114659399,
+            29169.924356272593
+          ],
+          "bootstrap_95ci_delta_local_linear": [
+            -38339859910.076485,
+            -128505912.80002199
+          ]
+        }
+      }
+    }
+  }
+}

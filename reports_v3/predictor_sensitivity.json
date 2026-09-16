@@ -1,0 +1,71 @@
+{
+  "mc_max_rel_deviation": {
+    "plug": 0.004607363321714056,
+    "bc": 0.004559352660027136
+  },
+  "phases": {
+    "Delta": {
+      "display": "COVID-19 Delta 暴发期",
+      "n": 50,
+      "median_plug": 7.119820491782022,
+      "median_bc": 7.272874879108304,
+      "median_bc_over_plug": 1.015459479326996,
+      "min_bc_over_plug": 1.0002396135332774,
+      "max_bc_over_plug": 1.0790572737815483
+    },
+    "Omicron": {
+      "display": "COVID-19 Omicron 达峰期",
+      "n": 51,
+      "median_plug": 3.953263113004818,
+      "median_bc": 3.9850174587715896,
+      "median_bc_over_plug": 1.00623756635943,
+      "min_bc_over_plug": 1.00045422542622,
+      "max_bc_over_plug": 1.0486605958694015
+    },
+    "JN1": {
+      "display": "COVID-19 JN.1 流行期",
+      "n": 51,
+      "median_plug": 5.003277671712398,
+      "median_bc": 5.048455230638312,
+      "median_bc_over_plug": 1.0115735887191317,
+      "min_bc_over_plug": 1.0015075505129385,
+      "max_bc_over_plug": 1.0434503664352661
+    },
+    "flu22": {
+      "display": "流感 2022--23 暴发早期",
+      "n": 38,
+      "median_plug": 2.2038730347506004,
+      "median_bc": 2.206058727869123,
+      "median_bc_over_plug": 1.0030237272393983,
+      "min_bc_over_plug": 1.0000525453129296,
+      "max_bc_over_plug": 1.0851150434260948
+    },
+    "flu24": {
+      "display": "流感 2024--25 流行季",
+      "n": 45,
+      "median_plug": 2.5814524628629383,
+      "median_bc": 2.5875128619234102,
+      "median_bc_over_plug": 1.0049844634637815,
+      "min_bc_over_plug": 1.000047825330755,
+      "max_bc_over_plug": 1.0714748270598884
+    },
+    "rsv24": {
+      "display": "RSV 2024--25 流行季",
+      "n": 34,
+      "median_plug": 5.817215495311246,
+      "median_bc": 5.923425494335526,
+      "median_bc_over_plug": 1.0134109776710047,
+      "min_bc_over_plug": 1.0000379846013474,
+      "max_bc_over_plug": 1.0797976167767138
+    },
+    "rsv25": {
+      "display": "RSV 2025--26 流行季",
+      "n": 26,
+      "median_plug": 3.8869006594492,
+      "median_bc": 3.9460046941589626,
+      "median_bc_over_plug": 1.0052503024827866,
+      "min_bc_over_plug": 1.0000419116322303,
+      "max_bc_over_plug": 1.0776999653793877
+    }
+  }
+}

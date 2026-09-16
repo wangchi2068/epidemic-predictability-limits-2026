@@ -1,0 +1,12 @@
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{3.0cm}@{}}
+\toprule
+分析对象 & 参数来源 & 真值来源 & 是否使用未来信息（泄漏风险） & 结论性质 \\
+\midrule
+理论模拟验证 & 已知真参数 & 模拟轨迹 & 否 & 严格数值验证 \\
+微观传播链队列 & 完整传播链（回顾） & 回顾性传播链 & 可能存在追踪截断与右删失 & 机制拟合与模型内自洽性 \\
+州级条件机制视界 & 5 周滑动窗口（在线可得） & 冻结面板（Final Vintage） & 参数可能受后续回填修订影响 & 回溯性机制估计 \\
+动力学阶段分类 & 全季轨迹曲率与峰值 & 全季最终真值 & \textbf{是}，依赖未来峰值 & 仅为事后分层，非实时可用 \\
+FluSight 外部审计 & 官方提交分位数（原点可得） & Final Vintage Truth & 真值含事后回填 & 外部回溯审计 \\
+逐州滚动回测 & 历史原点前 4 周参数 & Final Vintage Truth & 真值版本含未来回填 & 终报口径业务时效 \\
+\bottomrule
+\end{tabular}

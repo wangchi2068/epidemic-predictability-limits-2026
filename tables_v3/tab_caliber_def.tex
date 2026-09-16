@@ -1,0 +1,10 @@
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{3.2cm}@{}}
+\toprule
+视界名称 & 生成模型 & 层级归属 & 适用数据 \\
+\midrule
+微观机制视界 $h^*_{\text{micro}}$ & Galton--Watson 负二项分支（子代方差线性于 $Z_{t-1}$） & 理论主结果（个体级） & 个体传播链队列 \\
+启发式尺度映射视界 $h^*_{\text{heur}}$ & 微观分支闭式代入宏观离散度 $k_{\text{agg}}$（代际时钟，模型不自洽） & 敏感性分析 & 州级序列（仅作对照） \\
+宏观条件精确机制视界 $h^*_{\text{macro}}$ & 固定 $k_{\text{agg}}$ 负二项宏观更新模型（条件方差含 $Z_{t-1}^2$，周度时钟） & 州级主结果 & 周度住院面板 \\
+实测业务视界 $h^*_{\text{obs}}$ & 观测滚动误差首次穿越容忍度 $\tau$ & 现实比较 & 州级预测回测 \\
+\bottomrule
+\end{tabular}

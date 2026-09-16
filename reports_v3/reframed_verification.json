@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "macro_recursion_including_repeated_root": true,
+    "lognormal_parameter_mixture_quadrature": true,
+    "prefix_horizon_handles_recrossing_and_censoring": true,
+    "wis_equals_centered_intervals_and_degenerate_absolute_error": true,
+    "bootstrap_preserves_draw_multiplicity": true
+  },
+  "all_passed": true
+}

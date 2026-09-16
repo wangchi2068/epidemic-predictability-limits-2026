@@ -1,0 +1,637 @@
+[
+  {
+    "disease": "SARS",
+    "pathogen": "SARS-CoV-1",
+    "epi_name": "offspring distribution",
+    "probability_distribution": {
+      "prob_distribution": "nbinom",
+      "parameters": {
+        "mean": 1.63,
+        "mean_ci_limits": [
+          0.54,
+          2.65
+        ],
+        "mean_ci": 90,
+        "dispersion": 0.16,
+        "dispersion_ci_limits": [
+          0.11,
+          0.64
+        ],
+        "dispersion_ci": 90
+      },
+      "offset": 0
+    },
+    "summary_statistics": {},
+    "citation": {
+      "author": [
+        {
+          "given": "J. O.",
+          "family": "Lloyd-Smith"
+        },
+        {
+          "given": "S. J.",
+          "family": "Schreiber"
+        },
+        {
+          "given": "P. E.",
+          "family": "Kopp"
+        },
+        {
+          "given": "W. M.",
+          "family": "Getz"
+        }
+      ],
+      "title": "Superspreading and the effect of individual variation on disease emergence",
+      "journal": "Nature",
+      "year": 2005,
+      "pmid": 16292310,
+      "doi": "10.1038/nature04153"
+    },
+    "metadata": {
+      "units": "No units",
+      "sample_size": 57,
+      "region": "Singapore",
+      "transmission_mode": "natural_unknown",
+      "extrinsic": false,
+      "inference_method": "mle"
+    },
+    "method_assessment": {
+      "truncation": null,
+      "discretised": false,
+      "censored": false,
+      "right_truncated": false,
+      "phase_bias_adjusted": false
+    },
+    "notes": "Parameter estimates are retrieved from the supplementary tables."
+  },
+  {
+    "disease": "SARS",
+    "pathogen": "SARS-CoV-1",
+    "epi_name": "offspring distribution",
+    "probability_distribution": {
+      "prob_distribution": "nbinom",
+      "parameters": {
+        "mean": 0.94,
+        "mean_ci_limits": [
+          0.27,
+          1.51
+        ],
+        "mean_ci": 90,
+        "dispersion": 0.17,
+        "dispersion_ci_limits": [
+          0.1,
+          0.64
+        ],
+        "dispersion_ci": 90
+      },
+      "offset": 0
+    },
+    "summary_statistics": {},
+    "citation": {
+      "author": [
+        {
+          "given": "J. O.",
+          "family": "Lloyd-Smith"
+        },
+        {
+          "given": "S. J.",
+          "family": "Schreiber"
+        },
+        {
+          "given": "P. E.",
+          "family": "Kopp"
+        },
+        {
+          "given": "W. M.",
+          "family": "Getz"
+        }
+      ],
+      "title": "Superspreading and the effect of individual variation on disease emergence",
+      "journal": "Nature",
+      "year": 2005,
+      "pmid": 16292310,
+      "doi": "10.1038/nature04153"
+    },
+    "metadata": {
+      "units": "No units",
+      "sample_size": 33,
+      "region": "Beijing",
+      "transmission_mode": "natural_unknown",
+      "extrinsic": false,
+      "inference_method": "mle"
+    },
+    "method_assessment": {
+      "truncation": null,
+      "discretised": false,
+      "censored": false,
+      "right_truncated": false,
+      "phase_bias_adjusted": false
+    },
+    "notes": "No additional notes"
+  },
+  {
+    "disease": "Smallpox",
+    "pathogen": "Smallpox-Variola-Major",
+    "epi_name": "offspring distribution",
+    "probability_distribution": {
+      "prob_distribution": "nbinom",
+      "parameters": {
+        "mean": 3.19,
+        "mean_ci_limits": [
+          1.66,
+          4.62
+        ],
+        "mean_ci": 90,
+        "dispersion": 0.37,
+        "dispersion_ci_limits": [
+          0.26,
+          0.69
+        ],
+        "dispersion_ci": 90
+      },
+      "offset": 0
+    },
+    "summary_statistics": {},
+    "citation": {
+      "author": [
+        {
+          "given": "J. O.",
+          "family": "Lloyd-Smith"
+        },
+        {
+          "given": "S. J.",
+          "family": "Schreiber"
+        },
+        {
+          "given": "P. E.",
+          "family": "Kopp"
+        },
+        {
+          "given": "W. M.",
+          "family": "Getz"
+        }
+      ],
+      "title": "Superspreading and the effect of individual variation on disease emergence",
+      "journal": "Nature",
+      "year": 2005,
+      "pmid": 16292310,
+      "doi": "10.1038/nature04153"
+    },
+    "metadata": {
+      "units": "No units",
+      "sample_size": 32,
+      "region": "Europe",
+      "transmission_mode": "natural_unknown",
+      "extrinsic": false,
+      "inference_method": "mle"
+    },
+    "method_assessment": {
+      "truncation": null,
+      "discretised": false,
+      "censored": false,
+      "right_truncated": false,
+      "phase_bias_adjusted": false
+    },
+    "notes": "No additional notes"
+  },
+  {
+    "disease": "Smallpox",
+    "pathogen": "Smallpox-Variola-Major",
+    "epi_name": "offspring distribution",
+    "probability_distribution": {
+      "prob_distribution": "nbinom",
+      "parameters": {
+        "mean": 0.8,
+        "mean_ci_limits": [
+          0.32,
+          1.2
+        ],
+        "mean_ci": 90,
+        "dispersion": 0.32,
+        "dispersion_ci_limits": [
+          0.16,
+          1.76
+        ],
+        "dispersion_ci": 90
+      },
+      "offset": 0
+    },
+    "summary_statistics": {},
+    "citation": {
+      "author": [
+        {
+          "given": "J. O.",
+          "family": "Lloyd-Smith"
+        },
+        {
+          "given": "S. J.",
+          "family": "Schreiber"
+        },
+        {
+          "given": "P. E.",
+          "family": "Kopp"
+        },
+        {
+          "given": "W. M.",
+          "family": "Getz"
+        }
+      ],
+      "title": "Superspreading and the effect of individual variation on disease emergence",
+      "journal": "Nature",
+      "year": 2005,
+      "pmid": 16292310,
+      "doi": "10.1038/nature04153"
+    },
+    "metadata": {
+      "units": "No units",
+      "sample_size": 25,
+      "region": "Benin",
+      "transmission_mode": "natural_unknown",
+      "extrinsic": false,
+      "inference_method": "mle"
+    },
+    "method_assessment": {
+      "truncation": null,
+      "discretised": false,
+      "censored": false,
+      "right_truncated": false,
+      "phase_bias_adjusted": false
+    },
+    "notes": "No additional notes"
+  },
+  {
+    "disease": "Smallpox",
+    "pathogen": "Smallpox-Variola-Minor",
+    "epi_name": "offspring distribution",
+    "probability_distribution": {
+      "prob_distribution": "nbinom",
+      "parameters": {
+        "mean": 1.6,
+        "mean_ci_limits": [
+          0.88,
+          2.16
+        ],
+        "mean_ci": 90,
+        "dispersion": 0.65,
+        "dispersion_ci_limits": [
+          0.34,
+          2.32
+        ],
+        "dispersion_ci": 90
+      },
+      "offset": 0
+    },
+    "summary_statistics": {},
+    "citation": {
+      "author": [
+        {
+          "given": "J. O.",
+          "family": "Lloyd-Smith"
+        },
+        {
+          "given": "S. J.",
+          "family": "Schreiber"
+        },
+        {
+          "given": "P. E.",
+          "family": "Kopp"
+        },
+        {
+          "given": "W. M.",
+          "family": "Getz"
+        }
+      ],
+      "title": "Superspreading and the effect of individual variation on disease emergence",
+      "journal": "Nature",
+      "year": 2005,
+      "pmid": 16292310,
+      "doi": "10.1038/nature04153"
+    },
+    "metadata": {
+      "units": "No units",
+      "sample_size": 25,
+      "region": "England",
+      "transmission_mode": "natural_unknown",
+      "extrinsic": false,
+      "inference_method": "mle"
+    },
+    "method_assessment": {
+      "truncation": null,
+      "discretised": false,
+      "censored": false,
+      "right_truncated": false,
+      "phase_bias_adjusted": false
+    },
+    "notes": "No additional notes"
+  },
+  {
+    "disease": "Smallpox",
+    "pathogen": "Smallpox-Variola-Minor",
+    "epi_name": "offspring distribution",
+    "probability_distribution": {
+      "prob_distribution": "nbinom",
+      "parameters": {
+        "mean": 1.49,
+        "dispersion": 0.72,
+        "dispersion_ci_limits": [
+          0.44,
+          2.05
+        ],
+        "dispersion_ci": 90
+      },
+      "offset": 0
+    },
+    "summary_statistics": {},
+    "citation": {
+      "author": [
+        {
+          "given": "J. O.",
+          "family": "Lloyd-Smith"
+        },
+        {
+          "given": "S. J.",
+          "family": "Schreiber"
+        },
+        {
+          "given": "P. E.",
+          "family": "Kopp"
+        },
+        {
+          "given": "W. M.",
+          "family": "Getz"
+        }
+      ],
+      "title": "Superspreading and the effect of individual variation on disease emergence",
+      "journal": "Nature",
+      "year": 2005,
+      "pmid": 16292310,
+      "doi": "10.1038/nature04153"
+    },
+    "metadata": {
+      "units": "No units",
+      "sample_size": 47,
+      "region": "Pakistan",
+      "transmission_mode": "natural_unknown",
+      "extrinsic": false,
+      "inference_method": null
+    },
+    "method_assessment": {
+      "truncation": null,
+      "discretised": false,
+      "censored": false,
+      "right_truncated": false,
+      "phase_bias_adjusted": false
+    },
+    "notes": "Estimate of R0 taken from original study and CI of dispersion calculated mean of Z and proportion of zeros known "
+  },
+  {
+    "disease": "Mpox",
+    "pathogen": "Monkeypox Virus",
+    "epi_name": "offspring distribution",
+    "probability_distribution": {
+      "prob_distribution": "nbinom",
+      "parameters": {
+        "mean": 0.32,
+        "mean_ci_limits": [
+          0.22,
+          0.4
+        ],
+        "mean_ci": 90,
+        "dispersion": 0.58,
+        "dispersion_ci_limits": [
+          0.32,
+          3.57
+        ],
+        "dispersion_ci": 90
+      },
+      "offset": 0
+    },
+    "summary_statistics": {},
+    "citation": {
+      "author": [
+        {
+          "given": "J. O.",
+          "family": "Lloyd-Smith"
+        },
+        {
+          "given": "S. J.",
+          "family": "Schreiber"
+        },
+        {
+          "given": "P. E.",
+          "family": "Kopp"
+        },
+        {
+          "given": "W. M.",
+          "family": "Getz"
+        }
+      ],
+      "title": "Superspreading and the effect of individual variation on disease emergence",
+      "journal": "Nature",
+      "year": 2005,
+      "pmid": 16292310,
+      "doi": "10.1038/nature04153"
+    },
+    "metadata": {
+      "units": "No units",
+      "sample_size": 147,
+      "region": "Zaire",
+      "transmission_mode": "natural_unknown",
+      "extrinsic": false,
+      "inference_method": "mle"
+    },
+    "method_assessment": {
+      "truncation": null,
+      "discretised": false,
+      "censored": false,
+      "right_truncated": false,
+      "phase_bias_adjusted": false
+    },
+    "notes": "In the model comparison the geometric model was the better fit to the monkeypox data, however, only the parameters of the negative binomial were reported as so are stored in the database."
+  },
+  {
+    "disease": "Pneumonic Plague",
+    "pathogen": "Yersinia Pestis",
+    "epi_name": "offspring distribution",
+    "probability_distribution": {
+      "prob_distribution": "nbinom",
+      "parameters": {
+        "mean": 1.32,
+        "mean_ci_limits": [
+          1.01,
+          1.61
+        ],
+        "mean_ci": 90,
+        "dispersion": 1.37,
+        "dispersion_ci_limits": [
+          0.88,
+          3.53
+        ],
+        "dispersion_ci": 90
+      },
+      "offset": 0
+    },
+    "summary_statistics": {},
+    "citation": {
+      "author": [
+        {
+          "given": "J. O.",
+          "family": "Lloyd-Smith"
+        },
+        {
+          "given": "S. J.",
+          "family": "Schreiber"
+        },
+        {
+          "given": "P. E.",
+          "family": "Kopp"
+        },
+        {
+          "given": "W. M.",
+          "family": "Getz"
+        }
+      ],
+      "title": "Superspreading and the effect of individual variation on disease emergence",
+      "journal": "Nature",
+      "year": 2005,
+      "pmid": 16292310,
+      "doi": "10.1038/nature04153"
+    },
+    "metadata": {
+      "units": "No units",
+      "sample_size": 74,
+      "region": "Mixed",
+      "transmission_mode": "natural_unknown",
+      "extrinsic": false,
+      "inference_method": "mle"
+    },
+    "method_assessment": {
+      "truncation": null,
+      "discretised": false,
+      "censored": false,
+      "right_truncated": false,
+      "phase_bias_adjusted": false
+    },
+    "notes": "In the model comparison the geometric model was the better fit to the Pneumonic Plague data, however, only the parameters of the negative binomial were reported as so are stored in the database."
+  },
+  {
+    "disease": "Hantavirus Pulmonary Syndrome",
+    "pathogen": "Hantavirus (Andes Virus)",
+    "epi_name": "offspring distribution",
+    "probability_distribution": {
+      "prob_distribution": "nbinom",
+      "parameters": {
+        "mean": 0.7,
+        "mean_ci_limits": [
+          0.2,
+          1.05
+        ],
+        "mean_ci": 90,
+        "dispersion": 1.66
+      },
+      "offset": 0
+    },
+    "summary_statistics": {},
+    "citation": {
+      "author": [
+        {
+          "given": "J. O.",
+          "family": "Lloyd-Smith"
+        },
+        {
+          "given": "S. J.",
+          "family": "Schreiber"
+        },
+        {
+          "given": "P. E.",
+          "family": "Kopp"
+        },
+        {
+          "given": "W. M.",
+          "family": "Getz"
+        }
+      ],
+      "title": "Superspreading and the effect of individual variation on disease emergence",
+      "journal": "Nature",
+      "year": 2005,
+      "pmid": 16292310,
+      "doi": "10.1038/nature04153"
+    },
+    "metadata": {
+      "units": "No units",
+      "sample_size": 20,
+      "region": "Argentina",
+      "transmission_mode": "natural_unknown",
+      "extrinsic": false,
+      "inference_method": "mle"
+    },
+    "method_assessment": {
+      "truncation": null,
+      "discretised": false,
+      "censored": false,
+      "right_truncated": false,
+      "phase_bias_adjusted": false
+    },
+    "notes": "In the model comparison the geometric model was the better fit to the Hantavirus data, however, only the parameters of the negative binomial were reported as so are stored in the database. The uncertainty for the dispersion parameter is currently not stored in the database as the upper bound for the confidence interval is infinite, and currently infinite values are not supported."
+  },
+  {
+    "disease": "Ebola Virus Disease",
+    "pathogen": "Ebola Virus",
+    "epi_name": "offspring distribution",
+    "probability_distribution": {
+      "prob_distribution": "nbinom",
+      "parameters": {
+        "mean": 1.5,
+        "mean_ci_limits": [
+          0.85,
+          2.08
+        ],
+        "mean_ci": 90,
+        "dispersion": 5.1
+      },
+      "offset": 0
+    },
+    "summary_statistics": {},
+    "citation": {
+      "author": [
+        {
+          "given": "J. O.",
+          "family": "Lloyd-Smith"
+        },
+        {
+          "given": "S. J.",
+          "family": "Schreiber"
+        },
+        {
+          "given": "P. E.",
+          "family": "Kopp"
+        },
+        {
+          "given": "W. M.",
+          "family": "Getz"
+        }
+      ],
+      "title": "Superspreading and the effect of individual variation on disease emergence",
+      "journal": "Nature",
+      "year": 2005,
+      "pmid": 16292310,
+      "doi": "10.1038/nature04153"
+    },
+    "metadata": {
+      "units": "No units",
+      "sample_size": 13,
+      "region": "Uganda",
+      "transmission_mode": "natural_unknown",
+      "extrinsic": false,
+      "inference_method": "mle"
+    },
+    "method_assessment": {
+      "truncation": null,
+      "discretised": false,
+      "censored": false,
+      "right_truncated": false,
+      "phase_bias_adjusted": false
+    },
+    "notes": "In the model comparison the poisson model was the better fit to the Ebola data, however, only the parameters of the negative binomial were reported as so are stored in the database. The uncertainty for the dispersion parameter is currently not stored in the database as the upper bound for the confidence interval is infinite, and currently infinite values are not supported."
+  }
+]

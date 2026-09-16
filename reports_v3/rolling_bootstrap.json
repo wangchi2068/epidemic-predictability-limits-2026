@@ -1,0 +1,135 @@
+{
+  "Delta": {
+    "display": "COVID-19 Delta 暴发期",
+    "persistence": {
+      "n_states": 46,
+      "median_crossing": 3.724625818670501,
+      "median_ci": [
+        1.0,
+        6.746243608324718
+      ]
+    },
+    "local_linear": {
+      "n_states": 49,
+      "median_crossing": 1.0,
+      "median_ci": [
+        1.0,
+        5.110948843047484
+      ]
+    }
+  },
+  "Omicron": {
+    "display": "COVID-19 Omicron 达峰期",
+    "persistence": {
+      "n_states": 51,
+      "median_crossing": 1.4250573193728275,
+      "median_ci": [
+        1.0,
+        4.989810525712086
+      ]
+    },
+    "local_linear": {
+      "n_states": 51,
+      "median_crossing": 1.2110461088905358,
+      "median_ci": [
+        1.0,
+        4.549107632348355
+      ]
+    }
+  },
+  "JN1": {
+    "display": "COVID-19 JN.1 流行期",
+    "persistence": {
+      "n_states": 51,
+      "median_crossing": 1.0,
+      "median_ci": [
+        1.0,
+        3.307826497928016
+      ]
+    },
+    "local_linear": {
+      "n_states": 50,
+      "median_crossing": 1.0,
+      "median_ci": [
+        1.0,
+        3.934523864045962
+      ]
+    }
+  },
+  "flu22": {
+    "display": "流感 2022--23 暴发早期",
+    "persistence": {
+      "n_states": 37,
+      "median_crossing": 2.799626219842126,
+      "median_ci": [
+        1.0,
+        5.755066238235691
+      ]
+    },
+    "local_linear": {
+      "n_states": 37,
+      "median_crossing": 1.0,
+      "median_ci": [
+        1.0,
+        2.0833893902233016
+      ]
+    }
+  },
+  "flu24": {
+    "display": "流感 2024--25 流行季",
+    "persistence": {
+      "n_states": 47,
+      "median_crossing": 2.861021990137619,
+      "median_ci": [
+        1.0,
+        5.869358447345613
+      ]
+    },
+    "local_linear": {
+      "n_states": 47,
+      "median_crossing": 1.0,
+      "median_ci": [
+        1.0,
+        2.322941384910951
+      ]
+    }
+  },
+  "rsv24": {
+    "display": "RSV 2024--25 流行季",
+    "persistence": {
+      "n_states": 43,
+      "median_crossing": 1.2842485654518763,
+      "median_ci": [
+        1.0,
+        4.013407651671702
+      ]
+    },
+    "local_linear": {
+      "n_states": 40,
+      "median_crossing": 1.0,
+      "median_ci": [
+        1.0,
+        1.283890635007778
+      ]
+    }
+  },
+  "rsv25": {
+    "display": "RSV 2025--26 流行季",
+    "persistence": {
+      "n_states": 30,
+      "median_crossing": 4.26203117713352,
+      "median_ci": [
+        1.0,
+        6.526079145296542
+      ]
+    },
+    "local_linear": {
+      "n_states": 31,
+      "median_crossing": 1.0,
+      "median_ci": [
+        1.0,
+        1.0
+      ]
+    }
+  }
+}
