@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 \usepackage[UTF8,fontset=fandol]{ctex}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{lmodern}
@@ -28,12 +28,12 @@
 \usepackage{titlesec}
 \usepackage{caption}
 \usepackage{fancyhdr}
-\captionsetup{labelsep=none,labelfont=bf,textfont=small,justification=centering}
+\captionsetup{labelsep=space,labelfont=bf,textfont=small}
 
 % Custom section formatting according to Chinese journal style using titlesec
-\titleformat{\section}{\raggedright\heiti\zihao{4}\bfseries}{\thesection}{0pt}{}
-\titleformat{\subsection}{\raggedright\heiti\zihao{4}\bfseries}{\thesubsection}{0pt}{}
-\titleformat{\subsubsection}{\raggedright\heiti\zihao{5}\bfseries}{\thesubsubsection}{0pt}{}
+\titleformat{\section}{\raggedright\heiti\zihao{4}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\raggedright\heiti\zihao{5}\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\raggedright\heiti\zihao{5}}{\thesubsubsection}{1em}{}
 \titlespacing*{\section}{0pt}{1.5ex plus .2ex minus .2ex}{1ex plus .2ex}
 \titlespacing*{\subsection}{0pt}{1.2ex plus .2ex minus .2ex}{0.8ex plus .2ex}
 \titlespacing*{\subsubsection}{0pt}{1.0ex plus .2ex minus .2ex}{0.6ex plus .2ex}
@@ -66,7 +66,6 @@
 \renewcommand{\headrulewidth}{0.4pt}
 \begin{document}
 \thispagestyle{plain}
-\setcounter{section}{-1}
 
 % Title (without author placeholders)
 \begin{center}
@@ -100,20 +99,6 @@
 
 为应对传染病前瞻预测的重大现实需求，计算流行病学形成了四类代表性建模范式：(1) 基于房室微分方程的机械动力学流派（如经典 SIR/SEIR 及其随机拓展）；(2) 基于统计推断的时序更新流派（如滑动自回归、连续时间更新方程与再生数实时推断）；(3) 数据驱动的机器学习与深度学习流派（如循环神经网络、时空图网络与梯度提升树）；(4) 多模型协同与集成预报流派（如多团队概率预报集成）。然而，大规模多模型协同预测评估项目——包括美国 CDC FluSight 流感预测\citep{mcgowan2019collaborative, flusight2024evaluation}、RAPIDD 埃博拉多模型评估\citep{viboud2018rapidd}、登革热预测挑战\citep{johansson2019open}以及欧洲与美国 COVID-19 预测枢纽\citep{cramer2022evaluation, sherratt2023europeanhubs}——跨越多年、多病种的严格评估揭示了一个发人深省的共性瓶颈：在多周前瞻（前瞻 3--4 周及以上）或流行波次起伏临界期，绝大部分复杂流行病学模型的实测技巧普遍衰退，甚至难以稳定优于简单的持续性基线或局部线性外推模型\citep{suez2026baseline, lopez2024challenges}。Melikechi 等\citep{melikechi2022limits}与 King 等\citep{king2015avoidable}指出，由于早期监测数据存在报告延迟与漏报，远期预测不可避免面临严重的实用不可识别性（Practical Unidentifiability）。
 
-\subsection{本文主要贡献与结构安排}
-
-针对上述理论空白与现实困境，本文的主要贡献体现在以下四个方面：
-\begin{enumerate}
-\item \textbf{锐条件方差地板与宏观更新有限步精确方差闭式}：在信息集 $\mathcal{F}_t$ 的二阶可积预测规则类上证明了平方损失下的条件风险恒等式（定理~\ref{thm:sharp_floor}），确立了条件均值预测器几乎处处唯一达到的锐条件方差地板，并将理论视界严格界定为“模型条件下的锐机制基准”。在此基础上，本文建立了从微观分支到宏观聚合更新的尺度隔离映射，推导了固定离散度 $k_{\text{agg}}$ 宏观负二项更新模型的精确有限步方差闭式（定理~\ref{thm:macro_exact}）及其在 $q\to R$、$R=1$、$k\to\infty$ 与 $I_0\to\infty$ 下的数值稳定边界极限，导出了相对均方误差的严格单调递增性与解析闭式求根方程。
-\item \textbf{参数后验对数正态混合与信息论识别极限}：证明了共享对数正态增长率后验分布下的全方差分解有限和形式（命题~\ref{prop:posterior_mixture}），解析量化了即插即用点估计预测器产生的超额平方偏差；严格给出了外推相对均方误差项 $P(h)$ 的高斯矩展开闭式（引理~\ref{lem:param_amplification}）；推导了负二项分支过程的 Fisher 信息量与 Cramér--Rao 理想样本量基准（定理~\ref{thm:fisher}），明确限定其为理想模型内的辨识下限（$C = O(\varepsilon^{-2})$），并确立了与现实监测外推的严格边界隔离。
-\item \textbf{四层证据架构与未归因误差诊断}：全文采用四层证据架构——第一层为理论模拟验证，后三层为真实数据实证（个体传播链、州级住院面板、预测枢纽业务数据）。在州级面板层，以宏观更新模型的条件精确方差为口径、在固定 $k_{\text{agg}}$ 插件估计下测得七个典型阶段的机制视界州级中位数为 2.2--7.1 周；通过三项描述性误差记账发现实测未归因残差占主要份额（中位数 $55.0\%$），据此把机制视界定位为“业务时效的经验宽松包络候选”，而非已验证的一般性上界。
-\item \textbf{三赛季版本化外部审计与上升期校准退化}：全面接入 CDC FluSight 预测枢纽跨越 2023--2026 年的三个连续历史赛季（v1.0.0、v1.1.0、v1.2.0 共 204 个锁定文件，全量 SHA-256 固化，逐字节可复现）。在严格共同单元交集上计算完整评分面板（WIS 展开分解、经验覆盖率、区间宽度、随机化 PIT），实测证实机制基准在经验预测中存在严重欠覆盖（95\% 覆盖率仅 0.405--0.554），量化了现实预测的技术性校准差距；并在三个独立赛季中一致观察到上升期校准存在显著且跨赛季不稳定的退化：Hub 集成模型上升期经验 95\% 覆盖率依次为 0.852、0.589 与 0.419，官方基线为 0.759、0.539 与 0.488，机制基准为 0.370、0.385 与 0.140；下降期 Hub 集成恢复至 0.925--0.964，而官方基线与机制基准仍存在不同程度的欠覆盖。该阶段分层结果为分阶段差异化响应的公卫应急提供了实证线索，但因数据中同时存在结构变点、报告修订与模型分布外偏移，本文不据此完成单一机制的因果识别。
-\end{enumerate}
-
-本文的结构安排如下：第 0 节为引言，阐述现实背景、科学问题与核心贡献；第 1 节回顾随机分支过程、生态预测视界、临界慢化与信息论推断极限四条文献脉络；第 2 节建立传播动力学可预测视界理论；第 3 节给出高通量蒙特卡洛数值验证；第 4 节报告个体传播链校准与州级住院面板的宏观机制视界测算；第 5 节开展 CDC FluSight 三个锁定赛季的版本化外部审计与校准差距分析；第 6 节讨论双层基准架构、预警响应转化、公平性考量与研究局限；第 7 节总结全文。核心定理的证明要点与辅助诊断表格见附录，逐行详尽代数推导见独立推导手册。
-
-\section{研究回顾}\label{sec:review}
-
 \subsection{相关研究回顾与理论脉络}
 
 面对前瞻预测精度的急剧衰退，现有文献主要沿四条脉络探索其极限机制与解释边界：
@@ -124,6 +109,18 @@
 第三，\textbf{统计物理临界慢化与拟平稳涨落}。在统计物理与非线性动力学中，系统在相变临界点附近普遍出现临界慢化（Critical Slowing Down）与涨落发散\citep{grassberger1983critical}。流行病学研究亦将这一现象作为暴发早期的预警信号（Early Warning Signals）\citep{oregan2013theory, southall2021early}。在有限宿主群体中，吸收态马尔可夫链的拟平稳分布（Quasi-Stationary Distribution, QSD）刻画了灭绝与暴发之间的亚稳态长尾涨落\citep{darroch1965quasi, nasell1999quasi, dolgoarshinnykh2006critical}。然而，此类微观扩散标度主要为定性物理图像，尚缺乏连接宏观周度发病序列的具体闭式映射。
 
 第四，\textbf{信息论推断极限与两类可预测性概念}。在统计推断领域，必须严格区分两类可预测性概念：基于时间序列排列熵与相空间重构的内在可预测性（如 Song 等\citep{song2010limits}与 White 等\citep{white2026forecastability}），回答序列本身蕴含多少可压缩信息；以及基于统计推断与似然理论的估计精度下界（如 Cramér--Rao 下界）\citep{parag2022fundamental}。本文属于后者：我们在负二项随机生成模型下，以条件方差地板与 Fisher 信息量界定推断精度下限，进而通过误差传播推导宏观前瞻预测视界的机制基准。
+
+\subsection{本文主要贡献与结构安排}
+
+针对上述理论空白与现实困境，本文的主要贡献体现在以下四个方面：
+\begin{enumerate}
+\item \textbf{锐条件方差地板与宏观更新有限步精确方差闭式}：在信息集 $\mathcal{F}_t$ 的二阶可积预测规则类上证明了平方损失下的条件风险恒等式（定理~\ref{thm:sharp_floor}），确立了条件均值预测器几乎处处唯一达到的锐条件方差地板，并将理论视界严格界定为“模型条件下的锐机制基准”。在此基础上，本文建立了从微观分支到宏观聚合更新的尺度隔离映射，推导了固定离散度 $k_{\text{agg}}$ 宏观负二项更新模型的精确有限步方差闭式（定理~\ref{thm:macro_exact}）及其在 $q\to R$、$R=1$、$k\to\infty$ 与 $I_0\to\infty$ 下的数值稳定边界极限，导出了相对均方误差的严格单调递增性与解析闭式求根方程。
+\item \textbf{参数后验对数正态混合与信息论识别极限}：证明了共享对数正态增长率后验分布下的全方差分解有限和形式（命题~\ref{prop:posterior_mixture}），解析量化了即插即用点估计预测器产生的超额平方偏差；严格给出了外推相对均方误差项 $P(h)$ 的高斯矩展开闭式（引理~\ref{lem:param_amplification}）；推导了负二项分支过程的 Fisher 信息量与 Cramér--Rao 理想样本量基准（定理~\ref{thm:fisher}），明确限定其为理想模型内的辨识下限（$C = O(\varepsilon^{-2})$），并确立了与现实监测外推的严格边界隔离。
+\item \textbf{四层证据架构与未归因误差诊断}：全文采用四层证据架构——第一层为理论模拟验证，后三层为真实数据实证（个体传播链、州级住院面板、预测枢纽业务数据）。在州级面板层，以宏观更新模型的条件精确方差为口径、在固定 $k_{\text{agg}}$ 插件估计下测得七个典型阶段的机制视界州级中位数为 2.2--7.1 周；通过三项描述性误差记账发现实测未归因残差占主要份额（中位数 $55.0\%$），据此把机制视界定位为“业务时效的经验宽松包络候选”，而非已验证的一般性上界。
+\item \textbf{三赛季版本化外部审计与上升期校准退化}：全面接入 CDC FluSight 预测枢纽跨越 2023--2026 年的三个连续历史赛季（v1.0.0、v1.1.0、v1.2.0 共 204 个锁定文件，全量 SHA-256 固化，逐字节可复现）。在严格共同单元交集上计算完整评分面板（WIS 展开分解、经验覆盖率、区间宽度、随机化 PIT），实测证实机制基准在经验预测中存在严重欠覆盖（95\% 覆盖率仅 0.405--0.554），量化了现实预测的技术性校准差距；并在三个独立赛季中一致观察到上升期校准存在显著且跨赛季不稳定的退化：Hub 集成模型上升期经验 95\% 覆盖率依次为 0.852、0.589 与 0.419，官方基线为 0.759、0.539 与 0.488，机制基准为 0.370、0.385 与 0.140；下降期 Hub 集成恢复至 0.925--0.964，而官方基线与机制基准仍存在不同程度的欠覆盖。该阶段分层结果为分阶段差异化响应的公卫应急提供了实证线索，但因数据中同时存在结构变点、报告修订与模型分布外偏移，本文不据此完成单一机制的因果识别。
+\end{enumerate}
+
+本文的结构安排如下：第 1 节为引言，阐述现实背景、文献脉络与核心贡献；第 2 节建立传播动力学可预测视界理论，推导锐条件方差地板、尺度隔离映射、宏观更新精确有限步方差闭式与其边界极限、后验参数混合以及信息论 Cramér--Rao 界限；第 3 节介绍高通量蒙特卡洛随机模拟验证与边界数值保护检验；第 4 节为真实数据实证（上），介绍美国 CDC 监测数据并报告个体传播链校准、州级住院面板的宏观机制视界测算、描述性误差记账与多州样本外回测；第 5 节为真实数据实证（下），开展 CDC FluSight 三个锁定赛季的版本化外部回溯审计与现实校准差距分析，报告按事后动力学阶段分层的校准退化实测规律；第 6 节深入探讨双层基准架构、从机制视界到预警规则的决策转化、健康公平性考量及研究局限；第 7 节总结全文主要结论。详细代数推导见附录。
 
 \section{传播动力学可预测视界理论}
 
@@ -1025,8 +1022,6 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 
 \vspace{1.0em}
 
-
-
 \subsection*{附录支持表格与诊断网格}
 \begin{table}[htbp]
 \centering
@@ -1189,8 +1184,6 @@ $k$ 来源 & $k$ & 80\% 功效基准 $C$ & 单位信噪比基准 $C$ \\
 \vspace{1.0em}
 {\footnotesize
 \setlength{\bibsep}{2.0pt plus 0.5pt minus 0.5pt}
-
-\renewcommand{\refname}{参考文献：}
 \bibliographystyle{unsrtnat}
 \bibliography{references}
 }

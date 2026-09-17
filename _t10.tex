@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 \usepackage[UTF8,fontset=fandol]{ctex}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{lmodern}
@@ -100,20 +100,6 @@
 
 为应对传染病前瞻预测的重大现实需求，计算流行病学形成了四类代表性建模范式：(1) 基于房室微分方程的机械动力学流派（如经典 SIR/SEIR 及其随机拓展）；(2) 基于统计推断的时序更新流派（如滑动自回归、连续时间更新方程与再生数实时推断）；(3) 数据驱动的机器学习与深度学习流派（如循环神经网络、时空图网络与梯度提升树）；(4) 多模型协同与集成预报流派（如多团队概率预报集成）。然而，大规模多模型协同预测评估项目——包括美国 CDC FluSight 流感预测\citep{mcgowan2019collaborative, flusight2024evaluation}、RAPIDD 埃博拉多模型评估\citep{viboud2018rapidd}、登革热预测挑战\citep{johansson2019open}以及欧洲与美国 COVID-19 预测枢纽\citep{cramer2022evaluation, sherratt2023europeanhubs}——跨越多年、多病种的严格评估揭示了一个发人深省的共性瓶颈：在多周前瞻（前瞻 3--4 周及以上）或流行波次起伏临界期，绝大部分复杂流行病学模型的实测技巧普遍衰退，甚至难以稳定优于简单的持续性基线或局部线性外推模型\citep{suez2026baseline, lopez2024challenges}。Melikechi 等\citep{melikechi2022limits}与 King 等\citep{king2015avoidable}指出，由于早期监测数据存在报告延迟与漏报，远期预测不可避免面临严重的实用不可识别性（Practical Unidentifiability）。
 
-\subsection{本文主要贡献与结构安排}
-
-针对上述理论空白与现实困境，本文的主要贡献体现在以下四个方面：
-\begin{enumerate}
-\item \textbf{锐条件方差地板与宏观更新有限步精确方差闭式}：在信息集 $\mathcal{F}_t$ 的二阶可积预测规则类上证明了平方损失下的条件风险恒等式（定理~\ref{thm:sharp_floor}），确立了条件均值预测器几乎处处唯一达到的锐条件方差地板，并将理论视界严格界定为“模型条件下的锐机制基准”。在此基础上，本文建立了从微观分支到宏观聚合更新的尺度隔离映射，推导了固定离散度 $k_{\text{agg}}$ 宏观负二项更新模型的精确有限步方差闭式（定理~\ref{thm:macro_exact}）及其在 $q\to R$、$R=1$、$k\to\infty$ 与 $I_0\to\infty$ 下的数值稳定边界极限，导出了相对均方误差的严格单调递增性与解析闭式求根方程。
-\item \textbf{参数后验对数正态混合与信息论识别极限}：证明了共享对数正态增长率后验分布下的全方差分解有限和形式（命题~\ref{prop:posterior_mixture}），解析量化了即插即用点估计预测器产生的超额平方偏差；严格给出了外推相对均方误差项 $P(h)$ 的高斯矩展开闭式（引理~\ref{lem:param_amplification}）；推导了负二项分支过程的 Fisher 信息量与 Cramér--Rao 理想样本量基准（定理~\ref{thm:fisher}），明确限定其为理想模型内的辨识下限（$C = O(\varepsilon^{-2})$），并确立了与现实监测外推的严格边界隔离。
-\item \textbf{四层证据架构与未归因误差诊断}：全文采用四层证据架构——第一层为理论模拟验证，后三层为真实数据实证（个体传播链、州级住院面板、预测枢纽业务数据）。在州级面板层，以宏观更新模型的条件精确方差为口径、在固定 $k_{\text{agg}}$ 插件估计下测得七个典型阶段的机制视界州级中位数为 2.2--7.1 周；通过三项描述性误差记账发现实测未归因残差占主要份额（中位数 $55.0\%$），据此把机制视界定位为“业务时效的经验宽松包络候选”，而非已验证的一般性上界。
-\item \textbf{三赛季版本化外部审计与上升期校准退化}：全面接入 CDC FluSight 预测枢纽跨越 2023--2026 年的三个连续历史赛季（v1.0.0、v1.1.0、v1.2.0 共 204 个锁定文件，全量 SHA-256 固化，逐字节可复现）。在严格共同单元交集上计算完整评分面板（WIS 展开分解、经验覆盖率、区间宽度、随机化 PIT），实测证实机制基准在经验预测中存在严重欠覆盖（95\% 覆盖率仅 0.405--0.554），量化了现实预测的技术性校准差距；并在三个独立赛季中一致观察到上升期校准存在显著且跨赛季不稳定的退化：Hub 集成模型上升期经验 95\% 覆盖率依次为 0.852、0.589 与 0.419，官方基线为 0.759、0.539 与 0.488，机制基准为 0.370、0.385 与 0.140；下降期 Hub 集成恢复至 0.925--0.964，而官方基线与机制基准仍存在不同程度的欠覆盖。该阶段分层结果为分阶段差异化响应的公卫应急提供了实证线索，但因数据中同时存在结构变点、报告修订与模型分布外偏移，本文不据此完成单一机制的因果识别。
-\end{enumerate}
-
-本文的结构安排如下：第 0 节为引言，阐述现实背景、科学问题与核心贡献；第 1 节回顾随机分支过程、生态预测视界、临界慢化与信息论推断极限四条文献脉络；第 2 节建立传播动力学可预测视界理论；第 3 节给出高通量蒙特卡洛数值验证；第 4 节报告个体传播链校准与州级住院面板的宏观机制视界测算；第 5 节开展 CDC FluSight 三个锁定赛季的版本化外部审计与校准差距分析；第 6 节讨论双层基准架构、预警响应转化、公平性考量与研究局限；第 7 节总结全文。核心定理的证明要点与辅助诊断表格见附录，逐行详尽代数推导见独立推导手册。
-
-\section{研究回顾}\label{sec:review}
-
 \subsection{相关研究回顾与理论脉络}
 
 面对前瞻预测精度的急剧衰退，现有文献主要沿四条脉络探索其极限机制与解释边界：
@@ -124,6 +110,18 @@
 第三，\textbf{统计物理临界慢化与拟平稳涨落}。在统计物理与非线性动力学中，系统在相变临界点附近普遍出现临界慢化（Critical Slowing Down）与涨落发散\citep{grassberger1983critical}。流行病学研究亦将这一现象作为暴发早期的预警信号（Early Warning Signals）\citep{oregan2013theory, southall2021early}。在有限宿主群体中，吸收态马尔可夫链的拟平稳分布（Quasi-Stationary Distribution, QSD）刻画了灭绝与暴发之间的亚稳态长尾涨落\citep{darroch1965quasi, nasell1999quasi, dolgoarshinnykh2006critical}。然而，此类微观扩散标度主要为定性物理图像，尚缺乏连接宏观周度发病序列的具体闭式映射。
 
 第四，\textbf{信息论推断极限与两类可预测性概念}。在统计推断领域，必须严格区分两类可预测性概念：基于时间序列排列熵与相空间重构的内在可预测性（如 Song 等\citep{song2010limits}与 White 等\citep{white2026forecastability}），回答序列本身蕴含多少可压缩信息；以及基于统计推断与似然理论的估计精度下界（如 Cramér--Rao 下界）\citep{parag2022fundamental}。本文属于后者：我们在负二项随机生成模型下，以条件方差地板与 Fisher 信息量界定推断精度下限，进而通过误差传播推导宏观前瞻预测视界的机制基准。
+
+\subsection{本文主要贡献与结构安排}
+
+针对上述理论空白与现实困境，本文的主要贡献体现在以下四个方面：
+\begin{enumerate}
+\item \textbf{锐条件方差地板与宏观更新有限步精确方差闭式}：在信息集 $\mathcal{F}_t$ 的二阶可积预测规则类上证明了平方损失下的条件风险恒等式（定理~\ref{thm:sharp_floor}），确立了条件均值预测器几乎处处唯一达到的锐条件方差地板，并将理论视界严格界定为“模型条件下的锐机制基准”。在此基础上，本文建立了从微观分支到宏观聚合更新的尺度隔离映射，推导了固定离散度 $k_{\text{agg}}$ 宏观负二项更新模型的精确有限步方差闭式（定理~\ref{thm:macro_exact}）及其在 $q\to R$、$R=1$、$k\to\infty$ 与 $I_0\to\infty$ 下的数值稳定边界极限，导出了相对均方误差的严格单调递增性与解析闭式求根方程。
+\item \textbf{参数后验对数正态混合与信息论识别极限}：证明了共享对数正态增长率后验分布下的全方差分解有限和形式（命题~\ref{prop:posterior_mixture}），解析量化了即插即用点估计预测器产生的超额平方偏差；严格给出了外推相对均方误差项 $P(h)$ 的高斯矩展开闭式（引理~\ref{lem:param_amplification}）；推导了负二项分支过程的 Fisher 信息量与 Cramér--Rao 理想样本量基准（定理~\ref{thm:fisher}），明确限定其为理想模型内的辨识下限（$C = O(\varepsilon^{-2})$），并确立了与现实监测外推的严格边界隔离。
+\item \textbf{四层证据架构与未归因误差诊断}：全文采用四层证据架构——第一层为理论模拟验证，后三层为真实数据实证（个体传播链、州级住院面板、预测枢纽业务数据）。在州级面板层，以宏观更新模型的条件精确方差为口径、在固定 $k_{\text{agg}}$ 插件估计下测得七个典型阶段的机制视界州级中位数为 2.2--7.1 周；通过三项描述性误差记账发现实测未归因残差占主要份额（中位数 $55.0\%$），据此把机制视界定位为“业务时效的经验宽松包络候选”，而非已验证的一般性上界。
+\item \textbf{三赛季版本化外部审计与上升期校准退化}：全面接入 CDC FluSight 预测枢纽跨越 2023--2026 年的三个连续历史赛季（v1.0.0、v1.1.0、v1.2.0 共 204 个锁定文件，全量 SHA-256 固化，逐字节可复现）。在严格共同单元交集上计算完整评分面板（WIS 展开分解、经验覆盖率、区间宽度、随机化 PIT），实测证实机制基准在经验预测中存在严重欠覆盖（95\% 覆盖率仅 0.405--0.554），量化了现实预测的技术性校准差距；并在三个独立赛季中一致观察到上升期校准存在显著且跨赛季不稳定的退化：Hub 集成模型上升期经验 95\% 覆盖率依次为 0.852、0.589 与 0.419，官方基线为 0.759、0.539 与 0.488，机制基准为 0.370、0.385 与 0.140；下降期 Hub 集成恢复至 0.925--0.964，而官方基线与机制基准仍存在不同程度的欠覆盖。该阶段分层结果为分阶段差异化响应的公卫应急提供了实证线索，但因数据中同时存在结构变点、报告修订与模型分布外偏移，本文不据此完成单一机制的因果识别。
+\end{enumerate}
+
+本文的结构安排如下：第 1 节为引言，阐述现实背景、文献脉络与核心贡献；第 2 节建立传播动力学可预测视界理论，推导锐条件方差地板、尺度隔离映射、宏观更新精确有限步方差闭式与其边界极限、后验参数混合以及信息论 Cramér--Rao 界限；第 3 节介绍高通量蒙特卡洛随机模拟验证与边界数值保护检验；第 4 节为真实数据实证（上），介绍美国 CDC 监测数据并报告个体传播链校准、州级住院面板的宏观机制视界测算、描述性误差记账与多州样本外回测；第 5 节为真实数据实证（下），开展 CDC FluSight 三个锁定赛季的版本化外部回溯审计与现实校准差距分析，报告按事后动力学阶段分层的校准退化实测规律；第 6 节深入探讨双层基准架构、从机制视界到预警规则的决策转化、健康公平性考量及研究局限；第 7 节总结全文主要结论。详细代数推导见附录。
 
 \section{传播动力学可预测视界理论}
 
@@ -1009,177 +1007,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 }
 \end{table}
 
-\subsection*{核心定理数理证明要点（Key Proof Sketches）}
-
-\noindent\textbf{1. 定理~\ref{thm:sharp_floor}（锐条件方差地板）证明要点：}将误差向量正交拆分 $Y_{t+h}-\delta_h = (Y_{t+h}-m_h) + (m_h-\delta_h)$。对条件信息集 $\mathcal{F}_t$ 取期望，由于 $m_h, \delta_h$ 为 $\mathcal{F}_t$-可测，交叉项 $\mathbb{E}[(Y_{t+h}-m_h)(m_h-\delta_h)\mid\mathcal{F}_t] = (m_h-\delta_h)\cdot 0 = 0$，直接确立平方风险分解 $\mathcal{R}_h(\delta_h\mid\mathcal{F}_t) = V_h + (m_h-\delta_h)^2 \ge V_h$。等号成立当且仅当 $\delta_h = m_h$（$\mathbb{P}$-a.s.）。
-
-\noindent\textbf{2. 引理 1--2（分支矩递推与 $\text{CV}^2$ 饱和地板）证明要点：}全期望公式给出 $\mathbb{E}[Z_n] = R \mathbb{E}[Z_{n-1}]$，解得 $\mathbb{E}[Z_h] = I_0 R^h$。全方差公式给出 $\text{Var}(Z_n) = \sigma^2 \mathbb{E}[Z_{n-1}] + R^2 \text{Var}(Z_{n-1})$，转化为一阶非齐次差分方程 $V_n - R^2 V_{n-1} = \sigma^2 I_0 R^{n-1}$；以 $R^{2n}$ 伸缩求和直接导出 $\text{Var}(Z_h) = I_0\sigma^2 R^{h-1}(R^h-1)/(R-1)$。两端除以 $(I_0 R^h)^2$ 并利用 $\sigma^2 = R(1+R/k)$，即得 $\text{CV}^2(h) = (1+R/k)(1-R^{-h})/[I_0(R-1)]$；超临界下 $R^{-h}\to 0$ 给出有界饱和平台 $\text{CV}^2_\infty$。
-
-\noindent\textbf{3. 引理 3 与定理~\ref{thm:horizon}（参数放大项与视界映射）证明要点：}对数正态归一化估计乘子 $Y = \hat{R}/R$ 满足矩母公式 $\mathbb{E}[Y^m] = \exp(\frac{1}{2}m^2 s^2)$。三项多项式展开 $\mathbb{E}[(Y^h-1)^2] = \mathbb{E}[Y^{2h}] - 2\mathbb{E}[Y^h] + 1 = \exp(2h^2s^2) - 2\exp(\frac{1}{2}h^2s^2) + 1$ 导出精确式 $P(h)$。在假定 (A4) 下，点预测与未来微观新息条件正交使交叉乘积期望严格为零，确立加性分解 $\text{RelMSE}(h) = \text{CV}^2(h) + P(h)$。全方程单调性保证了连续视界 $h^*$ 的唯一存在性。
-
-\noindent\textbf{4. 定理~\ref{thm:monotonicity}（相对均方误差严格单调递增性）证明要点：}内在相对方差代际增量 $\text{CV}^2(h+1)-\text{CV}^2(h) = (1+R/k)/(I_0 R^{h+1}) > 0$ 恒正。参数外推项构造辅助函数 $g(y) = (y^{h_2}-1)^2 - (y^{h_1}-1)^2 = (y^{h_2}-y^{h_1})(y^{h_2}+y^{h_1}-2)$；在 $y>1$ 与 $0<y<1$ 两个开区间上两因子均同号，恒有 $g(y) > 0$，非退化对数正态积分严格保证增量为正。
-
-\noindent\textbf{5. 定理~\ref{thm:fisher}（Fisher 信息量与 Cramér--Rao 辨识界）证明要点：}负二项概率对数对 $R$ 求二阶导取负期望给出单样本 Fisher 信息 $I_1(R) = k/[R(R+k)]$。似然二阶混合偏导期望为零确立参数渐近正交，故联合估计下关于 $R$ 的 Cramér--Rao 界保持对角逆形式 $[\mathcal{I}^{-1}]_{RR} = \frac{R(R+k)}{Ck}$。双侧假设检验分位数间隔 $\varepsilon \ge z_{1-\alpha}\sqrt{R_0(R_0+k)/(Ck)} + z_{1-\beta}\sqrt{R_1(R_1+k)/(Ck)}$ 反解即导出样本量门槛。
-
-\noindent\textbf{6. 定理~\ref{thm:macro_exact}（固定离散度宏观更新有限步精确方差）证明要点：}宏观更新单步条件方差包含关于发病规模的二次项：$\text{Var}(Z_{t+1}\mid Z_t) = RZ_t + (R^2/k_{\text{agg}})Z_t^2$。应用全方差法则得到一阶非齐次差分方程 $V_{t+1} = qV_t + I_0 R^{t+1} + (I_0^2/k_{\text{agg}})R^{2t+2}$，其中 $q \equiv R^2(1+1/k_{\text{agg}})$。方程两端同除以 $q^{t+1}$ 实施裂项求和，利用等比级数求和公式与恒等式 $q-R^2 = R^2/k_{\text{agg}}$ 合并，严格导出双项分离闭式 $V_h = I_0 R \frac{q^h-R^h}{q-R} + I_0^2(q^h-R^{2h})$。
-
-\vspace{1.0em}
-
-
-
-\subsection*{附录支持表格与诊断网格}
-\begin{table}[htbp]
-\centering
-\footnotesize
-\caption{微观传播链层的子代分布极大似然拟合与信息论下界检验}\label{tab:micro}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.2cm}cccccc@{}}
-\toprule
-数据集 & 样本量 $N$ & $\hat{R}$ (95\% CI) & $\hat{k}$ (95\% CI) & $\Delta\text{AIC}_{\text{P-NB}}$ & 自助/CRB 比值 & 拟合优度 $p$ \\
-\midrule
-香港 COVID-19（本地） & 355 & 0.473 [0.38, 0.58] & 0.434 [0.30, 0.71] & 93.9 & 1.059 & 0.142 \\
-香港 COVID-19（全体） & 1,038 & 0.162 [0.13, 0.20] & 0.111 [0.08, 0.15] & 223.4 & 1.027 & 0.086 \\
-几内亚埃博拉 2014 & 152 & 0.954 [0.77, 1.18] & 0.182 [0.12, 0.30] & 244.0 & 0.984 & 0.091 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\scriptsize
-\caption{高通量蒙特卡洛模拟验证参数设置}\label{tab:sim_params}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{2.8cm}>{\centering\arraybackslash}p{1.2cm}>{\raggedright\arraybackslash}p{4.2cm}>{\centering\arraybackslash}p{1.4cm}>{\raggedright\arraybackslash}p{2.2cm}@{}}
-\toprule
-对应定理 & 验证目标 & 轨迹数 & 核心参数设定 $(R, k, I_0, \delta R)$ & 步长 & 检验准则 \\
-\midrule
-定理 1 / 2 & 可加分解与方差下界 & 20,000 & $(1.5, 5.0, 100, 0.10)$, $(1.5, 0.3, 100, 0.15)$ & 12 代 & 经验/理论比收敛于 1.0 \\
-命题~\ref{prop:qsd} & 反射扩散平稳密度 & 120 & $N=2000, \varepsilon \in \{0.005, 0.01, 0.2, 0.4\}$ & 250k & 经验直方图与理论重合 \\
-推论~\ref{cor:establishment} & 单种子建群概率 & 400 & $N \in \{500, 1000\}, \varepsilon \in \{0.02, 0.05, 0.1\}$ & 阈值 $0.05N$ & 95\% Beta 区间覆盖 \\
-定理~\ref{thm:fisher} & Fisher 信息基准 & 50,000 & $(1.05, 1.0, C=1300)$, $(1.5, 0.3, C=2000)$ & 固定 $C$ & MLE 方差逼近 CRB \\
-命题~\ref{thm:t5} / 定理 5R & 时变方差累积律 & 400 & $\phi \in \{0, 0.5, 0.8, 0.95\}, \mu=\log 1.05$ & 10 代 & 路径协方差累加比值 \\
-定理~\ref{thm:macro_exact} & 宏观方差精确闭式 & 20,000 & 三组 $(R, k_{\text{agg}}, I_0)$ 见 \texttt{macro\_cv\_check.py} & 14 代 & 典型偏差约 $1\%$--$3\%$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\caption{主要符号与数学定义对照}\label{tab:symbols}
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{6.8cm}>{\raggedright\arraybackslash}p{3.2cm}@{}}
-\toprule
-符号 & 含义 & 正文首次出现 \\
-\midrule
-$R,\ R_t$ & 基本再生数/有效代际乘子（$R_t$ 为时变序列；$\hat R$ 为估计量） & 式~(\ref{eq:nb_pmf}) \\
-$k,\ k_{\text{ind}}$ & 微观个体子代分布过度离散参数（刻画个体超扩散） & 式~(\ref{eq:nb_pmf}) \\
-$k_{\text{agg}}$ & 宏观周度聚合序列的时序离散度（与 $k$ 属不同观测层级） & 命题~\ref{thm:t5} \\
-$I_0$ & 预测原点初始周度发病规模（窗口均值口径） & 引理~\ref{lem:branch_moments} \\
-$Z_h,\ \hat Z_h$ & 第 $h$ 步实际发病数与模型点预测 & 引理~\ref{lem:branch_moments} \\
-$\mu_g,\ \Delta_g$ & 平均代间隔（天）与周聚合转换比 $\mu_g/7$ & 第 2.1 节 \\
-$h,\ h^*$ & 前瞻步长（周度/代际）与模型条件机制视界 & 定理~\ref{thm:horizon} \\
-$\tau$ & 相对均方根误差容忍度门槛（主基准取 $0.5$） & 定理~\ref{thm:horizon} \\
-$s_{\log R}$ & 对数再生数回归斜率标准误 $\text{SE}(\log\hat R)$ & 引理~\ref{lem:param_amplification} \\
-$\text{CV}^2_{\text{macro}}(h)$ & 固定离散度宏观更新有限步精确相对方差 & 定理~\ref{thm:macro_exact} \\
-$P(h)$ & 参数估计不确定性前向放大项 & 式~(\ref{eq:param_amplification}) \\
-$C$ & 独立个体子代计数观测数（含零子代个体） & 定理~\ref{thm:fisher} \\
-$\mathcal{E}_{\text{res}}(h)$ & 未归因综合实测闭合余项（描述性） & 式~(\ref{eq:full_budget}) \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\caption{各分析对象的口径与数据泄漏诊断}\label{tab:leakage}
-\resizebox{\textwidth}{!}{%
-\input{tables_v3/tab_leakage}%
-}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\caption{四类可预测视界的口径定义与层级归属}\label{tab:caliber_def}
-\resizebox{\textwidth}{!}{%
-\input{tables_v3/tab_caliber_def}%
-}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\caption{七个流行阶段在六种视界口径与两类实测时效下的逐阶段对照（周，州级中位数）}\label{tab:caliber}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccccccc@{}}
-\toprule
-阶段 & 宏观精确 & 宏观领先阶 & 启发式 & $k{=}0.434$ & $k{=}0.182$ & $k{=}0.111$ & 实测绝对 & 持续性 \\
-\midrule
-COVID-19 Delta 暴发期 & 7.1 & 8.2 & 10.9 & 9.1 & 8.1 & 5.9 & 1.78 & 3.72 \\
-COVID-19 Omicron 达峰期 & 4.0 & 4.1 & 8.0 & 6.7 & 5.8 & 4.9 & 1.92 & 1.43 \\
-COVID-19 JN.1 流行期 & 5.0 & 5.5 & 8.7 & 7.1 & 5.6 & 4.5 & 3.89 & 1.00 \\
-流感 2022--23 暴发早期 & 2.2 & 2.5 & 4.5 & 2.3 & 1.1 & 0.7 & 1.23 & 2.80 \\
-流感 2024--25 流行季 & 2.6 & 3.1 & 6.2 & 4.8 & 2.4 & 1.3 & 1.27 & 2.86 \\
-RSV 2024--25 流行季 & 5.8 & 6.4 & 9.6 & 6.8 & 4.5 & 2.9 & 2.91 & 1.28 \\
-RSV 2025--26 流行季 & 3.9 & 4.8 & 6.7 & 4.1 & 1.9 & 1.1 & 3.49 & 4.26 \\
-\bottomrule
-\end{tabular}%
-}
-\vspace{2pt}
-\begin{flushleft}
-\scriptsize \textbf{注：}``宏观精确''为主口径（定理~\ref{thm:macro_exact}）；``宏观领先阶''为 $h/k_{\text{agg}}$ 线性近似；``启发式''为微观闭式代入 $k_{\text{agg}}$；其余列为代入个体级离散度；``实测绝对''为由中位 RelMSE 曲线插值的穿越点；``持续性''为相对持续性基线的穿越点。\end{flushleft}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\caption{州级宏观条件精确机制视界对推断窗口长度与 $k_{\text{agg}}$ 截断的敏感性（周，跨州中位数）}\label{tab:sensitivity}
-\resizebox{\textwidth}{!}{%
-\input{tables_v3/tab_sensitivity}%
-}
-\vspace{2pt}
-\begin{flushleft}
-\scriptsize \textbf{注：}各单元格为指定建模选择下逐州求解宏观机制视界的跨州中位数（$\tau=0.5$）；基准口径为 5 周窗口、$k_{\text{agg}} \le 1000$。\end{flushleft}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\caption{公共卫生决策分级场景、多档容忍度宏观机制视界（州级中位数）与风控策略推荐}\label{tab:scenarios}
-\resizebox{\textwidth}{!}{%
-\input{tables_v3/table7_tiers}%
-}
-\vspace{2pt}
-\begin{flushleft}
-\scriptsize \textbf{注：}各格为州级中位数（括号内为参与州数）；求解直接在周度时钟上进行，不涉及代际换算。四个容忍度档次对应由容错度定义的风险等级：$\tau=0.20$（高成本低容错）、$\tau=0.35$（中高成本资源预置）、$\tau=0.50$（中等容错规划）、$\tau=0.70$（高容错研判）。\end{flushleft}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\scriptsize
-\caption{定理~\ref{thm:fisher} 样本量基准对过度离散参数 $k$ 的依赖（$\varepsilon=0.1$、$R_1=1.1$）}\label{tab:ck}
-\begin{tabular}{lccc}
-\toprule
-$k$ 来源 & $k$ & 80\% 功效基准 $C$ & 单位信噪比基准 $C$ \\
-\midrule
-居中参照值 & 1.000 & 1,300 & 861 \\
-香港 COVID-19 本地队列（实测） & 0.434 & 2,162 & 1,437 \\
-几内亚埃博拉（实测） & 0.182 & 4,270 & 2,844 \\
-香港 COVID-19 全队列（实测） & 0.111 & 6,593 & 4,393 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\scriptsize
-\caption{COVIDhub-ensemble 集成预测的州级技能衰减（12 个预测原点明细）}\label{tab:hub}
-\resizebox{\textwidth}{!}{%
-\input{tables_v3/table6_hub}%
-}
-\vspace{2pt}
-\begin{flushleft}
-\scriptsize \textbf{注：}每原点在 50--51 个辖区上评估；两波内各 6 个原点为连续逐周原点。数据来源 reichlab/covid19-forecast-hub 存档，逐文件校验和见清单。\end{flushleft}
-\end{table}
+\noindent\textbf{补充材料说明：}本附录仅保留核心定理推导全景索引表（表~\ref{tab:derivation_roadmap}）。全部核心定理的证明要点、符号定义表、数据泄漏诊断表、视界口径对照表、敏感性网格与决策分级表等支持材料，均收录于独立的补充材料文件《补充材料》（\texttt{supplementary.pdf}），与本主文稿同源并可逐字节复算；逐行展开的详尽代数运算另见推导手册。
 
 \noindent{\textbf{数据与代码可得性声明。}} 本文涉及的三类州级周度监测面板、两组微观接触追踪队列以及 CDC FluSight 三个锁定赛季的全部 204 个原始输入数据、处理脚本与图表复现管线（入口 \texttt{scripts\_v2/make\_all.py}），均完整存档于代码仓库；全量文件 SHA-256 校验和见 \texttt{MANIFEST.md}。详尽推导步骤与矩阵求逆展开参见推导手册 \texttt{derivations/derivations\_manual.pdf}。
 
