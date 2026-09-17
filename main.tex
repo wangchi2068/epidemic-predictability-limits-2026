@@ -75,7 +75,7 @@
 \end{center}
 
 % Abstract & Keywords Box
-\noindent{\heiti\bfseries 摘要：}重大呼吸道传染病的前瞻预测在传播阈值附近及多周外推中频繁遭遇系统性失效。本文研究理论机制方差、现实模型误差与预测校准差距三者之间的关系。方法上，我们在信息集可测的二阶规则类上证明条件平方风险恒等式，确立条件均值预测器所达到的锐条件方差地板；进而建立从个体负二项分支到宏观负二项更新过程的尺度隔离映射，导出固定聚合离散度宏观更新模型的精确有限步方差闭式与其数值稳定边界极限，并给出对数正态参数后验传播与即插即用预测器超额风险的解析表达；外部验证采用 CDC FluSight 预测枢纽三个锁定历史赛季（v1.0.0、v1.1.0、v1.2.0，共 204 个版本化文件并登记 SHA-256）。全文采用\textbf{四层证据架构}，其中真实数据实证包含三层——个体传播链、州级住院面板与预测枢纽业务数据，第一层为理论模拟验证。结果上，模拟验证在所检验参数网格中确认宏观方差闭式与模拟轨迹一致（相对偏差约 $1\%$--$3\%$，最大 $7.6\%$）；个体传播链数据对负二项相对 Poisson 的拟合优势提供支持（$\Delta\text{AIC}$ 达 93.9--244.0），而参数化自助方差与 Cramér--Rao 下界之比 0.98--1.06 属\textbf{模型内自洽性检验}，不构成对生成假设的独立验证；州级面板以宏观更新模型的条件精确方差为口径，在固定 $k_{\text{agg}}$ 插件估计下给出宏观机制视界的州级中位数 2.2--7.1 周，未归因闭合余项中位占比 $55.0\%$，表明机制分量仅覆盖实测误差的次要份额。外部\textbf{回溯性最终真值审计}（按事后动力学阶段分层）显示：机制基准作为预测器严重欠覆盖，标称 95\% 区间实测覆盖率仅 0.405--0.554；Hub 集成模型的上升期覆盖率在三个赛季分别为 0.852、0.589 与 0.419，官方基线为 0.759、0.539 与 0.488，机制基准为 0.370、0.385 与 0.140，显示上升期校准存在显著且跨赛季不稳定的退化；下降期 Hub 集成覆盖率恢复至 0.925--0.964，而官方基线与机制基准仍存在不同程度的欠覆盖。结论上，机制视界是依赖模型、信息与指定规则的条件风险基准（条件均值达到锐方差地板，但插件视界不等同于所有规则下的最优视界）；该框架更适合作为“机制基准--现实审计--校准差距”的诊断工具，实际业务系统尚需动态校准、实时回填建模与阶段特异性的不确定性膨胀。
+\noindent{\heiti\bfseries 摘要：}重大呼吸道传染病的前瞻预测在传播阈值附近及多周外推中频繁遭遇系统性失效。本文研究理论机制方差、现实模型误差与预测校准差距三者之间的关系。方法上，我们在信息集可测的二阶规则类上证明条件平方风险恒等式，确立条件均值预测器所达到的锐条件方差地板；进而建立区分个体负二项分支与宏观负二项更新工作模型的尺度隔离框架，导出固定聚合离散度宏观更新模型的精确有限步方差闭式与其数值稳定边界极限，并给出对数正态参数后验传播与即插即用预测器超额风险的解析表达；外部验证采用 CDC FluSight 预测枢纽三个锁定历史赛季（v1.0.0、v1.1.0、v1.2.0，共 204 个版本化文件并登记 SHA-256）。全文采用\textbf{四层证据架构}，其中真实数据实证包含三层——个体传播链、州级住院面板与预测枢纽业务数据，第一层为理论模拟验证。结果上，模拟验证在所检验参数网格中确认宏观方差闭式与模拟轨迹一致（相对偏差约 $1\%$--$3\%$，最大 $7.6\%$）；个体传播链数据对负二项相对 Poisson 的拟合优势提供支持（$\Delta\text{AIC}$ 达 93.9--244.0），而参数化自助方差与 Cramér--Rao 下界之比 0.98--1.06 属\textbf{模型内自洽性检验}，不构成对生成假设的独立验证；州级面板以宏观更新模型的条件精确方差为口径，在固定 $k_{\text{agg}}$ 插件估计下给出宏观机制视界的州级中位数 2.2--7.1 周，未归因闭合余项中位占比 $55.0\%$，表明机制分量仅覆盖实测误差的次要份额。外部\textbf{回溯性最终真值审计}（按事后动力学阶段分层）显示：机制基准作为预测器严重欠覆盖，标称 95\% 区间实测覆盖率仅 0.405--0.554；Hub 集成模型的上升期覆盖率在三个赛季分别为 0.852、0.589 与 0.419，官方基线为 0.759、0.539 与 0.488，机制基准为 0.370、0.385 与 0.140，显示上升期校准存在显著且跨赛季不稳定的退化；下降期 Hub 集成覆盖率恢复至 0.925--0.964，而官方基线与机制基准仍存在不同程度的欠覆盖。结论上，机制视界是依赖模型、信息与指定规则的条件风险基准（条件均值达到锐方差地板，但插件视界不等同于所有规则下的最优视界）；该框架更适合作为“机制基准--现实审计--校准差距”的诊断工具，实际业务系统尚需动态校准、实时回填建模与阶段特异性的不确定性膨胀。
 
 \vspace{0.8em}
 \noindent{\heiti\bfseries 关键词：}传染病预测；可预测视界；更新模型；分支过程；机制基准；校准差距；加权区间评分
@@ -85,7 +85,7 @@
     {\zihao{3}\heiti\bfseries Predictability Horizons, Fundamental Limits, and Empirical Analysis of Epidemic Transmission Dynamics} \\[1.0em]
 \end{center}
 
-\noindent{\textbf{Abstract:}} Prospective forecasting of major infectious diseases suffers systematic skill degradation near epidemic thresholds and over multi-week extrapolation. This study asks how model-conditional mechanistic variance, real-world model error, and the resulting calibration gap are related. Methodologically, we prove a conditional squared-risk identity over the class of square-integrable measurable decision rules, establishing the sharp conditional variance floor attained by the conditional-mean forecast; we then build a scale-isolation mapping from individual negative-binomial branching to a macroscopic negative-binomial aggregate update model, derive an exact finite-step variance closed form for the fixed-aggregate-dispersion aggregate update model together with its numerically stable boundary limits, and give analytic expressions for lognormal parameter-posterior propagation and the plug-in predictor's excess risk. External validation uses three locked historical seasons of the CDC FluSight hub (v1.0.0, v1.1.0, v1.2.0; 204 version-locked files with registered SHA-256 checksums). The paper adopts a \emph{four-tier evidence architecture}, of which the real-data empirical component comprises three layers---individual transmission chains, the state-level hospitalization panel, and forecast-hub operations data---with theoretical simulation validation as the first tier. Simulation confirms the macro variance closed form on the tested parameter grid (relative deviation about $1\%$--$3\%$, maximum $7.6\%$). Individual transmission-chain data support the negative-binomial over-Poisson fit ($\Delta\text{AIC}$ 93.9--244.0), whereas a bootstrap-to-Cramér--Rao ratio of 0.98--1.06 is a \emph{model-internal consistency check} and does not constitute independent validation of the generating assumption. The state-level panel, using the macro aggregate update model's conditional-exact variance under a fixed-$k_{\text{agg}}$ plug-in estimate, yields a median macro mechanistic horizon of 2.2--7.1 weeks, with an unattributed closure residual of median share $55.0\%$, indicating that the mechanistic components cover only a secondary share of observed error. The \emph{retrospective final-vintage external audit}, stratified by post-hoc epidemic phase, shows that the mechanistic benchmark badly undercovers as a forecaster (nominal 95\% empirical coverage 0.405--0.554); the Hub ensemble's rising-phase coverage is 0.852, 0.589 and 0.419 across the three seasons, the official baseline 0.759, 0.539 and 0.488, and the mechanistic benchmark 0.370, 0.385 and 0.140---a substantial and season-unstable degradation of rising-phase calibration; declining-phase coverage recovers to 0.925--0.964 for the Hub ensemble, while the baseline and the mechanistic benchmark remain undercovered to differing degrees. We conclude that the mechanistic horizon is a model-conditional sharp benchmark rather than a strict upper bound on operational forecasting, and that the framework is best read as a "mechanistic benchmark--external audit--calibration gap" diagnostic tool; operational systems additionally require dynamic calibration, real-time revision modelling, and phase-specific uncertainty inflation.
+\noindent{\textbf{Abstract:}} Prospective forecasting of major infectious diseases suffers systematic skill degradation near epidemic thresholds and over multi-week extrapolation. This study asks how model-conditional mechanistic variance, real-world model error, and the resulting calibration gap are related. Methodologically, we prove a conditional squared-risk identity over the class of square-integrable measurable decision rules, establishing the sharp conditional variance floor attained by the conditional-mean forecast; we then build a scale-isolation framework distinguishing individual negative-binomial branching from a macroscopic negative-binomial aggregate update working model, derive an exact finite-step variance closed form for the fixed-aggregate-dispersion aggregate update model together with its numerically stable boundary limits, and give analytic expressions for lognormal parameter-posterior propagation and the plug-in predictor's excess risk. External validation uses three locked historical seasons of the CDC FluSight hub (v1.0.0, v1.1.0, v1.2.0; 204 version-locked files with registered SHA-256 checksums). The paper adopts a \emph{four-tier evidence architecture}, of which the real-data empirical component comprises three layers---individual transmission chains, the state-level hospitalization panel, and forecast-hub operations data---with theoretical simulation validation as the first tier. Simulation confirms the macro variance closed form on the tested parameter grid (relative deviation about $1\%$--$3\%$, maximum $7.6\%$). Individual transmission-chain data support the negative-binomial over-Poisson fit ($\Delta\text{AIC}$ 93.9--244.0), whereas a bootstrap-to-Cramér--Rao ratio of 0.98--1.06 is a \emph{model-internal consistency check} and does not constitute independent validation of the generating assumption. The state-level panel, using the macro aggregate update model's conditional-exact variance under a fixed-$k_{\text{agg}}$ plug-in estimate, yields a median macro mechanistic horizon of 2.2--7.1 weeks, with an unattributed closure residual of median share $55.0\%$, indicating that the mechanistic components cover only a secondary share of observed error. The \emph{retrospective final-vintage external audit}, stratified by post-hoc epidemic phase, shows that the mechanistic benchmark badly undercovers as a forecaster (nominal 95\% empirical coverage 0.405--0.554); the Hub ensemble's rising-phase coverage is 0.852, 0.589 and 0.419 across the three seasons, the official baseline 0.759, 0.539 and 0.488, and the mechanistic benchmark 0.370, 0.385 and 0.140---a substantial and season-unstable degradation of rising-phase calibration; declining-phase coverage recovers to 0.925--0.964 for the Hub ensemble, while the baseline and the mechanistic benchmark remain undercovered to differing degrees. We conclude that the mechanistic horizon is a model-, information-, and rule-conditional risk benchmark---only the conditional-mean predictor attains the sharp variance floor---rather than a strict upper bound on operational forecasting, and that the framework is best read as a "mechanistic benchmark--external audit--calibration gap" diagnostic tool; operational systems additionally require dynamic calibration, real-time revision modelling, and phase-specific uncertainty inflation.
 
 \vspace{0.8em}
 \noindent{\textbf{Keywords:}} Epidemic forecasting; Predictability horizon; Aggregate update model; Branching process; Mechanistic benchmark; Calibration gap; Weighted interval score
@@ -104,13 +104,13 @@
 
 针对上述理论空白与现实困境，本文的主要贡献体现在以下四个方面：
 \begin{enumerate}
-\item \textbf{锐条件方差地板与宏观更新有限步精确方差闭式}：在信息集 $\mathcal{F}_t$ 的二阶可积预测规则类上证明了平方损失下的条件风险恒等式（定理~\ref{thm:sharp_floor}），确立了条件均值预测器几乎处处唯一达到的锐条件方差地板，并将理论视界严格界定为“模型条件下的锐机制基准”。在此基础上，本文建立了从微观分支到宏观聚合更新的尺度隔离映射，推导了固定离散度 $k_{\text{agg}}$ 宏观负二项更新模型的精确有限步方差闭式（定理~\ref{thm:macro_exact}）及其在 $q\to R$、$R=1$、$k\to\infty$ 与 $I_0\to\infty$ 下的数值稳定边界极限，导出了相对均方误差的严格单调递增性与解析闭式求根方程。
+\item \textbf{锐条件方差地板与宏观更新有限步精确方差闭式}：在信息集 $\mathcal{F}_t$ 的二阶可积预测规则类上证明了平方损失下的条件风险恒等式（定理~\ref{thm:sharp_floor}），确立了条件均值预测器几乎处处唯一达到的锐条件方差地板，并将理论视界严格界定为“模型条件下的锐机制基准”。在此基础上，本文建立了区分个体分支与宏观聚合更新的尺度隔离框架，推导了固定离散度 $k_{\text{agg}}$ 宏观负二项更新模型的精确有限步方差闭式（定理~\ref{thm:macro_exact}）及其在 $q\to R$、$R=1$、$k\to\infty$ 与 $I_0\to\infty$ 下的数值稳定边界极限，导出了相对均方误差的严格单调递增性与解析闭式求根方程。
 \item \textbf{参数后验对数正态混合与信息论识别极限}：证明了共享对数正态增长率后验分布下的全方差分解有限和形式（命题~\ref{prop:posterior_mixture}），解析量化了即插即用点估计预测器产生的超额平方偏差；严格给出了外推相对均方误差项 $P(h)$ 的高斯矩展开闭式（引理~\ref{lem:param_amplification}）；推导了负二项分支过程的 Fisher 信息量与 Cramér--Rao 理想样本量基准（定理~\ref{thm:fisher}），明确限定其为理想模型内的辨识下限（$C = O(\varepsilon^{-2})$），并确立了与现实监测外推的严格边界隔离。
 \item \textbf{四层证据架构与未归因误差诊断}：全文采用四层证据架构——第一层为理论模拟验证，后三层为真实数据实证（个体传播链、州级住院面板、预测枢纽业务数据）。在州级面板层，以宏观更新模型的条件精确方差为口径、在固定 $k_{\text{agg}}$ 插件估计下测得七个典型阶段的机制视界州级中位数为 2.2--7.1 周；通过三项描述性误差记账发现实测未归因残差占主要份额（中位数 $55.0\%$），据此把机制视界定位为“业务时效的经验宽松包络候选”，而非已验证的一般性上界。
 \item \textbf{三赛季版本化外部审计与上升期校准退化}：全面接入 CDC FluSight 预测枢纽跨越 2023--2026 年的三个连续历史赛季（v1.0.0、v1.1.0、v1.2.0 共 204 个锁定文件，全量 SHA-256 固化，逐字节可复现）。在严格共同单元交集上计算完整评分面板（WIS 展开分解、经验覆盖率、区间宽度、随机化 PIT），实测证实机制基准在经验预测中存在严重欠覆盖（95\% 覆盖率仅 0.405--0.554），量化了现实预测的技术性校准差距；并在三个独立赛季中一致观察到上升期校准存在显著且跨赛季不稳定的退化：Hub 集成模型上升期经验 95\% 覆盖率依次为 0.852、0.589 与 0.419，官方基线为 0.759、0.539 与 0.488，机制基准为 0.370、0.385 与 0.140；下降期 Hub 集成恢复至 0.925--0.964，而官方基线与机制基准仍存在不同程度的欠覆盖。该阶段分层结果为分阶段差异化响应的公卫应急提供了实证线索，但因数据中同时存在结构变点、报告修订与模型分布外偏移，本文不据此完成单一机制的因果识别。
 \end{enumerate}
 
-本文的结构安排如下：第 0 节为引言，阐述现实背景、科学问题与核心贡献；第 1 节回顾随机分支过程、生态预测视界、临界慢化与信息论推断极限四条文献脉络；第 2 节建立传播动力学可预测视界理论；第 3 节给出高通量蒙特卡洛数值验证；第 4 节报告个体传播链校准与州级住院面板的宏观机制视界测算；第 5 节开展 CDC FluSight 三个锁定赛季的版本化外部审计与校准差距分析；第 6 节讨论双层基准架构、预警响应转化、公平性考量与研究局限；第 7 节总结全文。核心定理的证明要点与辅助诊断表格见附录，逐行详尽代数推导见独立推导手册。
+本文的结构安排如下：第 0 节为引言，阐述现实背景、科学问题与核心贡献；第 1 节回顾随机分支过程、生态预测视界、临界慢化与信息论推断极限四条文献脉络；第 2 节建立传播动力学可预测视界理论；第 3 节给出高通量蒙特卡洛数值验证；第 4 节报告个体传播链校准与州级住院面板的宏观机制视界测算；第 5 节开展 CDC FluSight 三个锁定赛季的版本化外部审计与校准差距分析；第 6 节讨论双层基准架构、预警响应转化、公平性考量与研究局限；第 7 节总结全文。核心定理的证明要点与辅助诊断表格见附录，逐行详尽代数推导见随稿提交的正式补充材料《Supplementary Mathematical Derivations》（下称“推导手册”）。
 
 \section{研究回顾}\label{sec:review}
 
@@ -165,7 +165,7 @@ m_h \equiv \mathbb{E}[Y_{t+h} \mid \mathcal{F}_t], \qquad V_h \equiv \operatorna
 \end{proof}
 
 \begin{remark}[机制基准与现实业务误差的界限]\label{rem:sharp_floor}
-定理~\ref{thm:sharp_floor} 表明：任何算法在信息集 $\mathcal{F}_t$ 限制下，均方误差绝不可能突破条件方差地板 $V_h$。然而，这\textbf{并不意味着}现实业务算法的表现能收敛至 $V_h$；相反，未受控的行政回填、行为变化、干预断点将产生显著的超额风险 $(m_h - \delta_h)^2$。因此，我们将 $V_h$ 严格定义为\textbf{“模型条件下的锐条件方差基准（Sharp Variance Benchmark）”}。须严格区分以下三个层次：(i) 定理 1 的锐条件方差基准 $V_h$（对所有可测规则取下确界，仅条件均值预测器达到）；(ii) 指定预测规则在参考模型下的条件预测风险（如定理~\ref{thm:macro_exact} 与引理~\ref{lem:param_amplification} 在插入式规则下的 $\text{CV}^2_{\text{macro}}(h) + P(h)$）；(iii) 插件机制视界（该指定插件规则条件风险穿越容忍度的阈值根）。因此，插件机制视界不具有“所有规则下锐最优”的含义，而是指定插件规则在工作模型下的条件机制基准。
+定理~\ref{thm:sharp_floor} 表明：任何算法在信息集 $\mathcal{F}_t$ 限制下，均方误差绝不可能突破条件方差地板 $V_h$。然而，这\textbf{并不意味着}现实业务算法的表现能收敛至 $V_h$；相反，未受控的行政回填、行为变化、干预断点将产生显著的超额风险 $(m_h - \delta_h)^2$。因此，我们将 $V_h$ 严格定义为\textbf{“模型条件下的锐条件方差基准（Sharp Variance Benchmark）”}。须严格区分以下三个层次：(i) 定理 1 的锐条件方差基准 $V_h$（对所有可测规则取下确界，仅条件均值预测器达到）；(ii) 指定预测规则在参考模型下的条件预测风险（如定理~\ref{thm:macro_exact} 与引理~\ref{lem:param_amplification} 在插入式规则下的 $\text{CV}^2_{\text{macro}}(h) + P_{\text{plug}}(h)$）；(iii) 插件机制视界（该指定插件规则条件风险穿越容忍度的阈值根）。因此，插件机制视界不具有“所有规则下锐最优”的含义，而是指定插件规则在工作模型下的条件机制基准。
 \end{remark}
 
 \subsection{尺度隔离原则与微观分支生成机制}
@@ -481,7 +481,7 @@ C_{\text{obs}} \ge \frac{C_{\text{req}}}{\rho}.
 以 Fisher 信息作为精度度量并据此优化流行病模型的直接先例见 Parag 与 Donnelly\citep{parag2020adaptive}。
 
 \begin{proof}[证明要点]
-对负二项对数似然求二阶导取负期望给出单样本 Fisher 信息量 $I_1(R) = k/[R(R+k)]$；交叉偏导期望为零确立参数渐近正交，代入 Cramér--Rao 逆矩阵并反解双侧检验分位数间隔即导出样本量门槛。
+对负二项对数似然求二阶导取负期望给出单样本 Fisher 信息量 $I_1(R) = k/[R(R+k)]$；交叉偏导期望为零确立参数渐近正交，代入 Cramér--Rao 逆矩阵并反解正态近似下给定单侧显著性水平 $\alpha$ 与备择下功效 $1-\beta$ 所要求的样本量条件，即导出样本量门槛。
 \end{proof}
 
 \begin{corollary}[样本量约束下的机制视界上界]\label{cor:crb_horizon}
@@ -554,7 +554,7 @@ h^*_{\text{ub}}(C) \;\approx\; \frac{\mu_g}{7}\,\sqrt{\frac{C\left(\tau^2 - \tex
 \noindent\textbf{模型内条件方差的适用声明。}须先澄清本定理的对象：定理~\ref{thm:sharp_floor} 中的 $V_h$ 指\emph{真实}条件方差，而其具体解析闭式只在明确条件下可写——即 $Z_0=I_0$ 确定已知、$R$ 与 $k_{\text{agg}}$ 取固定已知值、$\mathcal{F}_t$ 中不含额外未建模状态不确定性、且未来无外生扰动。因此本节的有限步方差是\textbf{条件于固定 $(Z_0,R,k_{\text{agg}})$ 的模型内过程方差}，并不等同于包含参数后验与状态估计不确定性的完整条件方差；后者的分解由命题~\ref{prop:posterior_mixture} 单独给出。据此，全文对实证读数统一表述为“在固定 $k_{\text{agg}}$ 插件估计条件下的宏观条件精确机制视界”，以避免把公式的代数精确性误读为参数估计的精确性。
 
 \begin{theorem}[固定离散度宏观负二项更新模型的精确有限步方差闭式]\label{thm:macro_exact}
-在逐代独立更新的宏观负二项聚合模型下，设周度发病序列满足 $Z_t \mid \mathcal{F}_{t-1} \sim \text{NB}(R Z_{t-1}, k_{\text{agg}})$，初始发病水平给定为 $Z_0 = I_0$，增长乘子 $R > 0$。记 $m_t = \mathbb{E}[Z_t \mid Z_0] = I_0 R^t$，$V_t = \text{Var}(Z_t \mid Z_0)$，初始条件 $V_0 = 0$。则条件方差满足严格一阶差分递推方程：
+在逐代独立更新的宏观负二项聚合模型下，设周度发病序列满足 $Z_t \mid \mathcal{F}_{t-1} \sim \text{NB}(R_{\text{周}} Z_{t-1}, k_{\text{agg}})$（$R_{\text{周}}$ 为周度宏观增长乘子 $\exp(b_{\text{week}})$，见符号表），初始发病水平给定为 $Z_0 = I_0$，增长乘子 $R_{\text{周}} > 0$。为记号简洁，下文闭式中记 $R \equiv R_{\text{周}}$。记 $m_t = \mathbb{E}[Z_t \mid Z_0] = I_0 R_{\text{周}}^t$，$V_t = \text{Var}(Z_t \mid Z_0)$，初始条件 $V_0 = 0$。则条件方差满足严格一阶差分递推方程：
 \begin{equation}
 V_{t+1} = q V_t + I_0 R^{t+1} + \frac{I_0^2 R^{2t+2}}{k_{\text{agg}}}, \qquad q \equiv R^2 \left(1 + \frac{1}{k_{\text{agg}}}\right) = c R^2, \quad c \equiv 1 + \frac{1}{k_{\text{agg}}}. \label{eq:macro_var_recurrence}
 \end{equation}
@@ -615,7 +615,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 \noindent\textbf{频率学派插件近似主口径与贝叶斯后验扩展的区分声明：}必须在理论层面严格厘清两套概率对象的边界：
 \begin{enumerate}
 \item \textbf{频率学派插件近似主口径（本文州级实证主线）}：引理~\ref{lem:param_amplification} 假设在固定真实参数 $b = \log R$ 下，极大似然或对数线性回归估计量在重复抽样中满足 $\hat{b} \sim \mathcal{N}(b, s^2)$。此时相对均方误差主方程为 $\text{CV}^2_{\text{macro}}(h; \hat{R}, k_{\text{agg}}, I_0) + P(h; s) \le \tau^2$，其归一化分母为条件均值基准 $(I_0 R^h)^2$。本文第 4 节全部州级面板机制视界（表~\ref{tab:horizons}、表~\ref{tab:caliber}、表~\ref{tab:scenarios}、表~\ref{tab:rolling}）均严格以此频率学派插件近似风险为唯一主口径。
-\item \textbf{贝叶斯后验预测扩展（命题~\ref{prop:posterior_mixture}）}：讨论的是在给定历史信息集 $\mathcal{F}_t$ 后，未知参数后验分布为 $B \mid \mathcal{F}_t \sim \mathcal{N}(\mu_B, \sigma_B^2)$ 时的完全贝叶斯预测风险。在此框架下，中位数插件预测器 $\delta_h^{\text{plug}} = I_0 e^{h\mu_B}$ 的完全条件平方风险为 $\mathcal{R}_h(\delta_h^{\text{plug}} \mid \mathcal{F}_t) = \mathbb{E}_R[V_h(R)] + I_0^2(M_{2h} - M_h^2) + I_0^2(M_h - e^{h\mu_B})^2$，其严格归一化分母应为后验混合均值平方 $\bar{m}_h^2 = (I_0 M_h)^2$。此后验混合风险在代数上一般不等于插件近似式 $\text{CV}^2_{\text{macro}} + P(h)$。因现实周度监测面板在无强先验主观假定下无法严格识别连续后验分布 $\pi(\Theta \mid \mathcal{F}_t)$，命题~\ref{prop:posterior_mixture} 作为独立的后验解析扩展呈现，实证求根统一保留频率学派插件近似风险，不再将其混称为“后验全方差方程”。
+\item \textbf{贝叶斯后验预测扩展（命题~\ref{prop:posterior_mixture}）}：讨论的是在给定历史信息集 $\mathcal{F}_t$ 后，未知参数后验分布为 $B \mid \mathcal{F}_t \sim \mathcal{N}(\mu_B, \sigma_B^2)$ 时的完全贝叶斯预测风险。在此框架下，中位数插件预测器 $\delta_h^{\text{plug}} = I_0 e^{h\mu_B}$ 的完全条件平方风险为 $\mathcal{R}_h(\delta_h^{\text{plug}} \mid \mathcal{F}_t) = \mathbb{E}_R[V_h(R)] + I_0^2(M_{2h} - M_h^2) + I_0^2(M_h - e^{h\mu_B})^2$，其严格归一化分母应为后验混合均值平方 $\bar{m}_h^2 = (I_0 M_h)^2$。此后验混合风险在代数上一般不等于插件近似式 $\text{CV}^2_{\text{macro}} + P_{\text{plug}}(h)$。因现实周度监测面板在无强先验主观假定下无法严格识别连续后验分布 $\pi(\Theta \mid \mathcal{F}_t)$，命题~\ref{prop:posterior_mixture} 作为独立的后验解析扩展呈现，实证求根统一保留频率学派插件近似风险，不再将其混称为“后验全方差方程”。
 \end{enumerate}
 
 \section{数值复核与基准算法实现检验}\label{sec:simulation}
@@ -652,7 +652,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 \subsection{机器学习算法基准实现的探索性对照}\label{sec:ml}
 
 为了探究黑盒非参数算法在纯机制分支生成数据上的表现边界，我们在细粒度负二项分支模拟数据上开展了探索性算法对照（测试多层感知机 MLP 神经网络与 LightGBM 梯度提升回归，实验参数详见附录与代码清单）：
-基准测试表明，在单次标准调参预算下，端到端浅层 MLP 点位预测误差方差与参数估计 CRB 基准之比均值为 6.69，反映出小样本高离散分支过程下无归纳偏置黑盒模型的统计有效性损失；而在第一阶段参数辨识任务中，具有正确正则化的统计估计量能够紧密贴合 CRB 下界（均值比值 0.9956--1.0024）。类似地，LightGBM 多步预测的 log-RMSE 随步长迅速发散（1--4 周相对误差达 1.06--1.44），表明单纯提升算法容量在长程外推中无法突破由数据生成机制决定的物理方差地板。这一探索性对照表明：在机制主导的流行初期，机理统计模型在参数估计与方差控制上相较纯黑盒机器学习具有不可替代的理论优越性。
+基准测试表明，在单次标准调参预算下，端到端浅层 MLP 点位预测误差方差与参数估计 CRB 基准之比均值为 6.69，反映出小样本高离散分支过程下无归纳偏置黑盒模型的统计有效性损失；而在第一阶段参数辨识任务中，具有正确正则化的统计估计量能够紧密贴合 CRB 下界（均值比值 0.9956--1.0024）。类似地，LightGBM 多步预测的 log-RMSE 随步长迅速发散（1--4 周相对误差达 1.06--1.44），表明单纯提升算法容量在长程外推中未能达到经典统计估计器在该工作点上的模型内效率。这一探索性对照表明：在机制主导的流行初期、本文有限的模型配置、特征集与调参预算下，所测试的 MLP 与 LightGBM 未达到经典统计估计器的模型内效率；该结果不构成对机器学习方法的一般性理论上限。
 
 \section{真实数据实证（上）：微观传播链与州级住院面板}\label{sec:empirical}
 
@@ -662,7 +662,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 
 州级住院面板覆盖全美 51 个辖区（50 州加哥伦比亚特区）的三类主要呼吸道病原体：(1) COVID-19（Delta、Omicron、JN.1 三个波次）；(2) 季节性流感（2022--23、2024--25 流行季）；(3) 呼吸道合胞病毒 RSV（2024--25、2025--26 流行季）。全部序列均统一使用美国国家医疗安全网络（NHSN）口径的周度新增住院计数，杜绝跨指标拼接。
 
-数据预处理以各阶段起步期连续 5 个周度观测（$W=5$）作为推断窗口，采用对数线性回归估计周度增长乘子 $R$ 及其斜率标准误 $s_{\log R}$（自由度 $\text{df}=3$）；由 Ho 等\citep{ho2023simultaneous} 对数差分二阶矩法估计宏观有效离散度 $k_{\text{agg}}$（设定上限 1,000）；初始发病规模 $I_0$ 取推断窗口内的周度均值。若改用小样本 $t(3)$ 临界值替换渐近标准正态分位数，区间宽度相应扩大 1.62 倍（口径敏感性）。
+数据预处理以各阶段起步期连续 5 个周度观测（$W=5$）作为推断窗口，采用对数线性回归估计周度增长乘子 $R_{	ext{周}}=\exp(b_{	ext{week}})$ 及其对数尺度标准误 $s_{	ext{周}}=	ext{SE}(b_{	ext{week}})$（自由度 $	ext{df}=3$）；由 Ho 等\citep{ho2023simultaneous} 对数差分二阶矩法估计宏观有效离散度 $k_{	ext{agg}}$ （设定上限 1,000）；初始发病规模 $I_0$ 取推断窗口内的周度均值。\textbf{须声明 $I_0$ 口径与 Markov 起点的偏差}：宏观更新模型 $Z_{t+1}\mid Z_t\sim\text{NB}(R_{\text{周}}Z_t,k_{\text{agg}})$ 的严格起点应为当前状态 $Z_t$；而本文采用五周窗口均值 $\bar Z$，属平滑潜在状态而非观测 Markov 状态。该差异具阶段依赖性：疫情快速上升时窗口均值低于当前值（低估起点），下降时高于当前值（高估起点）。作为敏感性，本文对 $I_0 \in \{$窗口均值, 最后一个可得周计数, 对数回归拟合末端值$\}$ 做了三口径对照（增长参数 $R_{\text{周}}, s_{\text{周}}, k_{\text{agg}}$ 固定为基准拟合值，脚本 \texttt{scripts\_v2/i0\_sensitivity.py}）：各阶段州级中位机制视界的变化介于 $-0.2\%$ 至 $+4.8\%$（如流感 2022--23 为 $+2.5\%$、RSV 2025--26 为 $+4.8\%$、Omicron 为 $+0.2\%$），个别低计数州最大可及 $+51\%$，但州级中位读数对该口径仅呈弱敏感，方向与幅度已在第 4.6 节与局限一节报告；主口径统一采用窗口均值。若改用小样本 $t(3)$ 临界值替换渐近标准正态分位数，区间宽度相应扩大 1.62 倍（口径敏感性）。
 
 \subsection{微观传播链层：子代分布与信息论下界的个体级验证}\label{sec:micro}
 
@@ -674,7 +674,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 \caption{\textbf{个体传播链子代分布的负二项拟合。}三组传播链数据的极大似然拟合概率质量函数与参数估计（$\hat{R}, \hat{k}, \Delta\text{AIC}$）：香港本地子群（左）、香港全队列（中）与几内亚埃博拉（右）。}\label{fig:micro}
 \end{figure}
 
-核心发现包括：(1) \textbf{强过度离散特征确立}：负二项分布对三组数据的拟合均显著优于 Poisson 分布（$\Delta\text{AIC}$ 高达 93.9--244.0），香港全队列与埃博拉实测离散度仅为 $\hat{k} = 0.111$ 与 $0.182$，直观证实了超扩散事件在早期传播中的主导地位；(2) \textbf{定理~\ref{thm:fisher} 的模型内自洽性核验}：参数化自助经验方差与解析 Cramér--Rao 下界之比分别为 1.059、1.027 与 0.984，在蒙特卡洛噪声范围内紧密贴合理论下界，表明在负二项似然设定下极大似然估计量渐近有效，验证了信息论推导的自洽性（此为模型内自洽性检验，非对真实生成机制的独立实证确认）。
+核心发现包括：(1) \textbf{三组传播链数据均显示显著过度离散}：负二项分布对三组数据的拟合均明显优于 Poisson 分布（$\Delta\text{AIC}$ 高达 93.9--244.0），香港全队列与埃博拉实测离散度仅为 $\hat{k} = 0.111$ 与 $0.182$，与早期传播中超扩散事件的重要性一致（本文未比较零膨胀、截断或混合等替代分布，故不对“主导地位”作因果性断言）；(2) \textbf{定理~\ref{thm:fisher} 的模型内自洽性核验}：参数化自助经验方差与解析 Cramér--Rao 下界之比分别为 1.059、1.027 与 0.984，在蒙特卡洛噪声范围内紧密贴合理论下界，表明在负二项似然设定下极大似然估计量渐近有效，验证了信息论推导的自洽性（此为模型内自洽性检验，非对真实生成机制的独立实证确认）。
 
 \subsection{州级面板层：宏观机制视界的空间分布与聚合效应}\label{sec:state_panel}
 
@@ -688,7 +688,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 
 须在结论解读前澄清三处口径边界。其一，州级主口径的 $\text{CV}^2$ 来自\textbf{固定 $k_{\text{agg}}$ 宏观负二项更新模型}（命题~\ref{thm:t5}）的精确有限步相对方差（定理~\ref{thm:macro_exact}），其更新时钟与 $k_{\text{agg}}$ 的估计时钟一致（均为周度），因此主口径不涉及代际--周度换算。微观分支闭式（引理~\ref{lem:cv_floor}，条件方差线性于 $Z_{t-1}$）与宏观更新模型（条件方差含 $Z_{t-1}^2$ 二次项）是两套不同的方差律：前者在超临界下饱和，后者以 $(1+1/k_{\text{agg}})^h$ 几何增长，把 $k_{\text{agg}}$ 直接代入引理闭式只是启发式尺度映射，其低估倍数由定理~\ref{thm:macro_exact} 的闭式精确给出（数值核验见 \texttt{reports\_v3/macro\_cv\_check.json}，精确闭式与 $2\times10^4$ 轨迹模拟偏差约 $1\%$--$3\%$，引理闭式低估 $3.7$--$31.7$ 倍）。表~\ref{tab:caliber} 首列与第二列给出该启发式映射与宏观精确主口径的逐阶段对照。其二，$k_{\text{agg}}$ 由 5 周窗口、约 4 个周度对数差分估计，二阶矩抽样不确定度大，本文不把它解释为宏观过程的真实离散度，而作为该州该阶段的\textbf{有效时序离散代理参数}；其上限截断不影响中位读数（见下敏感性）。其三，模型假设周度增长率乘子 $R_{\text{周}}$ 在视界内恒定；对少数 $R_{\text{周}} \le 1$ 的州，宏观相对方差仍由同一闭式给出，程序在正半轴求根，无解时记为空值，不构成对超临界假设的违背。
 
-三项补充敏感性支持上述口径（逐阶段数值见 \texttt{reports\_v3/sensitivity\_v4.json}）。其一，$k_{\text{agg}}$ 的上限截断不影响结论：把上限由 1000 改为 500、100 乃至无截断，各阶段州级中位视界基本不变（仅 RSV 两季在 100 处下降约 0.3 周），说明该截断只作用于个别极高离散州、不改变中位读数。其二，推断窗口长度在宏观精确口径下不再是单调敏感性：把 5 周窗口延长至 6、8、10 周，中位视界变化有限且方向不一（Delta 7.1 周对 7.5、8.1、6.8 周；流感 2022--23 2.2 周对 2.4、2.0、1.8 周），说明宏观主口径对窗口的依赖弱于此前的启发式口径。其三，若以个体级 $\hat k$ 代入微观分支闭式（尺度映射口径），视界普遍长于宏观主口径（Delta 9.1/8.1/5.9 周，Omicron 6.7/5.8/4.9 周），但最极端的个体级离散度仍可在低计数阶段把机制视界压到实测时效之下（流感 2022--23、RSV 两季，见附录表~\ref{tab:caliber}），故包络关系只在宏观主口径与中等个体级离散度下成立。此外，视界对预测规则的依赖在本工作点上很小：把插入式预测换成均值偏差修正预测（注记~\ref{rem:predictor}），跨州中位视界仅延长 $0.3\%$--$1.5\%$（逐州上界约 $8\%$，\texttt{reports\_v3/predictor\_sensitivity.json}），原因是宏观过程方差已占工作点的 $0.73$--$0.89$、参数项的取值形式对求根影响有限。
+四项补充敏感性支持上述口径（逐阶段数值见 \texttt{reports\_v3/sensitivity\_v4.json}）。其一，$k_{\text{agg}}$ 的上限截断不影响结论：把上限由 1000 改为 500、100 乃至无截断，各阶段州级中位视界基本不变（仅 RSV 两季在 100 处下降约 0.3 周），说明该截断只作用于个别极高离散州、不改变中位读数。其二，推断窗口长度在宏观精确口径下不再是单调敏感性：把 5 周窗口延长至 6、8、10 周，中位视界变化有限且方向不一（Delta 7.1 周对 7.5、8.1、6.8 周；流感 2022--23 2.2 周对 2.4、2.0、1.8 周），说明宏观主口径对窗口的依赖弱于此前的启发式口径。其三，若以个体级 $\hat k$ 代入微观分支闭式（尺度映射口径），视界普遍长于宏观主口径（Delta 9.1/8.1/5.9 周，Omicron 6.7/5.8/4.9 周），但最极端的个体级离散度仍可在低计数阶段把机制视界压到实测时效之下（流感 2022--23、RSV 两季，见附录表~\ref{tab:caliber}），故包络关系只在宏观主口径与中等个体级离散度下成立。 其四，初始规模 $I_0$ 的口径敏感性有限：把窗口均值换成最后一个可得周计数或对数回归拟合末端值（增长参数固定），各阶段州级中位视界仅变化 $-0.2\%$ 至 $+4.8\%$（	exttt{reports\_v3/i0\_sensitivity.json}；如流感 2022--23 $+2.5\%$、RSV 2025--26 $+4.8\%$），个别低计数州最大约 $+51\%$，不改变中位结论。此外，视界对预测规则的依赖在本工作点上很小：把插入式预测换成均值偏差修正预测（注记~\ref{rem:predictor}），跨州中位视界仅延长 $0.3\%$--$1.5\%$（逐州上界约 $8\%$，\texttt{reports\_v3/predictor\_sensitivity.json}），原因是宏观过程方差已占工作点的 $0.73$--$0.89$、参数项的取值形式对求根影响有限。
 
 附录表~\ref{tab:caliber} 逐阶段给出六个视界口径与两类实测时效的完整对照。\textbf{宏观精确主口径}（定理~\ref{thm:macro_exact}）的州级中位视界为 $2.2$--$7.1$ 周，在全部七个阶段均高于同定义的实测绝对视界（比值 $1.1$--$4.0$ 倍）；其领先阶近似 $h/k_{\text{agg}}$ 与启发式尺度映射分别给出略长与显著偏长的读数，说明主口径的选择在方向上偏保守。但改用最极端的个体级离散度（$\hat k = 0.182$、$0.111$）代入微观闭式后，低计数阶段（流感 2022--23、RSV 2024--25、RSV 2025--26）的机制视界会落到实测绝对视界之下，即\textbf{包络关系并非对所有离散度映射口径稳健}。因此本文的主结论严格限定为：\textbf{在宏观精确主口径及中等个体级离散度下，机制视界高于同定义的实测业务时效}；对极端超扩散映射，该方向可以反转，故"宽松包络"应读作该口径范围内的经验关系，而非与口径无关的普遍性质。此外，周度聚合计数是住院报告而非感染数，观测层（报告率、住院占比）介于感染过程与观测序列之间，观测层误差在当前数据下不可识别，本文不将其纳入定量主结果。
 
@@ -704,7 +704,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 }
 \vspace{2pt}
 \begin{flushleft}
-\scriptsize \textbf{注：}每行统计的是通过数据门槛（窗口累计 $\ge 50$ 例且每周计数非零）的州级辖区；$R=\exp(\Delta_g b_{\text{week}})$ 为代际尺度再生数，$s = \Delta_g\,\text{SE}(b_{\text{week}})$ 为其对数尺度相对标准误（自由度 $\text{df}=3$），$k_{\text{agg}}$ 为对数差分二阶矩估计（估计式见第 4.1 节，上限 1000）；各阶段触及该上限的州数分别为 3、2、2、5、2、3、2（共 19 个州--阶段观测，占全部 295 个的 6.4\%），触限对应 Poisson 极限（$k_{\text{agg}} \to \infty$）、使 $\text{CV}^2$ 地板最小化，即在这些州上机制视界取相对乐观值，方向上与包络结论一致。$I_0$ 为窗口周度计数均值；$h^*_{\text{周}}$ 为满足全方差临界方程（$\tau=0.5$、对数正态精确 $P(h)$）在周度时钟上的数值精确根（固定 $k_{\text{agg}}$ 宏观更新模型，主口径）；末列为 51 州求和的国家级序列在同一窗口的对应值（其参数不确定性见第 4.3 节正文）。$\dagger$ 标注表示该国家级读数超出假设 (A2) 的适用域（单流行季 20 周），只报 $\ge 20$ 而不作为可操作数值引用；即使按此最保守下界，该阶段的国家级视界仍长于其州级中位数，故"州级短于国家级"的方向性结论不受影响。代间隔 $\mu_g$ 取各阶段的文献校准值：Delta 4.7 天\citep{hart2022generation}、Omicron 3.0 天\citep{park2023inferring}、JN.1 3.5 天\citep{chan2026estimating}、流感 3.2 天\citep{chan2025influenza}、RSV 8.4 天\citep{cohen2024respiratory}。\end{flushleft}
+\scriptsize \textbf{注：}每行统计的是通过数据门槛（窗口累计 $\ge 50$ 例且每周计数非零）的州级辖区。\textbf{本表全部参数与视界均在同一周度时钟上定义}：$R_{\text{周}}=\exp(b_{\text{week}})$ 为\textbf{周度增长乘子}，$s_{\text{周}}=\text{SE}(b_{\text{week}})$ 为其对数尺度标准误（自由度 $\text{df}=3$）；$k_{\text{agg}}$ 为对数差分二阶矩估计（估计式见第 4.1 节，上限 1000）；各阶段触及该上限的州数分别为 3、2、2、5、2、3、2（共 19 个州--阶段观测，占全部 295 个的 6.4\%），触限对应 Poisson 极限（$k_{\text{agg}} \to \infty$）、使 $\text{CV}^2$ 地板最小化，即在这些州上机制视界取相对乐观值，方向上与包络结论一致。$I_0$ 为窗口周度计数均值；$h^*_{\text{周}}$ 为满足全方差临界方程（$\tau=0.5$、对数正态精确 $P(h)$）在周度时钟上的数值精确根（固定 $k_{\text{agg}}$ 宏观更新模型，主口径）；末列为 51 州求和的国家级序列在同一窗口的对应值（其参数不确定性见第 4.3 节正文）。$\dagger$ 标注表示该国家级读数超出假设 (A2) 的适用域（单流行季 20 周），只报 $\ge 20$ 而不作为可操作数值引用；即使按此最保守下界，该阶段的国家级视界仍长于其州级中位数，故"州级短于国家级"的方向性结论不受影响。须强调：$R_{\text{周}}$ 与 $s_{\text{周}}$ 均为周度时钟参数，\textbf{代间隔 $\mu_g$ 不进入本表主口径的任何计算}；$\mu_g$ 仅用于微观代际视界、启发式尺度映射与跨病原体代际单位比较（文献校准值：Delta 4.7 天\citep{hart2022generation}、Omicron 3.0 天\citep{park2023inferring}、JN.1 3.5 天\citep{chan2026estimating}、流感 3.2 天\citep{chan2025influenza}、RSV 8.4 天\citep{cohen2024respiratory}）。\end{flushleft}
 \end{table}
 
 \begin{figure}[htbp]
@@ -718,12 +718,12 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 
 三项误差记账架构（式 (\ref{eq:full_budget})）在州级面板上逐州逐阶段执行，得到闭合残差占比的跨州分布（表~\ref{tab:budget_four}）：
 \begin{equation}
-\text{RelMSE}_{\text{obs}}(h) = \text{CV}^2(h) + P(h) + \mathcal{E}_{\text{res}}(h).
+\text{RelMSE}_{\text{obs}}(h) = \text{CV}^2_{\text{macro}}(h) + P_{\text{plug}}(h) + \mathcal{E}_{\text{res}}(h).
 \label{eq:full_budget}
 \end{equation}
-各分量口径与第 4.1 节一致：$\text{CV}^2_{\text{macro}}(h)$ 取定理~\ref{thm:macro_exact} 式 (\ref{eq:macro_cv2_closed})（即固定 $k_{\text{agg}}$ 宏观更新模型的条件精确有限步相对方差，而非微观分支引理~\ref{lem:cv_floor} 的 $\text{CV}^2_{\text{micro}}$），$I_0$ 为该州阶段级窗口均值；$k$ 取该州阶段级宏观聚合离散度 $k_{\text{agg}}$；$P(h) = (h_{\text{gen}} s_{\text{gen}})^2$ 取引理~\ref{lem:param_amplification} 一阶形式；实测项 $\text{RelMSE}_{\text{obs}}(h)$ 由该州自身的滚动原点（$W=4$ 在线重估、以模型预测为归一化分母）直接计算；$\mathcal{E}_{\text{res}}(h)$ 为定义为恒等闭合残差的未归因综合实测闭合余项（Unattributed Empirical Residual）。须说明为何只纳入两个机制分量：时变漂移项 $\mathcal{E}_{\text{drift}}(h) = h_{\text{周}}\widehat{v}^2_{\text{周}}$（命题~\ref{thm:t5} 线性累加项的经验代理）在早期版本中以含推断窗口的 16 周校准带估计，该带跨越预测目标期、含预测时点不可得的未来信息；改用仅含原点之前数据的因果估计后，漂移代理在短程工作点上单独即可超过实测误差，成为各分量中最不稳健者。为避免以不可靠分量污染主口径，本文将漂移项从主恒等式移出、降为有界敏感性（其因果估计量级见下文），主记账只保留两个可因果估计的机制分量。须强调式 (\ref{eq:full_budget}) 是实证描述性记账恒等式，而非具有独立因果识别的预测理论；该闭合余项在代数上吸收了机制模型两项未解释的全部实测差异，其来源至少包括：（i）公众自适应行为与未建模宏观结构波动；（ii）报告延迟与回填修订；（iii）模型误设；（iv）归一化分母尺度转换差异——实测项以预测点位平方为分母、理论分量以理论期望平方为分母；（v）两套推断窗口的口径差异——理论分量取 $W=5$ 单次拟合参数、实测项取 $W=4$ 滚动原点参数；（vi）参数项 $P(h)$ 取一阶形式 $(h_{\text{gen}}s_{\text{gen}})^2$，而精确对数正态形式与一阶形式的比值在 $h=4$ 处实测为 1.04--1.16，即一阶形式低估 $P$ 达 4\%--16\%，该低估经恒等式直接转入余项、使余项占比系统性偏高（选择一阶形式是为与命题~\ref{thm:t5} 的线性累积框架口径一致，其方向已知且可复核）。因此该余项不可解释为任何单一未建模机制的无偏估计：
+各分量口径与第 4.1 节一致：$\text{CV}^2_{\text{macro}}(h)$ 取定理~\ref{thm:macro_exact} 式 (\ref{eq:macro_cv2_closed})（即固定 $k_{\text{agg}}$ 宏观更新模型的条件精确有限步相对方差，而非微观分支引理~\ref{lem:cv_floor} 的 $\text{CV}^2_{\text{micro}}$），$I_0$ 为该州阶段级窗口均值；$k$ 取该州阶段级宏观聚合离散度 $k_{\text{agg}}$；$P_{\text{plug}}(h) = (h_{\text{周}} s_{\text{周}})^2$ 取引理~\ref{lem:param_amplification} 一阶形式（周度时钟）；实测项 $\text{RelMSE}_{\text{obs}}(h)$ 由该州自身的滚动原点（$W=4$ 在线重估、以模型预测为归一化分母）直接计算；$\mathcal{E}_{\text{res}}(h)$ 为定义为恒等闭合残差的未归因综合实测闭合余项（Unattributed Empirical Residual）。须说明为何只纳入两个机制分量：时变漂移项 $\mathcal{E}_{\text{drift}}(h) = h_{\text{周}}\widehat{v}^2_{\text{周}}$（命题~\ref{thm:t5} 线性累加项的经验代理）在早期版本中以含推断窗口的 16 周校准带估计，该带跨越预测目标期、含预测时点不可得的未来信息；改用仅含原点之前数据的因果估计后，漂移代理在短程工作点上单独即可超过实测误差，成为各分量中最不稳健者。为避免以不可靠分量污染主口径，本文将漂移项从主恒等式移出、降为有界敏感性（其因果估计量级见下文），主记账只保留两个可因果估计的机制分量。须强调式 (\ref{eq:full_budget}) 是实证描述性记账恒等式，而非具有独立因果识别的预测理论；该闭合余项在代数上吸收了机制模型两项未解释的全部实测差异，其来源至少包括：（i）公众自适应行为与未建模宏观结构波动；（ii）报告延迟与回填修订；（iii）模型误设；（iv）归一化分母尺度转换差异——实测项以预测点位平方为分母、理论分量以理论期望平方为分母；（v）两套推断窗口的口径差异——理论分量取 $W=5$ 单次拟合参数、实测项取 $W=4$ 滚动原点参数；（vi）参数项 $P(h)$ 取一阶形式 $(h_{\text{gen}}s_{\text{gen}})^2$，而精确对数正态形式与一阶形式的比值在 $h=4$ 处实测为 1.04--1.16，即一阶形式低估 $P$ 达 4\%--16\%，该低估经恒等式直接转入余项、使余项占比系统性偏高（选择一阶形式是为与命题~\ref{thm:t5} 的线性累积框架口径一致，其方向已知且可复核）。因此该余项不可解释为任何单一未建模机制的无偏估计：
 \begin{equation}
-\mathcal{E}_{\text{res}}(h) \equiv \text{RelMSE}_{\text{obs}}(h) - \left[ \text{CV}^2(h) + P(h) \right].
+\mathcal{E}_{\text{res}}(h) \equiv \text{RelMSE}_{\text{obs}}(h) - \left[ \text{CV}^2_{\text{macro}}(h) + P_{\text{plug}}(h) \right].
 \end{equation}
 
 \textbf{该余项主导是本文最需正面回应的诊断性事实。} 两项机制分量占实测误差的比例，在全部阶段--步长配置中介于 $4.2\%$--$100\%$，其未归因余项的中位占比为 $55.0\%$。这意味着本文第 2 节推导的机制分量在多数配置中覆盖不足半数实测误差，我们不将其表述为对实测误差的"解释"，而表述为\textbf{诊断性残差核算}：它量化了机制分量能覆盖多少、以及尚有多少由上述（i）--（vi）类来源构成。该诊断的推论方向是：一个按恒等式定义、且已知混杂纯口径差异的未识别残差，与"理论是宽松包络"和"理论有误"两种情形\textbf{同样相容}，故本文不将其作为支持前者的单向证据，只据其\textbf{限制}理论视界的解释力——机制分量覆盖率在多数配置中不足半数，说明理论方程并未完全刻画实测误差的主体，本文因此仅将理论视界定位为经验宽松包络，而不主张它与实测业务时效之间存在受控的定量对应。
@@ -799,20 +799,20 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 
 \noindent\textbf{州际空间相关性的剂量敏感性。}本文把 51 个州级序列作为近似独立的面板单元处理，但各州受共同季节驱动、共同毒株更替与统一 NHSN 报告制度约束，空间相关强烈。为直接检验该依赖是否推翻主要结论，我们对集成减基线的配对 WIS 差另做一次\textbf{按 HHS 区域整群聚类}的自助（十个区域整体重抽，2,000 次，种子 20260916；脚本 \texttt{scripts\_v2/region\_cluster\_bootstrap.py}，结果 \texttt{reports\_v3/region\_cluster\_bootstrap.json}）。聚类区间比原点周移动块区间普遍展宽：$h=1$ 的配对差在三个赛季分别为 $-11.68$（聚类 95\% CI $[-16.94, -6.65]$）、$-39.84$（$[-53.69, -26.45]$）与 $-30.33$（$[-46.13, -18.89]$），\textbf{全部九个赛季--步长组合的聚类区间仍严格不跨零}。即令空间相关被最保守地整体吸收，集成相对基线的优势结论依然成立；但本文仍按保守口径把全部州级区间与比较读作描述性读数（详见第 6 节局限性讨论）。
 
-\subsection{机制基准预测分布生成协议}\label{sec:mech_predictor_protocol}
+\subsection{机制基准的启发式矩匹配预测分布生成协议}\label{sec:mech_predictor_protocol}
 
 定理~\ref{thm:macro_exact} 与引理~\ref{lem:param_amplification} 给出了宏观发病预测的一阶均值与二阶方差闭式，但加权区间评分（WIS）与概率区间覆盖率需要完备的预测概率分布（23 个标准分位数）。为此，本文构建了一套参数化矩匹配的机制预测分布生成协议（实现于 \texttt{scripts\_v2/flusight\_audit\_extended.py}，函数 \texttt{build\_mechanistic} 与 \texttt{mechanistic\_quantiles}）：
 \begin{enumerate}
-\item \textbf{参数在线拟合与信息截断}：针对指定预测原点（Forecast Reference Date），提取截止于该原点前 7 天（\texttt{reference\_date - 7 days}）的最终版周度发病序列，截取最近 5 周滑动窗口 $W=5$。若历史窗口不足 5 周、存在非正发病数、或对数线性回归失效，则该时空单元标记为不可行。
+\item \textbf{按预测原点截断的 Final-vintage 回溯拟合与信息截断}：针对指定预测原点（Forecast Reference Date），提取截止于该原点前 7 天（\texttt{reference\_date - 7 days}）的最终版周度发病序列，截取最近 5 周滑动窗口 $W=5$。须声明：输入虽按原点截断，但取自最终修订版序列，其数值可能包含原点之后发生的回填修订，故本协议为\textbf{回溯（retrospective）拟合}而非实时在线拟合。若历史窗口不足 5 周、存在非正发病数、或对数线性回归失效，则该时空单元标记为不可行。
 \item \textbf{增长率与离散度估计}：在 5 周窗口内，拟合对数线性回归 $\log Z_t = a + bt + \epsilon_t$，得到周度增长乘子 $R = \exp(b)$、斜率标准误 $s = \operatorname{SE}(b)$ 与初始水平 $I_0 = \bar{Z}$；由 Ho 等\citep{ho2023simultaneous} 对数差分二阶矩法估计宏观有效离散度 $k_{\text{agg}}$（设定上限 1,000）。
-\item \textbf{前瞻矩匹配与总方差合成}：针对前瞻提前期 $h \in \{1, 2, 3\}$，按定理~\ref{thm:macro_exact} 式 (\ref{eq:macro_cv2_closed}) 计算宏观过程相对方差 $\text{CV}^2_{\text{macro}}(h)$，叠加引理~\ref{lem:param_amplification} 的参数外推放大项 $P(h) = \exp(2h^2s^2) - 2\exp(h^2s^2/2) + 1$，合成预测总相对方差 $\text{CV}^2_{\text{tot}}(h) = \text{CV}^2_{\text{macro}}(h) + P(h)$。前瞻预测均值取 $\hat{\mu}_h = I_0 R^h$，预测总方差为 $\operatorname{Var}_h = \text{CV}^2_{\text{tot}}(h) \cdot \hat{\mu}_h^2$（并施加泊松方差下界 $\operatorname{Var}_h \ge \hat{\mu}_h$）。
+\item \textbf{前瞻矩匹配与总方差合成}：针对前瞻提前期 $h \in \{1, 2, 3\}$，按定理~\ref{thm:macro_exact} 式 (\ref{eq:macro_cv2_closed}) 计算宏观过程相对方差 $\text{CV}^2_{\text{macro}}(h)$，叠加引理~\ref{lem:param_amplification} 的参数外推放大项 $P(h) = \exp(2h^2s^2) - 2\exp(h^2s^2/2) + 1$，合成预测总相对方差 $\text{CV}^2_{\text{tot}}(h) = \text{CV}^2_{\text{macro}}(h) + P_{\text{plug}}(h)$。前瞻预测均值取 $\hat{\mu}_h = I_0 R_{\text{周}}^h$，预测总方差为 $\operatorname{Var}_h = \text{CV}^2_{\text{tot}}(h) \cdot \hat{\mu}_h^2$（并施加泊松方差下界 $\operatorname{Var}_h \ge \hat{\mu}_h$）。\textbf{须明确本步骤的启发式定位}：这里将 $P_{\text{plug}}(h)$ 作为预测分布的\textbf{方差膨胀代理}，是为了生成可评分的概率分位数；但引理~\ref{lem:param_amplification} 中的 $P_{\text{plug}}(h)$ 是插件预测器相对于真实条件均值的\textbf{均方误差贡献}（可同时包含参数估计方差、Jensen 偏差平方与非线性外推偏差），并不严格等于给定信息集下的条件预测方差。因此该矩匹配分布属于\textbf{启发式频率学派校准分布}，既不是定理~\ref{thm:macro_exact} 的精确多步边际分布，也不是命题~\ref{prop:posterior_mixture} 的后验预测分布。
 \item \textbf{23 个分位数解析提取}：采用矩匹配负二项分布（Method-of-Moments Negative Binomial Matching），解析求解尺寸参数 $r = \hat{\mu}_h^2 / (\operatorname{Var}_h - \hat{\mu}_h)$ 与成功概率 $p = r / (r + \hat{\mu}_h)$；在 Forecast Hub 标准的 23 个分位数网格 $\alpha \in \{0.01, 0.025, 0.05, \dots, 0.99\}$ 上，调用分位数逆累积函数（百分位点函数 \texttt{scipy.stats.nbinom.ppf}）提取分位数值，并执行非降单调性截断累加，生成标准分位数预测包。
 \item \textbf{严格四方交集过滤}：机制模型在少数单元缺失主要源于早期历史周数不足 5 周或起步发病为零；在严格四方交集原则下，本文在比较时统一剔除机制模型不可行的评估单元，确保所有对比均在完全相同的时空单元集上展开。
 \end{enumerate}
 
 \subsection{多维度完整评分面板实测分析}\label{sec:flusight_scores}
 
-对每个评估单元，基于模型提交的 23 个标准概率分位数（覆盖 $\alpha = 0.01$ 至 $0.99$），计算加权区间评分（WIS\citep{bracher2021evaluating}，区间权重 $w_k = \alpha_k/2$、中位数权重 $w_0 = 1/2$）、\textbf{标称预测区间}的经验覆盖率（50\%、80\%、95\%）、平均区间物理宽度、以及标准随机化概率积分变换（PIT，$U=F_{\text{预测}}(Y)$）均值。表~\ref{tab:flusight_three_seasons} 汇报了三个锁定赛季在 $h=1$ 周提前期下的完整多维评分面板，三行模型共享相同 $n$。
+对每个评估单元，基于模型提交的 23 个标准概率分位数（覆盖 $\alpha = 0.01$ 至 $0.99$），计算加权区间评分（WIS\citep{bracher2021evaluating}，区间权重 $w_k = \alpha_k/2$、中位数权重 $w_0 = 1/2$）、\textbf{标称预测区间}的经验覆盖率（50\%、80\%、95\%）、平均区间物理宽度、以及标准随机化概率积分变换（PIT，$U=F_{\text{预测}}(Y)$）均值。PIT 的具体实现为：在 23 个分位数网格内部，按相邻分位数对 $(q_k, q_{k+1})$ 做分位数水平上的线性插值（等价于分位数间的分段均匀 CDF 近似；出现重复分位数时该区间贡献为零）；真值低于最低分位数时在 $[0, q_{0.01}]$ 内、高于最高分位数时在 $[q_{0.99}, 1]$ 内均匀随机填充，随机种子固定为 20260914（\texttt{numpy.random.default\_rng(20260914)}，实现见 \texttt{scripts\_v2/flusight\_audit\_extended.py} 函数 \texttt{randomized\_pit}）。该离散随机化 PIT 在完美校准预测下恰为均匀分布。表~\ref{tab:flusight_three_seasons} 汇报了三个锁定赛季在 $h=1$ 周提前期下的完整多维评分面板，三行模型共享相同 $n$。
 
 \begin{table}[htbp]
 \centering
@@ -829,7 +829,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 
 表~\ref{tab:flusight_three_seasons} 揭示了三条高度稳健的跨赛季经验规律（须强调：表内三行模型在同一赛季共享\textbf{完全相同的评估单元}，即严格四方交集 $\mathcal{C}=\mathcal{C}_{\text{集成}}\cap\mathcal{C}_{\text{基线}}\cap\mathcal{C}_{\text{机制}}\cap\mathcal{C}_{\text{真值}}$，故三者差值可直接读作配对性能差）：
 \begin{enumerate}
-\item \textbf{集成的持续技能优势}：在所有三个赛季、所有提前期上，Hub 集成模型的 WIS 均低于官方 Baseline 与机制基准（$h=1$ 时 v1.0.0 为 34.00 对 45.68 对 59.94，v1.1.0 为 85.27 对 125.11 对 170.88，v1.2.0 为 60.24 对 90.57 对 116.72）。配对差的 95\% 移动块自助区间均严格不跨零（如 v1.2.0 相对 Baseline 的 WIS 差为 $-30.33$，95\% CI $[-46.13, -18.89]$；v1.0.0 为 $-11.68$，$[-16.94, -6.65]$），表明协同集成在抑制单模型误设方面具有真实且可复现的实效。
+\item \textbf{集成的持续技能优势}：在所有三个赛季、所有提前期上，Hub 集成模型的 WIS 均低于官方 Baseline 与机制基准（$h=1$ 时 v1.0.0 为 34.00 对 45.68 对 59.94，v1.1.0 为 85.27 对 125.11 对 170.88，v1.2.0 为 60.24 对 90.57 对 116.72）。配对差的 95\% 自助区间均严格不跨零（按 HHS 区域整群自助口径，如 v1.2.0 相对 Baseline 的 WIS 差为 $-30.33$，95\% CI $[-46.13, -18.89]$；v1.0.0 为 $-11.68$，$[-16.94, -6.65]$；见第 5.2 节），表明协同集成在抑制单模型误设方面具有真实且可复现的实效。
 \item \textbf{机制基准的经验欠校准}：当把机制基准作为预测器直接输入相同评估单元时，其 WIS 在所有配置中均劣于官方 Baseline（$h=1$ 分别为 59.94、170.88 与 116.72），且其\textbf{标称 95\% 预测区间}的实测覆盖率严重不足（\textbf{0.405--0.554}）；80\% 与 50\% 预测区间的实测覆盖率同样偏低（0.269--0.384 与 0.128--0.214）。这定量表明理论机制方差仅能覆盖一部分业务不确定性：机制模型若脱离自适应修正直接用于点或区间预测，会面临严重的经验欠校准。
 \item \textbf{预测分布的系统性位置与形态失配}：机制基准在 v1.1.0 与 v1.2.0 的 PIT 均值明显偏离 0.50（分别为 0.381 与 0.363）。按本文采用的标准随机化 PIT（$U=F_{\text{预测}}(Y)$）定义，均值偏低意味着真实值倾向于落在预测分布中心之下，方向上是\textbf{预测偏高}而非偏低；但 WIS 过/欠预测分量在赛季间并不一致（v1.1.0 欠预测略占优：under 76.94 对 over 66.84；v1.2.0 则过预测占优：under 39.27 对 over 56.55）。因此只能说预测分布存在系统性位置或形态失配，\textbf{不能仅凭 PIT 均值判定偏差方向与尾部来源}；要判定尾部校准还须报告 PIT 直方图、PIT 分位数与上下尾命中率，本文将其留作后续工作。
 \end{enumerate}
@@ -1019,7 +1019,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 
 \noindent\textbf{4. 定理~\ref{thm:monotonicity}（相对均方误差严格单调递增性）证明要点：}内在相对方差代际增量 $\text{CV}^2(h+1)-\text{CV}^2(h) = (1+R/k)/(I_0 R^{h+1}) > 0$ 恒正。参数外推项构造辅助函数 $g(y) = (y^{h_2}-1)^2 - (y^{h_1}-1)^2 = (y^{h_2}-y^{h_1})(y^{h_2}+y^{h_1}-2)$；在 $y>1$ 与 $0<y<1$ 两个开区间上两因子均同号，恒有 $g(y) > 0$，非退化对数正态积分严格保证增量为正。
 
-\noindent\textbf{5. 定理~\ref{thm:fisher}（Fisher 信息量与 Cramér--Rao 辨识界）证明要点：}负二项概率对数对 $R$ 求二阶导取负期望给出单样本 Fisher 信息 $I_1(R) = k/[R(R+k)]$。似然二阶混合偏导期望为零确立参数渐近正交，故联合估计下关于 $R$ 的 Cramér--Rao 界保持对角逆形式 $[\mathcal{I}^{-1}]_{RR} = \frac{R(R+k)}{Ck}$。双侧假设检验分位数间隔 $\varepsilon \ge z_{1-\alpha}\sqrt{R_0(R_0+k)/(Ck)} + z_{1-\beta}\sqrt{R_1(R_1+k)/(Ck)}$ 反解即导出样本量门槛。
+\noindent\textbf{5. 定理~\ref{thm:fisher}（Fisher 信息量与 Cramér--Rao 辨识界）证明要点：}负二项概率对数对 $R$ 求二阶导取负期望给出单样本 Fisher 信息 $I_1(R) = k/[R(R+k)]$。似然二阶混合偏导期望为零确立参数渐近正交，故联合估计下关于 $R$ 的 Cramér--Rao 界保持对角逆形式 $[\mathcal{I}^{-1}]_{RR} = \frac{R(R+k)}{Ck}$。正态近似下，给定单侧显著性水平 $\alpha$ 与备择处功效 $1-\beta$ 所要求的分位数间隔 $\varepsilon \ge z_{1-\alpha}\sqrt{R_0(R_0+k)/(Ck)} + z_{1-\beta}\sqrt{R_1(R_1+k)/(Ck)}$ 反解即导出样本量门槛（与正文单侧检验 $H_0:R\le1$ 对 $H_1:R>1$ 口径一致）。
 
 \noindent\textbf{6. 定理~\ref{thm:macro_exact}（固定离散度宏观更新有限步精确方差）证明要点：}宏观更新单步条件方差包含关于发病规模的二次项：$\text{Var}(Z_{t+1}\mid Z_t) = RZ_t + (R^2/k_{\text{agg}})Z_t^2$。应用全方差法则得到一阶非齐次差分方程 $V_{t+1} = qV_t + I_0 R^{t+1} + (I_0^2/k_{\text{agg}})R^{2t+2}$，其中 $q \equiv R^2(1+1/k_{\text{agg}})$。方程两端同除以 $q^{t+1}$ 实施裂项求和，利用等比级数求和公式与恒等式 $q-R^2 = R^2/k_{\text{agg}}$ 合并，严格导出双项分离闭式 $V_h = I_0 R \frac{q^h-R^h}{q-R} + I_0^2(q^h-R^{2h})$。
 
@@ -1070,17 +1070,18 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 \toprule
 符号 & 含义 & 正文首次出现 \\
 \midrule
-$R,\ R_t$ & 基本再生数/有效代际乘子（$R_t$ 为时变序列；$\hat R$ 为估计量） & 式~(\ref{eq:nb_pmf}) \\
+$R_{\text{gen}},\ R_t$ & 微观代际再生数（$R_{\text{gen}}=\exp(\Delta_g b_{\text{week}})$）与标准更新方程下的有效再生数 $R_t$ & 式~(\ref{eq:nb_pmf}) \\
+$R_{\text{周}}$ & \textbf{周度宏观增长乘子} $\exp(b_{\text{week}})$（宏观主口径唯一使用的乘子） & 定理~\ref{thm:macro_exact} \\
 $k,\ k_{\text{ind}}$ & 微观个体子代分布过度离散参数（刻画个体超扩散） & 式~(\ref{eq:nb_pmf}) \\
 $k_{\text{agg}}$ & 宏观周度聚合序列的时序离散度（与 $k$ 属不同观测层级） & 命题~\ref{thm:t5} \\
 $I_0$ & 预测原点初始周度发病规模（窗口均值口径） & 引理~\ref{lem:branch_moments} \\
 $Z_h,\ \hat Z_h$ & 第 $h$ 步实际发病数与模型点预测 & 引理~\ref{lem:branch_moments} \\
-$\mu_g,\ \Delta_g$ & 平均代间隔（天）与周聚合转换比 $\mu_g/7$ & 第 2.1 节 \\
+$\mu_g,\ \Delta_g$ & 平均代间隔（天）与周聚合转换比 $\mu_g/7$；\textbf{仅用于微观代际视界与尺度敏感性，不进入宏观主口径} & 第 2.1 节 \\
 $h,\ h^*$ & 前瞻步长（周度/代际）与模型条件机制视界 & 定理~\ref{thm:horizon} \\
 $\tau$ & 相对均方根误差容忍度门槛（主基准取 $0.5$） & 定理~\ref{thm:horizon} \\
-$s_{\log R}$ & 对数再生数回归斜率标准误 $\text{SE}(\log\hat R)$ & 引理~\ref{lem:param_amplification} \\
+$s_{\text{周}}$ & 周度对数增长率回归斜率标准误 $\text{SE}(b_{\text{week}})$ & 引理~\ref{lem:param_amplification} \\
 $\text{CV}^2_{\text{macro}}(h)$ & 固定离散度宏观更新有限步精确相对方差 & 定理~\ref{thm:macro_exact} \\
-$P(h)$ & 参数估计不确定性前向放大项 & 式~(\ref{eq:param_amplification}) \\
+$P_{\text{plug}}(h)$ & 插件预测器的参数估计不确定性前向放大项（启发式方差膨胀代理） & 式~(\ref{eq:param_amplification}) \\
 $C$ & 独立个体子代计数观测数（含零子代个体） & 定理~\ref{thm:fisher} \\
 $\mathcal{E}_{\text{res}}(h)$ & 未归因综合实测闭合余项（描述性） & 式~(\ref{eq:full_budget}) \\
 \bottomrule

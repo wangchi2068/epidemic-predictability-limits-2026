@@ -1,0 +1,113 @@
+{
+ "Delta": {
+  "display": "COVID-19 Delta 暴发期",
+  "n": 50,
+  "median_h": {
+   "mean": 7.119820478697424,
+   "last": 7.3293868259805794,
+   "fitend": 7.300602103406714
+  },
+  "median_pct_change_last": 1.002756190874728,
+  "median_pct_change_fitend": 0.9421555552418981,
+  "min_pct_change_last": -1.6738948509114393,
+  "max_pct_change_last": 19.116982956708984,
+  "min_pct_change_fitend": 0.03784306701111184,
+  "max_pct_change_fitend": 20.91371245615319
+ },
+ "Omicron": {
+  "display": "COVID-19 Omicron 达峰期",
+  "n": 51,
+  "median_h": {
+   "mean": 3.953263113004818,
+   "last": 3.9582997463717837,
+   "fitend": 3.957400238213131
+  },
+  "median_pct_change_last": 0.18152174747915684,
+  "median_pct_change_fitend": 0.10465089446495493,
+  "min_pct_change_last": -13.716183828980078,
+  "max_pct_change_last": 2.1464547926517197,
+  "min_pct_change_fitend": -14.73925653464544,
+  "max_pct_change_fitend": 1.7885647497351886
+ },
+ "JN1": {
+  "display": "COVID-19 JN.1 流行期",
+  "n": 51,
+  "median_h": {
+   "mean": 5.003277671712398,
+   "last": 4.948299516062728,
+   "fitend": 4.987296045230146
+  },
+  "median_pct_change_last": -0.16091981643614836,
+  "median_pct_change_fitend": 0.13581766536639484,
+  "min_pct_change_last": -9.011421935077035,
+  "max_pct_change_last": 5.78415828834542,
+  "min_pct_change_fitend": -6.77548642714002,
+  "max_pct_change_fitend": 6.658933616844909
+ },
+ "flu22": {
+  "display": "流感 2022--23 暴发早期",
+  "n": 38,
+  "median_h": {
+   "mean": 2.203873019348917,
+   "last": 2.169426389354707,
+   "fitend": 2.1702268342730386
+  },
+  "median_pct_change_last": 2.5259720433288546,
+  "median_pct_change_fitend": 2.3104208515178115,
+  "min_pct_change_last": -12.927124378267186,
+  "max_pct_change_last": 51.07298309321651,
+  "min_pct_change_fitend": -8.922726573500805,
+  "max_pct_change_fitend": 57.15379755085173
+ },
+ "flu24": {
+  "display": "流感 2024--25 流行季",
+  "n": 45,
+  "median_h": {
+   "mean": 2.5814524137173516,
+   "last": 2.7007029421697832,
+   "fitend": 2.697067724441756
+  },
+  "median_pct_change_last": 2.140925389519045,
+  "median_pct_change_fitend": 2.016096104779319,
+  "min_pct_change_last": 0.24731289024353398,
+  "max_pct_change_last": 49.186200687758564,
+  "min_pct_change_fitend": 0.23278825157857508,
+  "max_pct_change_fitend": 54.68689440847907
+ },
+ "rsv24": {
+  "display": "RSV 2024--25 流行季",
+  "n": 34,
+  "median_h": {
+   "mean": 5.817215495311246,
+   "last": 5.969939213365127,
+   "fitend": 5.991019477479533
+  },
+  "median_pct_change_last": 2.6607403349404812,
+  "median_pct_change_fitend": 3.0780400975380684,
+  "min_pct_change_last": -2.820665634068209,
+  "max_pct_change_last": 12.783817161962796,
+  "min_pct_change_fitend": 0.35509397711546153,
+  "max_pct_change_fitend": 15.102613688936017
+ },
+ "rsv25": {
+  "display": "RSV 2025--26 流行季",
+  "n": 26,
+  "median_h": {
+   "mean": 3.8869007777906477,
+   "last": 4.133343126748729,
+   "fitend": 4.105931173023321
+  },
+  "median_pct_change_last": 4.812103421627421,
+  "median_pct_change_fitend": 4.568290208612442,
+  "min_pct_change_last": 0.6868869280151735,
+  "max_pct_change_last": 28.198273454022193,
+  "min_pct_change_fitend": 0.8666653928260049,
+  "max_pct_change_fitend": 30.329383800429643
+ },
+ "_summary": {
+  "max_abs_median_pct_change_last": 4.812103421627421,
+  "min_abs_median_pct_change_last": 0.16091981643614836,
+  "max_abs_median_pct_change_fitend": 4.568290208612442,
+  "min_abs_median_pct_change_fitend": 0.10465089446495493
+ }
+}
