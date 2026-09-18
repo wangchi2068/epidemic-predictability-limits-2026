@@ -31,9 +31,9 @@ plt.rcParams.update(
 
 RELS = ["v1.0", "v1.1", "v1.2"]
 REL_LABEL = {
-    "v1.0": "2023--24 (v1.0.0)",
-    "v1.1": "2024--25 (v1.1.0)",
-    "v1.2": "2025--26 (v1.2.0)",
+    "v1.0": "2023--24 赛季",
+    "v1.1": "2024--25 赛季",
+    "v1.2": "2025--26 赛季",
 }
 MODELS = ["ensemble", "baseline", "mechanistic"]
 MODEL_LABEL = {
@@ -128,7 +128,7 @@ def panel_a(ax, data: dict) -> None:
 
 def panel_b(ax, data: dict) -> None:
     phases = ["rising", "peak", "declining"]
-    ph_label = ["峰前期\n(Pre-peak)", "峰值窗口\n(Peak window)", "峰后期\n(Post-peak)"]
+    ph_label = ["峰前期", "峰值窗口", "峰后期"]
     x = np.arange(len(phases))
     w = 0.25
 
@@ -252,7 +252,7 @@ def panel_c(ax, data: dict) -> None:
         error_kw=dict(lw=1.0, capthick=1.0, ecolor="#1a476f"),
         color="#4575b4",
         alpha=0.88,
-        label="基线 $-$ 集成 (Baseline $-$ Ensemble)",
+        label="官方基线 $-$ Hub 集成",
         edgecolor="white",
         linewidth=0.8,
         zorder=3,
@@ -266,7 +266,7 @@ def panel_c(ax, data: dict) -> None:
         error_kw=dict(lw=1.0, capthick=1.0, ecolor="#8c1221"),
         color="#d73027",
         alpha=0.88,
-        label="插件式机制预测器 $-$ 集成 (Mech $-$ Ensemble)",
+        label="插件式机制预测器 $-$ Hub 集成",
         edgecolor="white",
         linewidth=0.8,
         zorder=3,

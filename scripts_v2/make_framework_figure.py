@@ -107,46 +107,44 @@ def generate_flowchart():
     # Subbox 1.1: 尺度隔离双层模型
     draw_subbox(ax, sb_x0, y0 + 0.540, sb_w, 0.200, "white", "#cbd5e1",
                 tag_text="尺度隔离", tag_color=c_blue, zorder=2)
-    ax.text(sb_x0 + 0.058, y0 + 0.728, "机制工作模型架构", fontsize=8.6, fontweight="bold", color="#1e3a8a", zorder=4)
+    ax.text(sb_x0 + 0.058, y0 + 0.728, "机制工作模型架构", fontsize=9.0, fontweight="bold", color="#1e3a8a", zorder=4)
     t1_1 = (
         "• 微观分支过程（个体传播链级）:\n"
         "  $Z_{t+1} \\mid Z_t \\sim \\mathrm{NB}(R Z_t, k_{\\mathrm{ind}} Z_t)$\n"
-        "  超临界饱和常数地板: $\\mathrm{CV}^2_\\infty = \\frac{1 + R/k_{\\mathrm{ind}}}{I_0(R-1)}$\n"
+        "  超临界有界饱和: $\\mathrm{CV}^2_\\infty = \\frac{1 + R/k_{\\mathrm{ind}}}{I_0(R-1)}$\n"
         "• 宏观聚合更新模型（周度住院序列）:\n"
         "  $I_{t+1} \\mid I_t \\sim \\mathrm{NB}(R_{\\mathrm{agg}} I_t, k_{\\mathrm{agg}})$\n"
         "  宏观条件方差含二次项: $R I_t + \\frac{R^2 I_t^2}{k_{\\mathrm{agg}}}$"
     )
-    ax.text(sb_x0 + 0.008, y0 + 0.628, t1_1, fontsize=7.4, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x0 + 0.008, y0 + 0.628, t1_1, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # Subbox 1.2: 定理 5 精确有限步方差闭式递推
     draw_subbox(ax, sb_x0, y0 + 0.310, sb_w, 0.220, "white", "#cbd5e1",
                 tag_text="闭式递推", tag_color=c_blue, zorder=2)
-    ax.text(sb_x0 + 0.058, y0 + 0.518, "定理 5 有限步精确方差", fontsize=8.6, fontweight="bold", color="#1e3a8a", zorder=4)
+    ax.text(sb_x0 + 0.058, y0 + 0.518, "定理 5 有限步精确方差", fontsize=9.0, fontweight="bold", color="#1e3a8a", zorder=4)
     t1_2 = (
         "• 一阶非齐次全方差递推方程:\n"
         "  $V_{t+1} = q V_t + I_0 R^{t+1} + \\frac{I_0^2 R^{2t+2}}{k_{\\mathrm{agg}}}$\n"
-        "  公比 $q = R^2 \\left(1 + \\frac{1}{k_{\\mathrm{agg}}}\\right) > R^2$\n"
+        "  递推比率 $q = R^2 (1 + 1/k_{\\mathrm{agg}}) > R^2$\n"
         "• 有限步代数封闭解:\n"
-        "  $V_h = q^h V_0 + \\sum_{j=1}^h q^{h-j} \\left(I_0 R^j + \\frac{I_0^2 R^{2j}}{k_{\\mathrm{agg}}}\\right)$\n"
-        "  $\\Rightarrow \\mathrm{CV}^2_{\\mathrm{macro}}(h)$ 随步长严格单调几何发散"
+        "  $\\mathrm{CV}^2_{\\mathrm{macro}}(h)$ 随步长呈几何增长发散"
     )
-    ax.text(sb_x0 + 0.008, y0 + 0.405, t1_2, fontsize=7.4, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x0 + 0.008, y0 + 0.405, t1_2, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # Subbox 1.3: 决策论下界与视界定义
     draw_subbox(ax, sb_x0, y0 + 0.012, sb_w, 0.288, "white", "#cbd5e1",
                 tag_text="决策推导", tag_color=c_blue, zorder=2)
-    ax.text(sb_x0 + 0.058, y0 + 0.288, "定理 1 决策界与视界求根", fontsize=8.6, fontweight="bold", color="#1e3a8a", zorder=4)
+    ax.text(sb_x0 + 0.058, y0 + 0.288, "定理 1 决策界与视界求根", fontsize=9.0, fontweight="bold", color="#1e3a8a", zorder=4)
     t1_3 = (
-        "• 条件均值预测器锐风险下界 (Thm 1):\n"
-        "  $\\min_\\delta \\mathcal{R}(\\delta) = \\operatorname{Var}(I_h \\mid I_0)$\n"
-        "• 对数正态后验混合参数外推项 (Prop 3):\n"
-        "  $P(h) = \\exp(2h^2 s^2) - 2\\exp(\\frac{1}{2}h^2 s^2) + 1$\n"
-        "• 条件精确机制视界方程:\n"
-        "  $\\operatorname{RelMSE}(h) = \\mathrm{CV}^2_{\\mathrm{macro}}(h) + P(h) = \\tau^2$\n"
-        "  在容忍误差 $\\tau=0.5$ 下二分数值求根 $h^*$\n"
-        "【明确防御】作为模型条件基准而非物理绝对上限"
+        "• 条件均值预测器锐风险下界 (定理 1):\n"
+        "  $\\min_\\delta \\mathcal{R}(\\delta) = \\operatorname{Var}(I_h \\mid I_0) = V_h^{(M)}$\n"
+        "• 参数外推精确放大项 (引理 2):\n"
+        "  $P_{\\mathrm{exact}}(h) = e^{2h^2 s^2} - 2e^{\\frac{1}{2}h^2 s^2} + 1$\n"
+        "• 机制视界临界求根方程:\n"
+        "  $\\mathrm{CV}^2_{\\mathrm{macro}}(h) + P_{\\mathrm{exact}}(h) = \\tau^2$\n"
+        "  作为模型条件基准而非物理绝对上限"
     )
-    ax.text(sb_x0 + 0.008, y0 + 0.142, t1_3, fontsize=7.3, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x0 + 0.008, y0 + 0.142, t1_3, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # -------------------------------------------------------------------------
     # Pillar 2: 多尺度实证证据链与误差记账 (Empirical Evidence)
@@ -157,45 +155,41 @@ def generate_flowchart():
     # Subbox 2.1: 微观传播链层
     draw_subbox(ax, sb_x1, y0 + 0.540, sb_w, 0.200, "white", "#cbd5e1",
                 tag_text="微观拟合", tag_color=c_teal, zorder=2)
-    ax.text(sb_x1 + 0.058, y0 + 0.728, "微观真实传播追踪层", fontsize=8.6, fontweight="bold", color="#115e59", zorder=4)
+    ax.text(sb_x1 + 0.058, y0 + 0.728, "微观真实传播追踪层", fontsize=9.0, fontweight="bold", color="#115e59", zorder=4)
     t2_1 = (
         "• 真实传播网络金标准拟合:\n"
-        "  香港 COVID-19 (N=355, 1038) 与几内亚埃博拉 (N=152)\n"
-        "• 极大似然估计: 显著过度离散 $\\hat{k} \\in [0.11, 0.18]$\n"
-        "  负二项拟合显著优于 Poisson ($\\Delta\\mathrm{AIC} \\geq 93.9$)\n"
-        "• 信息论下界检验 (Theorem 4):\n"
-        "  自助方差与 Cramér-Rao 界比值为 0.984--1.059"
+        "  香港 COVID-19 与几内亚埃博拉三组数据\n"
+        "• 负二项拟合明显优于 Poisson ($\\Delta\\mathrm{AIC} \\geq 93.9$)\n"
+        "• 极大似然估计验证 Fisher 信息量理论下界:\n"
+        "  Bootstrap 方差与 CRB 比值为 0.984--1.059"
     )
-    ax.text(sb_x1 + 0.008, y0 + 0.628, t2_1, fontsize=7.4, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x1 + 0.008, y0 + 0.628, t2_1, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # Subbox 2.2: 州级时空长面板
     draw_subbox(ax, sb_x1, y0 + 0.280, sb_w, 0.250, "white", "#cbd5e1",
                 tag_text="州级面板", tag_color=c_teal, zorder=2)
-    ax.text(sb_x1 + 0.058, y0 + 0.518, "51 州住院面板与机制视界", fontsize=8.6, fontweight="bold", color="#115e59", zorder=4)
+    ax.text(sb_x1 + 0.058, y0 + 0.518, "51 州住院面板与机制视界", fontsize=9.0, fontweight="bold", color="#115e59", zorder=4)
     t2_2 = (
-        "• 跨 3 种呼吸道病原体、7 个独立流行波次:\n"
-        "  SARS-CoV-2 (Delta, Omicron, JN.1)\n"
-        "  Influenza (2022-23, 2024-25), RSV (2024-25, 2025-26)\n"
-        "• 宏观机制视界分布: 跨州中位数 $h^* \\in [2.2, 7.1]$ 周\n"
-        "• 空间聚合平滑效应: 7 阶段中 6 个阶段州级短于国家级\n"
-        "• 过程内在方差占主导: $\\mathrm{CV}^2/\\tau^2$ 达 73%--89%\n"
-        "• 经验外包络性: 机制视界高于同口径实测时效"
+        "• 51 个州级辖区、3 种病原体、7 个流行阶段\n"
+        "• 插件式 NB2 机制视界中位数: 2.2--7.1 周\n"
+        "• 空间聚合效应: 6/7 阶段州级短于国家级\n"
+        "• 过程方差占主导: $\\mathrm{CV}^2/\\tau^2$ 达 73%--89%\n"
+        "• 构成实测绝对误差视界的宽松经验参考外包络"
     )
-    ax.text(sb_x1 + 0.008, y0 + 0.392, t2_2, fontsize=7.3, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x1 + 0.008, y0 + 0.392, t2_2, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # Subbox 2.3: 三项描述性误差记账
     draw_subbox(ax, sb_x1, y0 + 0.012, sb_w, 0.258, "white", "#cbd5e1",
                 tag_text="误差记账", tag_color=c_teal, zorder=2)
-    ax.text(sb_x1 + 0.058, y0 + 0.258, "无偏描述性误差恒等分解", fontsize=8.6, fontweight="bold", color="#115e59", zorder=4)
+    ax.text(sb_x1 + 0.058, y0 + 0.258, "无偏描述性误差恒等分解", fontsize=9.0, fontweight="bold", color="#115e59", zorder=4)
     t2_3 = (
-        "• 样本均方预测误差无偏描述性恒等式:\n"
-        "  $\\operatorname{RelMSE}_{\\mathrm{obs}}(h) = \\mathrm{CV}^2_{\\mathrm{macro}}(h) + P_{\\mathrm{plug}}(h) + \\mathcal{E}_{\\mathrm{res}}(h)$\n"
-        "• 机制分量: 过程内在离散 + 参数外推项\n"
-        "• 消除负交叉项争议，代数严格闭合\n"
-        "• 全美各阶段中位未归因闭合余项: $\\mathcal{E}_{\\mathrm{res}} = 55.0\\%$\n"
-        "  量化结构误配、非平稳行为与毒株漂移所占缺口"
+        "• 描述性代数记账恒等式:\n"
+        "  $\\operatorname{RelMSE}_{\\mathrm{obs}}(h) = \\mathrm{CV}^2_{\\mathrm{macro}}(h) + P_{\\mathrm{quad}}(h) + \\mathcal{E}_{\\mathrm{res}}(h)$\n"
+        "• 两项显式模型分量: 过程方差 + 参数二次项\n"
+        "• 跨州中位模型—观测代数差额占比达 55.0%\n"
+        "  综合吸收未建模非平稳行为、变点与报告回填"
     )
-    ax.text(sb_x1 + 0.008, y0 + 0.128, t2_3, fontsize=7.3, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x1 + 0.008, y0 + 0.128, t2_3, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # -------------------------------------------------------------------------
     # Pillar 3: CDC FluSight 连续三赛季外部审计 (External Operational Audit)
@@ -206,44 +200,41 @@ def generate_flowchart():
     # Subbox 3.1: 数据固化与审计方案
     draw_subbox(ax, sb_x2, y0 + 0.540, sb_w, 0.200, "white", "#cbd5e1",
                 tag_text="版本锁定", tag_color=c_indigo, zorder=2)
-    ax.text(sb_x2 + 0.058, y0 + 0.728, "权威外部基准与版本锁定", fontsize=8.6, fontweight="bold", color="#3730a3", zorder=4)
+    ax.text(sb_x2 + 0.058, y0 + 0.728, "权威外部基准与版本锁定", fontsize=9.0, fontweight="bold", color="#3730a3", zorder=4)
     t3_1 = (
-        "• 覆盖连续 3 个完整流感季 (2023--2026):\n"
-        "  2023-24 (v1.0.0), 2024-25 (v1.1.0), 2025-26 (v1.2.0)\n"
-        "• 204 个官方预测文件、12,384+ 组评估时空单元\n"
-        "• 逐字节 SHA-256 哈希校验，零未来信息泄露\n"
-        "• 全流程代码与历史预测流水线逐级可复现"
+        "• 覆盖连续三个锁定流感季 (2023--2026)\n"
+        "• 204 个官方归档文件、逐字节 SHA-256 锁定\n"
+        "• 回溯性审计保证高数据质量压力测试\n"
+        "• 全流程代码与历史预测流水线严格可复现"
     )
-    ax.text(sb_x2 + 0.008, y0 + 0.628, t3_1, fontsize=7.4, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x2 + 0.008, y0 + 0.628, t3_1, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # Subbox 3.2: 严格四方交集
     draw_subbox(ax, sb_x2, y0 + 0.310, sb_w, 0.220, "white", "#cbd5e1",
                 tag_text="四方交集", tag_color=c_indigo, zorder=2)
-    ax.text(sb_x2 + 0.058, y0 + 0.518, "同条件配对对垒协议", fontsize=8.6, fontweight="bold", color="#3730a3", zorder=4)
+    ax.text(sb_x2 + 0.058, y0 + 0.518, "同条件配对对垒协议", fontsize=9.0, fontweight="bold", color="#3730a3", zorder=4)
     t3_2 = (
-        "• 审计对垒模型池 (严格同条件配对):\n"
-        "  ① FluSight-ensemble (全美顶尖多机构集成)\n"
-        "  ② FluSight-baseline (官方朴素持续性基线)\n"
-        "  ③ Plug-in mechanistic (插件式机制预测器)\n"
-        "  ④ CDC 最终回填住院真实值 (Ground Truth)\n"
-        "• 概率评估指标: 加权区间评分 (WIS)、MAE、\n"
-        "  经验覆盖率 (Cover50/80/95) 与区间锐度"
+        "• 严格四方共同单元配对评估:\n"
+        "  ① Hub 集成 (多机构预测集成)\n"
+        "  ② 官方基线 (持续性预测模型)\n"
+        "  ③ 插件式机制预测器 (NB2 矩匹配构造)\n"
+        "  ④ 最终住院真值序列\n"
+        "• 概率多维评估: WIS、经验覆盖率与 PIT"
     )
-    ax.text(sb_x2 + 0.008, y0 + 0.405, t3_2, fontsize=7.3, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x2 + 0.008, y0 + 0.405, t3_2, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # Subbox 3.3: 跨步长技能衰减
     draw_subbox(ax, sb_x2, y0 + 0.012, sb_w, 0.288, "white", "#cbd5e1",
                 tag_text="时效衰减", tag_color=c_indigo, zorder=2)
-    ax.text(sb_x2 + 0.058, y0 + 0.288, "多步预测技能与时效衰退", fontsize=8.6, fontweight="bold", color="#3730a3", zorder=4)
+    ax.text(sb_x2 + 0.058, y0 + 0.288, "多步预测技能与时效衰退", fontsize=9.0, fontweight="bold", color="#3730a3", zorder=4)
     t3_3 = (
-        "• $h=1 \\to 4$ 周超前预测 WIS 呈快速单调恶化\n"
-        "• 集成模型在点预测均方误差上优于插件式机制预测器\n"
-        "• COVIDhub-ensemble 跨波次历史对照 (Delta/Omicron):\n"
-        "  在 1--2 周内相对朴素基准丧失技能优势 (SERatio $\\geq 1$)\n"
-        "• 证实预测技能在短步长内的迅速衰退是各类重大\n"
-        "  呼吸道传染病暴发期的共性物理与动力学瓶颈"
+        "• Hub 集成在各提前期保持稳定的配对评分优势\n"
+        "• 插件式机制预测器存在严重经验欠覆盖\n"
+        "  标称 95% 区间实测覆盖率仅 0.405--0.554\n"
+        "• COVIDhub 历史对照: 1--2 周内穿透基线\n"
+        "  证实短步长技能衰退具有跨病原共性"
     )
-    ax.text(sb_x2 + 0.008, y0 + 0.142, t3_3, fontsize=7.3, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x2 + 0.008, y0 + 0.142, t3_3, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # -------------------------------------------------------------------------
     # Pillar 4: 核心发现与公卫运筹闭环 (Key Discovery & Operations)
@@ -254,45 +245,41 @@ def generate_flowchart():
     # Subbox 4.1: 峰后期 vs 峰前期对比
     draw_subbox(ax, sb_x3, y0 + 0.505, sb_w, 0.235, "white", "#cbd5e1",
                 tag_text="核心特征", tag_color=c_crimson, zorder=2)
-    ax.text(sb_x3 + 0.058, y0 + 0.728, "经验特征：峰前期经验覆盖率较低", fontsize=8.6, fontweight="bold", color="#991b1b", zorder=4)
+    ax.text(sb_x3 + 0.058, y0 + 0.728, "经验特征：峰前期经验覆盖率较低", fontsize=9.0, fontweight="bold", color="#991b1b", zorder=4)
     t4_1 = (
-        "• 峰后期 (Post-peak) —— 近标称良好校准:\n"
+        "• 峰后期 —— 经验覆盖率近标称水平:\n"
         "  Hub 集成 95% 覆盖率稳定在 0.925--0.964\n"
-        "  官方 Baseline 覆盖率为 0.881--0.922\n"
-        "  退潮期自阻尼占优，系统表现出优良统计校准\n"
-        "• 峰前期 (Pre-peak) —— 经验覆盖率显著偏低:\n"
+        "  官方基线覆盖率为 0.881--0.922\n"
+        "• 峰前期 —— 经验覆盖率显著偏低:\n"
         "  Hub 集成覆盖率降至 0.419--0.852\n"
-        "  官方 Baseline 覆盖率降至 0.488--0.759\n"
-        "  插件式机制预测器仅 0.140--0.385！"
+        "  插件式机制预测器仅为 0.140--0.385"
     )
-    ax.text(sb_x3 + 0.008, y0 + 0.610, t4_1, fontsize=7.3, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x3 + 0.008, y0 + 0.610, t4_1, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # Subbox 4.2: 机制根源分析
     draw_subbox(ax, sb_x3, y0 + 0.260, sb_w, 0.235, "white", "#cbd5e1",
                 tag_text="机制透视", tag_color=c_crimson, zorder=2)
-    ax.text(sb_x3 + 0.058, y0 + 0.483, "虚假精确度与指数型前向放大", fontsize=8.6, fontweight="bold", color="#991b1b", zorder=4)
+    ax.text(sb_x3 + 0.058, y0 + 0.483, "过度精确信号与指数型前向放大", fontsize=9.0, fontweight="bold", color="#991b1b", zorder=4)
     t4_2 = (
-        "• 参数外推误差随步长发生指数型前向放大:\n"
-        "  $P(h) \\sim \\exp(2h^2 s^2)$ 高阶超指数膨胀\n"
-        "• 预测系统表现出潜在【虚假精确度】(False Precision)\n"
-        "• 真实住院人数系统性突破预测区间上限\n"
-        "• 揭示黑盒统计集成在峰前期表现出严重欠覆盖"
+        "• 参数外推误差随步长发生指数型前向放大\n"
+        "• 预测系统在峰前期表现出过度精确信号\n"
+        "• 实测发病更易突破预测区间，导致欠覆盖\n"
+        "• 该结果属描述性差异，未识别单一因果机制"
     )
-    ax.text(sb_x3 + 0.008, y0 + 0.366, t4_2, fontsize=7.3, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x3 + 0.008, y0 + 0.366, t4_2, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # Subbox 4.3: 公共卫生决策启示
     draw_subbox(ax, sb_x3, y0 + 0.012, sb_w, 0.238, "white", "#cbd5e1",
                 tag_text="运筹启示", tag_color=c_crimson, zorder=2)
-    ax.text(sb_x3 + 0.058, y0 + 0.238, "非对称损失与动态不确定性", fontsize=8.6, fontweight="bold", color="#991b1b", zorder=4)
+    ax.text(sb_x3 + 0.058, y0 + 0.238, "非对称损失与动态不确定性", fontsize=9.0, fontweight="bold", color="#991b1b", zorder=4)
     t4_3 = (
-        "• 公共卫生非对称损失结构 (Asymmetric Loss):\n"
-        "  低估发病带来医疗挤兑与超额重症超额死亡\n"
+        "• 公共卫生非对称损失: 低估发病带来医疗挤兑\n"
         "  $\\mathcal{L}_{\\mathrm{under}}(e) \\gg \\mathcal{L}_{\\mathrm{over}}(e)$\n"
-        "• 决策建议: 禁止在峰前期将标称区间视作刚性安全边界;\n"
-        "  实施峰前期动态不确定性膨胀因子，为 ICU 扩容与\n"
-        "  抗病毒药物调配保留 2--4 周的前置运筹缓冲"
+        "• 决策启示: 峰前期勿将标称区间视作刚性边界\n"
+        "• 实施阶段特异的不确定性动态膨胀因子\n"
+        "  为床位扩容与抗病毒药物调配保留安全缓冲"
     )
-    ax.text(sb_x3 + 0.008, y0 + 0.120, t4_3, fontsize=7.3, color="#1e293b", va="center", zorder=4)
+    ax.text(sb_x3 + 0.008, y0 + 0.120, t4_3, fontsize=8.2, color="#1e293b", va="center", zorder=4)
 
     # -------------------------------------------------------------------------
     # Connecting Arrows Across Pillars

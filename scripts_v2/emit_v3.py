@@ -417,10 +417,9 @@ def emit_table4(bud):
             "\\toprule\n"
             "阶段 & $h_{\\text{周}}$ & $n_{\\text{州}}$ & "
             "$\\text{RelMSE}_{\\text{obs}}$ & $\\text{CV}^2$ & "
-            "$P$ & "
-            "闭合残差占比 (IQR) & 为正占比 \\\\\n"
+            "$P_{\\text{quad}}$ & "
+            "代数差额占比 (IQR) & 为正占比 \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
-    body = body.replace("闭合残差占比", "代数差额占比")
     (TABLES / "table4_budget.tex").write_text(body, encoding="utf-8")
 
 
