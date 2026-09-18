@@ -224,7 +224,7 @@ def generate_flowchart():
         "• 审计对垒模型池 (严格同条件配对):\n"
         "  ① FluSight-ensemble (全美顶尖多机构集成)\n"
         "  ② FluSight-baseline (官方朴素持续性基线)\n"
-        "  ③ Mechanistic benchmark (本文机制基准)\n"
+        "  ③ Plug-in mechanistic (插件式机制预测器)\n"
         "  ④ CDC 最终回填住院真实值 (Ground Truth)\n"
         "• 概率评估指标: 加权区间评分 (WIS)、MAE、\n"
         "  经验覆盖率 (Cover50/80/95) 与区间锐度"
@@ -237,7 +237,7 @@ def generate_flowchart():
     ax.text(sb_x2 + 0.058, y0 + 0.288, "多步预测技能与时效衰退", fontsize=8.6, fontweight="bold", color="#3730a3", zorder=4)
     t3_3 = (
         "• $h=1 \\to 4$ 周超前预测 WIS 呈快速单调恶化\n"
-        "• 集成模型在点预测均方误差上优于机制基准\n"
+        "• 集成模型在点预测均方误差上优于插件式机制预测器\n"
         "• COVIDhub-ensemble 跨波次历史对照 (Delta/Omicron):\n"
         "  在 1--2 周内相对朴素基准丧失技能优势 (SERatio $\\geq 1$)\n"
         "• 证实预测技能在短步长内的迅速衰退是各类重大\n"
@@ -248,35 +248,35 @@ def generate_flowchart():
     # -------------------------------------------------------------------------
     # Pillar 4: 核心发现与公卫运筹闭环 (Key Discovery & Operations)
     # -------------------------------------------------------------------------
-    draw_card(ax, xs[3], y0, w, h, "#fef2f2", c_crimson, "第四支柱：动力学分相与公卫运筹")
+    draw_card(ax, xs[3], y0, w, h, "#fef2f2", c_crimson, "第四支柱：峰值相对位置分层与公卫运筹")
     sb_x3 = xs[3] + 0.008
 
-    # Subbox 4.1: 下降期 vs 上升期对比
+    # Subbox 4.1: 峰后期 vs 峰前期对比
     draw_subbox(ax, sb_x3, y0 + 0.505, sb_w, 0.235, "white", "#cbd5e1",
-                tag_text="核心发现", tag_color=c_crimson, zorder=2)
-    ax.text(sb_x3 + 0.058, y0 + 0.728, "首创揭示：上升期校准崩塌", fontsize=8.6, fontweight="bold", color="#991b1b", zorder=4)
+                tag_text="核心特征", tag_color=c_crimson, zorder=2)
+    ax.text(sb_x3 + 0.058, y0 + 0.728, "经验特征：峰前期经验覆盖率较低", fontsize=8.6, fontweight="bold", color="#991b1b", zorder=4)
     t4_1 = (
-        "• 下降期 (Falling Phase) —— 近标称良好校准:\n"
+        "• 峰后期 (Post-peak) —— 近标称良好校准:\n"
         "  Hub 集成 95% 覆盖率稳定在 0.925--0.964\n"
         "  官方 Baseline 覆盖率为 0.881--0.922\n"
         "  退潮期自阻尼占优，系统表现出优良统计校准\n"
-        "• 上升期 (Rising Phase) —— 断崖式崩塌:\n"
-        "  Hub 集成覆盖率骤降至 0.419--0.852\n"
+        "• 峰前期 (Pre-peak) —— 经验覆盖率显著偏低:\n"
+        "  Hub 集成覆盖率降至 0.419--0.852\n"
         "  官方 Baseline 覆盖率降至 0.488--0.759\n"
-        "  机制基准严重坍塌至 0.140--0.385！"
+        "  插件式机制预测器仅 0.140--0.385！"
     )
     ax.text(sb_x3 + 0.008, y0 + 0.610, t4_1, fontsize=7.3, color="#1e293b", va="center", zorder=4)
 
     # Subbox 4.2: 机制根源分析
     draw_subbox(ax, sb_x3, y0 + 0.260, sb_w, 0.235, "white", "#cbd5e1",
                 tag_text="机制透视", tag_color=c_crimson, zorder=2)
-    ax.text(sb_x3 + 0.058, y0 + 0.483, "虚假精确度与几何误差放大", fontsize=8.6, fontweight="bold", color="#991b1b", zorder=4)
+    ax.text(sb_x3 + 0.058, y0 + 0.483, "虚假精确度与指数型前向放大", fontsize=8.6, fontweight="bold", color="#991b1b", zorder=4)
     t4_2 = (
-        "• 参数外推误差在指数爬坡期发生几何放大:\n"
+        "• 参数外推误差随步长发生指数型前向放大:\n"
         "  $P(h) \\sim \\exp(2h^2 s^2)$ 高阶超指数膨胀\n"
-        "• 预测系统表现出严重的【虚假精确度】(False Precision)\n"
+        "• 预测系统表现出潜在【虚假精确度】(False Precision)\n"
         "• 真实住院人数系统性突破预测区间上限\n"
-        "• 揭示黑盒统计集成严重低估了上升期分布外方差"
+        "• 揭示黑盒统计集成在峰前期表现出严重欠覆盖"
     )
     ax.text(sb_x3 + 0.008, y0 + 0.366, t4_2, fontsize=7.3, color="#1e293b", va="center", zorder=4)
 
@@ -288,8 +288,8 @@ def generate_flowchart():
         "• 公共卫生非对称损失结构 (Asymmetric Loss):\n"
         "  低估发病带来医疗挤兑与超额重症超额死亡\n"
         "  $\\mathcal{L}_{\\mathrm{under}}(e) \\gg \\mathcal{L}_{\\mathrm{over}}(e)$\n"
-        "• 决策建议: 禁止在爬坡期将标称区间视作安全边界;\n"
-        "  实施上升期动态不确定性膨胀因子，为 ICU 扩容与\n"
+        "• 决策建议: 禁止在峰前期将标称区间视作刚性安全边界;\n"
+        "  实施峰前期动态不确定性膨胀因子，为 ICU 扩容与\n"
         "  抗病毒药物调配保留 2--4 周的前置运筹缓冲"
     )
     ax.text(sb_x3 + 0.008, y0 + 0.120, t4_3, fontsize=7.3, color="#1e293b", va="center", zorder=4)
@@ -310,7 +310,7 @@ def generate_flowchart():
 
     # Arrow 3 -> 4
     draw_arrow(ax, xs[2]+w+0.002, y0+0.62, xs[3]-0.002, y0+0.62, color=c_crimson, lw=2.4)
-    ax.text(xs[2]+w+0.012, y0+0.635, "分相审计", fontsize=7.2, fontweight="bold", color=c_crimson, zorder=10)
+    ax.text(xs[2]+w+0.012, y0+0.635, "分层审计", fontsize=7.2, fontweight="bold", color=c_crimson, zorder=10)
 
     # Bottom Legend / Footer
     ax.text(0.5, 0.038, "图 1: 传染病传播动力学可预测视界理论推导、多尺度实证校准、CDC 业务审计与公共卫生运筹决策架构图",

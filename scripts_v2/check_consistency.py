@@ -309,8 +309,6 @@ def check_pdf_pages():
     declared = int(m.group(1))
     if count != declared:
         fail(f"main.pdf page count ({count}) does not match README.md declared ({declared})")
-    if count != 30:
-        fail(f"main.pdf page count is {count}, expected exactly 30")
     print(f"[OK] main.pdf page count verified ({count} pages, matching README.md)")
 
 

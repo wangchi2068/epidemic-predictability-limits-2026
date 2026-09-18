@@ -39,7 +39,7 @@ MODELS = ["ensemble", "baseline", "mechanistic"]
 MODEL_LABEL = {
     "ensemble": "Hub 集成",
     "baseline": "官方基线",
-    "mechanistic": "机制基准",
+    "mechanistic": "插件式机制预测器",
 }
 MODEL_COLOR = {"ensemble": "#1b7837", "baseline": "#2166ac", "mechanistic": "#b2182b"}
 MODEL_STYLE = {"ensemble": "-o", "baseline": "--s", "mechanistic": "-.^"}
@@ -128,7 +128,7 @@ def panel_a(ax, data: dict) -> None:
 
 def panel_b(ax, data: dict) -> None:
     phases = ["rising", "peak", "declining"]
-    ph_label = ["上升期\n(Rising)", "达峰期\n(Peak)", "下降期\n(Declining)"]
+    ph_label = ["峰前期\n(Pre-peak)", "峰值窗口\n(Peak window)", "峰后期\n(Post-peak)"]
     x = np.arange(len(phases))
     w = 0.25
 
@@ -197,9 +197,9 @@ def panel_b(ax, data: dict) -> None:
 
     ax.axhline(0.95, color="#d95f02", ls="--", lw=1.2, label="标称 95% 水平", zorder=2)
 
-    # Highlight rising phase collapse
+    # Highlight pre-peak phase coverage
     ax.annotate(
-        "上升期校准显著坍塌\n(经验覆盖率最低仅 0.14--0.49)",
+        "峰前期经验覆盖率较低\n(实测覆盖率仅 0.14--0.49)",
         xy=(0.0, 0.49),
         xytext=(0.0, 1.04),
         arrowprops=dict(arrowstyle="->", color="#b2182b", lw=1.0),
@@ -210,7 +210,7 @@ def panel_b(ax, data: dict) -> None:
         zorder=6,
     )
 
-    ax.set_title("(b) 各动力学阶段经验 95% 预测区间覆盖率\n（柱为 2025--26，散点为前两季对照）", fontsize=9, fontweight="bold")
+    ax.set_title("(b) 峰值相对位置各阶段经验 95% 预测区间覆盖率\n（柱为 2025--26，散点为前两季对照）", fontsize=9, fontweight="bold")
     ax.set_xticks(x)
     ax.set_xticklabels(ph_label, fontsize=8)
     ax.set_ylabel("经验覆盖率（标称 = 0.95）", fontsize=8.5)
@@ -266,7 +266,7 @@ def panel_c(ax, data: dict) -> None:
         error_kw=dict(lw=1.0, capthick=1.0, ecolor="#8c1221"),
         color="#d73027",
         alpha=0.88,
-        label="机制基准 $-$ 集成 (Mech $-$ Ensemble)",
+        label="插件式机制预测器 $-$ 集成 (Mech $-$ Ensemble)",
         edgecolor="white",
         linewidth=0.8,
         zorder=3,
