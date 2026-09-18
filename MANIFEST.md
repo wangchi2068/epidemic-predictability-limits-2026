@@ -8,14 +8,14 @@
 | 磁盘文件路径 | 文件类型 | 说明与用途 |
 |---|---|---|
 | `main.tex` | LaTeX 源码 | **历史投稿版**论文主文档源码：含定理 1、2、4、5R、命题 3、命题 5 与推论 1--5、三项描述性误差记账（0 错误、0 溢出、0 未定义引用） |
-| `main.pdf` | PDF 文档 | 历史投稿版编译产物（57 页，由 Tectonic 从 `main.tex` 编译生成） |
-| `main_reframed.tex` | LaTeX 源码 | **重构主稿**：条件锐风险视界、后验总方差分解、固定 $k$ 宏观有限步闭式、同口径配对损失审计与版本化外部评分协议 |
-| `main_reframed.pdf` | PDF 文档 | 重构主稿编译产物（10 页，0 未定义引用、0 Overfull hbox） |
-| `references.bib` | BibTeX | 净化后的参考文献库（60 篇，双向完全闭合：0 缺失、0 未引项） |
+| `main.pdf` | PDF 文档 | 历史投稿版编译产物（50 页，由 Tectonic 从 `main.tex` 编译生成） |
+| `archive/main_reframed.tex` | LaTeX 源码 | **重构主稿**：条件锐风险视界、后验总方差分解、固定 $k$ 宏观有限步闭式、同口径配对损失审计与版本化外部评分协议 |
+| `archive/main_reframed.pdf` | PDF 文档 | 重构主稿编译产物（12 页，0 未定义引用、0 Overfull hbox，由 Tectonic 从 `archive/main_reframed.tex` 编译生成） |
+| `references.bib` | BibTeX | 净化后的参考文献库（44 篇，双向完全闭合：0 缺失、0 未引项） |
 | `README.md` | Markdown | 项目自洽指南、架构说明与复现指南 |
 | `MANIFEST.md` | Markdown | 本文件：全量有效交付文件与磁盘真实路径对照表 |
 | `environment.yml` | YAML | Conda 运行环境依赖定义 |
-| `REWRITE_REPORT.md` | Markdown | 重构决策、删改范围、已验证结果与剩余证据门槛 |
+| `archive/REWRITE_REPORT.md` | Markdown | 重构决策、删改范围、已验证结果与剩余证据门槛 |
 | `LICENSE` | 文本 | 开源学术授权协议 |
 
 ---
@@ -28,9 +28,20 @@
 
 ---
 
-## 3. 表格源码片段与正文表号对应 (`tables_v3/`)
-正文中的表格采用 `\input{tables_v3/...}` 动态加载。下表列出由片段文件加载的表格及其**实际编译表序**（表号按全文 `\caption` 出现顺序自动编号：表 1 主要符号、表 2 样本量基准、表 3 模拟参数设置为 `main.tex` 内联表；表 5 多口径对照为内联表）：
+## 3. 表格清单与对应关系
 
+### 3.1 重构主稿 (`archive/main_reframed.tex`, 12 页) 表格清单
+| 正文表序 | 标题与说明 | 对应数据来源 / 生成脚本 |
+|---|---|---|
+| **表 1** | 固定 $k_{\rm agg}$ 宏观模型的条件机制根（包含 $\widetilde R_{\rm week}$ 与 $\widetilde R_{\rm gen}$ 双尺度） | `scripts_v2/reframed_analysis.py` <- `reports_v3/state_phases.json` |
+| **表 2** | 模型减持续性基线的配对损失差（含 2,000 次州块移动块自助 95% 置信区间） | `scripts_v2/reframed_analysis.py` <- `reports_v3/reframed_summary.json` |
+| **表 3** | 个体传播链的负二项工作模型校准（香港 COVID-19 与几内亚埃博拉队列） | `data/micro/micro_branching_fit_results.json` |
+| **表 4** | FluSight 的 final-vintage 外部审计：三个锁定赛季（集成 vs baseline，共同单元） | `scripts_v2/score_flusight.py` <- `reports_v3/flusight_v1.*_strict.json` |
+| **表 5** | 严格四向相交单元上的完整评分面板与配对差异（$n_4=1235\sim 1376$，含 $\Delta(\text{Mech}-\text{Base})$ 与 95% CI） | `scripts_v2/flusight_audit_extended.py` <- `reports_v3/flusight_v1.*_extended.json` |
+| **表 6** | 按流行阶段分层的 WIS 与 95% 覆盖率（固定 $h=1$ 前瞻，严格四向相交单元） | `scripts_v2/flusight_audit_extended.py` <- `reports_v3/flusight_v1.*_extended.json` |
+
+### 3.2 历史投稿长稿 (`main.tex`, 50 页) 表格片段 (`tables_v3/`)
+正文历史稿采用 `\input{tables_v3/...}` 动态加载：
 | 磁盘文件名 | 正文表序与标题 | 对应数据来源 / 生成脚本 |
 |---|---|---|
 | `tables_v3/table2_micro.tex` | **表 4**：微观传播链层的子代分布极大似然拟合与信息论下界检验 | `scripts_v2/emit_v3.py` <- `data/micro/micro_branching_fit_results.json` |
@@ -44,11 +55,19 @@
 | `reports_v3/predictor_sensitivity.json` | 七阶段在两种预测规则下的机制视界与 bc/plug 比值 |
 | `reports_v3/caliber_table.json` | 七阶段多口径视界与实测时效对照结果 |
 | `tables_v3/table6_hub.tex` | **表 9**：COVIDhub-ensemble 集成预测的州级技能衰减 | `scripts_v2/emit_v3.py` <- `data/hub/forecast_hub_operational_evaluation.json` |
-| `tables_v3/table7_tiers.tex` | **表 10**：公共卫生决策分级场景、多档容忍度宏观机制视界与风控策略推荐 | `scripts_v2/emit_v3.py` <- `reports_v3/scenarios.json` |
+| `tables_v3/table7_tiers.tex` | **表 10**：不同误差容忍度下宏观机制视界的示意性决策场景映射 | `scripts_v2/emit_v3.py` <- `reports_v3/scenarios.json` |
 
 ---
 
 ## 4. 高清矢量图件清单
+
+### 4.1 重构主稿 (`archive/main_reframed.tex`) 图件
+| 磁盘文件路径 | 正文图序与内容说明 |
+|---|---|
+| `reports_v3/figures/fig_micro.png` | **图 1**：个体传播链中负二项工作模型的拟合摘要（仅支持过度离散工作假设，不作跨尺度推断） |
+| `reports_v3/figures/fig_state_horizons.png` | **图 2**：七个流行阶段的州级宏观条件机制根空间分布 |
+
+### 4.2 历史投稿长稿 (`main.tex`) 图件
 | 磁盘文件路径 | 正文图序与内容说明 |
 |---|---|
 | `reports/figures_v2/fig2_cv_verify.png` | **图 2**：负二项分支过程单代及全代变异系数平方 CV²(h) 理论曲线与模拟验证 |
@@ -71,8 +90,8 @@
 | `data/panels/flu_weekly_hospitalizations.csv.gz` | 全美 51 个州周度流感新增住院面板 (2022--23, 2024--25) |
 | `data/panels/rsv_weekly_hospitalizations.csv.gz` | 全美 51 个州周度 RSV 新增住院面板 (2024--25, 2025--26) |
 | `data/panels/us_state_daily_hospitalizations.csv` | 州级逐日住院基础序列 |
-| `data/hub/` | COVID-19 Forecast Hub 官方顶级集成模型预测与评估目录 (含 12 个原点原始预测归档) |
-| `data/hub/forecast_hub_operational_evaluation.json` | 预测枢纽 12 个原点 1--4 周技能衰减与持续性基线对比统计结果 |
+| `data/hub/` | [历史存盘/已废弃] COVID-19 Forecast Hub 早期集成预测目录 (含 12 个原点原始预测归档) |
+| `data/hub/forecast_hub_operational_evaluation.json` | [历史存盘/已废弃] 早期旧工作包旧 Hub 汇总指标（无法由随附 CSV 以误差容忍度重建，已移出重构稿主证据链，仅保留作复现性审计阴性对照记录在 `reports_v3/hub_pooled_metric_NOTE.md`） |
 | `data/flusight/README.md` | 外部审计协议：锁定 release 与 commit、评分口径与边界、输入哈希与复现命令 |
 | `data/flusight/v1.0.0/target-hospital-admissions.csv` | FluSight v1.0.0 frozen target file (SHA-256 recorded in `data/flusight/README.md`) |
 | `data/flusight/v1.0.0/ensemble/` | FluSight v1.0.0 30 frozen ensemble forecast origins |
@@ -90,7 +109,8 @@
 ## 6. 生产级分析与自动化验证套件 (`scripts_v2/`)
 | 磁盘文件路径 | 说明与功能 |
 |---|---|
-| `scripts_v2/make_all.py` | 全流程一键复现主入口：数据溯源 -> 面板估计 -> 制表画图 -> 定理模拟 -> 一致性检验 |
+| `scripts_v2/make_reframed_all.py` | **重构稿一键全自动复现主入口**：分析运行 -> 理论核验 -> 严格四向相交单元核验 -> Tectonic 编译 12 页 PDF -> 0 错误检验 |
+| `scripts_v2/make_all.py` | 历史全流程一键复现主入口：数据溯源 -> 面板估计 -> 制表画图 -> 定理模拟 -> 一致性检验 |
 | `scripts_v2/check_consistency.py` | 9 大类核心数理、实证断言及文档路径存在性自动化一致性检验脚本 |
 | `scripts_v2/ingest_and_aggregate.py` | 数据溯源与完整性校验脚本（含国家级窗口和校验断言） |
 | `scripts_v2/macro_model.py` | 固定 $k_{	ext{agg}}$ 宏观负二项更新模型的精确方差闭式（州级主口径的唯一来源，被 state_panel_v3 / emit_v3 / caliber_table 共用） |
@@ -165,7 +185,7 @@
 | COVID-19 州级住院面板 | reichlab/covid19-forecast-hub（目标数据 `target-data`，NHSN 周度住院口径） | 终版 release 2024-04-28 | 2024-04-28 |
 | 季节性流感州级住院面板 | cdcepi/FluSight-forecast-hub（目标数据，NHSN 周度住院口径） | 终版归档 | 2026-09 |
 | RSV 州级住院面板 | cdcepi/RSV-forecast-hub（目标数据，NHSN 周度住院口径） | 终版归档 | 2026-09 |
-| COVIDhub-ensemble 预测归档 | reichlab/covid19-forecast-hub（`data-processed/COVIDhub-ensemble/`） | 逐周 12 个预测原点 | 2026-09 |
+| COVIDhub-ensemble 预测归档 | reichlab/covid19-forecast-hub（`data-processed/COVIDhub-ensemble/`，历史存盘/已废弃） | 逐周 12 个预测原点 | 2026-09 |
 | 香港 COVID-19 传播链 | Adam 等 (2020) 补充材料（接触追踪队列） | 公开发表版 | 2026-09 |
 | 几内亚埃博拉传播链 | Faye 等 (2015) 补充材料（Conakry 传播网络） | 公开发表版 | 2026-09 |
 
@@ -178,7 +198,7 @@
 | `data/panels/rsv_weekly_hospitalizations.csv.gz` | `22c0f0fa1f38a551cf2ab880bb306b2cad7f5d1d8777d46ceaa9ae1627cdc5f8` |
 | `data/panels/us_state_daily_hospitalizations.csv` | `90c9d057b9561c4ce26ac591a61c0e174df52acfbd3a695d35b09fac963ae338` |
 | `data/micro/micro_branching_fit_results.json` | `2369cf1cce28be1c1e7f7cdc304098df06e682f081a94626fec4656fdce51977` |
-| `data/hub/forecast_hub_operational_evaluation.json` | `4f6deb0852da027d699fa3512227a1a222b29344d9827eceff2e289abf953ac6` |
+| `data/hub/forecast_hub_operational_evaluation.json` | `4f6deb0852da027d699fa3512227a1a222b29344d9827eceff2e289abf953ac6`（历史存盘/已废弃） |
 
 ### 10.3 SHA-256 校验和（COVIDhub-ensemble 逐文件）
 

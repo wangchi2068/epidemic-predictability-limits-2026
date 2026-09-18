@@ -310,6 +310,9 @@ def main():
     emit_table5_hub(hub)
     emit_table6_tiers(scen)
     emit_table7(micro)
+    emit_table8_flusight()
+    emit_table9_phases()
+    emit_tab_sensitivity()
     print("tables written to tables_v3/")
 
 
@@ -341,8 +344,13 @@ def emit_table2(phases):
     rows = []
     for key, src, w0, w1, mu_g, disp in PHASES:
         rec = phases[key]
-        R = rec["R_summary"]
-        s = rec["s_summary"]
+        st_vals = list(rec["states"].values())
+        rw = [v["R_week"] for v in st_vals if v.get("R_week") is not None]
+        sw = [v["s_week"] for v in st_vals if v.get("s_week") is not None]
+        R_med = np.median(rw)
+        R_q25 = np.percentile(rw, 25)
+        R_q75 = np.percentile(rw, 75)
+        s_med = np.median(sw)
         k = rec["k_summary"]
         I0 = rec["I0_summary"]
         h = rec["h_week_summary"]
@@ -354,14 +362,14 @@ def emit_table2(phases):
             nat_cell = f"$\\ge 20^{{\\dagger}}$"
         rows.append(
             f"{disp} & {rec['n_states']} & "
-            f"{_fmt(R['median'],3)} [{_fmt(R['q25'],3)}, {_fmt(R['q75'],3)}] & "
-            f"{_fmt(s['median'],4)} & {_fmt(k['median'],1)} & "
-            f"{int(I0['median'])} & "
+            f"{_fmt(R_med,3)} [{_fmt(R_q25,3)}, {_fmt(R_q75,3)}] & "
+            f"{_fmt(s_med,4)} & {_fmt(k['median'],1)} & "
+            f"{int(round(I0['median']))} & "
             f"{_fmt(h['median'],1)} [{_fmt(h['q25'],1)}, {_fmt(h['q75'],1)}] & "
             f"{nat_cell} \\\\")
     body = ("\\begin{tabular}{lccccccc}\n"
             "\\toprule\n"
-            "阶段 & $n_{\\text{州}}$ & $R$ 中位数 [IQR] & $s$ 中位数 & "
+            "阶段 & $n_{\\text{州}}$ & $R_{\\text{周}}$ 中位数 [IQR] & $s_{\\text{周}}$ 中位数 & "
             "$k_{\\text{agg}}$ 中位数 & $I_0$ 中位数 & "
             "$h^*_{\\text{周}}$ 中位数 [IQR] & 国家级 $h^*_{\\text{周}}$ \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
@@ -452,6 +460,11 @@ def emit_table6_tiers(scen):
 def emit_table7(micro):
     rean = json.loads((REPORTS / "micro_reanalysis.json").read_text(encoding="utf-8"))
     rows = []
+    name_map = {
+        "Hong_Kong_COVID19_Local": "香港 COVID-19（本地）",
+        "Hong_Kong_COVID19_All": "香港 COVID-19（全体）",
+        "Guinea_Ebola_2014": "几内亚埃博拉 2014",
+    }
     for name, rec in micro.items():
         if name == "LloydSmith_reference":
             continue
@@ -460,19 +473,140 @@ def emit_table7(micro):
         k_ci = ra.get("parametric_ci_k")
         r_lo, r_hi = (f"{r_ci[0]:.2f}", f"{r_ci[1]:.2f}") if r_ci else ("--", "--")
         k_lo, k_hi = (f"{k_ci[0]:.2f}", f"{k_ci[1]:.2f}") if k_ci else ("--", "--")
+        gof_p = f"{ra.get('gof', {}).get('p', 0.0):.4f}" if "gof" in ra else "--"
+        label = name_map.get(name, name.replace("_", " "))
         rows.append(
-            f"{name.replace('_', ' ')} & {rec['N']} & {rec['R_mle']:.3f} & "
+            f"{label} & {rec['N']} & {rec['R_mle']:.3f} & "
             f"{r_lo}--{r_hi} & {rec['k_mle']:.3f} & {k_lo}--{k_hi} & "
             f"{rec['empirical_CV2']:.2f} & {rec['theory_CV2']:.2f} & "
             f"{rec['delta_aic_poisson_vs_nb']:.1f} & "
-            f"{rec['bootstrap']['ratio_var_to_crb']:.3f} \\\\")
-    body = ("\\begin{tabular}{lcc c c c cc c c}\n"
+            f"{rec['bootstrap']['ratio_var_to_crb']:.3f} & {gof_p} \\\\")
+    body = ("\\begin{tabular}{lcc c c c cc c c c}\n"
             "\\toprule\n"
             "数据集 & $N$ & $\\hat R$ & 95\\% CI & $\\hat k$ & 95\\% CI & "
-            "经验 $\\text{CV}^2$ & 理论 $\\text{CV}^2$ & $\\Delta\\text{AIC}$ & 自助/CRB \\\\\n"
+            "经验 $\\text{CV}^2$ & 理论 $\\text{CV}^2$ & $\\Delta\\text{AIC}$ & 自助/CRB & 拟合优度 $p$ \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
     (TABLES / "table2_micro.tex").write_text(body, encoding="utf-8")
 
 
+def emit_table8_flusight():
+    releases = [
+        ("v1.0.0 (2023--24)", "flusight_v1.0_extended.json"),
+        ("v1.1.0 (2024--25)", "flusight_v1.1_extended.json"),
+        ("v1.2.0 (2025--26)", "flusight_v1.2_extended.json"),
+    ]
+    model_labels = [
+        ("ensemble", "Hub 集成 (Ensemble)"),
+        ("baseline", "官方基线 (Baseline)"),
+        ("mechanistic", "机制基准 (Mechanistic)"),
+    ]
+    rows = []
+    for i, (rel_label, json_file) in enumerate(releases):
+        d = json.loads((REPORTS / json_file).read_text(encoding="utf-8"))
+        bm = d["by_horizon"]["1"]["by_model"]
+        n_val = f"{bm['ensemble']['n']:,}"
+        rows.append(f"\\multirow{{3}}{{*}}{{{rel_label}}}")
+        for m_key, m_label in model_labels:
+            m = bm[m_key]
+            wis_str = f"\\textbf{{{m['wis']:.2f}}}" if m_key == "ensemble" else f"{m['wis']:.2f}"
+            c95_str = f"\\textbf{{{m['cover95']:.3f}}}" if m_key == "mechanistic" else f"{m['cover95']:.3f}"
+            rows.append(f"& {m_label} & {n_val} & {wis_str} & {m['cover50']:.3f} & "
+                        f"{m['cover80']:.3f} & {c95_str} & {m['width95']:.1f} & {m['pit_mean']:.3f} \\\\")
+        if i < len(releases) - 1:
+            rows.append("\\midrule")
+    body = ("\\begin{tabular}{llrrrrrrr}\n"
+            "\\toprule\n"
+            "发布版本 & 模型体系 & 共同单元数 $n$ & WIS & 覆盖率 50\\% & 覆盖率 80\\% & 覆盖率 95\\% & 95\\% 区间宽 & PIT 均值 \\\\\n"
+            "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+    (TABLES / "table8_flusight_audit.tex").write_text(body, encoding="utf-8")
+
+
+def emit_table9_phases():
+    releases = [
+        ("v1.0.0 (2023--24)", "flusight_v1.0_extended.json", "v1.0.0"),
+        ("v1.1.0 (2024--25)", "flusight_v1.1_extended.json", "v1.1.0"),
+        ("v1.2.0 (2025--26)", "flusight_v1.2_extended.json", "v1.2.0"),
+    ]
+    phase_defs = [
+        ("rising", "上升期 (Rising)"),
+        ("peak", "达峰期 (Peak)"),
+        ("declining", "下降期 (Declining)"),
+    ]
+    bold_set = {
+        ("v1.0.0", "rising", "mechanistic"),
+        ("v1.0.0", "declining", "ensemble"),
+        ("v1.1.0", "rising", "ensemble"),
+        ("v1.1.0", "rising", "baseline"),
+        ("v1.1.0", "rising", "mechanistic"),
+        ("v1.1.0", "declining", "ensemble"),
+        ("v1.1.0", "declining", "mechanistic"),
+        ("v1.2.0", "rising", "ensemble"),
+        ("v1.2.0", "rising", "baseline"),
+        ("v1.2.0", "rising", "mechanistic"),
+        ("v1.2.0", "declining", "ensemble"),
+        ("v1.2.0", "declining", "mechanistic"),
+    }
+    rows = []
+    for i, (rel_label, json_file, rel_tag) in enumerate(releases):
+        d = json.loads((REPORTS / json_file).read_text(encoding="utf-8"))
+        bph = d["by_phase_by_horizon"]["1"]
+        rows.append(f"\\multirow{{3}}{{*}}{{{rel_label}}}")
+        for p_key, p_label in phase_defs:
+            models = {m["model"]: m for m in bph[p_key]}
+            ens = models["ensemble"]
+            base = models["baseline"]
+            mech = models["mechanistic"]
+            n_val = f"{ens['n']:,}"
+
+            def fmt_cover(m_key, m_obj):
+                c_str = f"{m_obj['cover95']:.3f}"
+                if (rel_tag, p_key, m_key) in bold_set:
+                    c_str = f"\\textbf{{{c_str}}}"
+                return f"{m_obj['wis']:.2f} ({c_str})"
+
+            ens_str = fmt_cover("ensemble", ens)
+            base_str = fmt_cover("baseline", base)
+            mech_str = fmt_cover("mechanistic", mech)
+
+            rows.append(f"& {p_label} & {n_val} & {ens_str} & {base_str} & {mech_str} \\\\")
+        if i < len(releases) - 1:
+            rows.append("\\midrule")
+    body = ("\\begin{tabular}{llrrrr}\n"
+            "\\toprule\n"
+            "发布版本 & 流行动力学阶段 & 共同单元数 $n$ & Hub 集成 WIS (95\\% 覆盖率) & 官方基线 WIS (95\\% 覆盖率) & 机制基准 WIS (95\\% 覆盖率) \\\\\n"
+            "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+    (TABLES / "table9_phase_stratification.tex").write_text(body, encoding="utf-8")
+
+
+
+def emit_tab_sensitivity():
+    d = json.loads((REPORTS / "sensitivity_v4.json").read_text(encoding="utf-8"))["A_kagg"]
+    phase_order = [
+        ("Delta", "COVID Delta"),
+        ("Omicron", "COVID Omicron"),
+        ("JN1", "COVID JN.1"),
+        ("flu22", "Influenza 2022--23"),
+        ("flu24", "Influenza 2024--25"),
+        ("rsv24", "RSV 2024--25"),
+        ("rsv25", "RSV 2025--26"),
+    ]
+    rows = []
+    for key, label in phase_order:
+        rec = d[key]
+        w = rec["median_h_by_window"]
+        c = rec["median_h_by_cap"]
+        row = (f"{label:<18} & {w['5']:.2f} & {w['6']:.2f} & {w['8']:.2f} & {w['10']:.2f} & "
+               f"{c['100']:.2f} & {c['500']:.2f} & {c['1000']:.2f} & {c['inf']:.2f} \\\\")
+        rows.append(row)
+    body = ("\\begin{tabular}{lrrrrrrrrr}\n"
+            "\\toprule\n"
+            "& \\multicolumn{4}{c}{推断窗口长度（周）} & \\multicolumn{4}{c}{$k_{\\text{agg}}$ 上限截断} \\\\\n"
+            "\\cmidrule(lr){2-5}\\cmidrule(lr){6-9}\n"
+            "阶段 & 5 & 6 & 8 & 10 & 100 & 500 & 1000 & $\\infty$ \\\\\n"
+            "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+    (TABLES / "tab_sensitivity.tex").write_text(body, encoding="utf-8")
+
+
 if __name__ == "__main__":
     main()
+

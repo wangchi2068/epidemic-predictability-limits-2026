@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-"""check_consistency.py — build-halting consistency suite (nine assertion classes).
+"""check_consistency.py — build-halting consistency suite (11 assertion classes).
 
 1. Table fragments: regenerate every tables_v3/*.tex body from the deposited
-   JSONs and byte-compare against the committed fragments.
+   JSONs and byte-compare against the committed fragments (9 fragments),
+   and verify all tables_v3 inputs referenced in main.tex exist and are non-empty.
 2. Figures: every figure referenced in main.tex exists and is non-blank
    (>5% of pixels differ from the background).
 3. Stale-literal blacklist: retired phrases from earlier versions must be
@@ -20,6 +21,9 @@
    series equal the values the manuscript's tables were built from.
 9. Document-declared paths: every file, directory, or glob pattern declared in
    README.md and MANIFEST.md must exist on disk.
+10. Citations closure: references.bib is 100% two-way closed with main.tex
+    (exactly 44 entries cited, 0 missing, 0 unreferenced).
+11. PDF page count: compiled main.pdf is verified to match README.md (30 pages).
 """
 from __future__ import annotations
 
@@ -77,19 +81,38 @@ def check_tables():
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td)
         emit_v3.TABLES = tmp
+        emit_v3.emit_tab_sensitivity()
         emit_v3.emit_table2(phases)
         emit_v3.emit_table3(roll_state, roll_nat, phases, bud)
         emit_v3.emit_table4(bud)
         emit_v3.emit_table5_hub(hub)
         emit_v3.emit_table6_tiers(scen)
         emit_v3.emit_table7(micro)
-        for f in sorted(tmp.glob("*.tex")):
+        emit_v3.emit_table8_flusight()
+        emit_v3.emit_table9_phases()
+        generated = sorted(tmp.glob("*.tex"))
+        if len(generated) != 9:
+            fail(f"expected 9 generated table fragments, got {len(generated)}")
+        for f in generated:
             committed = TABLES / f.name
             if not committed.exists():
                 fail(f"missing committed table fragment {f.name}")
             if committed.read_bytes() != f.read_bytes():
                 fail(f"table fragment {f.name} diverges from the JSONs")
-    print("[OK] table fragments match the deposited JSONs (6 fragments)")
+    
+    # Dynamically verify every \input{tables_v3/...} referenced in main.tex exists and is non-empty
+    tex = (PAPER / "main.tex").read_text(encoding="utf-8")
+    table_inputs = re.findall(r"\\input\{tables_v3/([^}]+)\}", tex)
+    if not table_inputs:
+        fail("no tables_v3 inputs found in main.tex")
+    for t in table_inputs:
+        t_file = t if t.endswith(".tex") else f"{t}.tex"
+        p = TABLES / t_file
+        if not p.exists():
+            fail(f"table referenced in main.tex missing on disk: {t_file}")
+        if p.stat().st_size == 0:
+            fail(f"table referenced in main.tex is empty: {t_file}")
+    print(f"[OK] table fragments match deposited JSONs (9 fragments checked, {len(table_inputs)} referenced in main.tex)")
 
 
 def check_figures():
@@ -239,6 +262,47 @@ def check_doc_paths():
     print(f"[OK] {checked} document-declared paths verified in README.md and MANIFEST.md")
 
 
+def check_citations():
+    tex = (PAPER / "main.tex").read_text(encoding="utf-8")
+    cites = set()
+    for match in re.findall(r"\\cite[a-zA-Z]*\{([^}]+)\}", tex):
+        for key in match.split(","):
+            key = key.strip()
+            if key:
+                cites.add(key)
+    bib_text = (ROOT / "references.bib").read_text(encoding="utf-8")
+    raw_entries = re.findall(r"@\w+\s*\{\s*([^,]+),", bib_text)
+    entries = {k.strip() for k in raw_entries}
+    missing = cites - entries
+    unref = entries - cites
+    if missing:
+        fail(f"missing citation keys in references.bib: {missing}")
+    if unref:
+        fail(f"unreferenced citation keys in references.bib: {unref}")
+    if len(entries) != 44:
+        fail(f"expected exactly 44 references, found {len(entries)}")
+    print(f"[OK] citations 100% two-way closed ({len(cites)}/44 entries cited, 0 missing, 0 unreferenced)")
+
+
+def check_pdf_pages():
+    import pypdf
+    pdf_path = PAPER / "main.pdf"
+    if not pdf_path.exists():
+        fail("main.pdf does not exist")
+    reader = pypdf.PdfReader(pdf_path)
+    count = len(reader.pages)
+    readme_text = (ROOT / "README.md").read_text(encoding="utf-8")
+    m = re.search(r"main\.pdf[^\n]*?(\d+)\s*页", readme_text)
+    if not m:
+        fail("could not parse declared page count from README.md")
+    declared = int(m.group(1))
+    if count != declared:
+        fail(f"main.pdf page count ({count}) does not match README.md declared ({declared})")
+    if count != 30:
+        fail(f"main.pdf page count is {count}, expected exactly 30")
+    print(f"[OK] main.pdf page count verified ({count} pages, matching README.md)")
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     print("=== consistency suite ===", flush=True)
@@ -251,7 +315,9 @@ def main():
     check_crossings()
     check_series_identity()
     check_doc_paths()
-    print("\nAll 9 consistency assertions passed.", flush=True)
+    check_citations()
+    check_pdf_pages()
+    print("\nAll 11 consistency assertions passed.", flush=True)
 
 
 if __name__ == "__main__":

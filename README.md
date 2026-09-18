@@ -1,24 +1,24 @@
-# 传染病传播动力学的可预测视界、极限机制与实证研究 (Epidemic Predictability Limits)
+# 传染病传播动力学的模型条件可预测视界、机制基准与实证校准差距 (Model-Conditional Epidemic Predictability Benchmarks & Calibration Gaps)
 
 本工作目录为论文研究与正式投稿的**唯一核心权威工作区** (`final_clean_submission/`)，所有历史草稿、冗余副本及中间构建垃圾已全面剔除。
 
 ## 重构稿入口
 
-`main_reframed.tex` / `main_reframed.pdf` 是按 `REWRITE_REPORT.md` 重构的独立版本。该版本把视界限定为固定观测层模型下的条件机制基准，并用 `scripts_v2/reframed_analysis.py` 生成同原点、同目标、同归一化的配对损失审计。理论部分给出了任意信息集下达到条件风险地板的锐界定理、后验总方差分解、固定 $k$ 宏观有限步方差闭式、共享对数正态参数混合与条件 AR(1)/单位根边界；证明见 `derivations/derivations_manual.pdf`，数值接口见 `scripts_v2/reframed_model.py`。原 `main.tex` 保留为历史投稿版本，便于逐项核对。
+`archive/main_reframed.tex` / `archive/main_reframed.pdf` 是按 `archive/REWRITE_REPORT.md` 重构的独立版本。该版本把视界限定为固定观测层模型下的条件机制基准，并用 `scripts_v2/reframed_analysis.py` 生成同原点、同目标、同归一化的配对损失审计。理论部分给出了任意信息集下达到条件风险地板的锐界定理、后验总方差分解、固定 $k$ 宏观有限步方差闭式、共享对数正态参数混合与条件 AR(1)/单位根边界；证明见 `derivations/derivations_manual.pdf`，数值接口见 `scripts_v2/reframed_model.py`。原 `main.tex` 保留为历史投稿版本，便于逐项核对。
 
 重构与验证命令：
 ```bash
 python scripts_v2/reframed_analysis.py    # 生成 reports_v3/reframed_summary.json
 python scripts_v2/verify_reframed.py      # 生成 reports_v3/theory_verification.json（7/7 通过）
 python scripts_v2/score_flusight.py data/flusight/v1.0.0 --start-date 2023-10-14 --end-date 2024-05-04 --output reports_v3/flusight_v1.0_strict.json --csv reports_v3/flusight_v1.0_strict.csv
-tectonic main_reframed.tex
+tectonic archive/main_reframed.tex
 tectonic derivations/derivations_manual.tex
 ```
 
-旧的 `forecast_hub_operational_evaluation.json` 不再作为重构稿的外部验证证据；其不可重建记录保留在 `reports_v3/hub_pooled_metric_NOTE.md`。FluSight **三个锁定 release**（v1.0.0 / v1.1.0 / v1.2.0）的 final-vintage 严格外部审计已完成，证据文件为 `reports_v3/flusight_v1.0_strict.json`、`flusight_v1.1_strict.json`、`flusight_v1.2_strict.json`（逐单元 CSV 见同名 `.csv`），三者均可从原始文件逐字节复现。扩展评分面板见 `reports_v3/flusight_v1.*_extended.json`：它在同一批预测单元上追加 WIS 分解、50/80/95% 覆盖率、区间宽度与随机化 PIT，按流行阶段分层，并把本稿的机制基准作为第四个预测器评分（结论：机制基准的 WIS 在每个赛季与步长上均高于官方 baseline，标称 95% 区间只覆盖 0.405–0.714；上升期所有预测器的校准同时崩塌）。实证报告见 `reports_v3/EMPIRICAL_EXTENSION_REPORT.md`；协议、锁定 commit 与逐文件 SHA-256 见 `data/flusight/README.md` 与 `data/flusight/file_hashes.json`。
+旧的 `forecast_hub_operational_evaluation.json` 不再作为重构稿的外部验证证据；其不可重建记录保留在 `reports_v3/hub_pooled_metric_NOTE.md`。FluSight **三个锁定 release**（v1.0.0 / v1.1.0 / v1.2.0）的 final-vintage 严格外部审计已完成，证据文件为 `reports_v3/flusight_v1.0_strict.json`、`flusight_v1.1_strict.json`、`flusight_v1.2_strict.json`（逐单元 CSV 见同名 `.csv`），三者均可从原始文件逐字节复现。扩展评分面板见 `reports_v3/flusight_v1.*_extended.json`：它在同一批预测单元上追加 WIS 分解、50/80/95% 覆盖率、区间宽度与随机化 PIT，按流行阶段分层，并把本稿的机制基准作为第四个预测器评分（结论：机制基准的 WIS 在每个赛季与步长上均高于官方 baseline，标称 95% 区间只覆盖 0.405–0.714；多数模型—赛季组合在上升期出现经验覆盖率下降）。实证报告见 `reports_v3/EMPIRICAL_EXTENSION_REPORT.md`；协议、锁定 commit 与逐文件 SHA-256 见 `data/flusight/README.md` 与 `data/flusight/file_hashes.json`。
 
 > **工作目录与稿件规范说明：**
-> 1. 本目录即为论文主稿的根目录，核心 LaTeX 文档为根目录下的 **`main.tex`**，编译输出为 **`main.pdf`**（57 页，Tectonic 编译）。
+> 1. 本目录即为论文主稿的根目录，核心 LaTeX 文档为根目录下的 **`main.tex`**，编译输出为 **`main.pdf`**（30 页，Tectonic 编译）。
 > 2. 内部评审材料（审稿意见、评审报告与作者回复信）均不纳入本公开复现包，以避免双盲匿名性泄漏。
 
 ---
@@ -27,11 +27,11 @@ tectonic derivations/derivations_manual.tex
 
 ```text
 .
-├── main.tex                                        # 历史投稿版 LaTeX 论文主文档源码（0 错误、0 溢出）
-├── main.pdf                                        # 历史投稿版 Tectonic 编译产物 (57 页)
-├── main_reframed.tex                               # 重构稿 LaTeX 源码（条件锐风险 + 版本化外部审计）
-├── main_reframed.pdf                               # 重构稿 Tectonic 编译产物 (10 页, 0 未定义引用/0 溢出)
-├── references.bib                                  # 净化后的参考文献库（60 篇，双向完全闭合）
+├── main.tex                                        # 精炼重构版 LaTeX 论文主文档源码（0 错误、0 溢出）
+├── main.pdf                                        # 精炼重构版 Tectonic 编译产物 (30 页)
+├── archive/main_reframed.tex                               # 重构稿 LaTeX 源码（条件锐风险 + 版本化外部审计）
+├── archive/main_reframed.pdf                               # 重构稿 Tectonic 编译产物 (10 页, 0 未定义引用/0 溢出)
+├── references.bib                                  # 净化后的参考文献库（44 篇，双向完全闭合：0 缺失、0 未引项）
 ├── README.md                                       # 本说明文件：项目架构、自洽规范与复现指南
 ├── MANIFEST.md                                     # 全量有效交付文件与磁盘真实路径全量对照表
 ├── environment.yml                                 # Conda 运行环境配置文件

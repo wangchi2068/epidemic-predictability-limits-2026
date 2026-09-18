@@ -1,0 +1,398 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[UTF8,fontset=fandol]{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\graphicspath{{./}{reports/figures_v2/}{reports_v3/figures/}}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{geometry}
+\geometry{left=2.2cm,right=2.2cm,top=2.3cm,bottom=2.3cm}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=blue!70!black,urlcolor=blue!70!black}
+\usepackage[numbers,sort&compress]{natbib}
+\setlength{\bibsep}{2pt plus 0.5pt minus 0.5pt}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\captionsetup{labelsep=space,labelfont=bf,textfont=small}
+\newtheorem{theorem}{定理}
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\newtheorem{definition}{定义}
+\newtheorem*{remark}{注记}
+\renewcommand{\qedsymbol}{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\footnotesize Mechanistic Benchmarks and Empirical Calibration of Epidemic Forecast Horizons}
+\fancyfoot[C]{\footnotesize\thepage}
+\begin{document}
+\emergencystretch=3em
+
+\begin{center}
+ {\zihao{2}\heiti\bfseries 传染病预测视界的机制基准与实证校准差距}
+\end{center}
+
+\noindent{\heiti\bfseries 摘要：}传染病预测的误差随前瞻步长增长，但任何“预测极限”都必须同时指明随机过程、观测尺度、信息集和预测规则。本文将问题重新表述为模型条件的预测风险基准，并证明条件均值在平方损失下达到且仅达到条件风险地板（sharp conditional risk floor）$H_\tau^\sharp$。在固定离散度 $k_{\rm agg}$ 的宏观负二项更新模型下，我们推导有限步方差闭式，并将指定 plug-in 预测规则的参数传播项与过程方差分开。该闭式给出可计算的机制阈值根 $H_{\rm mech}$，二者仅在后验退化且规则最优时重合，因此机制根不是现实预测能力的普适上界。我们在美国 51 个州级辖区的 COVID-19、流感和 RSV 周度住院冻结面板上，对七个流行阶段进行观测层校准，并以相同原点、目标、归一化和预测器比较对持续性及局部线性基线的配对损失。机制根的州级中位数为 2.20--7.12 周；配对样本外损失的方向随病原和阶段改变，说明机制基准与业务误差之间存在校准差距，但不能由此推出统一包络。香港 COVID-19 与几内亚埃博拉传播链支持采用过度离散负二项工作模型；其自助方差与模型内 Cram\'er--Rao 基准之比为 0.984--1.059，这一结果只表示模型内部校准。作为独立外部审计，FluSight 三个锁定 release（v1.0.0（2023--24）、v1.1.0（2024--25）、v1.2.0（2025--26））输入文件由 SHA-256 验证，数值评分可在锁定环境下完全复算。在集成、baseline 与机制基准共同出现的严格四向相交单元（$n_4=1235\sim 1376$）上，集成在全部赛季与步长均优于 baseline。机制基准的 WIS 在每一个赛季与步长上都显著高于 baseline（$h=1$ 步长下差值分别为 $+14.26$、$+45.78$ 与 $+26.15$，95\% 移动块自助置信区间均严格大于零），且标称 95\% 区间实测覆盖率仅为 0.405--0.714：机制基准给出的窄区间是过度自信的表现，而非精度。按流行阶段分层后，在 $h=1$ 步长下，下降期集成覆盖率恢复至 0.925--0.964（baseline 0.881--0.922，机制基准 0.381--0.575）；而在上升期各预测器覆盖率普遍大幅下降（集成降至 0.419--0.852，机制基准仅 0.140--0.385；峰值期集成覆盖率为 0.667--0.719）。所有值均为 final-vintage 历史审计，不构成实时预测上界。论文的中心结论是：固定 $k_{\rm agg}$ 宏观模型提供了清晰、可复算、且在指定信息集与损失下达到锐风险地板的误差基准；现实预测还需要单独的版本锁定样本外审计。
+
+\vspace{0.6em}
+\noindent{\heiti\bfseries 关键词：}传染病预测；负二项更新；预测视界；条件风险；样本外评估；可复现性
+
+\vspace{1.2em}
+\begin{center}
+{\Large\bfseries Mechanistic Benchmarks and Empirical Calibration of Epidemic Forecast Horizons}
+\end{center}
+\noindent{\textbf{Abstract:}} Forecast error grows with lead time, but a claim about a predictability limit is meaningful only after the stochastic process, observation scale, information set, and forecast rule are specified. We recast the problem as a model-conditional risk benchmark and show that the conditional mean attains the sharp squared-loss risk floor $H_\tau^\sharp$ for the declared information set. For a fixed aggregate dispersion $k_{\rm agg}$ negative-binomial update model, we derive a finite-step variance formula and separate process variance from posterior parameter mixing and plug-in rule excess risk. This yields a computable mechanistic benchmark horizon $H_{\rm mech}$, which coincides with $H_\tau^\sharp$ only under degenerate parameter posteriors and optimal forecast rules, rather than a universal operational bound. We calibrate it on frozen weekly hospitalization panels for COVID-19, influenza, and respiratory syncytial virus across 51 U.S. state-level jurisdictions and seven epidemic phases. A same-origin, same-target, same-scale rolling audit compares the log-linear predictor with persistence and local-linear baselines. State-level median mechanistic roots range from 2.20 to 7.12 weeks; paired out-of-sample loss differences change sign across pathogens and phases, indicating a calibration gap without identifying a universal envelope. Individual transmission-chain data are compatible with an overdispersed negative-binomial working model; bootstrap-to-model-internal Cramér--Rao variance ratios range from 0.984 to 1.059. As an independent external audit, three locked FluSight releases (v1.0.0, 2023--24; v1.1.0, 2024--25; v1.2.0, 2025--26) with input files verified via SHA-256 are fully reproducible in a locked environment. Evaluated on strictly common 4-way intersection cells ($n_4=1235$--$1376$), the operational ensemble beats the official baseline in every season and at every horizon. Scored on these identical cells, the mechanistic benchmark has significantly higher WIS than the official baseline at $h=1$ (paired differences $+14.26$, $+45.78$, $+26.15$, with moving-block bootstrap 95\% CIs strictly positive), and its nominal 95\% intervals cover only 0.405--0.714 of outcomes: its narrow intervals reflect overconfidence rather than accuracy. Stratified by epidemic phase at $h=1$, declining-phase ensemble coverage recovers to 0.925--0.964 (baseline 0.881--0.922, mechanistic benchmark 0.381--0.575), whereas rising-phase coverage drops markedly across forecasters (ensemble falling to 0.419--0.852, mechanistic benchmark to 0.140--0.385; peak-phase ensemble coverage is 0.667--0.719). All values are final-vintage historical audits, not a real-time upper bound. The defensible conclusion is that the fixed-$k_{\rm agg}$ aggregate model supplies a transparent, reproducible benchmark that is sharp only relative to its declared information set and loss; operational forecasting requires a separate versioned out-of-sample audit.
+
+\vspace{0.6em}
+\noindent{\textbf{Keywords:}} epidemic forecasting; negative-binomial update; forecast horizon; conditional risk; out-of-sample evaluation; reproducibility
+
+\vspace{1.0em}
+\section{研究问题与贡献}
+
+公共卫生预测需要回答两个不同问题：在一个明确的随机模型中，过程方差和参数不确定性如何随步长传播；在真实、会修订的监测数据上，某个预测器相对于基线的损失如何变化。\citet{cori2013framework,gostic2020practical} 建立了基于更新方程的有效再生数估计与实时推断基准；\citet{penn2023intrinsic} 明确区分流行病模型中的内在随机性与统计不确定性；\citet{petchey2015ecological} 将预测视界定义为依赖系统、预测器和损失的操作性构造；针对美国州级尺度，\citet{bozzuto2023differences} 进一步显示可预测性随空间尺度和防护措施而变。上述工作促使我们把条件风险地板与经验评分审计分开，也意味着本文不宣称首次提出方差分解或首次报告州级预测视界。本文的研究问题因此限定为：在周度住院这一观测尺度上，固定离散度的负二项更新模型能提供什么样的条件风险基准，而该基准与严格样本外损失相差多远？
+
+本文有四项贡献。第一，我们给出任意给定信息集下的锐条件平方风险地板，并把条件均值预测器作为达到该地板的特例；第二，我们将固定 $k_{\rm agg}$ 的宏观负二项更新模型作为州级唯一机制口径，给出精确有限步方差、稳定边界极限，并显式区分过程方差、后验参数混合和 plug-in 规则的超额风险；第三，我们以相同原点、相同目标和相同归一化重算配对损失，并用州块自助区间描述校准差距；第四，我们把不可重建的旧预测枢纽汇总结果从证据链移出，登记可锁定的 FluSight release 与评分协议，而不在缺少输入文件时填入结果。
+
+本文不主张普适的预测上界，不把个体传播链拟合解释为州级住院的生成机制验证，也不把 CRB 理想样本量换算为现实检测时间。QSD 反射扩散、一次性机器学习对照、健康公平处方和旧的混合误差记账保留在历史工作包中，不作为本稿的证据。
+
+\section{条件风险与宏观机制基准}\label{sec:horizon}
+
+设 $\mathcal F_t$ 为预测原点的信息集，$Y_{t+h}$ 为目标，$\delta_h$ 为 $\mathcal F_t$ 可测的预测规则。令
+\begin{equation}
+m_h=\mathbb E(Y_{t+h}\mid\mathcal F_t),\qquad V_h=\operatorname{Var}(Y_{t+h}\mid\mathcal F_t).
+\end{equation}
+\begin{theorem}[锐条件平方风险地板]\label{thm:sharp_floor}
+若 $Y_{t+h}\in L^2$，则任意 $\mathcal F_t$ 可测预测规则满足
+\begin{equation}
+\mathcal R_h(\delta_h\mid\mathcal F_t)
+:=\mathbb E[(Y_{t+h}-\delta_h)^2\mid\mathcal F_t]
+=V_h+(m_h-\delta_h)^2.\label{eq:identity}
+\end{equation}
+因此 $\delta_h^\star=m_h$ 几乎处处是平方损失下的唯一最优规则，最小条件风险为 $\mathcal R_h^\star=V_h$；任意其他规则的超额风险恰为 $(m_h-\delta_h)^2$。
+\end{theorem}
+\begin{proof}
+将 $Y_{t+h}-\delta_h=(Y_{t+h}-m_h)+(m_h-\delta_h)$ 展开。第一项的条件均值为零，且第二项对 $\mathcal F_t$ 可测，故交叉项的条件期望为零。剩余两项分别为 $V_h$ 与 $(m_h-\delta_h)^2$；等号条件给出唯一性。
+\end{proof}
+
+该定理的 sharp 是相对于指定的信息集、目标、损失和可测规则类而言的：它不是跨模型、跨观测尺度或跨损失的普适常数。特别地，若使用的预测器只看见 $\mathcal G_t\subsetneq\mathcal F_t$，则相对于 $\mathcal G_t$ 的地板为 $\operatorname{Var}(Y_{t+h}\mid\mathcal G_t)$，通常更高。
+
+\begin{proposition}[后验总方差分解]\label{prop:posterior_variance}
+若参数 $\Theta$（以及尚未观测的初值或状态 $X_t$）在 $\mathcal F_t$ 下仍具有后验不确定性，则全方差定理给出
+\begin{equation}
+V_h=\mathbb E\!\left[V_h(\Theta,X_t)\mid\mathcal F_t\right]
++\operatorname{Var}\!\left[m_h(\Theta,X_t)\mid\mathcal F_t\right].\label{eq:posterior}
+\end{equation}
+第二项包含参数、初值及其协方差；它不能被未经检验的独立性假设删去。对一个指定的 plug-in 规则 $\delta_h^{\rm plug}$，相对于锐地板的超额风险为
+\begin{equation}
+\mathcal R_h(\delta_h^{\rm plug}\mid\mathcal F_t)-V_h
+=\bigl(m_h-\delta_h^{\rm plug}\bigr)^2.\label{eq:plugin_excess}
+\end{equation}
+这一区分使固定参数、后验混合和规则偏差成为可分别审计的量。
+\end{proposition}
+
+\subsection{固定离散度的宏观更新模型}
+
+在周度观测尺度上，令
+\begin{equation}
+Z_{t+1}\mid Z_t\sim \operatorname{NB}(R Z_t,k_{\rm agg}),\qquad
+\operatorname{Var}(Z_{t+1}\mid Z_t)=RZ_t+R^2Z_t^2/k_{\rm agg}.
+\end{equation}
+其中 $R>0$ 是周度增长乘子，$k_{\rm agg}>0$ 是有效聚合离散度。给定 $Z_0=I_0$，设 $q=R^2(1+1/k_{\rm agg})$，则全方差递推可解为
+\begin{equation}
+V_h=I_0R\frac{q^h-R^h}{q-R}+I_0^2(q^h-R^{2h}),\qquad
+\operatorname{CV}^2_{\rm macro}(h)=\frac{V_h}{(I_0R^h)^2}.\label{eq:macro}
+\end{equation}
+Equivalently, $V_0=0$ and
+\begin{equation}
+V_{t+1}=qV_t+I_0R^{t+1}+\frac{I_0^2R^{2t+2}}{k_{\rm agg}}.\label{eq:macro_recurrence}
+\end{equation}
+This follows directly from the law of total variance; summing the recurrence for $t=0,\ldots,h-1$ yields \eqref{eq:macro}. Thus its linear $I_0$ term is conditional Poisson variation and its quadratic $I_0^2$ term is fixed aggregate dispersion, rather than a rescaled individual-level branching variance.
+式 \eqref{eq:macro} 不要求 $R>1$；它是观测层工作模型的有限步方差，不是个体 Galton--Watson 过程的替代记号。数值实现应在 $q\approx R$ 时使用连续极限 $\{q^h-R^h\}/(q-R)\to hR^{h-1}$，在 $R=1$ 时使用
+\begin{equation}
+\operatorname{CV}^2_{\rm macro}(h)=\left(1+\frac{k_{\rm agg}}{I_0}\right)\left[\left(1+\frac{1}{k_{\rm agg}}\right)^h-1\right],
+\end{equation}
+从而避免相消误差；这些是同一有限步解的边界表达式，而非额外的渐近假设。
+
+\subsection{共享对数正态增长率的参数混合}
+
+为展示式 \eqref{eq:posterior} 的具体含义，令一个预测窗口内共享的随机增长率为 $R=\exp(B)$，其中 $B\sim N(\mu_B,\sigma_B^2)$，并令 $M_a=\mathbb E(R^a)=\exp(a\mu_B+a^2\sigma_B^2/2)$。在给定 $R$ 的宏观模型下，写 $c=1+1/k_{\rm agg}$，则过程方差的参数平均可用有限和稳定地表示为
+\begin{equation}
+\mathbb E_R[V_h(R)]
+=I_0\sum_{j=1}^{h}c^{h-j}M_{2h-j}
++I_0^2 M_{2h}(c^h-1).\label{eq:lognormal_process}
+\end{equation}
+同时，混合预测均值和参数传播方差为
+\begin{equation}
+\bar m_h=I_0M_h,\qquad
+\operatorname{Var}_R\{m_h(R)\}=I_0^2(M_{2h}-M_h^2).\label{eq:lognormal_parameter}
+\end{equation}
+故条件均值预测器的 sharp 风险为式 \eqref{eq:lognormal_process} 加上式 \eqref{eq:lognormal_parameter}；若采用中位数 plug-in $\delta_h^{\rm plug}=I_0e^{h\mu_B}$，其额外平方偏差为
+\begin{equation}
+I_0^2\left(M_h-e^{h\mu_B}\right)^2,
+\end{equation}
+与式 \eqref{eq:plugin_excess} 一致。当 $\sigma_B\to0$ 时，$M_a\to R^a$，上述三式退化为固定参数闭式；因此对数正态传播是透明的参数混合特例，而不是对后验预测分布的普遍替代。
+
+在一般后验预测分布下，定义相对于给定尺度 $a_h>0$ 的锐条件视界
+\begin{equation}
+H^\sharp_\tau=\sup\left\{h\geq0:\frac{\mathcal R_h^\star}{a_h^2}\leq\tau^2\right\},\qquad \mathcal R_h^\star=V_h.\label{eq:sharp_horizon}
+\end{equation}
+它允许风险曲线非单调，并把信息集、损失和归一化写进定义。式 \eqref{eq:sharp_horizon} 中的 $H_\tau^\sharp$ 是由条件均值达到的理论风险地板视界。而在实证计算中，我们使用的是固定参数、plug-in 规则和 $a_h=I_0R^h$ 下的可复算特例机制阈值根：
+\begin{equation}
+H_{\rm mech}(\tau;\theta)=\sup\{h\geq0:\operatorname{CV}^2_{\rm macro}(h;\theta)+P(h;\theta)\leq\tau^2\},\label{eq:horizon}
+\end{equation}
+其中本文的敏感性项为 $P(h)=\exp(2h^2s^2)-2\exp(h^2s^2/2)+1$，$s$ 是拟合斜率的标准误。主结果取 $\tau=0.5$。只有当 plug-in 规则等于条件均值且参数后验退化为单点时，$H_{\rm mech}$ 才与 $H_\tau^\sharp$ 重合；在更一般情况下，$H_{\rm mech}$ 仅作为操作性基准，不能与理论锐视界混淆。在未知参数的情形，后验或联合自助抽样得到的是一个根的分布；由于参数混合、状态耗竭和季节性可能破坏单调性，不能预先假定存在唯一根。固定参数时，若风险函数单调，\eqref{eq:horizon} 与首次穿越等价。
+
+\begin{proposition}[条件视界的解释边界]
+式 \eqref{eq:horizon} 衡量的是给定观测层模型、参数、初值、损失归一化和预测规则后的阈值根。它只有在这些对象与业务评估完全相同时，才可作为校准参照；它不是所有预测器的上界，也不是跨观测尺度的基本常数。
+\end{proposition}
+
+\subsection{相关增长率与临界边界}
+
+为避免把平稳相关漂移误读为独立创新，考虑对数增长率过程 $r_t=\phi r_{t-1}+e_t$，其中 $e_t$ 独立同分布、均值为零、方差为 $\sigma_e^2$。在 $|\phi|<1$ 且条件于当前 $r_t$ 时，未来 $h$ 个增长率之和的随机部分满足
+\begin{equation}
+\operatorname{Var}\!\left(\sum_{j=1}^{h}r_{t+j}\middle|\mathcal F_t\right)
+=\frac{\sigma_e^2}{(1-\phi)^2}\left[h-\frac{2\phi(1-\phi^h)}{1-\phi}+\frac{\phi^2(1-\phi^{2h})}{1-\phi^2}\right].\label{eq:ar1_conditional}
+\end{equation}
+该式是条件方差；若改用无条件平稳方差，则应使用自协方差和，二者不能在同一视界计算中混用。当 $\phi\to1$ 时，式 \eqref{eq:ar1_conditional} 的连续极限为
+\begin{equation}
+\sigma_e^2\sum_{m=1}^{h}m^2=\sigma_e^2\,h(h+1)(2h+1)/6,\label{eq:ar1_unitroot}
+\end{equation}
+对应单位根随机游走的非平稳边界；因此平稳 AR(1) 的线性长期累积律不能外推到 $\phi=1$。本文的州级根不把相关增长率或单位根项并入固定-$k_{\rm agg}$ 主口径；式 \eqref{eq:ar1_conditional}--\eqref{eq:ar1_unitroot} 说明将其加入后必须重新定义信息集、状态和视界集合。
+
+\subsection{模型内的信息论基准}
+
+在个体负二项子代分布 $\mathrm{NB}(R,k_{\rm ind})$ 下，对数似然函数关于交叉偏导数满足
+\begin{equation}
+\frac{\partial^2\ell}{\partial R\,\partial k_{\rm ind}} = \sum_{i=1}^C \frac{y_i - R}{(R+k_{\rm ind})^2}.
+\end{equation}
+由于条件期望 $\mathbb E[y_i \mid R, k_{\rm ind}] = R$，交叉 Fisher 信息量严格为零：
+\begin{equation}
+\mathcal I_{R\,k_{\rm ind}} = -\mathbb E\left[\frac{\partial^2\ell}{\partial R\,\partial k_{\rm ind}}\right] = 0.
+\end{equation}
+因此 Fisher 信息矩阵关于 $(R, k_{\rm ind})$ 呈分块对角结构。这意味着在 $(R, k_{\rm ind})$ 联合未知的情形下，关于 $R$ 的渐近方差下界（即逆信息矩阵对角元 $[I(R, k_{\rm ind})^{-1}]_{RR}$）与 $k_{\rm ind}$ 已知时的条件界严格重合\citep{lloyd-smith2005superspreading,lloyd-smith2007fisher}。若监测期内累计观测到 $C$ 个完整、独立、无延迟的子代数，则关于 $R$ 的 Fisher 信息量为 $\mathcal I(R)=C k_{\rm ind}/[R(R+k_{\rm ind})]$，Cramér--Rao 不等式给出
+\begin{equation}
+\frac{\operatorname{Var}(\widehat R)}{R^2}\;\ge\;\frac{1/R+1/k_{\rm ind}}{C} .
+\label{eq:crb}
+\end{equation}
+式 \eqref{eq:crb} 的成立依赖四条明确假设：子代观测**独立**、**完整**、**无误报**，且工作模型**正确设定**。真实的住院监测同时违反全部四条——报告延迟与回填破坏完整性，疑似/确诊合并破坏无误报，聚合观测不提供个体子代计数，$k_{\rm agg}$ 只能由少数差分估计。因此本文只把 \eqref{eq:crb} 作为**模型内部的信息基准**用于两项判断：其一，与微观队列的参数化自助方差比较（自助/CRB 比值 0.984--1.059，见第~\ref{sec:horizon} 节），说明模拟估计可接近其自身信息极限；其二，说明在给定的效应量与离散度下，模型内可靠区分 $R>1$ 与 $R\le1$ 所需的累计观测数随 $1/\varepsilon^2$ 增长。**我们明确不把这一数量换算为现实检测时间、监测门槛或公共卫生阈值**，因为它所依赖的四条假设在监测数据上均不成立。
+
+
+
+\section{数据与分析协议}
+
+\subsection{冻结住院面板}
+
+主实证输入为工作包中冻结的周度住院面板：COVID-19（Delta、Omicron、JN.1）、流感（2022--23、2024--25）和 RSV（2024--25、2025--26）。每个面板包含美国 50 州和哥伦比亚特区的州级单元，周末为周六。每一阶段用连续五周正计数窗口拟合 $\log Z_t=a+bt+\epsilon_t$，取 $R=\exp(b)$、$s=\operatorname{SE}(b)$、$I_0$ 为窗口均值，并以
+\begin{equation}
+\widehat k_{\rm agg}=\min\left(1000,\left[\widehat{\operatorname{Var}}(\Delta\log Z_t)-1/\bar Z\right]^{-1}_+\right)
+\end{equation}
+作为有效时序离散度，其中 $\widehat{\operatorname{Var}}(\Delta\log Z_t)$ 为五周窗口内对数住院周度一阶差分的样本方差。五周窗口只有约四个对数差分，因此 $k_{\rm agg}$ 被视为敏感性参数而非精确识别的结构参数。
+
+\subsection{微观传播链作为工作模型校准}
+
+香港 COVID-19 接触追踪数据\citep{adam2020clustering}和几内亚 Conakry 埃博拉网络\citep{faye2015chains}被用于检查过度离散工作模型的数量级。负二项与 Poisson 的 AIC 差为 93.9--244.0；参数化自助方差与相应模型内 CRB 的比值为 0.984--1.059（表~\ref{tab:micro}）。这些结果说明负二项模型在这些队列上是合理的工作近似，并显示模拟估计可接近其自身信息基准；它们不证明真实传播过程严格服从该分布，也不桥接到州级住院观测。
+
+\subsection{滚动样本外审计}
+
+每个州在阶段窗口内取最多六个可用原点，使用原点前四个观测拟合同一个对数线性预测器。对未来第 $h$ 周，记录模型、持续性和局部线性预测的
+\begin{equation}
+L=(\widehat Y-Y)^2/Z_t^2
+\end{equation}
+并在完全相同的州--原点--步长单元上计算 $\Delta_{\rm pers}=L_{\rm model}-L_{\rm pers}$ 与 $\Delta_{\rm lin}=L_{\rm model}-L_{\rm lin}$。不使用误差比率作为主估计量，因为基线接近真值时分母会趋近零。置信区间通过 2,000 次州块自助获得；结果是描述性审计，不将穿越点称为业务上界。
+
+\section{结果}
+
+\subsection{宏观条件机制根}
+
+表~\ref{tab:horizons} 汇总了现有冻结面板的宏观精确根。表中 $\widetilde R_{\rm week}=\exp(\tilde b)$ 为模型在周度步长上的实际增长乘子，而 $\widetilde R_{\rm gen}=\exp(\tilde b\cdot\mu_g/7)$ 为换算至代表性代际时间后的再生数（代际时间 $\mu_g$ 取值：COVID-19 取 4.7 天，流感取 3.4 天，RSV 取 8.4 天）。州级中位数在七个阶段为 2.20--7.12 周，四分位距显示州间差异很大；国家级序列由相同州求和而来，仅作为尺度参照。这里的数值是固定 $k_{\rm agg}$、五周窗口和 $\tau=0.5$ 下的条件根，不是预测器在未来数据上的保证时效。
+
+\begin{table}[htbp]
+\centering\small
+\caption{固定 $k_{\rm agg}$ 宏观模型的条件机制根（周）}\label{tab:horizons}
+\begin{tabular}{lrrrrrr}
+\toprule
+阶段 & 州数 & $\widetilde R_{\rm week}$ & $\widetilde R_{\rm gen}$ & $\widetilde k_{\rm agg}$ & 州级中位数 & 国家级参照\\
+\midrule
+COVID Delta & 50 & 1.27 & 1.18 & 56.56 & 7.12 & 16.99\\
+COVID Omicron & 51 & 1.10 & 1.04 & 21.02 & 3.95 & 3.88\\
+COVID JN.1 & 51 & 1.04 & 1.02 & 29.49 & 5.00 & 6.95\\
+Influenza 2022--23 & 38 & 1.55 & 1.22 & 11.22 & 2.20 & 6.31\\
+Influenza 2024--25 & 45 & 1.61 & 1.24 & 17.38 & 2.58 & 11.12\\
+RSV 2024--25 & 34 & 1.35 & 1.43 & 39.84 & 5.82 & 38.11\\
+RSV 2025--26 & 26 & 1.30 & 1.37 & 23.69 & 3.89 & 60.44\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+根对窗口和离散度定义敏感。将窗口由五周延长会降低斜率标准误，因而可能显著推长参数传播项；将个体级 $k_{\rm ind}$ 直接代入宏观闭式则改变的是另一个随机对象。我们因此把 $H_{\rm mech}$ 报告为条件校准量，并将这些口径放入敏感性分析，而不从州级与国家级的整体--部分差异推出机制定律。
+
+\subsection{配对损失审计}
+
+图~\ref{fig:state} 和表~\ref{tab:loss} 展示同口径滚动损失。以持续性为基线时，Delta 在 $h=1$、$2$ 周的平均损失差分别为 $-0.064$、$-0.274$，而在 $h=4$ 周为 $+0.852$；Omicron 从 $-0.020$ 变为 $+0.099$、再到 $+6.039$；JN.1 在 $h=1$ 即为 $+0.006$。流感和 RSV 也出现阶段依赖的符号变化。州块自助区间在较长步长明显变宽，说明六个原点不足以支撑精确穿越时间。局部线性基线的高阶损失极易受指数外推放大，故本文只把它作为另一种基线，不与持续性结果合并为单一时效。
+
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{模型减持续性基线的配对损失差；括号为州块自助 95\% 区间}\label{tab:loss}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{3.1cm}rrrr}
+\toprule
+阶段 & $h=1$ & $h=2$ & $h=3$ & $h=4$\\
+\midrule
+Delta & $-0.064\ [-.081,-.049]$ & $-0.274\ [-.344,-.198]$ & $-0.356\ [-.588,-.125]$ & $+0.852\ [-.149,1.905]$\\
+Omicron & $-0.020\ [-.030,-.010]$ & $+0.099\ [.035,.172]$ & $+1.155\ [.518,1.898]$ & $+6.039\ [2.543,10.224]$\\
+JN.1 & $+0.006\ [.003,.010]$ & $+0.052\ [.039,.065]$ & $+0.187\ [.148,.229]$ & $+0.451\ [.345,.568]$\\
+Flu 2022--23 & $-0.266\ [-.394,-.158]$ & $-1.323\ [-2.458,-.394]$ & $+0.702\ [-4.652,6.856]$ & $+70.697\ [26.334,126.848]$\\
+Flu 2024--25 & $-0.388\ [-.474,-.316]$ & $-0.823\ [-1.594,.133]$ & $+10.375\ [2.508,22.157]$ & $+121.872\ [44.584,234.510]$\\
+RSV 2024--25 & $-0.009\ [-.045,.025]$ & $+0.162\ [.006,.337]$ & $+1.752\ [1.101,2.517]$ & $+9.268\ [5.943,13.324]$\\
+RSV 2025--26 & $-0.016\ [-.061,.033]$ & $+0.043\ [-.248,.413]$ & $+1.387\ [-.241,3.676]$ & $+10.748\ [1.516,25.274]$\\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsection{微观队列结果}
+
+\begin{table}[htbp]
+\centering\small
+\caption{个体传播链的负二项工作模型校准}\label{tab:micro}
+\begin{tabular}{p{2.7cm}rrrrr}
+\toprule
+数据集 & $N$ & $\widehat R$ & $\widehat k$ & $\Delta$AIC(Poisson--NB) & 自助/CRB\\
+\midrule
+香港本地子群 & 355 & 0.473 & 0.434 & 93.9 & 1.059\\
+香港全队列 & 1038 & 0.162 & 0.111 & 223.4 & 1.027\\
+几内亚埃博拉 & 152 & 0.954 & 0.182 & 244.0 & 0.984\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{reports_v3/figures/fig_micro.png}
+\caption{个体传播链中负二项工作模型的拟合摘要。图示只支持过度离散的工作建模选择，不构成州级观测机制的验证。}\label{fig:micro}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{reports_v3/figures/fig_state_horizons.png}
+\caption{七个阶段的州级宏观条件机制根分布。}\label{fig:state}
+\end{figure}
+
+\section{版本化外部验证协议}
+
+\subsection{协议与三个锁定赛季}
+
+旧工作包中的 \path{forecast_hub_operational_evaluation.json} 无法由随附 CSV 以误差容忍度重建，因此本稿不把它当作外部验证，也不引用其汇总图。失败记录保存在 \path{reports_v3/hub_pooled_metric_NOTE.md}，作为复现性审计证据。
+
+外部审计使用 CDC FluSight Forecast Hub 的历史 release\citep{bracher2021evaluating,flusight2024evaluation}。我们固定三个赛季的 release：2023--24 的 v1.0.0（commit \texttt{dde0d620d349854266c5a0217df9956ae17670f9}）、2024--25 的 v1.1.0（commit \texttt{1b5b615312eb3a9ebb3fa5fe0e2e123e45258bdc}）、以及 2025--26 的 v1.2.0。以 \texttt{target\_end\_date} 对齐州级流感住院真值，排除 horizon 0，评估 horizon 1--3；预测点取 0.5 分位数，概率预测使用 23 分位数加权评分，点损失以严格早于原点七天的最近目标归一化。每个 release 仅保留 01--56 FIPS 中与 ensemble 和官方 FluSight-baseline 共同出现的 origin--state--horizon 单元。v1.0.0 的三个步长各有 1428、1377、1326 个共同单元，v1.1.0 各有 1377 个（该 release 缺少 2025-01-25 原点，未作插补），v1.2.0 各有 1428 个。州块 moving-block 自助使用 2,000 次重抽、4 周区块（表~\ref{tab:flusight}）。所有输入文件 SHA-256 与评分脚本登记在 \path{data/flusight/README.md}；三个 release 的评分结果均已验证可在版本锁定环境下完全复算。这些是最终版真值下的历史审计，不能替代当时实时可得信息评估。
+
+\begin{table}[htbp]
+\centering\small
+\caption{FluSight 的 final-vintage 外部审计：三个锁定赛季}\label{tab:flusight}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrr}
+\toprule
+Release & horizon & 共同单元 & 集成 WIS & baseline WIS & 集成 MAE & baseline MAE\\
+\midrule
+v1.0.0 & 1 & 1428 & 31.99 & 42.98 & 50.07 & 59.22\\
+v1.0.0 & 2 & 1377 & 42.81 & 58.84 & 67.32 & 82.72\\
+v1.0.0 & 3 & 1326 & 51.30 & 71.98 & 79.19 & 102.78\\
+v1.1.0 & 1 & 1377 & 81.71 & 119.81 & 115.43 & 152.26\\
+v1.1.0 & 2 & 1377 & 105.88 & 163.83 & 147.94 & 208.10\\
+v1.1.0 & 3 & 1377 & 133.39 & 208.37 & 183.77 & 262.52\\
+v1.2.0 & 1 & 1428 & 58.38 & 87.68 & 88.81 & 112.89\\
+v1.2.0 & 2 & 1428 & 77.73 & 113.29 & 114.94 & 146.88\\
+v1.2.0 & 3 & 1428 & 88.94 & 129.83 & 130.08 & 170.56\\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+集成在三个赛季、全部步长上均优于官方 baseline，这一方向在三个独立赛季上复现，其中 v1.2.0 是与本文设计无关的独立赛季。
+
+\subsection{把机制基准放到同一批预测单元上}
+
+表~\ref{tab:flusight} 回答的是“集成是否优于 baseline”。本文真正需要回答的是另一个问题：第~\ref{sec:horizon} 节的机制基准，若被当作一个预测器放到**完全相同的单元**上，表现如何？我们把固定 $k_{\rm agg}$ 宏观模型按其预测分布（均值 $m_h=Z_0R^h$、方差由式~\eqref{eq:macro} 给出，矩匹配为负二项）生成 23 分位数，作为第四个预测器与集成、baseline 在同一批 origin--state--horizon 上评分。为保证严格可比性，表~\ref{tab:palette} 报告的是集成、baseline 与机制基准三者共同出现的**严格四向相交单元** $\mathcal C_4$（$n_4=1235\sim 1376$ 个单元），并在该严格子集上计算机制基准相对官方 baseline 的配对损失差 $\Delta(\text{Mech}-\text{Base})$ 及 95\% 移动块自助置信区间。该预测器是事后拟合的基准：$R$、$k_{\rm agg}$ 由 \texttt{reference\_date} 之前七天的最终真值窗口估计。它衡量的是“把机制模型当预测器用会怎样”，不是它的理论最优表现。
+
+\begin{table}[htbp]
+\centering\small
+\caption{严格四向相交单元上的完整评分面板与配对差异（final-vintage；标称覆盖率 0.95）}\label{tab:palette}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+Release & $h$ & $n_4$ & 集成 WIS & 集成 cov95 & baseline WIS & baseline cov95 & 机制基准 WIS & 机制基准 cov95 & $\Delta(\text{Mech}-\text{Base})$ [95\% CI]\\
+\midrule
+v1.0.0 & 1 & 1337 & 34.00 & 0.933 & 45.68 & 0.895 & 59.94 & 0.554 & $+14.26\ [6.56, 22.98]$\\
+v1.0.0 & 2 & 1286 & 45.55 & 0.925 & 62.63 & 0.863 & 68.63 & 0.664 & $+6.00\ [2.21, 11.52]$\\
+v1.0.0 & 3 & 1235 & 54.60 & 0.901 & 76.72 & 0.854 & 87.98 & 0.714 & $+11.26\ [-10.51, 42.62]$\\
+v1.1.0 & 1 & 1315 & 85.27 & 0.837 & 125.11 & 0.742 & 170.88 & 0.405 & $+45.78\ [10.76, 95.39]$\\
+v1.1.0 & 2 & 1315 & 110.33 & 0.820 & 170.89 & 0.690 & 181.61 & 0.548 & $+10.72\ [-24.95, 52.16]$\\
+v1.1.0 & 3 & 1315 & 138.62 & 0.801 & 216.96 & 0.650 & 222.56 & 0.615 & $+5.60\ [-27.37, 52.64]$\\
+v1.2.0 & 1 & 1376 & 60.24 & 0.905 & 90.57 & 0.869 & 116.72 & 0.531 & $+26.15\ [13.67, 41.83]$\\
+v1.2.0 & 2 & 1376 & 79.97 & 0.890 & 116.77 & 0.853 & 141.23 & 0.649 & $+24.47\ [1.81, 57.94]$\\
+v1.2.0 & 3 & 1376 & 91.15 & 0.880 & 133.49 & 0.839 & 191.55 & 0.690 & $+58.06\ [-9.19, 172.24]$\\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+三个结论在全部九个格点上一致。第一，机制基准的 WIS 在每一个赛季与步长上都**高于**官方 baseline，更高于集成；在 $h=1$ 周前瞻上，机制基准相比 baseline 的配对损失差在三个赛季均为正，且 95\% 移动块自助置信区间均严格大于零（v1.0.0 为 $+14.26\ [6.56, 22.98]$，v1.1.0 为 $+45.78\ [10.76, 95.39]$，v1.2.0 为 $+26.15\ [13.67, 41.83]$）。第二，它的区间严重欠覆盖：标称 95\% 的实测覆盖率只有 0.405--0.714，其区间宽度虽显著窄于 baseline（例如 v1.0.0 在 $h=1$ 的 95\% 区间宽度为 142.1，集成与 baseline 分别为 231.8 与 256.5），却并未带来预测准确度的提升。第三，在严格共同单元上，集成在所有赛季与步长均优于 baseline（相对集成的 WIS 差在 $h=1$ 分别为 baseline $+11.68$、机制 $+25.94$；v1.1.0 为 $+39.84$、$+85.61$；v1.2.0 为 $+30.33$、$+56.48$）。这量化了第~\ref{sec:horizon} 节所说的“校准差距”：机制基准给出的窄区间不是精度的来源，而是过度自信的表现，其百分位区间不能当作业务区间使用。
+
+\subsection{按流行阶段分层：上升期校准系统性退化}
+
+按目标周所属的流行阶段（以真值序列的局部趋势划分）分层，表~\ref{tab:phase} 固定在前瞻步长 $h=1$ 周以消除混合步长引起的视界混淆。各阶段单元数总和严格等于该 release 在 $h=1$ 时的四向共同单元数 $n_4$（$h=2, 3$ 的完整分层结果见扩展审计报告）。
+
+\begin{table}[htbp]
+\centering\small
+\caption{按流行阶段分层的 WIS 与 95\% 覆盖率（$h=1$ 周前瞻；括号内为 cov95）}\label{tab:phase}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrr}
+\toprule
+Release & 阶段 & $n$ & 集成 & baseline & 机制基准\\
+\midrule
+v1.0.0 & 上升 & 108 & 42.79 (0.852) & 61.21 (0.759) & 76.35 (0.370)\\
+v1.0.0 & 峰值 & 36 & 138.73 (0.667) & 176.13 (0.417) & 181.28 (0.417)\\
+v1.0.0 & 下降 & 1193 & 30.05 (0.948) & 40.34 (0.922) & 54.79 (0.575)\\
+v1.1.0 & 上升 & 343 & 176.51 (0.589) & 207.73 (0.539) & 232.73 (0.385)\\
+v1.1.0 & 峰值 & 132 & 206.84 (0.674) & 266.55 (0.386) & 225.78 (0.606)\\
+v1.1.0 & 下降 & 840 & 28.91 (0.964) & 69.14 (0.881) & 137.00 (0.381)\\
+v1.2.0 & 上升 & 43 & 160.93 (0.419) & 240.78 (0.488) & 276.93 (0.140)\\
+v1.2.0 & 峰值 & 32 & 259.91 (0.719) & 447.34 (0.219) & 424.55 (0.281)\\
+v1.2.0 & 下降 & 1301 & 52.00 (0.925) & 76.83 (0.898) & 103.85 (0.550)\\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+分层结果显示出明确的阶段依赖规律。在下降期，集成预测器的实测 95\% 覆盖率恢复至接近标称（0.925--0.964），baseline 也达到 0.881--0.922，而机制基准仍明显欠覆盖（0.381--0.575）。在上升期，各预测器的校准普遍大幅退化：集成的 95\% 覆盖率降至 0.419--0.852（在 v1.2.0 降至 0.419），baseline 降至 0.488--0.759，机制基准降至 0.140--0.385（值得注意的是，在 v1.1.0 中机制基准上升期覆盖率为 0.385，略高于其下降期的 0.381，反映出该赛季机制模型在下降期同样存在结构性偏差；峰值期集成覆盖率为 0.667--0.719）。值得指出的是，上升期也是样本较少的阶段（43--343 个单元，对下降期的 840--1301），因此估计存在抽样波动，但三个赛季的定性方向高度一致。其实践含义十分明确：在疫情快速上升期，无论集成、官方 baseline 还是理论机制模型的百分位区间都不应被当作充分校准的区间使用。这条规律与本文理论框架自洽——成长期的条件均值最难建模，而未建模的均值误差直接进入式~\eqref{eq:plugin_excess} 的超额风险。
+
+
+\section{讨论}
+
+本文最稳固的结果是式 \eqref{eq:macro} 的有限步闭式和式 \eqref{eq:identity} 的条件风险恒等式。前者让观测层的固定离散度模型可以直接求根；后者说明参数和初值不确定性应通过预测分布传播，而不是用一个未经检验的交叉项消失假设替代。州级结果表明机制根对病原、阶段、窗口和离散度定义均敏感；配对损失则显示真实误差还包含报告延迟、状态估计、结构变化和外生扰动。
+
+外部审计把这一差距从定性描述变成了可复算的定量结果。把机制基准当作预测器放到与业务预测完全相同的单元上，它在三个赛季、全部步长上都劣于官方 baseline，且标称 95\% 的区间只覆盖 0.405--0.714 的真值。这有两层含义。第一，机制基准的百分位区间不能当作业务区间使用——它比集成和 baseline 都窄，却并未因此更准，这正是式 \eqref{eq:plugin_excess} 中规则偏差与参数混合共同作用的结果。第二，按阶段分层（固定 $h=1$ 步长）后显示：下降期集成的校准接近标称（0.925--0.964），而上升期所有预测器的校准均出现大幅退化（集成降至 0.419--0.852，机制基准降至 0.140--0.385）。这与本文框架自洽——成长期的条件均值最难建模，而未建模的均值误差直接进入超额风险。就实践而言，这条规律的直接含义是：在疫情上升期，无论集成还是官方基线的区间都不应被当作可靠区间使用。
+
+需要强调的是，上述结论完全是**描述性的配对审计**：它只说“在这些锁定赛季、这些共同单元、这一损失下，各预测器的表现如何”，不构成对任何预测器未来表现的判断，也不涉及跨观测尺度的机制主张。
+
+微观队列的 $\Delta$AIC 和自助/CRB 比值为负二项工作模型提供了数量级支持，但三个队列中只有文献参考集包含明显超临界案例，不能把它们写成“阈值附近的现实验证”。同样，CRB 样本量依赖独立完整子代观测、效应大小、显著性水平和功效设定，只作为补充的信息基准，不转换为检测时间或公共卫生阈值。
+
+本文有五项主要限制。第一，$k_{\rm agg}$ 由五周窗口的少数差分估计，识别不强。第二，面板是住院观测而非感染过程，报告和住院概率没有单独识别。第三，每阶段原点最多六个，长步长配对区间很宽。第四，后验参数混合可能破坏固定参数单调性，本文主结果仍是 plug-in 条件根。第五，FluSight 评分使用最终版真值，不能代表实时信息集；v1.1.0 在 2025-01-25 缺少预测原点，且两个 release 的提交组成不同。后续工作应优先完成实时 vintage、联合参数自助和包含观测延迟的后验预测模型。
+
+\section{结论}
+
+在明确的观测尺度和固定离散度负二项更新模型下，宏观有限步方差可以精确计算，任意预测规则的平方风险可以用条件恒等式分解。对冻结的美国州级住院面板，条件机制根的州级中位数为 2.20--7.12 周；严格同口径的配对损失差随病原和阶段改变方向。把机制基准放到与业务预测完全相同的单元上评分，其表现劣于官方 baseline，且标称 95\% 的区间只覆盖约一半真值——这是“校准差距”的定量形式，而不是一个可用的时效。三个独立赛季的外部审计给出同一条结论，并显示上升期各预测器的校准均出现大幅退化。因而，本文支持的结论是一个模型条件、可复算的校准基准，以及与业务误差之间需要单独审计、且无法用该基准本身弥合的差距。它不支持普适的基本预测上界，也不支持把旧的不可重建预测枢纽汇总指标当作外部验证。
+
+\section*{数据与代码可得性}
+
+冻结面板、微观队列、理论模拟、FluSight 三个锁定 release 和重构分析脚本随工作包提供。重构入口为 \path{scripts_v2/reframed_analysis.py}，外部评分入口为 \path{scripts_v2/score_flusight.py} 与扩展评分入口 \path{scripts_v2/flusight_audit_extended.py}（完整评分面板、机制基准的同单元评分与阶段分层），独立核验入口为 \path{scripts_v2/verify_reframed.py}，输出为 \path{reports_v3/reframed_summary.json}、\path{reports_v3/flusight_v1.0_strict.json}、\path{reports_v3/flusight_v1.1_strict.json}、\path{reports_v3/flusight_v1.2_strict.json} 及其扩展版本 \path{reports_v3/flusight_v1.*_extended.json}。实证扩展报告见 \path{reports_v3/EMPIRICAL_EXTENSION_REPORT.md}。原稿 \path{main.tex} 保留作历史版本；本文件 \path{main_reframed.tex} 是重构稿。FluSight 的版本锁定、文件哈希和评分边界见 \path{data/flusight/README.md}。
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

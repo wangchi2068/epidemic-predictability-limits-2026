@@ -9,3 +9,9 @@
 __pycache__/
 .pytest_cache/
 .DS_Store
+.workbuddy/
+archive/OPENJUDGE_REVIEW_REPORT.md
+archive/PEER_REVIEW_REPORT.md
+archive/REVIEW_ROUND2_AUDIT.md
+archive/AGENT.md
+archive/main_50p_backup.tex
