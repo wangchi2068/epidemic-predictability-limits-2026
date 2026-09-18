@@ -2,23 +2,24 @@
 
 本工作目录为论文研究与正式投稿的**唯一核心权威工作区** (`final_clean_submission/`)，所有历史草稿、冗余副本及中间构建垃圾已全面剔除。
 
-## 重构稿入口
+## 论文手稿与复现包说明
 
-`archive/main_reframed.tex` / `archive/main_reframed.pdf` 是按 `archive/REWRITE_REPORT.md` 重构的独立版本。该版本把视界限定为固定观测层模型下的条件机制基准，并用 `scripts_v2/reframed_analysis.py` 生成同原点、同目标、同归一化的配对损失审计。理论部分给出了任意信息集下达到条件风险地板的锐界定理、后验总方差分解、固定 $k$ 宏观有限步方差闭式、共享对数正态参数混合与条件 AR(1)/单位根边界；证明见 `derivations/derivations_manual.pdf`，数值接口见 `scripts_v2/reframed_model.py`。原 `main.tex` 保留为历史投稿版本，便于逐项核对。
+根目录下的 **`main.tex`** 为正式提交稿（30 页紧凑精炼稿，中文标题《传染病预测视界的机制基准与实证校准差距》，英文标题 *Mechanistic Benchmarks and Empirical Calibration of Epidemic Forecast Horizons*），经由 Tectonic 编译生成 **`main.pdf`**（严格 30 页，0 错误、0 未定义引用、0 溢出）。
 
-重构与验证命令：
+推导手册位于 `derivations/derivations_manual.tex`（编译生成 `derivations/derivations_manual.pdf`），提供全文核心定理的逐行数学证明。
+`archive/` 目录存放早期的探索稿（如 `archive/main_reframed.tex` 及 `archive/REWRITE_REPORT.md`）。
+
+本包提供全流程一键复现与自动化一致性核验：
 ```bash
-python scripts_v2/reframed_analysis.py    # 生成 reports_v3/reframed_summary.json
-python scripts_v2/verify_reframed.py      # 生成 reports_v3/theory_verification.json（7/7 通过）
-python scripts_v2/score_flusight.py data/flusight/v1.0.0 --start-date 2023-10-14 --end-date 2024-05-04 --output reports_v3/flusight_v1.0_strict.json --csv reports_v3/flusight_v1.0_strict.csv
-tectonic archive/main_reframed.tex
-tectonic derivations/derivations_manual.tex
+python scripts_v2/check_consistency.py        # 执行 15 大类严格数理、实证与路径一致性断言
+tectonic main.tex                             # 编译 30 页主稿
+tectonic derivations/derivations_manual.tex   # 编译推导手册
 ```
 
-旧的 `forecast_hub_operational_evaluation.json` 不再作为重构稿的外部验证证据；其不可重建记录保留在 `reports_v3/hub_pooled_metric_NOTE.md`。FluSight **三个锁定 release**（v1.0.0 / v1.1.0 / v1.2.0）的 final-vintage 严格外部审计已完成，证据文件为 `reports_v3/flusight_v1.0_strict.json`、`flusight_v1.1_strict.json`、`flusight_v1.2_strict.json`（逐单元 CSV 见同名 `.csv`），三者均可从原始文件逐字节复现。扩展评分面板见 `reports_v3/flusight_v1.*_extended.json`：它在同一批预测单元上追加 WIS 分解、50/80/95% 覆盖率、区间宽度与随机化 PIT，按流行阶段分层，并把本稿的机制基准作为第四个预测器评分（结论：机制基准的 WIS 在每个赛季与步长上均高于官方 baseline，标称 95% 区间只覆盖 0.405–0.714；多数模型—赛季组合在上升期出现经验覆盖率下降）。实证报告见 `reports_v3/EMPIRICAL_EXTENSION_REPORT.md`；协议、锁定 commit 与逐文件 SHA-256 见 `data/flusight/README.md` 与 `data/flusight/file_hashes.json`。
+FluSight **三个锁定 release**（v1.0.0 / v1.1.0 / v1.2.0）的 final-vintage 严格外部审计已完成，证据文件为 `reports_v3/flusight_v1.0_strict.json`、`flusight_v1.1_strict.json`、`flusight_v1.2_strict.json`（逐单元 CSV 见同名 `.csv`），三者均可从原始文件逐字节复现。扩展评分面板见 `reports_v3/flusight_v1.*_extended.json`：它在同一批预测单元上追加 WIS 分解（离散度、低估惩罚、过度预测惩罚）、50/80/95% 覆盖率、区间宽度与随机化 PIT，按流行阶段分层，并把本稿的启发式插件式机制预测器作为同批单元对照评分。实证报告见 `reports_v3/EMPIRICAL_EXTENSION_REPORT.md`；协议、锁定 commit 与逐文件 SHA-256 见 `data/flusight/README.md` 与 `data/flusight/file_hashes.json`。
 
 > **工作目录与稿件规范说明：**
-> 1. 本目录即为论文主稿的根目录，核心 LaTeX 文档为根目录下的 **`main.tex`**，编译输出为 **`main.pdf`**（30 页，Tectonic 编译）。
+> 1. 本目录即为论文主稿的根目录，核心 LaTeX 文档为根目录下的 **`main.tex`**，编译输出为 **`main.pdf`**（严格 30 页，Tectonic 编译）。
 > 2. 内部评审材料（审稿意见、评审报告与作者回复信）均不纳入本公开复现包，以避免双盲匿名性泄漏。
 
 ---
@@ -98,12 +99,15 @@ tectonic derivations/derivations_manual.tex
 │   ├── *.json                                      # 州级视界、误差记账与预测枢纽实证结果
 │   └── figures/                                    # 实证结果高清图件 (微观拟合, 州级视界, Hub 技能衰减)
 └── tables_v3/                                      # 导出的独立 LaTeX 表格源码片段
-    ├── table2_micro.tex                            # 正文表 4: 微观极大似然与 CRB 检验
-    ├── table3_state.tex                            # 正文表 6: 51 州宏观机制视界空间分布
-    ├── table4_budget.tex                           # 正文表 7: 三项描述性误差记账分解
-    ├── table5_rolling.tex                          # 正文表 8: 伪实时滚动业务时效双层对照
-    ├── table6_hub.tex                              # 正文表 9: 预测枢纽集成预测技能衰减
-    └── table7_tiers.tex                            # 正文表 10: 分级预警响应策略推荐
+    ├── table2_micro.tex                            # 正文表 2: 微观极大似然与 CRB 检验
+    ├── table3_state.tex                            # 正文表 3: 51 辖区宏观机制视界空间分布
+    ├── table4_budget.tex                           # 正文表 4: 启发式模型方差与模型—观测代数差额分解
+    ├── table5_rolling.tex                          # 正文表 5: 伪实时滚动业务时效双层对照
+    ├── table8_flusight_audit.tex                   # 正文表 6: CDC FluSight 外部审计三赛季总体表现
+    ├── table9_phase_stratification.tex             # 正文表 7: CDC FluSight 流行阶段分层校准评估
+    ├── table6_hub.tex                              # 补充表: COVIDhub 集成预测技能衰减
+    ├── table7_tiers.tex                            # 补充表: 分级预警响应策略映射
+    └── tab_sensitivity.tex                        # 补充表: k_agg 敏感性表格片段
 ```
 
 ---
@@ -115,7 +119,7 @@ tectonic derivations/derivations_manual.tex
 ```bash
 python scripts_v2/check_consistency.py
 ```
-该脚本全量执行针对表格碎片、引用图件、退役短语黑名单、摘要数值区间、CRB 比例、量纲对齐、双侧穿越、数据锁定及**文档声明路径存在性**等 **9 大类断言** 实施自动化检查。
+该脚本全量执行针对表格碎片、引用图件、退役短语黑名单、摘要数值区间、CRB 比例、量纲对齐、双侧穿越、数据锁定、文档声明路径存在性、阶段分类协议、Poisson 极限单调性、WIS 惩罚方向以及相交单元样本量一致性等 **15 大类断言** 实施自动化检查。
 
 ### 2. 重新编译 LaTeX 主稿
 直接在根目录下执行：

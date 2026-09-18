@@ -420,6 +420,7 @@ def emit_table4(bud):
             "$P$ & "
             "闭合残差占比 (IQR) & 为正占比 \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
+    body = body.replace("闭合残差占比", "代数差额占比")
     (TABLES / "table4_budget.tex").write_text(body, encoding="utf-8")
 
 
@@ -498,7 +499,7 @@ def emit_table8_flusight():
     model_labels = [
         ("ensemble", "Hub 集成 (Ensemble)"),
         ("baseline", "官方基线 (Baseline)"),
-        ("mechanistic", "机制基准 (Mechanistic)"),
+        ("mechanistic", "插件机制预测器 (Mechanistic)"),
     ]
     rows = []
     for i, (rel_label, json_file) in enumerate(releases):
@@ -573,7 +574,7 @@ def emit_table9_phases():
             rows.append("\\midrule")
     body = ("\\begin{tabular}{llrrrr}\n"
             "\\toprule\n"
-            "发布版本 & 流行动力学阶段 & 共同单元数 $n$ & Hub 集成 WIS (95\\% 覆盖率) & 官方基线 WIS (95\\% 覆盖率) & 机制基准 WIS (95\\% 覆盖率) \\\\\n"
+            "发布版本 & 流行动力学阶段 & 共同单元数 $n$ & Hub 集成 WIS (95\\% 覆盖率) & 官方基线 WIS (95\\% 覆盖率) & 插件机制预测器 WIS (95\\% 覆盖率) \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
     (TABLES / "table9_phase_stratification.tex").write_text(body, encoding="utf-8")
 

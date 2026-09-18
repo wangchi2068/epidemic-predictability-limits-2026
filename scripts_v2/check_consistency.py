@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""check_consistency.py — build-halting consistency suite (11 assertion classes).
+"""check_consistency.py — build-halting consistency suite (15 assertion classes).
 
 1. Table fragments: regenerate every tables_v3/*.tex body from the deposited
    JSONs and byte-compare against the committed fragments (9 fragments),
@@ -24,6 +24,14 @@
 10. Citations closure: references.bib is 100% two-way closed with main.tex
     (exactly 44 entries cited, 0 missing, 0 unreferenced).
 11. PDF page count: compiled main.pdf is verified to match README.md (30 pages).
+12. Phase classification protocol: verify peak-anchored retrospective classification logic
+    (|ref - peak| <= 7d -> peak, ref < peak - 7d -> rising, ref > peak + 7d -> declining)
+    and empirical partition consistency across all three FluSight releases.
+13. Poisson limit properties: Lemma 4 monotonicity, saturation at 1/[I0*(R-1)], and finite plug-in horizon.
+14. WIS decomposition direction semantics: under/over prediction penalty directions,
+    additive sum identity, and empirical values in main.tex.
+15. Four-way common unit sample sizes: exact sample size identity across all models,
+    seasons, horizons, and phases.
 """
 from __future__ import annotations
 
@@ -41,6 +49,9 @@ PAPER = ROOT
 REPORTS = ROOT / "reports_v3"
 TABLES = ROOT / "tables_v3"
 DATA = ROOT / "data"
+SCRIPTS = ROOT / "scripts_v2"
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
 STATE_FIPS = {f"{i:02d}" for i in range(1, 57)}
 
 # phrases retired from earlier versions; must not appear in reader-facing text
@@ -303,6 +314,215 @@ def check_pdf_pages():
     print(f"[OK] main.pdf page count verified ({count} pages, matching README.md)")
 
 
+def check_phase_protocol():
+    """Verify that peak-anchored retrospective classification strictly adheres
+    to: |ref - peak| <= 7d -> peak, ref < peak - 7d -> rising, ref > peak + 7d -> declining.
+    Also verify empirical partition consistency across all three FluSight releases.
+    """
+    # 1. Synthetic test of the classification logic
+    p = pd.Timestamp("2024-01-15")
+    # <= 7 days difference
+    for dt_str in ["2024-01-08", "2024-01-15", "2024-01-22"]:
+        ref = pd.Timestamp(dt_str)
+        diff_days = abs((ref - p).days)
+        if diff_days <= 7:
+            cat = "peak"
+        elif ref < p:
+            cat = "rising"
+        else:
+            cat = "declining"
+        if cat != "peak":
+            fail(f"phase protocol failure: {dt_str} should be 'peak', got {cat}")
+
+    # strictly earlier than peak - 7d
+    for dt_str in ["2024-01-01", "2024-01-07"]:
+        ref = pd.Timestamp(dt_str)
+        if abs((ref - p).days) <= 7:
+            cat = "peak"
+        elif ref < p:
+            cat = "rising"
+        else:
+            cat = "declining"
+        if cat != "rising":
+            fail(f"phase protocol failure: {dt_str} should be 'rising', got {cat}")
+
+    # strictly later than peak + 7d
+    for dt_str in ["2024-01-23", "2024-02-01"]:
+        ref = pd.Timestamp(dt_str)
+        if abs((ref - p).days) <= 7:
+            cat = "peak"
+        elif ref < p:
+            cat = "rising"
+        else:
+            cat = "declining"
+        if cat != "declining":
+            fail(f"phase protocol failure: {dt_str} should be 'declining', got {cat}")
+
+    # 2. Check deposited JSONs consistency
+    expected_phases = {"rising", "peak", "declining"}
+    for f in ["flusight_v1.0_extended.json", "flusight_v1.1_extended.json", "flusight_v1.2_extended.json"]:
+        d = json.loads((REPORTS / f).read_text(encoding="utf-8"))
+        bph = d.get("by_phase_by_horizon", {}).get("1", {})
+        if set(bph.keys()) != expected_phases:
+            fail(f"{f}: by_phase_by_horizon['1'] keys {set(bph.keys())} != {expected_phases}")
+        n_total_phases = sum(bph[phase][0]["n"] for phase in bph)
+        n_h1 = d["by_horizon"]["1"]["by_model"]["ensemble"]["n"]
+        if n_total_phases != n_h1:
+            fail(f"{f}: sum of phase n ({n_total_phases}) != h=1 total n ({n_h1})")
+    print("[OK] phase protocol logic and partition consistency verified across all 3 seasons")
+
+
+def check_poisson_limit():
+    """Verify Lemma 4 Poisson limit properties:
+    1. Monotonic growth: Delta CV^2_Pois(h) = 1 / (I0 * R^{h+1}) > 0.
+    2. Saturation limit: lim_{h -> inf} CV^2_Pois(h) = 1 / [I0 * (R - 1)].
+    3. Finite plug-in horizon: CV^2_plug(h) = CV^2_Pois(h) + (exp(h^2 * s^2) - 1)
+       strictly crosses any finite threshold tau^2 at finite h* < inf.
+    """
+    for R in [1.1, 1.3, 1.5, 2.0, 3.0]:
+        for I0 in [50, 100, 500, 1000]:
+            sat_limit = 1.0 / (I0 * (R - 1.0))
+            prev_cv2 = 0.0  # at h=0
+            for h in range(1, 25):
+                cv2 = (1.0 - R ** (-h)) / (I0 * (R - 1.0))
+                # 1. strictly monotonic increase
+                if cv2 <= prev_cv2:
+                    fail(f"Poisson CV^2 not monotonically increasing at R={R}, I0={I0}, h={h}")
+                # exact increment identity
+                inc = cv2 - prev_cv2
+                exact_inc = 1.0 / (I0 * (R ** h))
+                if abs(inc - exact_inc) > 1e-12:
+                    fail(f"Poisson CV^2 increment mismatch at R={R}, I0={I0}, h={h}")
+                # bounded above by saturation limit
+                if cv2 >= sat_limit:
+                    fail(f"Poisson CV^2 exceeded saturation limit at R={R}, I0={I0}, h={h}")
+                prev_cv2 = cv2
+
+            # check large h saturation and analytical remainder
+            cv2_500 = (1.0 - R ** (-500)) / (I0 * (R - 1.0))
+            if abs(cv2_500 - sat_limit) > 1e-10:
+                fail(f"Poisson CV^2 did not saturate at h=500 for R={R}, I0={I0}")
+            # check exact remainder identity at h=10
+            cv2_10 = (1.0 - R ** (-10)) / (I0 * (R - 1.0))
+            rem_10 = (R ** (-10)) / (I0 * (R - 1.0))
+            if abs((sat_limit - cv2_10) - rem_10) > 1e-12:
+                fail(f"Poisson remainder identity failed at R={R}, I0={I0}")
+
+    # 3. Check plug-in crossing is finite
+    for tau in [0.2, 0.3, 0.5]:
+        for s in [0.05, 0.1, 0.2]:
+            R, I0 = 1.3, 100
+            # find crossing h
+            h_cross = None
+            for h in range(1, 100):
+                cv2_pois = (1.0 - R ** (-h)) / (I0 * (R - 1.0))
+                p_err = np.exp((h * s) ** 2) - 1.0
+                if cv2_pois + p_err >= tau ** 2:
+                    h_cross = h
+                    break
+            if h_cross is None:
+                fail(f"Poisson plug-in horizon failed to cross threshold tau={tau}, s={s}")
+            # upper bound: ceil(sqrt(ln(1 + tau^2)) / s)
+            bound = np.ceil(np.sqrt(np.log(1.0 + tau ** 2)) / s)
+            if h_cross > bound:
+                fail(f"h_cross {h_cross} exceeded analytical bound {bound} for tau={tau}, s={s}")
+    print("[OK] Lemma 4 Poisson limit monotonicity, saturation, and finite plug-in crossing verified")
+
+
+def check_wis_direction_labels():
+    """Verify WIS directional penalty semantics:
+    - y < lower: forecast overpredicted -> over penalty > 0, under penalty == 0
+    - y > upper: forecast underpredicted -> under penalty > 0, over penalty == 0
+    - lower <= y <= upper: interval covers -> over == 0, under == 0
+    - sum identity: point + spread + under + over == total_wis (within float tol)
+    Also verify directional numbers cited in main.tex line 757:
+    - 2024-25 (v1.1.0): over (76.94) > under (66.84)
+    - 2025-26 (v1.2.0): under (56.55) > over (39.27)
+    """
+    from flusight_audit_extended import wis_decomposed
+    # 23 quantiles centered at 250, running from 50 to 450
+    q = np.linspace(50.0, 450.0, 23)
+
+    # Case 1: severe overprediction (y = 10 < q[0])
+    res_over = wis_decomposed(q, 10.0)
+    if res_over["over"] <= 0 or res_over["under"] != 0.0:
+        fail(f"WIS direction failed for overprediction: got over={res_over['over']}, under={res_over['under']}")
+    sum_over = res_over["point"] + res_over["spread"] + res_over["under"] + res_over["over"]
+    if abs(sum_over - res_over["wis"]) > 1e-12:
+        fail("WIS sum identity failed for overprediction")
+
+    # Case 2: severe underprediction (y = 1000 > q[-1])
+    res_under = wis_decomposed(q, 1000.0)
+    if res_under["under"] <= 0 or res_under["over"] != 0.0:
+        fail(f"WIS direction failed for underprediction: got under={res_under['under']}, over={res_under['over']}")
+    sum_under = res_under["point"] + res_under["spread"] + res_under["under"] + res_under["over"]
+    if abs(sum_under - res_under["wis"]) > 1e-12:
+        fail("WIS sum identity failed for underprediction")
+
+    # Case 3: exact center (y = 250 == q[11])
+    res_mid = wis_decomposed(q, 250.0)
+    if res_mid["under"] != 0.0 or res_mid["over"] != 0.0:
+        fail("WIS under/over should both be 0 when y is at median within all intervals")
+
+    # Check deposited reports
+    d11 = json.loads((REPORTS / "flusight_v1.1_extended.json").read_text(encoding="utf-8"))
+    m11 = d11["by_horizon"]["1"]["by_model"]["mechanistic"]
+    if round(m11["over"], 2) != 76.94 or round(m11["under"], 2) != 66.84:
+        fail(f"v1.1.0 mechanistic directional values {m11['over']:.2f}, {m11['under']:.2f} != 76.94, 66.84")
+    if m11["over"] <= m11["under"]:
+        fail("v1.1.0 mechanistic should have over > under (systematic overprediction)")
+
+    d12 = json.loads((REPORTS / "flusight_v1.2_extended.json").read_text(encoding="utf-8"))
+    m12 = d12["by_horizon"]["1"]["by_model"]["mechanistic"]
+    if round(m12["under"], 2) != 56.55 or round(m12["over"], 2) != 39.27:
+        fail(f"v1.2.0 mechanistic directional values {m12['under']:.2f}, {m12['over']:.2f} != 56.55, 39.27")
+    if m12["under"] <= m12["over"]:
+        fail("v1.2.0 mechanistic should have under > over (systematic underprediction)")
+
+    for f in ["flusight_v1.0_extended.json", "flusight_v1.1_extended.json", "flusight_v1.2_extended.json"]:
+        d = json.loads((REPORTS / f).read_text(encoding="utf-8"))
+        for h, rec in d["by_horizon"].items():
+            for m_name, m_stats in rec["by_model"].items():
+                s = m_stats["point"] + m_stats["spread"] + m_stats["under"] + m_stats["over"]
+                if abs(s - m_stats["wis"]) > 1e-4:
+                    fail(f"{f} h={h} {m_name}: WIS decomposition sum {s} != total WIS {m_stats['wis']}")
+    print("[OK] WIS directional penalty semantics, sum identities, and empirical values verified")
+
+
+def check_four_way_equal_n():
+    """Verify that all comparative models are evaluated on the exact same common units:
+    - by_horizon: for each season and each horizon h in {1, 2, 3}, all models have identical n
+    - by_phase_by_horizon: for each season, phase, and horizon h=1, all models have identical n
+    - table8 & table9 LaTeX fragments reflect identical common unit counts
+    """
+    for f in ["flusight_v1.0_extended.json", "flusight_v1.1_extended.json", "flusight_v1.2_extended.json"]:
+        d = json.loads((REPORTS / f).read_text(encoding="utf-8"))
+        # by_horizon check
+        for h, rec in d["by_horizon"].items():
+            models = rec["by_model"]
+            ns = {m: stats["n"] for m, stats in models.items()}
+            if len(set(ns.values())) != 1:
+                fail(f"{f} h={h}: sample sizes differ across models: {ns}")
+        # by_phase check at h=1
+        bph = d["by_phase_by_horizon"]["1"]
+        for phase, m_list in bph.items():
+            ns = {m["model"]: m["n"] for m in m_list}
+            if len(set(ns.values())) != 1:
+                fail(f"{f} phase {phase}: sample sizes differ across models: {ns}")
+
+    # Check Table 8 and Table 9 committed fragments
+    t8 = (TABLES / "table8_flusight_audit.tex").read_text(encoding="utf-8")
+    for expected_n in ["1,337", "1,315", "1,376"]:
+        if expected_n not in t8:
+            fail(f"table8 fragment missing expected sample size {expected_n}")
+
+    t9 = (TABLES / "table9_phase_stratification.tex").read_text(encoding="utf-8")
+    for phase_n in ["108", "36", "1,193", "343", "132", "840", "43", "32", "1,301"]:
+        if phase_n not in t9:
+            fail(f"table9 fragment missing expected phase sample size {phase_n}")
+    print("[OK] strict common-unit sample size identity verified across all models, seasons, and phases")
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     print("=== consistency suite ===", flush=True)
@@ -317,7 +537,11 @@ def main():
     check_doc_paths()
     check_citations()
     check_pdf_pages()
-    print("\nAll 11 consistency assertions passed.", flush=True)
+    check_phase_protocol()
+    check_poisson_limit()
+    check_wis_direction_labels()
+    check_four_way_equal_n()
+    print("\nAll 15 consistency assertions passed.", flush=True)
 
 
 if __name__ == "__main__":

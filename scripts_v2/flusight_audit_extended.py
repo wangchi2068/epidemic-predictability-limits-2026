@@ -94,8 +94,8 @@ def wis_decomposed(values: np.ndarray, truth: float) -> dict:
     median = v[..., MEDIAN_INDEX]
     alpha = 2.0 * LOWER
     spread = float(np.sum(alpha / 2.0 * (upper - lower)))
-    under = float(np.sum(np.maximum(lower - truth, 0.0)))
-    over = float(np.sum(np.maximum(truth - upper, 0.0)))
+    over = float(np.sum(np.maximum(lower - truth, 0.0)))
+    under = float(np.sum(np.maximum(truth - upper, 0.0)))
     point = float(0.5 * abs(median - truth))
     return {
         "wis": (point + spread + under + over) / 11.5,
@@ -120,8 +120,8 @@ def randomized_pit(values: np.ndarray, truth: float, rng: np.random.Generator) -
     """Randomized probability integral transform for a quantile grid.
 
     Inside the grid the PIT interpolates linearly in the quantile level; the two
-    tails are filled uniformly so the transform is exactly uniform under a
-    correctly calibrated forecast.
+    tails are filled uniformly so the transform is approximately uniform under
+    correct calibration of the reconstructed piecewise-quantile distribution.
     """
     v = np.asarray(values, dtype=float)
     if truth <= v[0]:
