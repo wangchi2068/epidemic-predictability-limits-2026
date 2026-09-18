@@ -499,7 +499,7 @@ def emit_table8_flusight():
     model_labels = [
         ("ensemble", "Hub 集成 (Ensemble)"),
         ("baseline", "官方基线 (Baseline)"),
-        ("mechanistic", "插件机制预测器 (Mechanistic)"),
+        ("mechanistic", "插件式机制预测器 (Plug-in mechanistic)"),
     ]
     rows = []
     for i, (rel_label, json_file) in enumerate(releases):
@@ -529,9 +529,9 @@ def emit_table9_phases():
         ("v1.2.0 (2025--26)", "flusight_v1.2_extended.json", "v1.2.0"),
     ]
     phase_defs = [
-        ("rising", "上升期 (Rising)"),
-        ("peak", "达峰期 (Peak)"),
-        ("declining", "下降期 (Declining)"),
+        ("rising", "峰前期 (Pre-peak)"),
+        ("peak", "峰值窗口 (Peak window)"),
+        ("declining", "峰后期 (Post-peak)"),
     ]
     bold_set = {
         ("v1.0.0", "rising", "mechanistic"),
@@ -574,7 +574,7 @@ def emit_table9_phases():
             rows.append("\\midrule")
     body = ("\\begin{tabular}{llrrrr}\n"
             "\\toprule\n"
-            "发布版本 & 流行动力学阶段 & 共同单元数 $n$ & Hub 集成 WIS (95\\% 覆盖率) & 官方基线 WIS (95\\% 覆盖率) & 插件机制预测器 WIS (95\\% 覆盖率) \\\\\n"
+            "发布版本 & 峰值相对位置阶段 & 共同单元数 $n$ & Hub 集成 WIS (95\\% 覆盖率) & 官方基线 WIS (95\\% 覆盖率) & 插件式机制预测器 WIS (95\\% 覆盖率) \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
     (TABLES / "table9_phase_stratification.tex").write_text(body, encoding="utf-8")
 
