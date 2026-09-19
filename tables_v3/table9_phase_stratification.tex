@@ -1,6 +1,8 @@
-\begin{tabular}{llrrrr}
+\begin{tabular}{@{}llrrrr@{}}
 \toprule
-发布版本 & 峰值相对位置阶段 & 共同单元数 $n$ & Hub 集成 WIS (95\% 覆盖率) & 官方基线 WIS (95\% 覆盖率) & 插件式机制预测器 WIS (95\% 覆盖率) \\
+赛季 & 峰值相对位置阶段 & $n$ & \multicolumn{3}{c}{WIS（括号内为标称 95\% 区间实测覆盖率）} \\
+\cmidrule(lr){4-6}
+& & & Hub 集成 & 官方基线 & 机制预测器 \\
 \midrule
 \multirow{3}{*}{v1.0.0 (2023--24)}
 & 峰前期 (Pre-peak) & 108 & 42.79 (0.852) & 61.21 (0.759) & 76.35 (\textbf{0.370}) \\

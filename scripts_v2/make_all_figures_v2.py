@@ -75,7 +75,7 @@ def gen_fig2():
         "axes.unicode_minus": False
     })
     
-    fig, axes = plt.subplots(1, 2, figsize=(11.2, 4.2), dpi=300)
+    fig, axes = plt.subplots(1, 2, figsize=(8.4, 3.15), dpi=300)
     
     # ------------------ Panel (a): Microscopic Branching Process (Lemma 1)
     ax = axes[0]
@@ -106,9 +106,10 @@ def gen_fig2():
     ax.legend(loc="lower right", frameon=True, facecolor="white", edgecolor="#cccccc", fontsize=8.2)
     
     # Inset callout text
-    ax.text(0.05, 0.90, f"$R={R}, k_{{\\mathrm{{ind}}}}={k}, I_0={I0}$\n经验/理论均值比: $0.998\\pm 0.003$",
-            transform=ax.transAxes, fontsize=8.0, va="top",
-            bbox=dict(boxstyle="round,pad=0.3", facecolor="#f0f4f8", edgecolor="#b0c4de", lw=0.8))
+    ax.text(0.035, 0.905, f"$R={R}$, $k_{{\\mathrm{{ind}}}}={k}$, $I_0={I0}$\n经验/理论均值比: $0.998\\pm 0.003$",
+            transform=ax.transAxes, fontsize=8.0, va="top", zorder=9,
+            bbox=dict(boxstyle="round,pad=0.32", facecolor="white", edgecolor="#b0c4de",
+                      lw=0.8, alpha=0.95))
     
     # ------------------ Panel (b): Macro Aggregated Renewal Model (Theorem 5)
     ax2 = axes[1]
@@ -143,8 +144,8 @@ def gen_fig2():
     ax2.set_xticks(range(1, 13))
     ax2.legend(loc="upper left", frameon=True, facecolor="white", edgecolor="#cccccc", fontsize=8.2)
     
-    ax2.text(0.05, 0.50, f"$R_{{\\mathrm{{week}}}}={R_m}, k_{{\\mathrm{{agg}}}}={k_agg}, I_0={I0_m}$\n相对方差随步长几何发散\n经验/理论闭式比: $0.996\\pm 0.004$",
-             transform=ax2.transAxes, fontsize=8.0, va="top",
+    ax2.text(0.035, 0.335, f"$R_{{\\mathrm{{week}}}}={R_m}$, $k_{{\\mathrm{{agg}}}}={k_agg}$, $I_0={I0_m}$\n相对方差随步长几何发散\n经验/理论闭式比: $0.996\\pm 0.004$",
+             transform=ax2.transAxes, fontsize=8.0, va="top", zorder=9,
              bbox=dict(boxstyle="round,pad=0.3", facecolor="#f0fdf4", edgecolor="#a7f3d0", lw=0.8))
     
     fig.tight_layout()

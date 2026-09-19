@@ -1,25 +1,26 @@
-# 传染病传播动力学的模型条件可预测视界、机制基准与实证校准差距 (Model-Conditional Epidemic Predictability Benchmarks & Calibration Gaps)
+# 传染病预测视界的机制基准与实证校准差距
 
-本工作目录为论文研究与正式投稿的**唯一核心权威工作区** (`final_clean_submission/`)，所有历史草稿、冗余副本及中间构建垃圾已全面剔除。
+本工作目录为论文研究与正式投稿的**唯一核心权威工作区**，所有历史草稿、冗余副本及中间构建垃圾已全面剔除。
 
 ## 论文手稿与复现包说明
 
-根目录下的 **`main.tex`** 为正式提交稿（32 页全文，中文标题《传染病预测视界的机制基准与实证校准差距》，英文标题 *Mechanistic Benchmarks and Empirical Calibration of Epidemic Forecast Horizons*），经由 Tectonic 编译生成 **`main.pdf`**（32 页，0 错误、0 未定义引用、0 溢出）。
+根目录下的 **`main.tex`** 为正式提交稿（35 页全文，标题《传染病预测视界的机制基准与实证校准差距》；本稿按中文期刊体例排版，不含英文题名与英文摘要），经由 Tectonic 编译生成 **`main.pdf`**（35 页；0 错误、0 未定义引用、0 Overfull、0 Underfull）。
 
-推导手册位于 `derivations/derivations_manual.tex`（编译生成 `derivations/derivations_manual.pdf`），提供全文核心定理的逐行数学证明。
+推导手册位于 `derivations/derivations_manual.tex`（编译生成 `derivations/derivations_manual.pdf`，10 页），提供全文核心定理的逐行数学证明。补充材料位于 `supplementary/supplementary_tables.tex`（编译生成 `supplementary/supplementary_tables.pdf`），收录正文引用的全部支持表格 S1--S9。
 `archive/` 目录存放早期的探索稿（如 `archive/main_reframed.tex` 及 `archive/REWRITE_REPORT.md`）。
 
 本包提供全流程一键复现与自动化一致性核验：
 ```bash
-python scripts_v2/check_consistency.py        # 执行 15 大类严格数理、实证与路径一致性断言
+python scripts_v2/check_consistency.py        # 执行 21 大类严格数理、实证与路径一致性断言
 tectonic main.tex                             # 编译主稿
 tectonic derivations/derivations_manual.tex   # 编译推导手册
+tectonic supplementary/supplementary_tables.tex # 编译补充材料 S1--S9
 ```
 
-FluSight **三个锁定 release**（v1.0.0 / v1.1.0 / v1.2.0）的 final-vintage 严格外部审计已完成，证据文件为 `reports_v3/flusight_v1.0_strict.json`、`flusight_v1.1_strict.json`、`flusight_v1.2_strict.json`（逐单元 CSV 见同名 `.csv`），三者均可从原始文件逐字节复现。扩展评分面板见 `reports_v3/flusight_v1.*_extended.json`：它在同一批预测单元上追加 WIS 分解（离散度、低估惩罚、过度预测惩罚）、50/80/95% 覆盖率、区间宽度与随机化 PIT，按流行阶段分层，并把本稿的启发式插件式机制预测器作为同批单元对照评分。实证报告见 `reports_v3/EMPIRICAL_EXTENSION_REPORT.md`；协议、锁定 commit 与逐文件 SHA-256 见 `data/flusight/README.md` 与 `data/flusight/file_hashes.json`。
+FluSight **三个锁定 release**（v1.0.0 / v1.1.0 / v1.2.0）的 final-vintage 严格外部审计已完成，证据文件为 `reports_v3/flusight_v1.0_strict.json`、`flusight_v1.1_strict.json`、`flusight_v1.2_strict.json`（逐单元 CSV 见同名 `.csv`），三者均可从原始文件逐字节复现。扩展评分面板见 `reports_v3/flusight_v1.*_extended.json`：它在同一批预测单元上追加 WIS 分解（离散度、低估惩罚、过度预测惩罚）、50/80/95% 覆盖率、区间宽度与随机化 PIT，按流行阶段分层，并把本稿的启发式插件式机制预测器作为同批单元对照评分。实证报告见 `reports_v3/EMPIRICAL_EXTENSION_REPORT.md`；协议、锁定 commit 与逐文件 SHA-256 见 `data/flusight/README.md` 与 `data/input_hashes.json`（覆盖全部 237 个输入文件的 SHA-256 清单，由门禁逐条复核）。
 
 > **工作目录与稿件规范说明：**
-> 1. 本目录即为论文主稿的根目录，核心 LaTeX 文档为根目录下的 **`main.tex`**，编译输出为 **`main.pdf`**（32 页，Tectonic 编译）。
+> 1. 本目录即为论文主稿的根目录，核心 LaTeX 文档为根目录下的 **`main.tex`**，编译输出为 **`main.pdf`**（35 页，Tectonic 编译）。
 > 2. 内部评审材料（审稿意见、评审报告与作者回复信）均不纳入本公开复现包，以避免双盲匿名性泄漏。
 
 ---
@@ -29,7 +30,7 @@ FluSight **三个锁定 release**（v1.0.0 / v1.1.0 / v1.2.0）的 final-vintage
 ```text
 .
 ├── main.tex                                        # 精炼重构版 LaTeX 论文主文档源码（0 错误、0 溢出）
-├── main.pdf                                        # 精炼重构版 Tectonic 编译产物 (32 页)
+├── main.pdf                                        # 精炼重构版 Tectonic 编译产物 (35 页)
 ├── archive/main_reframed.tex                               # 重构稿 LaTeX 源码（条件锐风险 + 版本化外部审计）
 ├── archive/main_reframed.pdf                               # 重构稿 Tectonic 编译产物 (10 页, 0 未定义引用/0 溢出)
 ├── references.bib                                  # 净化后的参考文献库（46 篇，双向完全闭合：0 缺失、0 未引项）

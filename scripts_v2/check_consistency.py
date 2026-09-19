@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""check_consistency.py — build-halting consistency suite (15 assertion classes).
+"""check_consistency.py — build-halting consistency suite (21 assertion classes).
 
 1. Table fragments: regenerate every tables_v3/*.tex body from the deposited
    JSONs and byte-compare against the committed fragments (9 fragments),
@@ -32,6 +32,9 @@
     additive sum identity, and empirical values in main.tex.
 15. Four-way common unit sample sizes: exact sample size identity across all models,
     seasons, horizons, and phases.
+16. Input SHA-256 manifest: every deposited input file matches data/input_hashes.json.
+17. Supplementary tables S1--S9 shipped; every referenced fragment is present.
+18. Table typography: no \\resizebox scaling, all declared table sizes >= 7pt.
 """
 from __future__ import annotations
 
@@ -49,6 +52,14 @@ PAPER = ROOT
 REPORTS = ROOT / "reports_v3"
 TABLES = ROOT / "tables_v3"
 DATA = ROOT / "data"
+FIGS = {
+    "fig1_framework": ROOT / "reports_v3" / "figures" / "fig1_framework.png",
+    "fig2_cv_verify": ROOT / "reports" / "figures_v2" / "fig2_cv_verify.png",
+    "fig_micro": ROOT / "reports_v3" / "figures" / "fig_micro.png",
+    "fig_state_horizons": ROOT / "reports_v3" / "figures" / "fig_state_horizons.png",
+    "fig_flusight_audit": ROOT / "reports_v3" / "figures" / "fig_flusight_audit.png",
+    "fig_hub_skill": ROOT / "reports_v3" / "figures" / "fig_hub_skill.png",
+}
 SCRIPTS = ROOT / "scripts_v2"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
@@ -312,6 +323,190 @@ def check_pdf_pages():
     print(f"[OK] main.pdf page count verified ({count} pages, matching README.md)")
 
 
+def check_input_hashes():
+    """Every deposited input file must match the SHA-256 recorded in
+    data/input_hashes.json, so the availability statement's byte-level pinning
+    claim holds for all inputs (not FluSight alone)."""
+    import hashlib
+    manifest = DATA / "input_hashes.json"
+    if not manifest.exists():
+        fail("data/input_hashes.json missing (run scripts_v2/build_input_hashes.py)")
+    rows = json.loads(manifest.read_text(encoding="utf-8"))
+    if len(rows) < 200:
+        fail(f"input hash manifest looks truncated ({len(rows)} entries)")
+    bad, missing = [], []
+    for r in rows:
+        p = ROOT / r["path"]
+        if not p.exists():
+            missing.append(r["path"])
+            continue
+        h = hashlib.sha256(p.read_bytes()).hexdigest().upper()
+        if h != r["sha256"].upper():
+            bad.append(r["path"])
+    if missing:
+        fail(f"{len(missing)} hashed input files missing, e.g. {missing[:3]}")
+    if bad:
+        fail(f"{len(bad)} input files diverge from their recorded SHA-256, e.g. {bad[:3]}")
+    print(f"[OK] input SHA-256 manifest verified ({len(rows)} files, 0 mismatch)")
+
+
+def check_supplementary():
+    """The supplementary table set S1--S9 must be shipped and its fragments present."""
+    sup = ROOT / "supplementary"
+    for f in ("supplementary_tables.tex", "supplementary_tables.pdf"):
+        if not (sup / f).exists():
+            fail(f"supplementary/{f} missing")
+    tex = (sup / "supplementary_tables.tex").read_text(encoding="utf-8")
+    frags = re.findall(r"\\input\{\\suppdir/([^}]+)\}", tex)
+    if len(frags) != 9:
+        fail(f"expected 9 supplementary fragments, found {len(frags)}")
+    for f in frags:
+        p = TABLES / (f if f.endswith(".tex") else f + ".tex")
+        if not p.exists() or p.stat().st_size == 0:
+            fail(f"supplementary fragment missing or empty: {p.name}")
+    # every S-label cited in main.tex must be <= 9
+    paper = (PAPER / "main.tex").read_text(encoding="utf-8")
+    cited = sorted({int(m.group(1)) for m in re.finditer(r"表 S(\d)", paper)})
+    if not cited or max(cited) > 9:
+        fail(f"main.tex cites supplementary labels beyond S9: {cited}")
+    print(f"[OK] supplementary tables S1--S9 shipped ({len(frags)} fragments, cited {cited})")
+
+
+def check_table_typography():
+    """No tables_v3 fragment may be wrapped in \resizebox: scaling a table down
+    pushes its body text below the legibility floor (reviewer item C35)."""
+    paper = (PAPER / "main.tex").read_text(encoding="utf-8")
+    if "\\resizebox" in paper:
+        fail("main.tex still uses \\resizebox; table body text will fall below 7pt")
+    # the accessibility floor: warn-fail if a table block declares < 7pt
+    for m in re.finditer(r"\\fontsize\{(\d+(?:\.\d+)?)pt\}", paper):
+        if float(m.group(1)) < 7.0:
+            fail(f"declared table font {m.group(1)}pt is below the 7pt legibility floor")
+    print("[OK] table typography: no resizebox scaling, all declared sizes >= 7pt")
+
+
+def check_figure_legibility():
+    """Every embedded figure's body text must print at >= 7 pt.
+
+    effective_pt = base_pt x (printed_width_in / canvas_width_in)
+    A figure drawn on a wide canvas but printed narrow falls below the floor;
+    the canvas sizes below are the ones declared by the generating scripts.
+    """
+    import pymupdf
+    from PIL import Image
+    CANVAS = {
+        "fig1_framework": (8.6, 9.5),
+        "fig2_cv_verify": (8.4, 9.5),
+        "fig_micro": (8.4, 9.5),
+        "fig_state_horizons": (8.4, 9.5),
+        "fig_flusight_audit": (8.4, 9.0),
+        "fig_hub_skill": (8.4, 9.5),
+    }
+    pdf = PAPER / "main.pdf"
+    if not pdf.exists():
+        fail("main.pdf missing; cannot check figure legibility")
+    doc = pymupdf.open(pdf)
+    seen, worst = set(), []
+    for page in doc:
+        for img in page.get_images(full=True):
+            info = doc.extract_image(img[0])
+            ar = info["width"] / info["height"]
+            for name, (cw, base) in CANVAS.items():
+                png = FIGS.get(name)
+                if png is None or not png.exists():
+                    continue
+                with Image.open(png) as im:
+                    if abs(ar - im.width / im.height) > 0.03:
+                        continue
+                rects = page.get_image_rects(img[0])
+                if not rects:
+                    continue
+                printed_in = rects[0].width / 72.0
+                eff = base * printed_in / cw
+                seen.add(name)
+                worst.append((eff, name))
+    if len(seen) != len(CANVAS):
+        fail(f"could not locate all figures in main.pdf (found {sorted(seen)})")
+    bad = [(round(e, 2), n) for e, n in worst if e < 7.0]
+    if bad:
+        fail(f"figure text below the 7 pt legibility floor: {bad}")
+    lo = min(worst)
+    print(f"[OK] figure text legibility: all {len(seen)} figures >= 7 pt "
+          f"(minimum {lo[0]:.2f} pt, {lo[1]})")
+
+
+def check_alt_variance():
+    """Recompute the alternative-variance horizons and check that the ranges
+    quoted in main.tex match the JSON (structural sensitivity, reviewer W/C6)."""
+    import alt_variance_calibers as AVC
+    phases = json.loads((REPORTS / "state_phases.json").read_text(encoding="utf-8"))
+    med = {}
+    for key in AVC.PHASE_ORDER:
+        vals = {c: [] for c in ("nb2", "nb1", "poisson", "micro")}
+        for v in phases[key]["states"].values():
+            R, s, k, I0 = v.get("R_week"), v.get("s_week"), v.get("k"), v.get("I0")
+            if None in (R, s, k, I0):
+                continue
+            h = AVC.horizons_for_state(R, s, k, I0)
+            for c in vals:
+                if h[c] is not None:
+                    vals[c].append(h[c])
+        med[key] = {c: (float(np.median(vals[c])) if vals[c] else None)
+                    for c in vals}
+    rng = lambda c: (min(med[k][c] for k in med if med[k][c] is not None),
+                     max(med[k][c] for k in med if med[k][c] is not None))
+    nb2, nb1, po = rng("nb2"), rng("nb1"), rng("poisson")
+
+    json_path = REPORTS / "alt_variance_calibers.json"
+    if not json_path.exists():
+        fail("reports_v3/alt_variance_calibers.json missing")
+    stored = json.loads(json_path.read_text(encoding="utf-8"))
+    for k in med:
+        for c in med[k]:
+            a, b = med[k][c], stored[k]["median"][c]
+            if a is None or b is None:
+                continue
+            if abs(a - b) > 1e-6:
+                fail(f"alt-variance median drift for {k}/{c}: {a} vs {b}")
+
+    paper = (PAPER / "main.tex").read_text(encoding="utf-8")
+    checks = [
+        (f"{nb2[0]:.2f}--{nb2[1]:.2f}", "NB2 range"),
+        (f"{po[0]:.2f}--{po[1]:.2f}", "Poisson range"),
+        (f"{nb1[0]:.2f}--{nb1[1]:.2f}", "NB1 range"),
+    ]
+    missing = [name for txt, name in checks if txt not in paper]
+    if missing:
+        fail(f"main.tex does not quote the recomputed structural ranges: {missing}")
+    print(f"[OK] alternative-variance horizons reproduced "
+          f"(NB2 {nb2[0]:.2f}--{nb2[1]:.2f}, NB1 {nb1[0]:.2f}--{nb1[1]:.2f}, "
+          f"Poisson {po[0]:.2f}--{po[1]:.2f} wk)")
+
+
+
+def check_joint_ci_table():
+    """tab_joint_ci.tex must match the bootstrap output in horizon_robustness.json."""
+    rep = json.loads((REPORTS / "horizon_robustness.json").read_text(encoding="utf-8"))
+    joint = rep.get("joint_ci")
+    if not joint:
+        fail("reports_v3/horizon_robustness.json lacks the joint_ci block")
+    frag = (TABLES / "tab_joint_ci.tex").read_text(encoding="utf-8")
+    for key, v in joint.items():
+        cell = f"[{v['ci_lo']:.2f}, {v['ci_hi']:.2f}]"
+        if cell not in frag:
+            fail(f"tab_joint_ci.tex missing interval {cell} for {key}")
+        if f"{v['point_median']:.2f}" not in frag:
+            fail(f"tab_joint_ci.tex missing point estimate for {key}")
+    paper = (PAPER / "main.tex").read_text(encoding="utf-8")
+    wide = max(joint.items(), key=lambda kv: kv[1]["ci_hi"] - kv[1]["ci_lo"])
+    cell = f"{wide[1]['point_median']:.2f} 周 $[{wide[1]['ci_lo']:.2f}, {wide[1]['ci_hi']:.2f}]$"
+    if cell not in paper:
+        fail("main.tex does not quote the widest joint bootstrap interval")
+    print(f"[OK] joint horizon bootstrap intervals reproduced "
+          f"({len(joint)} phases, widest {wide[0]} "
+          f"[{wide[1]['ci_lo']:.2f}, {wide[1]['ci_hi']:.2f}])")
+
+
 def check_phase_protocol():
     """Verify that peak-anchored retrospective classification strictly adheres
     to: |ref - peak| <= 7d -> peak, ref < peak - 7d -> rising, ref > peak + 7d -> declining.
@@ -539,7 +734,13 @@ def main():
     check_poisson_limit()
     check_wis_direction_labels()
     check_four_way_equal_n()
-    print("\nAll 15 consistency assertions passed.", flush=True)
+    check_input_hashes()
+    check_supplementary()
+    check_table_typography()
+    check_figure_legibility()
+    check_alt_variance()
+    check_joint_ci_table()
+    print("\nAll 21 consistency assertions passed.", flush=True)
 
 
 if __name__ == "__main__":

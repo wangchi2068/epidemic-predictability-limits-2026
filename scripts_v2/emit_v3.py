@@ -496,9 +496,9 @@ def emit_table8_flusight():
         ("v1.2.0 (2025--26)", "flusight_v1.2_extended.json"),
     ]
     model_labels = [
-        ("ensemble", "Hub 集成 (Ensemble)"),
-        ("baseline", "官方基线 (Baseline)"),
-        ("mechanistic", "插件式机制预测器 (Plug-in mechanistic)"),
+        ("ensemble", "Hub 集成"),
+        ("baseline", "官方基线"),
+        ("mechanistic", "机制预测器"),
     ]
     rows = []
     for i, (rel_label, json_file) in enumerate(releases):
@@ -514,9 +514,9 @@ def emit_table8_flusight():
                         f"{m['cover80']:.3f} & {c95_str} & {m['width95']:.1f} & {m['pit_mean']:.3f} \\\\")
         if i < len(releases) - 1:
             rows.append("\\midrule")
-    body = ("\\begin{tabular}{llrrrrrrr}\n"
+    body = ("\\begin{tabular}{@{}llrrrrrrr@{}}\n"
             "\\toprule\n"
-            "发布版本 & 模型体系 & 共同单元数 $n$ & WIS & 覆盖率 50\\% & 覆盖率 80\\% & 覆盖率 95\\% & 95\\% 区间宽 & PIT 均值 \\\\\n"
+            "赛季 & 模型 & $n$ & WIS & 覆盖 50\\% & 覆盖 80\\% & 覆盖 95\\% & 宽 95\\% & PIT \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
     (TABLES / "table8_flusight_audit.tex").write_text(body, encoding="utf-8")
 
@@ -571,9 +571,11 @@ def emit_table9_phases():
             rows.append(f"& {p_label} & {n_val} & {ens_str} & {base_str} & {mech_str} \\\\")
         if i < len(releases) - 1:
             rows.append("\\midrule")
-    body = ("\\begin{tabular}{llrrrr}\n"
+    body = ("\\begin{tabular}{@{}llrrrr@{}}\n"
             "\\toprule\n"
-            "发布版本 & 峰值相对位置阶段 & 共同单元数 $n$ & Hub 集成 WIS (95\\% 覆盖率) & 官方基线 WIS (95\\% 覆盖率) & 插件式机制预测器 WIS (95\\% 覆盖率) \\\\\n"
+            "赛季 & 峰值相对位置阶段 & $n$ & \\multicolumn{3}{c}{WIS（括号内为标称 95\\% 区间实测覆盖率）} \\\\\n"
+            "\\cmidrule(lr){4-6}\n"
+            "& & & Hub 集成 & 官方基线 & 机制预测器 \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n\\bottomrule\n\\end{tabular}\n")
     (TABLES / "table9_phase_stratification.tex").write_text(body, encoding="utf-8")
 

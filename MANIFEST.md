@@ -7,8 +7,8 @@
 ## 1. 核心文书与手稿
 | 磁盘文件路径 | 文件类型 | 说明与用途 |
 |---|---|---|
-| `main.tex` | LaTeX 源码 | **正式提交稿**论文主文档源码：32 页紧凑精炼稿，含定理 1--5、引理 1--4、命题 1--4、推论 1--4，四层证据架构（0 错误、0 溢出、0 未定义引用） |
-| `main.pdf` | PDF 文档 | 正式提交稿编译产物（严格 32 页，由 Tectonic 从 `main.tex` 编译生成） |
+| `main.tex` | LaTeX 源码 | **正式提交稿**论文主文档源码：35 页紧凑精炼稿，含定理 1--5、引理 1--4、命题 1--4、推论 1--4，四层证据架构（0 错误、0 Overfull、0 Underfull、0 未定义引用） |
+| `main.pdf` | PDF 文档 | 正式提交稿编译产物（严格 35 页，由 Tectonic 从 `main.tex` 编译生成） |
 | `archive/main_reframed.tex` | LaTeX 源码 | [历史存档] 重构探索稿源码（12 页，曾用作独立审计验证测试） |
 | `archive/main_reframed.pdf` | PDF 文档 | [历史存档] 重构探索稿编译产物（12 页） |
 | `references.bib` | BibTeX | 净化后的参考文献库（46 篇，双向完全闭合：0 缺失、0 未引项） |
@@ -24,23 +24,36 @@
 | 磁盘文件路径 | 说明 |
 |---|---|
 | `derivations/derivations_manual.tex` | 数学定理“显微镜式”逐行代数证明源码（已统一 C >= 1,300） |
-| `derivations/derivations_manual.pdf` | 数学推导手册编译就绪 PDF |
+| `derivations/derivations_manual.pdf` | 数学推导手册编译就绪 PDF（10 页） |
+
+---
+
+## 2b. 补充材料 (`supplementary/`)
+| 磁盘文件路径 | 说明 |
+|---|---|
+| `supplementary/supplementary_tables.tex` | 补充材料源码：正文引用的全部支持表格 S1--S9 |
+| `supplementary/supplementary_tables.pdf` | 补充材料编译就绪 PDF |
+
+对应关系：表 S1 符号与口径对照（`tables_v3/supp_s1.tex`，`scripts_v2/emit_supplementary.py`）；表 S2 样本量基准与蒙特卡洛网格（`tables_v3/supp_s2.tex`，`reports/verify_t4.json`）；表 S3 数据源与泄漏核查（`tables_v3/tab_leakage.tex`）；表 S4 四类视界口径定义（`tables_v3/tab_caliber_def.tex`）；表 S5 七阶段六口径视界全景（`tables_v3/supp_s5.tex`，`reports_v3/caliber_table.json`）；表 S6 窗口与截断敏感性（`tables_v3/tab_sensitivity.tex`）；表 S7 容错门槛预警映射（`tables_v3/table7_tiers.tex`）；表 S8 FluSight 三赛季分步长评分面板（`tables_v3/supp_s8.tex`，`reports_v3/flusight_v1.*_extended.json`）；表 S9 COVIDhub 12 原点明细（`tables_v3/table6_hub.tex`）。
 
 ---
 
 ## 3. 表格清单与对应关系
 
-### 3.1 正式提交稿 (`main.tex`, 32 页) 正文表格清单
+### 3.1 正式提交稿 (`main.tex`, 35 页) 正文表格清单
 | 正文表序 | 标题与说明 | 对应数据来源 / 生成脚本 |
 |---|---|---|
 | **表 1** | 证据架构与跨尺度层级界定（确定性分支与随机范围） | 正文内嵌排版 (`main.tex`) |
 | **表 2** | 微观传播链子代分布极大似然拟合与信息论下界检验 | `tables_v3/table2_micro.tex` <- `data/micro/micro_branching_fit_results.json` |
 | **表 3** | 州级七阶段动力学参数与固定离散度 NB2 模型内机制视界分布 | `tables_v3/table3_state.tex` <- `reports_v3/state_phases.json` |
-| **表 4** | 启发式模型方差与模型—观测代数差额的州级分解 | `tables_v3/table4_budget.tex` <- `reports_v3/budget_national.json` |
-| **表 5** | 宏观机制视界与伪实时滚动业务时效的州级双层对照 | `tables_v3/table5_rolling.tex` <- `reports_v3/state_rolling.json` |
-| **表 6** | CDC FluSight 外部审计：三历史赛季严格四向相交单元总体表现与配对差异 | `tables_v3/table8_flusight_audit.tex` <- `reports_v3/flusight_v1.*_extended.json` |
-| **表 7** | CDC FluSight 外部审计按流行病学阶段分层的校准评估 | `tables_v3/table9_phase_stratification.tex` <- `reports_v3/flusight_v1.*_extended.json` |
-| **表 8** | 全文核心定理证明推导索引全景目录 | 正文内嵌排版 (`main.tex`) |
+| **表 4** | 同一面板下四种宏观方差结构给出的机制视界（结构敏感性） | `tables_v3/tab_alt_variance.tex` <- `reports_v3/alt_variance_calibers.json` |
+| **表 5** | 启发式模型方差与模型—观测代数差额的州级分解 | `tables_v3/table4_budget.tex` <- `reports_v3/budget_national.json` |
+| **表 6** | 宏观机制视界与伪实时滚动业务时效的州级双层对照 | `tables_v3/table5_rolling.tex` <- `reports_v3/state_rolling.json` |
+| **表 7** | 准入门槛放宽后的各阶段州级中位机制视界与参与辖区数 | `tables_v3/tab_threshold_sweep.tex` <- `reports_v3/horizon_robustness.json` |
+| **表 8** | 各阶段州级中位机制视界的联合自助 95% 区间（$B=1000$） | `tables_v3/tab_joint_ci.tex` <- `reports_v3/horizon_robustness.json` |
+| **表 9** | CDC FluSight 外部审计：三历史赛季严格四向相交单元总体表现与配对差异 | `tables_v3/table8_flusight_audit.tex` <- `reports_v3/flusight_v1.*_extended.json` |
+| **表 10** | CDC FluSight 外部审计按全局峰值相对位置分层的校准评估 | `tables_v3/table9_phase_stratification.tex` <- `reports_v3/flusight_v1.*_extended.json` |
+| **表 11** | 全文核心定理证明推导索引全景目录（末列已逐条对齐推导手册实体节名） | 正文内嵌排版 (`main.tex`) |
 
 ### 3.2 补充与备用表格片段 (`tables_v3/`)
 | 磁盘文件名 | 标题与说明 | 对应数据来源 / 生成脚本 |
@@ -48,12 +61,16 @@
 | `tables_v3/table6_hub.tex` | COVIDhub-ensemble 集成预测技能衰减汇总表 | `scripts_v2/emit_v3.py` <- `data/hub/forecast_hub_operational_evaluation.json` |
 | `tables_v3/table7_tiers.tex` | 公共卫生分级响应场景与机制视界策略映射表 | `scripts_v2/emit_v3.py` <- `reports_v3/scenarios.json` |
 | `tables_v3/tab_sensitivity.tex` | 视界方程 $k_{\text{agg}}$ 敏感性表格片段 | `scripts_v2/emit_v3.py` <- `reports_v3/sensitivity_v4.json` |
+| `tables_v3/tab_threshold_sweep.tex` | 准入门槛敏感性（$\ge 50/30/20/10$ 例） | `scripts_v2/horizon_robustness.py` <- `reports_v3/state_phases.json` |
+| `tables_v3/tab_alt_variance.tex` | 四种宏观方差结构下的机制视界 | `scripts_v2/alt_variance_calibers.py` <- `reports_v3/state_phases.json` |
+| `tables_v3/tab_joint_ci.tex` | 中位视界的联合自助 95% 区间 | `scripts_v2/horizon_robustness.py` <- `reports_v3/state_phases.json` |
+| `tables_v3/supp_s1.tex` … `tables_v3/supp_s8.tex` | 补充材料表 S1/S2/S5/S8 片段 | `scripts_v2/emit_supplementary.py` |
 
 ---
 
 ## 4. 高清矢量图件清单
 
-### 4.1 正式提交稿 (`main.tex`, 32 页) 正文图件清单
+### 4.1 正式提交稿 (`main.tex`, 35 页) 正文图件清单
 | 磁盘文件路径 | 正文图序与内容说明 |
 |---|---|
 | `reports_v3/figures/fig1_framework.png` | **图 1**：传染病预测视界机制基准与实证外部审计架构全景图 |
@@ -128,6 +145,10 @@
 | `scripts_v2/predictor_sensitivity.py` | 预测规则依赖：插入式预测与均值偏差修正预测的视界对照（含 $2\times10^6$ 次蒙特卡洛核验） |
 | `scripts_v2/caliber_table.py` | 七阶段五口径视界与实测时效的逐阶段对照（含包络失效判定） |
 | `scripts_v2/verify_suite.py` | 定理 5R（环境噪声自回归）与推论 1 验证套件 |
+| `scripts_v2/horizon_robustness.py` | 准入门槛敏感性扫描 + 逐州配对视界比（294 单元）+ 中位视界联合自助区间 |
+| `scripts_v2/build_input_hashes.py` | 全量输入文件 SHA-256 清单生成（237 个文件） |
+| `scripts_v2/emit_supplementary.py` | 补充材料表 S1/S2/S5/S8 生成脚本 |
+| `scripts_v2/alt_variance_calibers.py` | 替代宏观方差结构（NB1／Poisson／微观 GW）下的机制视界实算 |
 
 ---
 

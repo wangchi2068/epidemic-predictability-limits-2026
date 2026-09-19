@@ -1,0 +1,121 @@
+{
+ "Delta": {
+  "display": "COVID-19 Delta 暴发期",
+  "n": 50,
+  "median": {
+   "nb2": 7.119820478697424,
+   "nb1": 9.341375455463968,
+   "poisson": 11.09803612652317,
+   "micro": 11.084357983149959
+  },
+  "n_unbounded": {
+   "nb2": 0,
+   "nb1": 0,
+   "poisson": 0,
+   "micro": 0
+  },
+  "median_nb1_saturation": 0.11075313810447973
+ },
+ "Omicron": {
+  "display": "COVID-19 Omicron 达峰期",
+  "n": 51,
+  "median": {
+   "nb2": 3.953263113004818,
+   "nb1": 5.118882957164665,
+   "poisson": 8.573670966481759,
+   "micro": 8.568717342635711
+  },
+  "n_unbounded": {
+   "nb2": 0,
+   "nb1": 0,
+   "poisson": 0,
+   "micro": 0
+  },
+  "median_nb1_saturation": 0.41350766140923106
+ },
+ "JN1": {
+  "display": "COVID-19 JN.1 流行期",
+  "n": 51,
+  "median": {
+   "nb2": 5.003277671712398,
+   "nb1": 5.29139098092262,
+   "poisson": 9.339882035767998,
+   "micro": 9.314396804690267
+  },
+  "n_unbounded": {
+   "nb2": 0,
+   "nb1": 0,
+   "poisson": 0,
+   "micro": 0
+  },
+  "median_nb1_saturation": 0.5901498278360816
+ },
+ "flu22": {
+  "display": "流感 2022--23 暴发早期",
+  "n": 38,
+  "median": {
+   "nb2": 2.203873019348917,
+   "nb1": 2.928346980381763,
+   "poisson": 5.065535985589315,
+   "micro": 5.0178498445028765
+  },
+  "n_unbounded": {
+   "nb2": 0,
+   "nb1": 0,
+   "poisson": 0,
+   "micro": 0
+  },
+  "median_nb1_saturation": 0.2902374177339483
+ },
+ "flu24": {
+  "display": "流感 2024--25 流行季",
+  "n": 45,
+  "median": {
+   "nb2": 2.5814524137173516,
+   "nb1": 3.9470953873644,
+   "poisson": 6.5984849327790185,
+   "micro": 6.5877813367326095
+  },
+  "n_unbounded": {
+   "nb2": 0,
+   "nb1": 0,
+   "poisson": 0,
+   "micro": 0
+  },
+  "median_nb1_saturation": 0.21718707254355596
+ },
+ "rsv24": {
+  "display": "RSV 2024--25 流行季",
+  "n": 34,
+  "median": {
+   "nb2": 5.817215495311246,
+   "nb1": 7.455836757520329,
+   "poisson": 9.551920579186907,
+   "micro": 9.540018653853089
+  },
+  "n_unbounded": {
+   "nb2": 0,
+   "nb1": 0,
+   "poisson": 0,
+   "micro": 0
+  },
+  "median_nb1_saturation": 0.1516591292765257
+ },
+ "rsv25": {
+  "display": "RSV 2025--26 流行季",
+  "n": 26,
+  "median": {
+   "nb2": 3.8869007777906477,
+   "nb1": 4.664774383756117,
+   "poisson": 6.318713444657607,
+   "micro": 6.294630124233198
+  },
+  "n_unbounded": {
+   "nb2": 0,
+   "nb1": 0,
+   "poisson": 0,
+   "micro": 0
+  },
+  "median_nb1_saturation": 0.2818290915284688
+ }
+}

@@ -1,0 +1,29 @@
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{9.0cm}@{}}
+\toprule
+符号 & 名称 & 定义与口径 \\
+\midrule
+$\mathcal{F}_t$ & 预测原点信息集 & 原点 $t$ 处严格可得的全部历史与外生信息 \\
+$Y_{t+h}$ & 预测目标 & 前瞻 $h$ 步的真实状态（终报真值口径下 $Y_{t+h}=Z_{t+h}$） \\
+$\delta_h$ & 预测规则 & $\mathcal{F}_t$ 可测且二阶可积的实随机变量 \\
+$m_h,\,V_h$ & 条件均值与条件方差 & $m_h=\mathbb{E}[Y_{t+h}\mid\mathcal{F}_t]$，$V_h=\operatorname{Var}(Y_{t+h}\mid\mathcal{F}_t)$ \\
+$\mathcal{R}_h(\delta_h)$ & 条件平方预测风险 & $\mathbb{E}[(Y_{t+h}-\delta_h)^2\mid\mathcal{F}_t]$；最小值为地板 $V_h$ \\
+$Z_t$ & 周度宏观观测 & 第 $t$ 周全辖区报告的新增住院计数 \\
+$R$ & 代际增长乘子 & 个体级（代际时钟）基本再生数 \\
+$R_{\text{周}}$ & 周度增长乘子 & $\exp(b_{\text{week}})$；宏观主口径使用 \\
+$s_{\text{周}}$ & 斜率对数标准误 & $\operatorname{SE}(b_{\text{week}})$，自由度 $3$（$W=5$） \\
+$k_{\text{ind}}$ & 个体级离散度 & 个体子代分布负二项的 size 参数 \\
+$k_{\text{agg}}$ & 宏观聚合离散度 & 州级周度序列的有效离散度（对数差分二阶矩估计，上限 1,000） \\
+$I_0$ & 初始发病规模 & 推断窗口内周度均值（平滑初始状态） \\
+$\text{CV}^2_{\text{macro}}(h)$ & 宏观过程相对方差 & 固定 $k_{\text{agg}}$ 的 NB2 更新模型有限步精确方差除以均值平方 \\
+$P_{\text{exact}}(h)$ & 参数外推项（精确） & $\exp(2h^2s^2)-2\exp(h^2s^2/2)+1$（对数正态精确式） \\
+$P_{\text{quad}}(h)$ & 参数外推项（领先阶） & $(h_{\text{周}}s_{\text{周}})^2$，用于误差记账 \\
+$h^*$ & 机制视界 & $\text{RelMSE}(h)$ 首次达到容忍度 $\tau$ 的连续阈值根 \\
+$h^*_{\text{obs}}$ & 实测绝对误差视界 & 各州滚动误差首次穿越同一 $	au$ 的插值点 \\
+$\tau$ & 容忍度阈值 & 本文主口径 $\tau=0.5$ \\
+$\mathcal{E}_{\text{res}}(h)$ & 模型—观测代数差额 & $\text{RelMSE}_{\text{obs}}-(\text{CV}^2_{\text{macro}}+P_{\text{quad}})$，描述性记账 \\
+$\phi,\,s_e^2$ & AR(1) 持续性参数 & 环境漂移自相关系数与其创新方差（$|\phi|<1$） \\
+$\text{WIS}$ & 加权区间评分 & 基于 23 个标准分位数的严格适当评分规则 \\
+$\text{PIT}$ & 概率积分变换 & 分位数插值近似随机化 PIT，完美校准时服从均匀分布 \\
+$C$ & 理想样本量基准 & 给定效应量与功效下由 CRB 反解的单代完全观测样本量 \\
+\bottomrule
+\end{tabular}

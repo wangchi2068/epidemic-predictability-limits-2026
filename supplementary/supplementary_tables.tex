@@ -1,0 +1,93 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[UTF8,fontset=fandol]{ctex}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{left=2.0cm,right=2.0cm,top=2.2cm,bottom=2.2cm}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+\usepackage{longtable}
+\usepackage{array}
+
+\newcommand{\suppdir}{../tables_v3}
+
+\title{\textbf{补充材料：支持表格 S1--S9}\\[0.4em]
+\large Supplementary Tables for\\
+\emph{Mechanistic Benchmarks and Empirical Calibration of Epidemic Forecast Horizons}}
+\author{（双盲评审版，作者信息暂略）}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{说明。}本补充材料收录正文引用的全部支持表格（表 S1--S9）。所有表格均由随稿提交的代码与数据冻结快照自动生成：表 S2 来自 \texttt{reports/verify\_t4.json}，表 S5 来自 \texttt{reports\_v3/caliber\_table.json}，表 S8 来自 \texttt{reports\_v3/flusight\_v1.*\_extended.json}，其余表格由 \texttt{scripts\_v2/} 下的生成脚本产出并受 \texttt{scripts\_v2/check\_consistency.py} 的一致性门禁逐字节核验。
+
+\section*{表 S1　主要符号与口径对照表}
+\addcontentsline{toc}{section}{表 S1 主要符号}
+\begin{table}[htbp]\centering\footnotesize
+\caption{全文主要符号、名称与定义口径}
+\input{\suppdir/supp_s1}
+\end{table}
+
+\clearpage
+\section*{表 S2　理想样本量基准与蒙特卡洛参数全网格}
+\addcontentsline{toc}{section}{表 S2 样本量基准与模拟网格}
+\begin{table}[htbp]\centering\footnotesize
+\caption{定理 4（Fisher 信息与 Cramér--Rao 界）验证的完整参数网格。$C$ 为单代完全观测的样本量基准（单位信噪比 $C=861$、80\% 功效工作点 $C=1{,}300$，以及本文实测 $k$ 对应的 $C=2{,}162$ 与 $C=6{,}593$）；经验方差为 50{,}000 次蒙特卡洛数值极大似然的方差}
+\input{\suppdir/supp_s2}
+\end{table}
+
+\section*{表 S3　各分析对象的数据来源与潜在泄漏核查表}
+\addcontentsline{toc}{section}{表 S3 数据源与泄漏核查}
+\begin{table}[htbp]\centering\footnotesize
+\caption{各分析对象的参数来源、真值口径与未来信息依赖}
+\input{\suppdir/tab_leakage}
+\end{table}
+
+\section*{表 S4　四类视界口径的定义与层级归属}
+\addcontentsline{toc}{section}{表 S4 视界口径定义}
+\begin{table}[htbp]\centering\footnotesize
+\caption{四类视界的生成模型、层级归属与适用数据}
+\input{\suppdir/tab_caliber_def}
+\end{table}
+
+\clearpage
+\section*{表 S5　七阶段六口径机制视界全景对照}
+\addcontentsline{toc}{section}{表 S5 六口径视界全景}
+\begin{table}[htbp]\centering\scriptsize
+\caption{各阶段在六类机制视界口径下的州级中位视界（周），并与同定义实测绝对误差视界及相对持续性基线的业务时效对照。$h^*_{\text{macro}}$ 为正文主口径（固定 $k_{\text{agg}}$ 的 NB2 更新模型、周度时钟）；$h^*_{k}$ 三列为代入三档个体级离散度（实测 $\hat k$）的启发式尺度映射，仅作平行敏感性对照}
+\input{\suppdir/supp_s5}
+\end{table}
+
+\section*{表 S6　推断窗口与 $k_{\text{agg}}$ 截断敏感性矩阵}
+\addcontentsline{toc}{section}{表 S6 窗口与截断敏感性}
+\begin{table}[htbp]\centering\footnotesize
+\caption{各阶段州级中位机制视界对推断窗口长度（5/6/8/10 周）与 $k_{\text{agg}}$ 上限截断（100/500/1{,}000/无约束）的敏感性}
+\input{\suppdir/tab_sensitivity}
+\end{table}
+
+\section*{表 S7　不同容错门槛下的多层级预警映射}
+\addcontentsline{toc}{section}{表 S7 容错门槛预警映射}
+\begin{table}[htbp]\centering\footnotesize
+\caption{各阶段州级机制视界在四种容忍度门槛 $\tau$ 下的取值（括号内为参与辖区数）}
+\input{\suppdir/table7_tiers}
+\end{table}
+
+\clearpage
+\section*{表 S8　CDC FluSight 三赛季分步长完整评分面板}
+\addcontentsline{toc}{section}{表 S8 FluSight 分步长评分面板}
+\begin{table}[htbp]\centering\scriptsize
+\caption{三个锁定赛季在 $h=1,2,3$ 周提前期下的三模型完整评分面板。每行三个模型在同一（赛季, 提前期）单元内共享完全相同的 $n$（严格四方交集），故差值可直接读作配对性能差。逐单元、逐辖区的明细见随包 \texttt{reports\_v3/flusight\_v1.*.csv}}
+\input{\suppdir/supp_s8}
+\end{table}
+
+\section*{表 S9　COVIDhub-ensemble 12 预测原点逐周技能衰减明细}
+\addcontentsline{toc}{section}{表 S9 COVIDhub 逐原点明细}
+\begin{table}[htbp]\centering\scriptsize
+\caption{Delta 与 Omicron 两波共 12 个预测原点、$h=1$--$4$ 周的跨州中位平方误差比率（相对持续性基线）与绝对加权区间评分明细}
+\input{\suppdir/table6_hub}
+\end{table}
+
+\end{document}

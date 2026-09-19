@@ -115,7 +115,7 @@ def panel_a(ax, data: dict) -> None:
     ]
 
     ax.set_title(
-        "(a) 加权区间评分随提前期衰减\n（实线粗体为 2025--26，阴影为 95% Bootstrap CI）", fontsize=9, fontweight="bold"
+        "(a) WIS 随提前期衰减", fontsize=9.5, fontweight="bold"
     )
     ax.set_xlabel("提前期 $h$（周）", fontsize=8.5)
     ax.set_ylabel("WIS（加权区间评分，越低越优）", fontsize=8.5)
@@ -198,24 +198,18 @@ def panel_b(ax, data: dict) -> None:
     ax.axhline(0.95, color="#d95f02", ls="--", lw=1.2, label="标称 95% 水平", zorder=2)
 
     # Highlight pre-peak phase coverage
-    ax.annotate(
-        "峰前期经验覆盖率较低\n(实测覆盖率仅 0.14--0.49)",
-        xy=(0.0, 0.49),
-        xytext=(0.0, 1.04),
-        arrowprops=dict(arrowstyle="->", color="#b2182b", lw=1.0),
-        ha="center",
-        fontsize=7.5,
-        fontweight="bold",
-        bbox=dict(boxstyle="round,pad=0.35", fc="#fff5f5", ec="#b2182b", lw=0.9, alpha=0.95),
-        zorder=6,
-    )
+    ax.text(0.98, 0.06, "峰前期覆盖率偏低\n(实测 0.14--0.49)",
+            transform=ax.transAxes, ha="right", va="bottom", fontsize=7.0,
+            fontweight="bold", color="#8c1221", zorder=6,
+            bbox=dict(boxstyle="round,pad=0.30", fc="#fff5f5", ec="#b2182b",
+                      lw=0.8, alpha=0.95))
 
-    ax.set_title("(b) 峰值相对位置各阶段经验 95% 预测区间覆盖率\n（柱为 2025--26，散点为前两季对照）", fontsize=9, fontweight="bold")
+    ax.set_title("(b) 分阶段经验覆盖率", fontsize=9.5, fontweight="bold")
     ax.set_xticks(x)
     ax.set_xticklabels(ph_label, fontsize=8)
     ax.set_ylabel("经验覆盖率（标称 = 0.95）", fontsize=8.5)
-    ax.set_ylim(0, 1.22)
-    ax.legend(frameon=True, fontsize=7.5, loc="lower right")
+    ax.set_ylim(0, 1.20)
+    ax.legend(frameon=True, fontsize=6.5, loc="upper left")
 
 
 def panel_c(ax, data: dict) -> None:
@@ -300,17 +294,17 @@ def panel_c(ax, data: dict) -> None:
             zorder=6,
         )
 
-    ax.set_title("(c) 相对集成的超额 WIS 与配对 95% CI（$h=1$）\n（正值表示劣于集成，误差棒为配对置信区间）", fontsize=9, fontweight="bold")
+    ax.set_title("(c) 相对集成的超额 WIS", fontsize=9.5, fontweight="bold")
     ax.set_xticks(x)
-    ax.set_xticklabels([REL_LABEL[r] for r in RELS], fontsize=8)
+    ax.set_xticklabels([REL_LABEL[r] for r in RELS], fontsize=7.5)
     ax.set_ylabel("$\\Delta$WIS（超额加权区间评分）", fontsize=8.5)
     ax.set_ylim(-5, 175)
-    ax.legend(frameon=True, fontsize=7.5, loc="upper left")
+    ax.legend(frameon=True, fontsize=6.8, loc="upper left")
 
 
 def main() -> None:
     data = {rel: load(rel) for rel in RELS}
-    fig, axes = plt.subplots(1, 3, figsize=(12.8, 4.0), dpi=300)
+    fig, axes = plt.subplots(1, 3, figsize=(8.4, 3.20), dpi=300)
     panel_a(axes[0], data)
     panel_b(axes[1], data)
     panel_c(axes[2], data)

@@ -18,6 +18,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+
+import macro_model
 import pandas as pd
 from scipy.stats import nbinom, poisson
 
@@ -48,7 +50,7 @@ PATHOGEN_COLOR = {
 
 
 def fig_micro(micro: dict):
-    fig, axes = plt.subplots(1, 3, figsize=(11.4, 3.6), dpi=300)
+    fig, axes = plt.subplots(1, 3, figsize=(8.4, 2.65), dpi=300)
     series = [
         ("Hong_Kong_COVID19_Local", "香港 COVID-19（本地）", "#1f78b4"),
         ("Hong_Kong_COVID19_All", "香港 COVID-19（全体）", "#4575b4"),
@@ -99,7 +101,7 @@ def fig_micro(micro: dict):
 
 
 def fig_state_horizons(phases: dict):
-    fig, axes = plt.subplots(1, 2, figsize=(12.2, 4.4), dpi=300)
+    fig, axes = plt.subplots(1, 2, figsize=(8.4, 3.03), dpi=300)
     
     # ------------------ Panel (a): State-level Horizon Distribution & National Aggregate
     ax = axes[0]
@@ -119,8 +121,10 @@ def fig_state_horizons(phases: dict):
         ax.scatter(x_jitter, hs, color=PATHOGEN_COLOR[k], alpha=0.55, s=20,
                    edgecolors="none", zorder=3)
     
-    bp = ax.boxplot(data, tick_labels=labels, widths=0.52, showfliers=False,
+    bp = ax.boxplot(data, widths=0.52, showfliers=False,
                     patch_artist=True, medianprops=dict(color="#0f172a", lw=1.8), zorder=4)
+    ax.set_xticks(range(1, len(labels) + 1))
+    ax.set_xticklabels(labels, rotation=22, ha="right", fontsize=7.0)
     for p in bp["boxes"]:
         p.set_facecolor("#e2e8f0")
         p.set_alpha(0.65)
@@ -154,18 +158,21 @@ def fig_state_horizons(phases: dict):
         # from text and reports, median is ~0.73 to 0.89
         shares = []
         for v in rec["states"].values():
-            if v.get("h_week") and v.get("k_agg"):
-                # leading order / exact ratio at h*
-                h_w = v["h_week"]
-                k_a = v["k_agg"]
-                # leading order process variance: h / k_agg
-                # or exact share bounded near tau2
-                s = min(0.98, max(0.50, (h_w / k_a) / tau2 if k_a > 0 else 0.80))
-                shares.append(s)
-        cv2_shares.append(shares if shares else [0.80])
+            h_w = v.get("h_week")
+            k_a = v.get("k")
+            r_w = v.get("R_week")
+            i_0 = v.get("I0")
+            if None in (h_w, k_a, r_w, i_0):
+                continue
+            # exact macro process variance share at the working point h*,
+            # computed from the Theorem 5 closed form (not the h/k_agg heuristic)
+            shares.append(macro_model.cv2_macro(h_w, r_w, k_a, i_0) / tau2)
+        cv2_shares.append(shares if shares else [np.nan])
         
-    bp2 = ax2.boxplot(cv2_shares, tick_labels=labels, widths=0.52, showfliers=False,
+    bp2 = ax2.boxplot(cv2_shares, widths=0.52, showfliers=False,
                       patch_artist=True, medianprops=dict(color="#0f172a", lw=1.8), zorder=4)
+    ax2.set_xticks(range(1, len(labels) + 1))
+    ax2.set_xticklabels(labels, rotation=22, ha="right", fontsize=7.0)
     for idx, p in enumerate(bp2["boxes"]):
         k = PHASE_ORDER[idx]
         p.set_facecolor(PATHOGEN_COLOR[k])
@@ -188,7 +195,7 @@ def fig_state_horizons(phases: dict):
 
 
 def fig_hub(hub: list):
-    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.0), dpi=300)
+    fig, axes = plt.subplots(1, 2, figsize=(8.4, 2.95), dpi=300)
     
     # ------------------ Panel (a): SERatio relative to persistence baseline
     ax = axes[0]
