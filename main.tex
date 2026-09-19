@@ -412,18 +412,18 @@ C_{\text{total}} \gtrsim \frac{C_{\text{req}}}{\rho},
 \begin{corollary}[样本量约束下的机制视界渐近标度参照]\label{cor:crb_horizon}
 在独立负二项样本、正值估计量及 Delta 方法适用的渐近条件下，对渐近有效且满足强相合性的 $R$ 估计量，其对数尺度方差满足渐近近似 $s_{\log R}^{\,2} \approx \frac{1/R + 1/k}{C}$。对其他满足相应正则条件的估计规则，定理~\ref{thm:fisher} 的 Cramér--Rao 下界提供 $R$ 尺度上的理想信息基准；由此将渐近方差代入定理~\ref{thm:horizon} 的临界方程，即得给定 $C$ 个独立子代观测时领先阶、模型内的乐观机制视界标度参照：
 \begin{equation}
-h^*_{\text{ub}}(C) \;\approx\; \frac{\mu_g}{7}\,\sqrt{\frac{C\left(\tau^2 - \text{CV}^2_\infty\right)}{1/R+1/k}},
+h^*_{\text{ref}}(C) \;\approx\; \frac{\mu_g}{7}\,\sqrt{\frac{C\left(\tau^2 - \text{CV}^2_\infty\right)}{1/R+1/k}},
 \qquad \text{CV}^2_\infty = \frac{1+R/k}{I_0(R-1)} \quad (R > 1),
 \label{eq:crb_horizon}
 \end{equation}
-该式表明机制视界随独立子代观测数 $C$ 以 $\sqrt{C}$ 的领先阶渐近标度增长，将数据充分性判据（定理~\ref{thm:fisher}）与视界映射（定理~\ref{thm:horizon}）桥接为同一组闭式，作为模型内的乐观外推标度参照而非任意有限样本预测器均满足的无条件严格上界。
+该式表明机制视界随独立子代观测数 $C$ 以 $\sqrt{C}$ 的领先阶渐近标度增长（下标 $\text{ref}$ 强调其为理想渐近信息参照而非有限样本绝对上界），将数据充分性判据（定理~\ref{thm:fisher}）与视界映射（定理~\ref{thm:horizon}）桥接为同一组闭式，作为模型内的乐观外推标度参照而非任意有限样本预测器均满足的无条件严格上界。
 \end{corollary}
 
 \begin{proof}
 由定理~\ref{thm:fisher}，无偏估计量满足 $\text{Var}(\hat{R})/R^2 \ge (1/R+1/k)/C$；在估计量处处为正且满足渐近正态性的正则条件下，经 Delta 方法一阶展开可得 $s_{\log R}^{\,2} \approx \text{Var}(\hat{R})/R^2 \ge (1/R+1/k)/C$。由引理~\ref{lem:param_amplification}，$P(h;s_{\log R})$ 关于 $s_{\log R}$ 严格递增，故 $\text{RelMSE}(h) = \text{CV}^2(h) + P(h;s_{\log R})$ 关于 $s_{\log R}$ 严格递增，临界方程的根 $h^*$ 关于 $s_{\log R}$ 单调递减；代入渐近有效估计量的方差基准即得乐观标度式。在超临界体制（$R > 1$）且 $\tau^2 > \text{CV}^2_\infty$ 的常规工作点，取领先阶饱和形式 $\text{CV}^2(h) \to \text{CV}^2_\infty$ 与 $P \approx (h s_{\log R})^2$ 反解即得式 (\ref{eq:crb_horizon})。
 \end{proof}
 
-式 (\ref{eq:crb_horizon}) 给出的机制视界标度参照显式依赖初始发病规模 $I_0$ 与渐近方差饱和极限 $\text{CV}^2_\infty$。在大初值极限下（$I_0 \to \infty$，$\text{CV}^2_\infty \to 0$），代入 $\varepsilon=0.1$、$k=1$、$\tau=0.5$、$\mu_g=4.7$ 天以及基准样本量 $C=1{,}300$，可解得 $h^*_{\text{ub}} \approx 8.8$ 周。但在表~\ref{tab:horizons} 列报的州级实际工作点（$I_0$ 中位数 37--757，对应 $\text{CV}^2_\infty = 0.03$--$0.70$）上，相同的 $C$ 仅给出 $3.5$--$8.4$ 周的理论标度值；当发病规模过低导致 $\text{CV}^2_\infty \ge \tau^2$（$I_0 \lesssim 10$）时，根号内部转为负值，意味着内在过程噪声已单独击穿误差容忍门槛。因此，该标度参照应被理解为大初值与充分样本量条件下的潜在乐观外推窗口上限，而非任意小样本序列均可企及的实际视界。
+式 (\ref{eq:crb_horizon}) 给出的机制视界标度参照显式依赖初始发病规模 $I_0$ 与渐近方差饱和极限 $\text{CV}^2_\infty$。在大初值极限下（$I_0 \to \infty$，$\text{CV}^2_\infty \to 0$），代入 $\varepsilon=0.1$、$k=1$、$\tau=0.5$、$\mu_g=4.7$ 天以及基准样本量 $C=1{,}300$，可解得 $h^*_{\text{ref}} \approx 8.8$ 周。但在表~\ref{tab:horizons} 列报的州级实际工作点（$I_0$ 中位数 37--757，对应 $\text{CV}^2_\infty = 0.03$--$0.70$）上，相同的 $C$ 仅给出 $3.5$--$8.4$ 周的理论标度值；当发病规模过低导致 $\text{CV}^2_\infty \ge \tau^2$（$I_0 \lesssim 10$）时，根号内部转为负值，意味着内在过程噪声已单独击穿误差容忍门槛。因此，该标度参照应被理解为大初值与充分样本量条件下的潜在乐观外推窗口上限，而非任意小样本序列均可企及的实际视界。
 
 % [tab:ck moved to Appendix Table S5]
 
@@ -431,30 +431,37 @@ h^*_{\text{ub}}(C) \;\approx\; \frac{\mu_g}{7}\,\sqrt{\frac{C\left(\tau^2 - \tex
 \subsection{时变传播扰动与宏观聚合方差累积律}
 
 \begin{proposition}[宏观固定离散度更新模型的领先阶方差累积律]\label{thm:t5}
-在逐代独立更新的宏观负二项聚合模型下，设条件发病规模满足 $Z_t \mid \mathcal{F}_{t-1} \sim \text{NB}(\mu_t = R_t Z_{t-1}, k_{\text{agg}})$。其发病对数满足逐代更新方程：
+在逐代独立更新的宏观负二项聚合模型下，设条件发病规模满足 $Z_t \mid \mathcal{F}_{t-1} \sim \text{NB}(\mu_t = R_t Z_{t-1}, k_{\text{agg}})$。需要指出，对任意有限 $\mu_t > 0$ 与 $k_{\text{agg}} > 0$，零计数概率 $\Pr(Z_t = 0 \mid \mathcal{F}_{t-1}) = (1 + \mu_t/k_{\text{agg}})^{-k_{\text{agg}}} > 0$ 恒正，直接作用的 $\log Z_t$ 在零点无定义且条件期望发散。为使条件期望与创新在有限样本下严格良定，本文采用正计数值截断对数协议（Truncated Logarithm Protocol）：定义 $L_t \equiv \log(Z_t \vee 1)$（在正计数路径 $Z_t \ge 1$ 上恒有 $L_t = \log Z_t$；在 $Z_t = 0$ 时为 $\log 1 = 0$）。则 $L_t$ 满足严格有限的逐代递推方程：
 \begin{equation}
-\log Z_t = \log Z_{t-1} + \log R_t + b_t + \xi_t,
+L_t = L_{t-1} + \log R_t + b_t + \xi_t,
+\label{eq:truncated_log_recurrence}
 \end{equation}
-其中 $b_t = \mathbb{E}[\log Z_t \mid \mathcal{F}_{t-1}] - \log \mu_t$ 为对数尺度下的 Jensen 修正项，$\xi_t \equiv \log Z_t - \mathbb{E}[\log Z_t \mid \mathcal{F}_{t-1}]$ 为鞅差创新。由负二项分布的 Gamma--Poisson 层次混合表示 $Z_t \mid \Lambda_t \sim \text{Poisson}(\Lambda_t)$（其中潜伏随机均值 $\Lambda_t \sim \text{Gamma}(k_{\text{agg}}, k_{\text{agg}}/\mu_t)$）：在固定离散参数 $k_{\text{agg}}$ 下，令发病期望规模 $\mu_t \to \infty$，泊松随机性相对消失，归一化发病变量弱收敛于标准化的 Gamma 分布：
+其中 $b_t \equiv \mathbb{E}[L_t \mid \mathcal{F}_{t-1}] - \log \mu_t$ 为良定的有限 Jensen 修正项，$\xi_t \equiv L_t - \mathbb{E}[L_t \mid \mathcal{F}_{t-1}]$ 为有限方差鞅差创新（$\mathbb{E}[\xi_t \mid \mathcal{F}_{t-1}] = 0$）。
+
+由负二项分布的 Gamma--Poisson 层次混合表示 $Z_t \mid \Lambda_t \sim \text{Poisson}(\Lambda_t)$（其中随机均值 $\Lambda_t \sim \text{Gamma}(k_{\text{agg}}, k_{\text{agg}}/\mu_t)$）：在固定离散参数 $k_{\text{agg}}$ 下令条件期望规模 $\mu_t \to \infty$ 时，零事件概率以代数速率衰减 $\Pr(Z_t = 0) = \mathcal{O}(\mu_t^{-k_{\text{agg}}}) \to 0$，泊松相对随机性消失，归一化变量弱收敛于标准化的 Gamma 分布：
 \begin{equation}
-\frac{Z_t}{\mu_t} \xrightarrow{d} G_t \sim \text{Gamma}(k_{\text{agg}}, k_{\text{agg}}), \qquad \mathbb{E}[G_t] = 1, \quad \text{Var}(G_t) = \frac{1}{k_{\text{agg}}}.
+\frac{Z_t \vee 1}{\mu_t} \xrightarrow{d} G_t \sim \text{Gamma}(k_{\text{agg}}, k_{\text{agg}}), \qquad \mathbb{E}[G_t] = 1, \quad \text{Var}(G_t) = \frac{1}{k_{\text{agg}}}.
 \end{equation}
-因此，单步相对波动并不随发病绝对规模的增加而退化为零，对数变量的渐近条件方差严格收敛于三伽马（trigamma）函数 $\psi_1(k_{\text{agg}}) \equiv \psi'(k_{\text{agg}}) = \sum_{m=0}^\infty (k_{\text{agg}} + m)^{-2}$，而 Jensen 修正项严格收敛于 $b_t \to \psi(k_{\text{agg}}) - \ln k_{\text{agg}}$（$\psi$ 为 digamma 函数）。
+由于 $G_t$ 的对数矩母函数在原点邻域解析且 $L_t - \log\mu_t$ 满足二阶一致可积性，由矩收敛定理，条件一阶与二阶矩收敛于对应 Gamma 对数矩：
+\begin{equation}
+\lim_{\mu_t \to \infty} b_t = \mathbb{E}[\log G_t] = \psi(k_{\text{agg}}) - \ln k_{\text{agg}}, \qquad \lim_{\mu_t \to \infty} \text{Var}(L_t \mid \mathcal{F}_{t-1}) = \text{Var}(\log G_t) = \psi_1(k_{\text{agg}}),
+\end{equation}
+其中 $\psi(k)$ 为 digamma 函数，$\psi_1(k) \equiv \psi'(k) = \sum_{m=0}^\infty (k + m)^{-2}$ 为三伽马（trigamma）函数。这表明单步相对方差并不随发病规模增加而消失，其大均值下界由三伽马函数 $\psi_1(k_{\text{agg}})$ 给出。
 
 当进一步满足宏观大离散度条件（$k_{\text{agg}} \gg 1$）时，利用特殊函数的渐近级数展开：
 \begin{equation}
 \psi_1(k_{\text{agg}}) = \frac{1}{k_{\text{agg}}} + \frac{1}{2k_{\text{agg}}^2} + \mathcal{O}(k_{\text{agg}}^{-3}), \qquad \psi(k_{\text{agg}}) - \ln k_{\text{agg}} = -\frac{1}{2k_{\text{agg}}} + \mathcal{O}(k_{\text{agg}}^{-2}),
 \end{equation}
-可得 $b_t \approx -1/(2k_{\text{agg}}) \to 0$ 成为高阶小量，单代抽样方差退化为一阶 Delta 近似值 $1/k_{\text{agg}}$。若对数再生数叠加独立同分布的环境扰动 $\log R_t = \log R + \eta_t$（$\eta_t \sim \mathcal{N}(0, v^2)$），在双重大样本条件（未灭绝 $Z_h > 0$、各步均值充分大 $\min_{1 \le t \le h} \mu_t \gg k_{\text{agg}}$ 且宏观离散度 $k_{\text{agg}} \gg 1$）下，未来第 $h$ 代发病对数的预测方差呈领先阶线性累积：
+可得 $b_t \approx -1/(2k_{\text{agg}}) \to 0$ 成为高阶小量，单代抽样方差退化为一阶 Delta 近似值 $1/k_{\text{agg}}$。若对数再生数叠加独立同分布的环境扰动 $\log R_t = \log R + \eta_t$（$\eta_t \sim \mathcal{N}(0, v^2)$），在固定有限提前期 $h$、各步保持正计数且条件均值充分大（$\min_{1 \le t \le h} \mu_t \gg k_{\text{agg}}$）及 $k_{\text{agg}} \gg 1$ 条件下，未来第 $h$ 代发病对数指标的预测方差呈领先阶线性累积：
 \begin{equation}
-\text{Var}(\log Z_h \mid Z_h > 0) \sim h \left(v^2 + \frac{1}{k_{\text{agg}}}\right),
+\text{Var}(L_h \mid Z_1 > 0, \dots, Z_h > 0) \sim h \left(v^2 + \frac{1}{k_{\text{agg}}}\right),
 \end{equation}
-而在固定 $k_{\text{agg}}$ 与固定有限 $h$ 下，其大均值极限累积速率由 $h(v^2 + \psi_1(k_{\text{agg}}))$ 给出。需要指出，上述固定 $k_{\text{agg}}$ 的累积系数应按固定有限提前期、预测路径各步保持正计数且条件均值均充分大的极限理解；本文未证明该近似对增长的提前期 $h$ 一致有效。在各阶段跨州中位 $k_{\text{agg}} = 11.2\text{--}56.6$ 的工作点上，$1/k_{\text{agg}}$ 相对于 $\psi_1(k_{\text{agg}})$ 的领先阶差额 $\frac{\psi_1(k) - 1/k}{1/k} \approx \frac{1}{2k}$ 约为 0.9\%--4.5\%；这一范围描述的是阶段中位工作点，而非所有州—阶段单元。流感及 RSV 各阶段的对应值约为 1.3\%--4.5\%。因而 $1/k_{\text{agg}}$ 构成了阶段中位尺度上极佳且解析透明的工程领先阶近似。
+而在固定 $k_{\text{agg}}$ 与固定有限 $h$ 下，其大均值极限累积速率由 $h(v^2 + \psi_1(k_{\text{agg}}))$ 给出。需要指出，上述结论针对所选定的截断对数协议（在正计数路径上与 $\log Z_t$ 完全重合），且按先固定有限提前期 $h$、预测路径各步保持正计数且条件均值充分大的极限理解；本文未证明该近似对增长的提前期 $h$ 一致有效。在各阶段跨州中位 $k_{\text{agg}} = 11.2\text{--}56.6$ 的工作点上，$1/k_{\text{agg}}$ 相对于 $\psi_1(k_{\text{agg}})$ 的领先阶差额 $\frac{\psi_1(k) - 1/k}{1/k} \approx \frac{1}{2k}$ 约为 0.9\%--4.5\%；这一范围描述的是阶段中位工作点，而非所有州—阶段单元。流感及 RSV 各阶段的对应值约为 1.3\%--4.5\%。因而 $1/k_{\text{agg}}$ 构成了阶段中位尺度上极佳且解析透明的工程领先阶近似。
 \end{proposition}
 
 % Proof sketch detailed in Appendix and Derivations Manual
 
-作为命题~\ref{thm:t5} 环境噪声分量在时间自相关情形下的平行扩展，定理 5R 刻画传播增长率存在平稳 AR(1) 持续性漂移时的对数增长率累积方差规律。二者的分析对象与噪声组成存在明确区别：命题~\ref{thm:t5} 针对发病对数 $\log Z_h$ 的全方差，在线性展开下其斜率 $v^2 + 1/k_{\text{agg}}$（在大均值极限下为 $v^2 + \psi_1(k_{\text{agg}})$）同时包含了环境方差与负二项宏观抽样方差地板；而定理 5R 则聚焦于未来 $h$ 步对数增长率之和 $\sum_{j=1}^h r_{t+j} = \log(Z_{t+h}/Z_t)$ 的环境漂移子过程，其闭式解仅描述外生环境扰动，并不包含内生离散项 $1/k_{\text{agg}}$（当自相关系数 $\phi=0$ 时，定理 5R 退化为纯环境白噪声的 $s_e^2 h$ 而非命题~\ref{thm:t5} 的复合项）；若要得到包含宏观抽样地板的完整前瞻预测方差，需在环境漂移与抽样波动相互独立的假定下，将定理 5R 与宏观抽样项 $h/k_{\text{agg}}$（在大均值极限下对应为 $h\,\psi_1(k_{\text{agg}})$）线性叠加。
+作为命题~\ref{thm:t5} 环境噪声分量在时间自相关情形下的平行扩展，定理 5R 刻画传播增长率存在平稳 AR(1) 持续性漂移时的对数增长率累积方差规律。二者的分析对象与噪声组成存在明确区别：命题~\ref{thm:t5} 针对发病对数指标 $L_h$ 的全方差，在线性展开下其斜率 $v^2 + 1/k_{\text{agg}}$（在大均值极限下为 $v^2 + \psi_1(k_{\text{agg}})$）同时包含了环境方差与负二项宏观抽样方差地板；而定理 5R 则聚焦于未来 $h$ 步对数增长率之和 $\sum_{j=1}^h r_{t+j} = \log(Z_{t+h}/Z_t)$ 的环境漂移子过程，其闭式解仅描述外生环境扰动，并不包含内生离散项 $1/k_{\text{agg}}$（当自相关系数 $\phi=0$ 时，定理 5R 退化为纯环境白噪声的 $s_e^2 h$ 而非命题~\ref{thm:t5} 的复合项）；若要得到包含宏观抽样地板的完整前瞻预测方差，需在环境漂移与抽样波动相互独立的假定下，将定理 5R 与宏观抽样项 $h/k_{\text{agg}}$（在大均值极限下对应为 $h\,\psi_1(k_{\text{agg}})$）线性叠加。
 
 \begin{theorem5R}\label{thm:t5r}
 当对数增长率 $r_t = \log R_t$ 服从具有持久性自相关系数 $|\phi| < 1$ 与创新方差 $s_e^2$ 的平稳 AR(1) 过程时，未来 $h$ 步对数增长率之和 $\sum_{j=1}^h r_{t+j}$（即 $\log(Z_{t+h}/Z_t)$ 的环境漂移部分）的无条件方差满足精确闭式解：
@@ -473,12 +480,12 @@ h^*_{\text{ub}}(C) \;\approx\; \frac{\mu_g}{7}\,\sqrt{\frac{C\left(\tau^2 - \tex
 % Proof sketch detailed in Appendix and Derivations Manual
 
 \begin{corollary}[固定时间聚合尺度下的大 $k_{\text{agg}}$ 一阶方差累积近似]\label{cor:pop_floor}
-对于跨种群聚合的宏观更新模型，当各步平均发病规模充分大（$\min_{1 \le t \le h} \mu_t \gg k_{\text{agg}}$）且宏观离散度满足 $k_{\text{agg}} \gg 1$ 时，记 $Z_h^{\text{agg}}$ 为第 $h$ 步宏观观测发病水平，其对数方差满足固定时间聚合尺度下的一阶近似累积律：
+对于跨种群聚合的宏观更新模型，在截断对数协议 $L_h = \log(Z_h^{\text{agg}} \vee 1)$ 下，当先固定有限提前期 $h$、预测路径各步均值充分大（$\min_{1 \le t \le h} \mu_t \gg k_{\text{agg}}$）且宏观离散度满足 $k_{\text{agg}} \gg 1$ 时，第 $h$ 步宏观发病对数方差满足固定时间聚合尺度下的一阶近似累积律：
 \begin{equation}
-\text{Var}(\log Z_h^{\text{agg}}) \approx \frac{h}{k_{\text{agg}}},
+\text{Var}(L_h) \approx \frac{h}{k_{\text{agg}}},
 \label{eq:pop_floor}
 \end{equation}
-在先固定有限提前期 $h$、再令各步均值充分大的极限下，其渐近累积速率在固定 $k_{\text{agg}}$ 下由三伽马函数给出：$\lim_{\min \mu_t \to \infty} \text{Var}(\log Z_h^{\text{agg}}) = h\,\psi_1(k_{\text{agg}})$。式~(\ref{eq:pop_floor}) 对应于大离散度 $k_{\text{agg}} \gg 1$ 下截断级数首项的一阶 Delta 近似，其显著特征是渐近累积速率与绝对发病规模 $\mu$ 解耦，单纯由宏观时序离散度 $k_{\text{agg}}$ 决定（在全美 7 个阶段跨州中位工作点上高阶差额约为 $0.9\%$--$4.5\%$）。
+在正计数大均值极限下，其渐近累积速率在固定 $k_{\text{agg}}$ 下由三伽马函数给出：$\lim_{\min \mu_t \to \infty} \text{Var}(L_h) = h\,\psi_1(k_{\text{agg}})$。式~(\ref{eq:pop_floor}) 对应于大离散度 $k_{\text{agg}} \gg 1$ 下截断级数首项的一阶 Delta 近似，其显著特征是渐近累积速率与绝对发病规模 $\mu$ 解耦，单纯由宏观时序离散度 $k_{\text{agg}}$ 决定（在全美 7 个阶段跨州中位工作点上高阶差额约为 $0.9\%$--$4.5\%$）。
 \end{corollary}
 
 % Proof sketch detailed in Appendix and Derivations Manual
@@ -628,7 +635,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 (2) \textbf{预设多窗口结果范围（窗口选择敏感性范围）}：针对滑动窗口长度选择所带来的结构不确定性，本文报告 $W \in \{5, 6, 8, 10\}$ 四种预设窗口下视界点估计的极值范围 $\mathcal{R}_W \equiv [\min_{W} \hat{h}^*(W), \max_{W} \hat{h}^*(W)]$（详见补充材料附表 S6）：COVID Delta 为 $[6.79, 8.07]$ 周、Omicron 为 $[3.61, 4.17]$ 周、JN.1 为 $[4.24, 7.23]$ 周、流感 2022--23 为 $[1.79, 2.39]$ 周、流感 2024--25 为 $[1.52, 3.03]$ 周、RSV 2024--25 为 $[2.98, 6.21]$ 周、RSV 2025--26 为 $[3.89, 5.58]$ 周。该范围仅反映四种预设推断窗口选择之间的结构敏感性，不具有统计置信区间性质，也不传播各窗口内部的参数估计抽样不确定性。各阶段中位视界在窗口变换下出现 $-48.7\%$ 至 $+44.6\%$ 浮动，反映了样本量增加降低估计标准误与引入非平稳均值漂移之间的结构权衡。
 (3) \textbf{其他敏感性}：$k_{\text{agg}}$ 截断上限对多数 COVID 阶段及流感 2024--25 影响极小（100 与 1000 上限之间差异低于 $0.3\%$）；在流感 2022--23 及两季 RSV 中，100 与 1000 上限之间的中位视界差异为 $3.4\%\text{--}7.4\%$（若以 100 上限为基准对比无约束 $\infty$ 则为 $3.3\%\text{--}8.1\%$），仍显著小于推断窗口长度引起的变化，但不能概括为所有阶段均低于 $0.3\%$；$I_0$ 初值口径变动影响在 $-0.2\%\sim +4.8\%$ 之间；偏差修正预测使视界微弱延长 $0.3\%$--$1.5\%$。
 
-补充材料附表 S5 给出六个视界口径与实测时效的完整对照。插件式 NB2 模型内机制视界的州级中位数（2.2--7.1 周，多窗口范围覆盖 1.52--8.07 周）在全部七个阶段均高于同定义实测绝对视界（比值 1.1--4.0 倍）。但若代入极端个体级微观离散度（$\hat{k}=0.111$），低计数阶段视界可降至实测之下。因此主结论严格界定为：在固定离散度 NB2 宏观工作模型与中等个体离散度下，机制视界高于实测绝对时效；“宽松包络”应理解为该特定模型设定下的诊断性经验参考基准，而非现实预测系统的绝对物理上限。
+补充材料附表 S5 给出六个视界口径与实测时效的完整对照。插件式 NB2 模型内机制视界的州级中位数（2.2--7.1 周，多窗口范围覆盖 1.52--8.07 周）在全部七个阶段均高于同定义实测绝对视界（比值 1.1--4.0 倍）。但若代入极端个体级微观离散度（$\hat{k}=0.111$），低计数阶段视界可降至实测之下。因此主结论严格界定为：主结果成立于插件式宏观 NB2 口径（机制视界高于实测绝对时效）；中等个体离散度的微观映射仅提供平行敏感性对照。“宽松包络”应理解为该特定模型设定下的诊断性经验参考基准，而非现实预测系统的绝对物理上限。
 
 \begin{table}[htbp]
 \centering
@@ -835,12 +842,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 \end{equation}
 两类差额具有以下性质：(i) $V^{\text{model}}_h$ 仅为固定宏观更新模型与固定插件参数下的模型内方差基准，并非现实复杂流行系统不可突破的物理极限；(ii) $\mathrm{Gap}^{\text{SE}}_h$ 是经验均方误差与模型方差之间的代数差额，在有限样本或模型设定偏误下并不保证非负，亦不等于定理~\ref{thm:sharp_floor} 中处处非负的理论超额风险 $(m_h - \delta_h)^2$。第 5.4 节的相对误差记账可视为该绝对平方误差差额在特定归一化口径下的描述性对应形式；由于归一化分母和参数外推项处理不同，两者并非逐项严格等价。
 
-\noindent\textbf{第二类：配对概率评分差（$\Delta\text{WIS}$）。}外部审计的核心评价指标为基于 23 分位数的加权区间评分（WIS\citep{bracher2021evaluating}）。WIS 是针对所报告中位数与中心预测区间的适当评分规则（Proper Scoring Rule），并可视为连续排名概率评分（CRPS）的离散近似。本文使用有限的 23 个标准分位数，因此其严格适当性应理解为针对所报告分位数集合，而非对任意完整预测分布的唯一识别。对于两个预测体系 $A$ 与 $B$（如 $A = \text{官方基线或启发式插件式机制预测器}$，$B = \text{Hub 集成}$），定义样本配对概率评分差：
-\begin{equation}
-\Delta\mathrm{WIS}_{A, B}(h) \equiv \overline{\mathrm{WIS}}_A(h) - \overline{\mathrm{WIS}}_B(h).
-\label{eq:gap_wis}
-\end{equation}
-需要明确：平方损失下的条件方差地板不应与 WIS 的风险地板相混淆。$\Delta\mathrm{WIS}$ 属于概率预测分布间的配对评分差，综合反映了预测分布的位置偏差、离散充盈度与尾部惩罚，不等同于定理~\ref{thm:sharp_floor} 的超额平方风险。本文第 6.3 节与表~\ref{tab:flusight_three_seasons} 报告的即为此类配对评分差。
+\noindent\textbf{第二类：配对概率评分差（$\Delta\text{WIS}$）。}外部审计的核心评价指标为基于 23 分位数的加权区间评分（WIS\citep{bracher2021evaluating}）。WIS 是针对所报告中位数与中心预测区间的适当评分规则（Proper Scoring Rule），并可视为连续排名概率评分（CRPS）的离散近似。本文使用有限的 23 个标准分位数，因此其严格适当性应理解为针对所报告分位数集合，而非对任意完整预测分布的唯一识别。对于两个预测体系 $A$ 与 $B$（如 $A = \text{官方基线或启发式插件式机制预测器}$，$B = \text{Hub 集成}$），定义样本配对概率评分差 $\Delta\mathrm{WIS}_{A, B}(h) \equiv \overline{\mathrm{WIS}}_A(h) - \overline{\mathrm{WIS}}_B(h)$。需要明确：平方损失下的条件方差地板不应与 WIS 的风险地板相混淆。$\Delta\mathrm{WIS}$ 属于概率预测分布间的配对评分差，综合反映了预测分布的位置偏差、离散充盈度与尾部惩罚，不等同于定理~\ref{thm:sharp_floor} 的超额平方风险。本文第 6.3 节与表~\ref{tab:flusight_three_seasons} 报告的即为此类配对评分差。
 
 上述两类差额的候选失配来源至少包括以下三项：(1)~\textbf{均值模型误设与非平稳漂移}：真实再生数随人群自发防护、政策介入而动态时变，静态指数增长假设在多周外推中必然偏离；(2)~\textbf{监测系统的测量与修订泄漏}：医院报告延迟导致预测原点处所见并非真实发病全貌，事后向上的回填修订直接拉大了前瞻偏差；(3)~\textbf{预测不确定性的结构性低估}：所评估预测系统在部分峰前期未能充分反映结构变点和分布外波动，表现为预测区间偏窄（图~\ref{fig:flusight_audit}b）。上述误差分解表明：NB2 模型内机制视界作为“现实预警时效的经验参考外包络”与现有证据一致，而现实业务系统若想逐步逼近该基准，其攻关重点不应仅依赖高维黑盒参数的堆砌，而应聚焦于提升疫情峰前期的数据实时感知度与动态不确定性膨胀算法。需要指出，上述三项归因为基于描述性记账的候选解释，各项的相对贡献在本数据下不可唯一识别。
 
@@ -858,11 +860,11 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 
 健康公平性层面，定理~\ref{thm:fisher} 表明参数辨识精度正比于有效样本量 $C$。在两地区其他动力学参数、初始规模和过程方差近似相同，且视界主要受参数辨识误差约束的领先阶条件下，若有效样本量与报告率成正比（欠发达社区有效报告率 $\rho_{\text{low}} \ll \rho_0$），参数推断方差按 $\rho_0/\rho_{\text{low}}$ 放大，理论机制视界近似满足相对标度关系：$\frac{h^*_{\text{low}}}{h^*_0} \approx \sqrt{\frac{\rho_{\text{low}}}{\rho_0}}$。该式为条件性标度关系而非完整因果分解，提示资源配置部门应向监测薄弱辖区倾斜常态哨点与抽样资源，保障预警能力的均等化。
 
-\subsection{研究局限性与未来拓展方向}\label{sec:limitations}
+\subsection{研究局限性与未来拓展方向}\label{sec:limitations}\enlargethispage{1.5\baselineskip}
 
 \noindent\textbf{（一）实证与方法学局限}
 
-\begin{enumerate}[leftmargin=*,itemsep=2.5pt,topsep=2.0pt]
+\begin{enumerate}[leftmargin=*,itemsep=0.2pt,topsep=0.5pt,parsep=0pt]
 \item \textbf{代数差额量级大}：21 个配置的模型—观测代数差额占比跨州中位数为 $55.0\%$（$h=1$ 为 $45.4\%$），由多重现实扰动共同吸收；时变漂移作有界敏感性分析，理论视界作宽松包络。
 \item \textbf{业务时效依赖基线与数据版本}：相对持续性基线的州级时效为 1.0--4.3 周，相对局部线性基线约 1 周追平。回测基于终报数据，实时初报预期更短；区间上界来自存在回填的 RSV 2025--26 阶段。
 \item \textbf{跨病原覆盖有限}：COVIDhub 对照仅覆盖 Delta 与 Omicron 两波约 6 个月，尚缺 RSV 官方预测枢纽审计。
@@ -880,9 +882,10 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 
 本文聚焦早期分支增长，未耦合易感耗竭非线性负反馈（SIR 类）并隐含均匀混合。将视界理论与非线性 Hamilton--Jacobi 波动方程或元种群分支网络结合推导跨峰全相位闭式解是重要深化方向\citep{parag2026threshold}。此外，初值 $I_0$ 的在线估计不确定性目前被代数差额吸收，其因果剥离与多源异构信号（污水监测、搜索指数、基因组丰度）融合增益边界均属关键前沿。
 
+\vspace{-2pt}
 \section{结论}\label{sec:conclusion}
 
-本文建立区分理论条件风险地板、NB2 模型内过程方差、插件预测风险与现实业务误差的分层框架，确立条件均值的锐条件方差地板，刻画个体生成机制与 Fisher 信息下界（实测 $k \in [0.11, 0.43]$ 下 CRB 为 $C \ge 2{,}162$--$6{,}593$），并推导宏观有限步方差闭式、稳定边界与参数传播超额风险。四层证据评估表明：宏观闭式经模拟核验（相对偏差 $1\%$--$3\%$，最大 $7.6\%$）；微观负二项 AIC 明显更低（$\Delta\text{AIC}$ 达 93.9--244.0，相对拟合更优，Bootstrap/CRB 比 0.98--1.06）；51 个州级辖区在 5 周基准窗口下，测得插件式 NB2 机制视界中位数为 2.2--7.1 周（预设窗口结果范围 1.52--8.07 周），汇总比较高于同定义实测绝对误差视界；21 个配置中代数差额中位占比达 $55.0\%$，表明显式机制分量不足以覆盖实测误差。FluSight 三赛季审计中，启发式预测器严重经验欠覆盖（95\% 区间实测仅 0.405--0.554），峰前期覆盖率偏低（Hub 集成降至 0.419--0.852，机制预测器仅 0.140--0.385；峰后期集成恢复至 0.925--0.964）。在本文固定离散度 NB2 工作模型、5 周基准窗口及阶段汇总中位数比较口径下，插件式机制视界可作为实测绝对误差视界的宽松经验参考外包络，而非现实预测系统的普适上界，为重大疫情预警中的分级响应与动态校准提供了一套可复算的理论—实证诊断工具。
+本文建立区分理论条件风险地板、NB2 模型内过程方差、插件预测风险与现实业务误差的分层框架，确立条件均值的锐条件方差地板，刻画个体生成机制与 Fisher 信息下界（实测 $k \in [0.11, 0.43]$ 下 CRB 为 $C \ge 2{,}162$--$6{,}593$），并推导宏观有限步方差闭式、稳定边界与参数传播超额风险。四层证据评估表明：宏观闭式经模拟核验（相对偏差 $1\%$--$3\%$，最大 $7.6\%$）；微观负二项 AIC 显著更优（$\Delta\text{AIC}$ 达 93.9--244.0，Bootstrap/CRB 比 0.98--1.06）；51 个辖区在 5 周基准窗口下，测得插件式 NB2 机制视界中位数为 2.2--7.1 周（范围 1.52--8.07 周），高于实测绝对误差视界；21 个配置中代数差额中位占比达 $55.0\%$，表明显式机制分量不足以覆盖实测误差。FluSight 三赛季审计中启发式预测器经验欠覆盖严重（95\% 区间实测仅 0.405--0.554），峰前期覆盖率偏低（Hub 集成 0.419--0.852，机制预测器 0.140--0.385；峰后期集成恢复至 0.925--0.964）。在本文固定离散度 NB2 工作模型、5 周基准窗口及阶段汇总中位数比较口径下，插件式机制视界可作为实测绝对误差视界的宽松经验参考外包络，而非现实预测系统的普适上界，为重大疫情预警的分级响应提供可复算的理论—实证诊断工具。
 
 \clearpage
 \appendix
@@ -912,9 +915,9 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 推论~\ref{cor:establishment} 单种子建群概率 & 强超扩散对持续定殖的抑制 & 式~(\ref{eq:pgf_fixed_point}) & 负二项概率母函数不动点 $q=G(q)$ 二阶泰勒展开提取 $(1-q)$ & 手册第 3.2 节 式 (34)--(36) \\
 定理~\ref{thm:fisher} Fisher 信息与 CRB 界 & 早期参数辨识数据充分性下限 & 式~(\ref{eq:cramer_cn}) & 得分函数二阶导负期望，交叉偏导期望为零确立参数渐近正交 & 手册第 4.1 节 式 (37)--(41) \\
 推论~\ref{cor:crb_horizon} 样本量约束机制视界标度 & 监测样本量对视界的外在约束 & 式~(\ref{eq:crb_horizon}) & CRB 理论方差代入连续视界方程反解乐观前瞻代际标度 & 手册第 4.2 节 式 (42)--(43) \\
-命题~\ref{thm:t5} 宏观方差线性累积律 & 固定聚合离散度更新噪声累加 & 命题~\ref{thm:t5} & 鞅差对数创新求和，大均值与大 $k_{\text{agg}}$ 展开（大均值界含 $\psi_1$） & 手册第 5.1 节 式 (44)--(46) \\
+命题~\ref{thm:t5} 宏观方差线性累积律 & 固定聚合离散度更新噪声累加 & 命题~\ref{thm:t5} & 截断对数鞅差创新求和，大均值与大 $k_{\text{agg}}$ 展开（大均值界含 $\psi_1$） & 手册第 5.1 节 式 (44)--(46) \\
 定理 5R 平稳与单位根时变漂移 & 增长率时间自相关方差累积 & 定理 5R & 平稳自协方差级数求和；单位根下自然数平方和通项超线性发散 $\sim h^3/3$ & 手册第 5.2 节 式 (47)--(50) \\
-推论~\ref{cor:pop_floor} 宏观抽样 $h/k_{\text{agg}}$ 律 & 跨代独立增量大样本噪声地板 & 式~(\ref{eq:pop_floor}) & 单代对数 Delta 展开，大均值与大 $k_{\text{agg}}$ 下为 $1/k_{\text{agg}}$（大均值界为 $\psi_1$） & 手册第 5.3 节 式 (51)--(52) \\
+推论~\ref{cor:pop_floor} 宏观抽样 $h/k_{\text{agg}}$ 律 & 跨代独立增量大样本噪声地板 & 式~(\ref{eq:pop_floor}) & 截断对数 Delta 展开，大均值与大 $k_{\text{agg}}$ 下为 $1/k_{\text{agg}}$（大均值界为 $\psi_1$） & 手册第 5.3 节 式 (51)--(52) \\
 定理~\ref{thm:macro_exact} 宏观有限步精确方差 & 固定 $k_{\text{agg}}$ 更新模型精确方差 & 式~(\ref{eq:macro_var_closed}) & 一阶非齐次差分方程 $V_{t+1}=qV_t+I_0R^{t+1}+I_0^2R^{2t+2}/k_{\text{agg}}$ 伸缩求和 & 手册第 6.1 节 式 (53)--(58) \\
 引理~\ref{lem:macro_boundaries} 稳定边界极限 & 浮点运算消除相消误差 & 式~(\ref{eq:bound_q_eq_R}) & 洛必达法则求差商极限；$R=1$ 展开；$k\to\infty$ 泊松极限；$I_0\to\infty$ 宏观地板 & 手册第 6.2 节 式 (59)--(62) \\
 命题~\ref{prop:posterior_mixture} 对数正态后验混合 & 完全贝叶斯预测方差与超额风险 & 式~(\ref{eq:mixture_full_var}) & 全方差公式，对数正态对偶阶矩有限和展开，Jensen 不等式超额风险 & 手册第 6.3 节 式 (63)--(66) \\
@@ -935,6 +938,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 \item \textbf{定理~\ref{thm:monotonicity}}：$\text{CV}^2$ 增量 $(1+R/k)/(I_0R^{h+1})>0$；辅助函数 $g(y)=(y^{h_2}-y^{h_1})(y^{h_2}+y^{h_1}-2)$ 在 $y>1$ 与 $0<y<1$ 均同号恒正。
 \item \textbf{定理~\ref{thm:fisher}}：NB 对数似然二阶导负期望得 $I_1(R)=k/[R(R+k)]$；交叉偏导期望为零确立渐近正交；Wald 型检验反解样本量门槛。
 \item \textbf{定理~\ref{thm:macro_exact}}：全方差法则得 $V_{t+1}=qV_t+I_0R^{t+1}+I_0^2R^{2t+2}/k_{\text{agg}}$（$q=R^2c$），除以 $q^{t+1}$ 裂项求和，利用 $q-R^2=R^2/k_{\text{agg}}$ 合并得 $V_h=I_0R(q^h-R^h)/(q-R)+I_0^2(q^h-R^{2h})$。
+\item \textbf{命题~\ref{thm:t5} 与推论~\ref{cor:pop_floor}}：截断对数 $L_t \equiv \log(Z_t \vee 1)$ 规避零点发散，确立鞅差创新有限性；大均值下 $(Z_t\vee 1)/\mu_t \xrightarrow{d} G_t$，二阶一致可积性确立一、二阶矩收敛至 $\psi(k)-\ln k$ 与 $\psi_1(k)$；大 $k_{\text{agg}}$ 级数展开截断给出 $1/k_{\text{agg}}$ 一阶累积近似。
 \end{enumerate}
 
 \subsection*{附录支持说明与补充材料索引}

@@ -182,6 +182,43 @@ V_h=I_0hR^h+I_0^2(R^h-R^{2h}),\qquad q=R.\label{eq:q_equal_R}
 \end{equation}
 数值实现应使用 $G_h$ 或稳定差分商；直接计算两个接近幂的差会造成消去误差。
 
+\subsection{正计数值截断对数协议与三伽马极限}
+在负二项宏观更新模型 $Z_t \mid \mathcal{F}_{t-1} \sim \operatorname{NB}(\mu_t, k_{\text{agg}})$ 下，由于
+\begin{equation}
+\Pr(Z_t = 0 \mid \mathcal{F}_{t-1}) = \left(\frac{k_{\text{agg}}}{k_{\text{agg}} + \mu_t}\right)^{k_{\text{agg}}} > 0,
+\end{equation}
+未正则化的原始对数 $\log Z_t$ 在 $Z_t = 0$ 处无定义，其形式条件期望不可积。为使条件创新与 Jensen 修正项在有限样本下严格良定，引入正计数值截断对数（Truncated Logarithm）：
+\begin{equation}
+L_t \equiv \log(Z_t \vee 1) = \begin{cases} \log Z_t, & Z_t \ge 1, \\ 0, & Z_t = 0. \end{cases}
+\end{equation}
+在正计数观测路径 $\{Z_1 \ge 1, \dots, Z_h \ge 1\}$ 上，$L_t$ 与 $\log Z_t$ 恒等。良定的逐代递推方程为：
+\begin{equation}
+L_t = L_{t-1} + \log R_t + b_t + \xi_t, \qquad \xi_t \equiv L_t - \E[L_t \mid \mathcal{F}_{t-1}],
+\end{equation}
+其中 $\E[\xi_t \mid \mathcal{F}_{t-1}] = 0$ 构成严格鞅差序列，Jensen 修正项为有限值 $b_t \equiv \E[L_t \mid \mathcal{F}_{t-1}] - \log \mu_t$。
+
+\begin{proposition}[大均值下的三伽马极限与矩收敛]
+在固定 $k_{\text{agg}} > 0$ 下，令条件均值 $\mu_t \to \infty$。则零事件概率满足代数衰减 $\Pr(Z_t = 0) = \mathcal{O}(\mu_t^{-k_{\text{agg}}}) \to 0$。由 Gamma--Poisson 混合，归一化变量弱收敛：
+\begin{equation}
+\frac{Z_t \vee 1}{\mu_t} \xrightarrow{d} G_t \sim \operatorname{Gamma}(k_{\text{agg}}, k_{\text{agg}}).
+\end{equation}
+且对数变量的一阶与二阶矩收敛：
+\begin{equation}
+\lim_{\mu_t \to \infty} b_t = \E[\log G_t] = \psi(k_{\text{agg}}) - \ln k_{\text{agg}}, \qquad \lim_{\mu_t \to \infty} \Var(L_t \mid \mathcal{F}_{t-1}) = \Var(\log G_t) = \psi_1(k_{\text{agg}}),
+\end{equation}
+其中 $\psi(k) = \Gamma'(k)/\Gamma(k)$ 为 digamma 函数，$\psi_1(k) = \psi'(k) = \sum_{m=0}^\infty (k+m)^{-2}$ 为 trigamma 函数。
+\end{proposition}
+
+\begin{proof}
+由连续映射定理，$(Z_t \vee 1)/\mu_t \xrightarrow{d} G_t \implies \log((Z_t \vee 1)/\mu_t) = L_t - \log\mu_t \xrightarrow{d} \log G_t$。由于 $G_t \sim \operatorname{Gamma}(k_{\text{agg}}, k_{\text{agg}})$，其对数矩母函数 $\E[G_t^s] = \frac{\Gamma(k_{\text{agg}}+s)}{\Gamma(k_{\text{agg}}) k_{\text{agg}}^s}$ 在 $\operatorname{Re}(s) > -k_{\text{agg}}$ 上解析，故 $\E[|\log G_t|^p] < \infty$ 对任意 $p \ge 1$ 均成立。对于序列 $X_{\mu} \equiv L_t - \log\mu_t$：当 $Z_t \ge 1$ 时，$X_\mu \ge -\log\mu_t$；在截断下 $L_t \ge 0$，故负半轴仅在零计数上有贡献，其积分受权重 $\Pr(Z_t=0) |\log\mu_t|^p \le (k/\mu)^k (\log\mu)^p \to 0$ 控制；正半轴由于 $Z_t/\mu_t$ 的多项式矩一致有界，故族 $\{|X_\mu|^{2+\delta}\}_{\mu \ge \mu_0}$ 满足二阶一致可积性。由矩收敛定理，分布弱收敛蕴含条件均值与条件方差向极限变量的对应矩收敛。
+\end{proof}
+
+当进一步满足宏观大离散度 $k_{\text{agg}} \gg 1$ 时，特殊函数具有渐近展开：
+\begin{equation}
+\psi_1(k_{\text{agg}}) = \frac{1}{k_{\text{agg}}} + \frac{1}{2k_{\text{agg}}^2} + \mathcal{O}(k_{\text{agg}}^{-3}), \qquad \psi(k_{\text{agg}}) - \ln k_{\text{agg}} = -\frac{1}{2k_{\text{agg}}} + \mathcal{O}(k_{\text{agg}}^{-2}).
+\end{equation}
+故 $b_t \approx -1/(2k_{\text{agg}}) \to 0$，单步对数方差饱和于一阶 Delta 近似值 $1/k_{\text{agg}}$。在先固定有限提前期 $h$、各步均值充分大的正计数路径上，对数方差累积为 $\Var(L_h \mid Z_1>0,\dots,Z_h>0) \sim h(v^2 + \psi_1(k_{\text{agg}})) \approx h(v^2 + 1/k_{\text{agg}})$。需明确该近似在有限步长递推中以各步均值充分大为前提，未证明对增长的提前期 $h \to \infty$ 一致有效。
+
 \section{条件风险恒等式与 sharp risk floor}
 \begin{theorem}[精确条件平方风险恒等式]
 设 $Y\in L^2$，$\delta_h$ 是 $\mathcal F_t$ 可测，令
