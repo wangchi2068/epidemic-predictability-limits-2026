@@ -32,7 +32,7 @@ FluSight **三个锁定 release**（v1.0.0 / v1.1.0 / v1.2.0）的 final-vintage
 ├── main.pdf                                        # 精炼重构版 Tectonic 编译产物 (32 页)
 ├── archive/main_reframed.tex                               # 重构稿 LaTeX 源码（条件锐风险 + 版本化外部审计）
 ├── archive/main_reframed.pdf                               # 重构稿 Tectonic 编译产物 (10 页, 0 未定义引用/0 溢出)
-├── references.bib                                  # 净化后的参考文献库（44 篇，双向完全闭合：0 缺失、0 未引项）
+├── references.bib                                  # 净化后的参考文献库（46 篇，双向完全闭合：0 缺失、0 未引项）
 ├── README.md                                       # 本说明文件：项目架构、自洽规范与复现指南
 ├── MANIFEST.md                                     # 全量有效交付文件与磁盘真实路径全量对照表
 ├── environment.yml                                 # Conda 运行环境配置文件

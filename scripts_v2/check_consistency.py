@@ -290,9 +290,9 @@ def check_citations():
         fail(f"missing citation keys in references.bib: {missing}")
     if unref:
         fail(f"unreferenced citation keys in references.bib: {unref}")
-    if len(entries) != 44:
-        fail(f"expected exactly 44 references, found {len(entries)}")
-    print(f"[OK] citations 100% two-way closed ({len(cites)}/44 entries cited, 0 missing, 0 unreferenced)")
+    if len(entries) != 46:
+        fail(f"expected exactly 46 references, found {len(entries)}")
+    print(f"[OK] citations 100% two-way closed ({len(cites)}/46 entries cited, 0 missing, 0 unreferenced)")
 
 
 def check_pdf_pages():
