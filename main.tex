@@ -431,32 +431,24 @@ h^*_{\text{ref}}(C) \;\approx\; \frac{\mu_g}{7}\,\sqrt{\frac{C\left(\tau^2 - \te
 \subsection{时变传播扰动与宏观聚合方差累积律}
 
 \begin{proposition}[宏观固定离散度更新模型的领先阶方差累积律]\label{thm:t5}
-在逐代独立更新的宏观负二项聚合模型下，设条件发病规模满足 $Z_t \mid \mathcal{F}_{t-1} \sim \text{NB}(\mu_t = R_t Z_{t-1}, k_{\text{agg}})$。需要指出，对任意有限 $\mu_t > 0$ 与 $k_{\text{agg}} > 0$，零计数概率 $\Pr(Z_t = 0 \mid \mathcal{F}_{t-1}) = (1 + \mu_t/k_{\text{agg}})^{-k_{\text{agg}}} > 0$ 恒正，直接作用的 $\log Z_t$ 在零点无定义且条件期望发散。为使条件期望与创新在有限样本下严格良定，本文采用正计数值截断对数协议（Truncated Logarithm Protocol）：定义 $L_t \equiv \log(Z_t \vee 1)$（在正计数路径 $Z_t \ge 1$ 上恒有 $L_t = \log Z_t$；在 $Z_t = 0$ 时为 $\log 1 = 0$）。则 $L_t$ 满足严格有限的逐代递推方程：
+在逐代独立更新的宏观负二项聚合模型下，设条件发病规模满足 $Z_t \mid \mathcal{F}_{t-1} \sim \text{NB}(\mu_t = R_t Z_{t-1}, k_{\text{agg}})$。对任意有限 $\mu_t > 0$ 与 $k_{\text{agg}} > 0$，零计数概率 $\Pr(Z_t = 0 \mid \mathcal{F}_{t-1}) = (1 + \mu_t/k_{\text{agg}})^{-k_{\text{agg}}} > 0$ 恒正，直接作用的 $\log Z_t$ 在零点无定义且条件期望发散。为使条件期望在有限样本下良定并规避 $Z_{t-1}=0$ 时 $\log\mu_t$ 的奇异性，本文采用正计数值截断对数协议（Truncated Logarithm Protocol）：定义 $L_t \equiv \log(Z_t \vee 1)$（在正计数路径 $Z_t \ge 1$ 上与 $\log Z_t$ 恒等；$Z_t = 0$ 时为 $0$）。考虑差分量 $\Delta L_t \equiv L_t - L_{t-1}$，定义差分 Jensen 修正项与鞅差创新：
 \begin{equation}
-L_t = L_{t-1} + \log R_t + b_t + \xi_t,
+b_t^\Delta \equiv \mathbb{E}[\Delta L_t \mid \mathcal{F}_{t-1}] - \log R_t, \qquad \xi_t^\Delta \equiv \Delta L_t - \mathbb{E}[\Delta L_t \mid \mathcal{F}_{t-1}],
 \label{eq:truncated_log_recurrence}
 \end{equation}
-其中 $b_t \equiv \mathbb{E}[L_t \mid \mathcal{F}_{t-1}] - \log \mu_t$ 为良定的有限 Jensen 修正项，$\xi_t \equiv L_t - \mathbb{E}[L_t \mid \mathcal{F}_{t-1}]$ 为有限方差鞅差创新（$\mathbb{E}[\xi_t \mid \mathcal{F}_{t-1}] = 0$）。
+满足严格鞅差性质 $\mathbb{E}[\xi_t^\Delta \mid \mathcal{F}_{t-1}] = 0$ 且条件方差有限。单步满足可加分解 $\Delta L_t = \log R_t + b_t^\Delta + \xi_t^\Delta$；对提前期 $h \ge 1$，伸缩求和得 $L_h = L_0 + \sum_{t=1}^h \log R_t + \sum_{t=1}^h b_t^\Delta + \sum_{t=1}^h \xi_t^\Delta$。
 
-由负二项分布的 Gamma--Poisson 层次混合表示 $Z_t \mid \Lambda_t \sim \text{Poisson}(\Lambda_t)$（其中随机均值 $\Lambda_t \sim \text{Gamma}(k_{\text{agg}}, k_{\text{agg}}/\mu_t)$）：在固定离散参数 $k_{\text{agg}}$ 下令条件期望规模 $\mu_t \to \infty$ 时，零事件概率以代数速率衰减 $\Pr(Z_t = 0) = \mathcal{O}(\mu_t^{-k_{\text{agg}}}) \to 0$，泊松相对随机性消失，归一化变量弱收敛于标准化的 Gamma 分布：
+由负二项分布的 Gamma--Poisson 层次混合表示 $Z_t \mid \Lambda_t \sim \text{Poisson}(\Lambda_t)$（$\Lambda_t \sim \text{Gamma}(k_{\text{agg}}, k_{\text{agg}}/\mu_t)$）：在固定 $k_{\text{agg}}$ 下令 $\mu_t \to \infty$，$\Pr(Z_t = 0) = \mathcal{O}(\mu_t^{-k_{\text{agg}}}) \to 0$，归一化变量弱收敛 $(Z_t \vee 1)/\mu_t \xrightarrow{d} G_t \sim \text{Gamma}(k_{\text{agg}}, k_{\text{agg}})$（其中 $\mathbb{E}[G_t]=1$，$\text{Var}(G_t)=1/k_{\text{agg}}$）。在必要的高阶矩一致可积性条件下（推导手册第 2.4 节），由矩收敛定理，条件矩收敛：
 \begin{equation}
-\frac{Z_t \vee 1}{\mu_t} \xrightarrow{d} G_t \sim \text{Gamma}(k_{\text{agg}}, k_{\text{agg}}), \qquad \mathbb{E}[G_t] = 1, \quad \text{Var}(G_t) = \frac{1}{k_{\text{agg}}}.
+\lim_{\mu_t \to \infty} b_t^\Delta = \psi(k_{\text{agg}}) - \ln k_{\text{agg}}, \qquad \lim_{\mu_t \to \infty} \text{Var}(\Delta L_t \mid \mathcal{F}_{t-1}) = \psi_1(k_{\text{agg}}),
 \end{equation}
-由于 $G_t$ 的对数矩母函数在原点邻域解析且 $L_t - \log\mu_t$ 满足二阶一致可积性，由矩收敛定理，条件一阶与二阶矩收敛于对应 Gamma 对数矩：
-\begin{equation}
-\lim_{\mu_t \to \infty} b_t = \mathbb{E}[\log G_t] = \psi(k_{\text{agg}}) - \ln k_{\text{agg}}, \qquad \lim_{\mu_t \to \infty} \text{Var}(L_t \mid \mathcal{F}_{t-1}) = \text{Var}(\log G_t) = \psi_1(k_{\text{agg}}),
-\end{equation}
-其中 $\psi(k)$ 为 digamma 函数，$\psi_1(k) \equiv \psi'(k) = \sum_{m=0}^\infty (k + m)^{-2}$ 为三伽马（trigamma）函数。这表明单步相对方差并不随发病规模增加而消失，其大均值下界由三伽马函数 $\psi_1(k_{\text{agg}})$ 给出。
+其中 $\psi(k)$ 为 digamma 函数，$\psi_1(k) \equiv \psi'(k) = \sum_{m=0}^\infty (k + m)^{-2}$ 为三伽马（trigamma）函数。表明单步相对方差不随发病规模增加而消失，其大均值下界由 $\psi_1(k_{\text{agg}})$ 给出。
 
-当进一步满足宏观大离散度条件（$k_{\text{agg}} \gg 1$）时，利用特殊函数的渐近级数展开：
+若进一步满足宏观大离散度条件 $k_{\text{agg}} \gg 1$，由级数展开 $\psi_1(k_{\text{agg}}) = 1/k_{\text{agg}} + 1/(2k_{\text{agg}}^2) + \mathcal{O}(k_{\text{agg}}^{-3})$ 与 $\psi(k_{\text{agg}}) - \ln k_{\text{agg}} = -1/(2k_{\text{agg}}) + \mathcal{O}(k_{\text{agg}}^{-2})$，可得 $b_t^\Delta \approx 0$ 为高阶小量，单代抽样方差退化为一阶 Delta 近似值 $1/k_{\text{agg}}$。若对数再生数叠加独立环境扰动 $\log R_t = \log R + \eta_t$（$\eta_t \sim \mathcal{N}(0, v^2)$），在下述四项严格适用条件下：(1) 固定有限提前期 $h$；(2) 各步发病均值充分大（$\min_{1 \le t \le h} \mu_t \gg k_{\text{agg}}$）；(3) 正计数路径或截断对数协议；(4) 扰动项满足高阶矩一致可积性，未来第 $h$ 代发病对数指标的预测方差呈领先阶线性累积：
 \begin{equation}
-\psi_1(k_{\text{agg}}) = \frac{1}{k_{\text{agg}}} + \frac{1}{2k_{\text{agg}}^2} + \mathcal{O}(k_{\text{agg}}^{-3}), \qquad \psi(k_{\text{agg}}) - \ln k_{\text{agg}} = -\frac{1}{2k_{\text{agg}}} + \mathcal{O}(k_{\text{agg}}^{-2}),
+\text{Var}(L_h) \sim h \left(v^2 + \frac{1}{k_{\text{agg}}}\right),
 \end{equation}
-可得 $b_t \approx -1/(2k_{\text{agg}}) \to 0$ 成为高阶小量，单代抽样方差退化为一阶 Delta 近似值 $1/k_{\text{agg}}$。若对数再生数叠加独立同分布的环境扰动 $\log R_t = \log R + \eta_t$（$\eta_t \sim \mathcal{N}(0, v^2)$），在固定有限提前期 $h$、各步保持正计数且条件均值充分大（$\min_{1 \le t \le h} \mu_t \gg k_{\text{agg}}$）及 $k_{\text{agg}} \gg 1$ 条件下，未来第 $h$ 代发病对数指标的预测方差呈领先阶线性累积：
-\begin{equation}
-\text{Var}(L_h \mid Z_1 > 0, \dots, Z_h > 0) \sim h \left(v^2 + \frac{1}{k_{\text{agg}}}\right),
-\end{equation}
-而在固定 $k_{\text{agg}}$ 与固定有限 $h$ 下，其大均值极限累积速率由 $h(v^2 + \psi_1(k_{\text{agg}}))$ 给出。需要指出，上述结论针对所选定的截断对数协议（在正计数路径上与 $\log Z_t$ 完全重合），且按先固定有限提前期 $h$、预测路径各步保持正计数且条件均值充分大的极限理解；本文未证明该近似对增长的提前期 $h$ 一致有效。在各阶段跨州中位 $k_{\text{agg}} = 11.2\text{--}56.6$ 的工作点上，$1/k_{\text{agg}}$ 相对于 $\psi_1(k_{\text{agg}})$ 的领先阶差额 $\frac{\psi_1(k) - 1/k}{1/k} \approx \frac{1}{2k}$ 约为 0.9\%--4.5\%；这一范围描述的是阶段中位工作点，而非所有州—阶段单元。流感及 RSV 各阶段的对应值约为 1.3\%--4.5\%。因而 $1/k_{\text{agg}}$ 构成了阶段中位尺度上极佳且解析透明的工程领先阶近似。
+而在固定 $k_{\text{agg}}$ 下其大均值极限累积速率由 $h(v^2 + \psi_1(k_{\text{agg}}))$ 给出。需要明确指出，本文未证明该近似对增长的提前期 $h$ 一致有效。在全美 7 阶段跨州中位工作点（$k_{\text{agg}} = 11.2\text{--}56.6$）上，$1/k_{\text{agg}}$ 相对于 $\psi_1(k_{\text{agg}})$ 的领先阶相对差额约为 0.9\%--4.5\%（流感与 RSV 阶段约 1.3\%--4.5\%），构成了极佳的工程领先阶近似。
 \end{proposition}
 
 % Proof sketch detailed in Appendix and Derivations Manual
@@ -480,7 +472,7 @@ L_t = L_{t-1} + \log R_t + b_t + \xi_t,
 % Proof sketch detailed in Appendix and Derivations Manual
 
 \begin{corollary}[固定时间聚合尺度下的大 $k_{\text{agg}}$ 一阶方差累积近似]\label{cor:pop_floor}
-对于跨种群聚合的宏观更新模型，在截断对数协议 $L_h = \log(Z_h^{\text{agg}} \vee 1)$ 下，当先固定有限提前期 $h$、预测路径各步均值充分大（$\min_{1 \le t \le h} \mu_t \gg k_{\text{agg}}$）且宏观离散度满足 $k_{\text{agg}} \gg 1$ 时，第 $h$ 步宏观发病对数方差满足固定时间聚合尺度下的一阶近似累积律：
+对于跨种群聚合的宏观更新模型，在截断对数协议 $L_h = \log(Z_h^{\text{agg}} \vee 1)$ 下，当满足命题~\ref{thm:t5} 的四项严格适用条件（固定有限提前期 $h$、各步均值充分大、截断对数协议及高阶矩一致可积性）且宏观离散度满足 $k_{\text{agg}} \gg 1$ 时，第 $h$ 步宏观发病对数方差满足固定时间聚合尺度下的一阶近似累积律：
 \begin{equation}
 \text{Var}(L_h) \approx \frac{h}{k_{\text{agg}}},
 \label{eq:pop_floor}
@@ -915,7 +907,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 推论~\ref{cor:establishment} 单种子建群概率 & 强超扩散对持续定殖的抑制 & 式~(\ref{eq:pgf_fixed_point}) & 负二项概率母函数不动点 $q=G(q)$ 二阶泰勒展开提取 $(1-q)$ & 手册第 3.2 节 式 (34)--(36) \\
 定理~\ref{thm:fisher} Fisher 信息与 CRB 界 & 早期参数辨识数据充分性下限 & 式~(\ref{eq:cramer_cn}) & 得分函数二阶导负期望，交叉偏导期望为零确立参数渐近正交 & 手册第 4.1 节 式 (37)--(41) \\
 推论~\ref{cor:crb_horizon} 样本量约束机制视界标度 & 监测样本量对视界的外在约束 & 式~(\ref{eq:crb_horizon}) & CRB 理论方差代入连续视界方程反解乐观前瞻代际标度 & 手册第 4.2 节 式 (42)--(43) \\
-命题~\ref{thm:t5} 宏观方差线性累积律 & 固定聚合离散度更新噪声累加 & 命题~\ref{thm:t5} & 截断对数鞅差创新求和，大均值与大 $k_{\text{agg}}$ 展开（大均值界含 $\psi_1$） & 手册第 5.1 节 式 (44)--(46) \\
+命题~\ref{thm:t5} 宏观方差线性累积律 & 固定聚合离散度更新噪声累加 & 命题~\ref{thm:t5} & 截断对数差分 $\Delta L_t$ 规避 $Z_{t-1}=0$ 奇异性，大均值与大 $k_{\text{agg}}$ 展开（大均值界含 $\psi_1$） & 手册第 2.4 节 式 (23)--(27) \\
 定理 5R 平稳与单位根时变漂移 & 增长率时间自相关方差累积 & 定理 5R & 平稳自协方差级数求和；单位根下自然数平方和通项超线性发散 $\sim h^3/3$ & 手册第 5.2 节 式 (47)--(50) \\
 推论~\ref{cor:pop_floor} 宏观抽样 $h/k_{\text{agg}}$ 律 & 跨代独立增量大样本噪声地板 & 式~(\ref{eq:pop_floor}) & 截断对数 Delta 展开，大均值与大 $k_{\text{agg}}$ 下为 $1/k_{\text{agg}}$（大均值界为 $\psi_1$） & 手册第 5.3 节 式 (51)--(52) \\
 定理~\ref{thm:macro_exact} 宏观有限步精确方差 & 固定 $k_{\text{agg}}$ 更新模型精确方差 & 式~(\ref{eq:macro_var_closed}) & 一阶非齐次差分方程 $V_{t+1}=qV_t+I_0R^{t+1}+I_0^2R^{2t+2}/k_{\text{agg}}$ 伸缩求和 & 手册第 6.1 节 式 (53)--(58) \\
@@ -938,7 +930,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 \item \textbf{定理~\ref{thm:monotonicity}}：$\text{CV}^2$ 增量 $(1+R/k)/(I_0R^{h+1})>0$；辅助函数 $g(y)=(y^{h_2}-y^{h_1})(y^{h_2}+y^{h_1}-2)$ 在 $y>1$ 与 $0<y<1$ 均同号恒正。
 \item \textbf{定理~\ref{thm:fisher}}：NB 对数似然二阶导负期望得 $I_1(R)=k/[R(R+k)]$；交叉偏导期望为零确立渐近正交；Wald 型检验反解样本量门槛。
 \item \textbf{定理~\ref{thm:macro_exact}}：全方差法则得 $V_{t+1}=qV_t+I_0R^{t+1}+I_0^2R^{2t+2}/k_{\text{agg}}$（$q=R^2c$），除以 $q^{t+1}$ 裂项求和，利用 $q-R^2=R^2/k_{\text{agg}}$ 合并得 $V_h=I_0R(q^h-R^h)/(q-R)+I_0^2(q^h-R^{2h})$。
-\item \textbf{命题~\ref{thm:t5} 与推论~\ref{cor:pop_floor}}：截断对数 $L_t \equiv \log(Z_t \vee 1)$ 规避零点发散，确立鞅差创新有限性；大均值下 $(Z_t\vee 1)/\mu_t \xrightarrow{d} G_t$，二阶一致可积性确立一、二阶矩收敛至 $\psi(k)-\ln k$ 与 $\psi_1(k)$；大 $k_{\text{agg}}$ 级数展开截断给出 $1/k_{\text{agg}}$ 一阶累积近似。
+\item \textbf{命题~\ref{thm:t5} 与推论~\ref{cor:pop_floor}}：截断对数差分 $\Delta L_t \equiv L_t - L_{t-1}$ 与 $b_t^\Delta$ 规避 $Z_{t-1}=0$ 奇异性，确立鞅差创新有限性；在固定有限提前期、各步均值充分大及高阶矩一致可积性下，$(Z_t\vee 1)/\mu_t \xrightarrow{d} G_t$ 确立一、二阶矩收敛至 $\psi(k)-\ln k$ 与 $\psi_1(k)$；大 $k_{\text{agg}}$ 级数展开截断给出 $1/k_{\text{agg}}$ 一阶累积近似。
 \end{enumerate}
 
 \subsection*{附录支持说明与补充材料索引}
