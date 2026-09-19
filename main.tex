@@ -431,16 +431,30 @@ h^*_{\text{ub}}(C) \;\approx\; \frac{\mu_g}{7}\,\sqrt{\frac{C\left(\tau^2 - \tex
 \subsection{时变传播扰动与宏观聚合方差累积律}
 
 \begin{proposition}[宏观固定离散度更新模型的领先阶方差累积律]\label{thm:t5}
-在逐代更新宏观负二项聚合模型下，设发病规模满足 $Z_t \mid \mathcal{F}_{t-1} \sim \text{NB}(\mu_t = R_t Z_{t-1}, k_{\text{agg}})$，对数更新满足 $\log Z_t = \log Z_{t-1} + \log R_t + b_t + \xi_t$（$b_t = \mathbb{E}[\log Z_t \mid \mathcal{F}_{t-1}] - \log \mu_t$ 为 Jensen 修正项）。由 Gamma--Poisson 混合表示，固定 $k_{\text{agg}}$、令 $\mu_t \to \infty$ 时，$Z_t/\mu_t \xrightarrow{d} \text{Gamma}(k_{\text{agg}}, k_{\text{agg}})$，相对波动不趋于零，对数方差严格收敛于 trigamma 函数 $\psi_1(k_{\text{agg}})$，且 $b_t \to \psi(k_{\text{agg}}) - \ln k_{\text{agg}}$。大离散度下由级数展开 $\psi_1(k) = 1/k + \mathcal{O}(k^{-2})$ 与 $b_t \approx -1/(2k) \to 0$ 导出领先阶 Delta 近似（实测各阶段 $\hat{k}_{\text{agg}}$ 中位数 11.2--56.6，高阶差额 $<5\%$）。叠加独立同分布环境扰动 $\log R_t = \log R + \eta_t$（$\eta_t \sim \mathcal{N}(0, v^2)$），在双重大样本条件（未灭绝 $Z_h > 0$、$\min_{t} \mu_t \gg k_{\text{agg}}$ 且 $k_{\text{agg}} \gg 1$）下，对数预测方差呈领先阶线性累积：
+在逐代独立更新的宏观负二项聚合模型下，设条件发病规模满足 $Z_t \mid \mathcal{F}_{t-1} \sim \text{NB}(\mu_t = R_t Z_{t-1}, k_{\text{agg}})$。其发病对数满足逐代更新方程：
+\begin{equation}
+\log Z_t = \log Z_{t-1} + \log R_t + b_t + \xi_t,
+\end{equation}
+其中 $b_t = \mathbb{E}[\log Z_t \mid \mathcal{F}_{t-1}] - \log \mu_t$ 为对数尺度下的 Jensen 修正项，$\xi_t \equiv \log Z_t - \mathbb{E}[\log Z_t \mid \mathcal{F}_{t-1}]$ 为鞅差创新。由负二项分布的 Gamma--Poisson 层次混合表示 $Z_t \mid \Lambda_t \sim \text{Poisson}(\Lambda_t)$（其中潜伏随机均值 $\Lambda_t \sim \text{Gamma}(k_{\text{agg}}, k_{\text{agg}}/\mu_t)$）：在固定离散参数 $k_{\text{agg}}$ 下，令发病期望规模 $\mu_t \to \infty$，泊松随机性相对消失，归一化发病变量弱收敛于标准化的 Gamma 分布：
+\begin{equation}
+\frac{Z_t}{\mu_t} \xrightarrow{d} G_t \sim \text{Gamma}(k_{\text{agg}}, k_{\text{agg}}), \qquad \mathbb{E}[G_t] = 1, \quad \text{Var}(G_t) = \frac{1}{k_{\text{agg}}}.
+\end{equation}
+因此，单步相对波动并不随发病绝对规模的增加而退化为零，对数变量的渐近条件方差严格收敛于三伽马（trigamma）函数 $\psi_1(k_{\text{agg}}) \equiv \psi'(k_{\text{agg}}) = \sum_{m=0}^\infty (k_{\text{agg}} + m)^{-2}$，而 Jensen 修正项严格收敛于 $b_t \to \psi(k_{\text{agg}}) - \ln k_{\text{agg}}$（$\psi$ 为 digamma 函数）。
+
+当进一步满足宏观大离散度条件（$k_{\text{agg}} \gg 1$）时，利用特殊函数的渐近级数展开：
+\begin{equation}
+\psi_1(k_{\text{agg}}) = \frac{1}{k_{\text{agg}}} + \frac{1}{2k_{\text{agg}}^2} + \mathcal{O}(k_{\text{agg}}^{-3}), \qquad \psi(k_{\text{agg}}) - \ln k_{\text{agg}} = -\frac{1}{2k_{\text{agg}}} + \mathcal{O}(k_{\text{agg}}^{-2}),
+\end{equation}
+可得 $b_t \approx -1/(2k_{\text{agg}}) \to 0$ 成为高阶小量，单代抽样方差退化为一阶 Delta 近似值 $1/k_{\text{agg}}$。若对数再生数叠加独立同分布的环境扰动 $\log R_t = \log R + \eta_t$（$\eta_t \sim \mathcal{N}(0, v^2)$），在双重大样本条件（未灭绝 $Z_h > 0$、各步均值充分大 $\min_{1 \le t \le h} \mu_t \gg k_{\text{agg}}$ 且宏观离散度 $k_{\text{agg}} \gg 1$）下，未来第 $h$ 代发病对数的预测方差呈领先阶线性累积：
 \begin{equation}
 \text{Var}(\log Z_h \mid Z_h > 0) \sim h \left(v^2 + \frac{1}{k_{\text{agg}}}\right),
 \end{equation}
-固定 $k_{\text{agg}}$ 下其严格大均值极限速率为 $h(v^2 + \psi_1(k_{\text{agg}}))$。
+而在固定 $k_{\text{agg}}$ 下其严格大均值极限累积速率为 $h(v^2 + \psi_1(k_{\text{agg}}))$。在本文实证分析的美国 51 个州级面板中，各阶段 $\hat{k}_{\text{agg}}$ 的跨州中位数介于 11.2--56.6 之间，对应的高阶余项相对差额 $\frac{\psi_1(k) - 1/k}{1/k} \approx \frac{1}{2k}$ 均小于 $4.5\%$（流感与 RSV 阶段普遍 $<1\%$），因而 $1/k_{\text{agg}}$ 构成了极佳且解析透明的工程领先阶近似。
 \end{proposition}
 
 % Proof sketch detailed in Appendix and Derivations Manual
 
-作为命题~\ref{thm:t5} 环境噪声分量在时间自相关情形下的平行扩展，定理 5R 刻画传播增长率存在平稳 AR(1) 持续性漂移时的累积方差规律。命题~\ref{thm:t5} 针对 $\log Z_h$ 的方差，含环境噪声与抽样地板 $1/k_{\text{agg}}$（严格为 $\psi_1(k_{\text{agg}})$）；定理 5R 聚焦于增长率之和 $\sum_{j=1}^h r_{t+j}$，不含抽样项；完整方差在独立假设下将两者线性相加。
+作为命题~\ref{thm:t5} 环境噪声分量在时间自相关情形下的平行扩展，定理 5R 刻画传播增长率存在平稳 AR(1) 持续性漂移时的对数增长率累积方差规律。二者的分析对象与噪声组成存在明确区别：命题~\ref{thm:t5} 针对发病对数 $\log Z_h$ 的全方差，在线性展开下其斜率 $v^2 + 1/k_{\text{agg}}$（严格为 $v^2 + \psi_1(k_{\text{agg}})$）同时包含了环境方差与负二项宏观抽样方差地板；而定理 5R 则聚焦于未来 $h$ 步对数增长率之和 $\sum_{j=1}^h r_{t+j} = \log(Z_{t+h}/Z_t)$ 的环境漂移子过程，其闭式解仅描述外生环境扰动，并不包含内生离散项 $1/k_{\text{agg}}$（当自相关系数 $\phi=0$ 时，定理 5R 退化为纯环境白噪声的 $s_e^2 h$ 而非命题~\ref{thm:t5} 的复合项）；若要得到包含宏观抽样地板的完整前瞻预测方差，需在环境漂移与抽样波动相互独立的假定下，将定理 5R 与宏观抽样项 $h/k_{\text{agg}}$（严格为 $h\,\psi_1(k_{\text{agg}})$）线性叠加。
 
 \begin{theorem5R}\label{thm:t5r}
 当对数增长率 $r_t = \log R_t$ 服从具有持久性自相关系数 $|\phi| < 1$ 与创新方差 $s_e^2$ 的平稳 AR(1) 过程时，未来 $h$ 步对数增长率之和 $\sum_{j=1}^h r_{t+j}$（即 $\log(Z_{t+h}/Z_t)$ 的环境漂移部分）的无条件方差满足精确闭式解：
@@ -459,12 +473,12 @@ h^*_{\text{ub}}(C) \;\approx\; \frac{\mu_g}{7}\,\sqrt{\frac{C\left(\tau^2 - \tex
 % Proof sketch detailed in Appendix and Derivations Manual
 
 \begin{corollary}[固定时间聚合尺度下的大 $k_{\text{agg}}$ 一阶方差累积近似]\label{cor:pop_floor}
-对于宏观更新模型，当各步发病充分大（$\min_{1 \le t \le h} \mu_t \gg k_{\text{agg}}$）且 $k_{\text{agg}} \gg 1$ 时，宏观发病对数方差满足领先阶近似：
+对于跨种群聚合的宏观更新模型，当各步平均发病规模充分大（$\min_{1 \le t \le h} \mu_t \gg k_{\text{agg}}$）且宏观离散度满足 $k_{\text{agg}} \gg 1$ 时，记 $Z_h^{\text{agg}}$ 为第 $h$ 步宏观观测发病水平，其对数方差满足固定时间聚合尺度下的一阶近似累积律：
 \begin{equation}
-\text{Var}(\log Z_h^{\text{agg}}) \approx \frac{h}{k_{\text{agg}}}.
+\text{Var}(\log Z_h^{\text{agg}}) \approx \frac{h}{k_{\text{agg}}},
 \label{eq:pop_floor}
 \end{equation}
-固定 $k_{\text{agg}}$ 下 $\mu \to \infty$ 的严格渐近速率为 $h\,\psi_1(k_{\text{agg}})$；式~(\ref{eq:pop_floor}) 为 $k_{\text{agg}} \gg 1$ 下截断 trigamma 首项的一阶 Delta 近似，与发病规模解耦（实测中高阶差额仅 $1\%$--$5\%$）。
+其严格渐近大均值极限在固定 $k_{\text{agg}}$ 下由三伽马函数给出：$\lim_{\mu \to \infty} \text{Var}(\log Z_h^{\text{agg}}) = h\,\psi_1(k_{\text{agg}})$。式~(\ref{eq:pop_floor}) 对应于大离散度 $k_{\text{agg}} \gg 1$ 下截断级数首项的一阶 Delta 近似，其显著特征是渐近累积速率与绝对发病规模 $\mu$ 解耦，单纯由宏观时序离散度 $k_{\text{agg}}$ 决定（实证中高阶差额仅 $1\%$--$5\%$）。
 \end{corollary}
 
 % Proof sketch detailed in Appendix and Derivations Manual
@@ -833,7 +847,6 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 \noindent\textbf{州际空间相关性。}51 个州级辖区受共同季节与毒株驱动存在强空间相关；10 个 HHS 区域整群聚类自助检验表明全部九个赛季--步长组合的配对差区间仍严格不跨零（第~\ref{sec:flusight_protocol} 节）。本文全部州级区间按保守口径界定为描述性指标。
 
 \section{讨论与公共卫生启示}\label{sec:discussion}
-\enlargethispage{4.0\baselineskip}
 
 \subsection{公共卫生决策分级场景与可预测视界映射}
 
@@ -846,11 +859,10 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 健康公平性层面，定理~\ref{thm:fisher} 表明参数辨识精度正比于有效样本量 $C$。在两地区其他动力学参数、初始规模和过程方差近似相同，且视界主要受参数辨识误差约束的领先阶条件下，若有效样本量与报告率成正比（欠发达社区有效报告率 $\rho_{\text{low}} \ll \rho_0$），参数推断方差按 $\rho_0/\rho_{\text{low}}$ 放大，理论机制视界近似满足相对标度关系：$\frac{h^*_{\text{low}}}{h^*_0} \approx \sqrt{\frac{\rho_{\text{low}}}{\rho_0}}$。该式为条件性标度关系而非完整因果分解，提示资源配置部门应向监测薄弱辖区倾斜常态哨点与抽样资源，保障预警能力的均等化。
 
 \subsection{研究局限性与未来拓展方向}\label{sec:limitations}
-\enlargethispage{5.5\baselineskip}
 
 \noindent\textbf{（一）实证与方法学局限}
 
-\begin{enumerate}[leftmargin=*,itemsep=-2.0pt,topsep=0pt,parsep=0pt,partopsep=0pt]
+\begin{enumerate}[leftmargin=*,itemsep=2.5pt,topsep=2.0pt]
 \item \textbf{代数差额量级大}：21 个配置的模型—观测代数差额占比跨州中位数为 $55.0\%$（$h=1$ 为 $45.4\%$），由多重现实扰动共同吸收；时变漂移作有界敏感性分析，理论视界作宽松包络。
 \item \textbf{业务时效依赖基线与数据版本}：相对持续性基线的州级时效为 1.0--4.3 周，相对局部线性基线约 1 周追平。回测基于终报数据，实时初报预期更短；区间上界来自存在回填的 RSV 2025--26 阶段。
 \item \textbf{跨病原覆盖有限}：COVIDhub 对照仅覆盖 Delta 与 Omicron 两波约 6 个月，尚缺 RSV 官方预测枢纽审计。
@@ -870,7 +882,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 
 \section{结论}\label{sec:conclusion}
 
-本文建立区分理论条件风险地板、NB2 模型内过程方差、插件预测风险与现实业务误差的分层框架，确立条件均值的锐条件方差地板，刻画个体生成机制与 Fisher 信息下界（实测 $k \in [0.11, 0.43]$ 下 CRB 为 $C \ge 2{,}162$--$6{,}593$），并推导宏观有限步方差闭式、稳定边界与参数传播超额风险。四层证据评估表明：宏观闭式经模拟核验（相对偏差 $1\%$--$3\%$，最大 $7.6\%$）；微观负二项 AIC 明显更低（$\Delta\text{AIC}$ 达 93.9--244.0，相对拟合更优，Bootstrap/CRB 比 0.98--1.06）；51 个州级辖区在 5 周基准窗口下，测得插件式 NB2 机制视界中位数为 2.2--7.1 周（预设窗口结果范围 1.52--8.07 周），汇总比较高于同定义实测绝对误差视界；21 个配置中代数差额中位占比达 $55.0\%$，表明显式机制分量不足以覆盖实测误差。FluSight 三赛季审计中，启发式预测器严重经验欠覆盖（95\% 区间实测仅 0.405--0.554），峰前期覆盖率偏低（Hub 集成降至 0.419--0.852，机制预测器仅 0.140--0.385；峰后期集成恢复至 0.925--0.964）。在本文固定离散度 NB2 工作模型、5 周基准窗口及阶段汇总中位数比较口径下，插件式机制视界可作为实测绝对误差视界的宽松经验参考外包络，而非现实预测系统的普适上界，为重大疫情预警中的分级响应与动态校准提供可复算的理论—实证诊断工具。
+本文建立区分理论条件风险地板、NB2 模型内过程方差、插件预测风险与现实业务误差的分层框架，确立条件均值的锐条件方差地板，刻画个体生成机制与 Fisher 信息下界（实测 $k \in [0.11, 0.43]$ 下 CRB 为 $C \ge 2{,}162$--$6{,}593$），并推导宏观有限步方差闭式、稳定边界与参数传播超额风险。四层证据评估表明：宏观闭式经模拟核验（相对偏差 $1\%$--$3\%$，最大 $7.6\%$）；微观负二项 AIC 明显更低（$\Delta\text{AIC}$ 达 93.9--244.0，相对拟合更优，Bootstrap/CRB 比 0.98--1.06）；51 个州级辖区在 5 周基准窗口下，测得插件式 NB2 机制视界中位数为 2.2--7.1 周（预设窗口结果范围 1.52--8.07 周），汇总比较高于同定义实测绝对误差视界；21 个配置中代数差额中位占比达 $55.0\%$，表明显式机制分量不足以覆盖实测误差。FluSight 三赛季审计中，启发式预测器严重经验欠覆盖（95\% 区间实测仅 0.405--0.554），峰前期覆盖率偏低（Hub 集成降至 0.419--0.852，机制预测器仅 0.140--0.385；峰后期集成恢复至 0.925--0.964）。在本文固定离散度 NB2 工作模型、5 周基准窗口及阶段汇总中位数比较口径下，插件式机制视界可作为实测绝对误差视界的宽松经验参考外包络，而非现实预测系统的普适上界，为重大疫情预警中的分级响应与动态校准提供了一套可复算的理论—实证诊断工具。
 
 \clearpage
 \appendix
@@ -940,13 +952,13 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 \vspace{0.3em}
 \noindent{\textbf{利益冲突声明。}} 作者声明不存在利益冲突；双盲评审期间作者贡献与致谢暂略。
 
-\vspace{0.4em}
+\clearpage
 \noindent{\heiti\zihao{4}\bfseries 参考文献：}\vspace{0.1em}
 \begin{multicols}{2}
-{\fontsize{6.8pt}{8.0pt}\selectfont
-\setlength{\bibsep}{0.0pt}
+{\fontsize{7.5pt}{9.0pt}\selectfont
+\setlength{\bibsep}{1.0pt}
 \renewcommand{\refname}{}
-\vspace*{-2.2em}
+\vspace*{-2.0em}
 \bibliographystyle{unsrtnat}
 \bibliography{references}
 }
