@@ -115,7 +115,7 @@
 针对上述理论空白与现实困境，本文的主要贡献体现在以下四个方面：
 \begin{enumerate}
 \item \textbf{锐条件方差地板与宏观更新有限步精确方差闭式}：在信息集 $\mathcal{F}_t$ 的二阶可积预测规则类上证明平方损失下的条件风险恒等式（定理~\ref{thm:sharp_floor}），确立条件均值预测器达到的锐条件方差地板。建立个体分支与宏观更新的尺度隔离框架，推导固定离散度 $k_{\text{agg}}$ 宏观负二项更新模型的精确有限步方差闭式（定理~\ref{thm:macro_exact}）及其数值稳定边界极限与严格单调求根方程。
-\item \textbf{参数后验对数正态混合与信息论识别极限}：解析刻画对数正态参数推断误差的指数型前向放大项 $P(h)$（引理~\ref{lem:param_amplification}）与代入式预测器的超额风险；证明对数正态后验下的全方差分解有限和形式（命题~\ref{prop:posterior_mixture}）；推导负二项分支过程的 Fisher 信息量与 Cramér--Rao 理想样本量基准（定理~\ref{thm:fisher}），明确限定其为理想模型内的辨识下限（$C = O(\varepsilon^{-2})$）。
+\item \textbf{参数后验对数正态混合与信息论识别极限}：解析刻画对数正态参数推断误差的指数型前向放大项 $P_{\text{exact}}(h)$（引理~\ref{lem:param_amplification}）与代入式预测器的超额风险；证明对数正态后验下的全方差分解有限和形式（命题~\ref{prop:posterior_mixture}）；推导负二项分支过程的 Fisher 信息量与 Cramér--Rao 理想样本量基准（定理~\ref{thm:fisher}），明确限定其为理想模型内的辨识下限（$C = O(\varepsilon^{-2})$）。
 \item \textbf{四层证据架构与模型—观测差额诊断}：构建包含理论模拟、个体传播链、州级住院面板与国家级预测枢纽的四层证据架构。在美国 51 个州级辖区住院面板上测得插件式 NB2 模型内机制视界中位数为 2.2--7.1 周（在 5 周基准滑动窗口下）；通过描述性误差记账发现模型—观测代数差额跨州中位数占比达 $55.0\%$（$h=1$ 为 $45.4\%$），表明显式机制分量通常不足以覆盖实测误差，据此将机制视界定位为现实预警时效的宽松经验参考外包络。
 \item \textbf{三赛季版本化外部审计与阶段校准特征}：全面接入 CDC FluSight 连续三个锁定历史赛季（v1.0.0--v1.2.0 共 204 个固化文件，逐字节可复现）。实测证实启发式插件式机制预测器存在严重经验欠覆盖与整体校准偏离（标称 95\% 覆盖率仅 0.405--0.554）；全局峰值相对位置事后分层在多个模型—赛季组合中重复观察到峰前期经验覆盖率较低（Hub 集成降至 0.419--0.852，机制预测器仅 0.140--0.385；峰后期集成恢复至 0.925--0.964），为动态方差膨胀与敏捷公卫应急提供了实证线索。
 \end{enumerate}
@@ -143,7 +143,7 @@
 \addlinespace[1.5pt]
 \textbf{宏观更新层}：固定参数 NB2 模型内方差（定理~\ref{thm:macro_exact}） & 周度宏观负二项聚合更新工作模型的精确有限步方差闭式，含 $[(1+1/k_{\text{agg}})^h - 1]$ 几何发散主项 & 在给定 NB2 宏观生成过程与固定 $k_{\text{agg}}$ 条件下，解析刻画了宏观过程离散度随步长的递推演化与边界极限 & \textbf{不支持}将几何增长泛化到其他方差结构；在 Poisson 或 NB1 模型下，超临界相对方差可有界饱和，近临界时呈线性累积，状态空间模型还可能受到潜状态平滑约束 \\
 \addlinespace[1.5pt]
-\textbf{参数外推层}：对数正态放大与信息界（引理~\ref{lem:param_amplification}、定理~\ref{thm:fisher}） & 对数正态参数估计误差经指数外推导致的超额相对均方误差闭式 $P(h)$；负二项分支过程单代极大似然的 Fisher 信息量与 CRB 下界 & 量化代入式点估计预测器在参数不确定性下的超额风险；确立理想无偏估计下的参数辨识样本量阶数 $O(\varepsilon^{-2})$ & \textbf{不支持}将 $P(h)$ 直接等同于现实业务预测的完整参数后验方差；\textbf{不支持}将理想 CRB 样本量直接用于存在严重漏报与报告回填的现实监测网络 \\
+\textbf{参数外推层}：对数正态放大与信息界（引理~\ref{lem:param_amplification}、定理~\ref{thm:fisher}） & 对数正态参数估计误差经指数外推导致的超额相对均方误差闭式 $P_{\text{exact}}(h)$（领先阶为 $P_{\text{quad}}$）；负二项分支过程单代极大似然的 Fisher 信息量与 CRB 下界 & 量化代入式点估计预测器在参数不确定性下的超额风险；确立理想无偏估计下的参数辨识样本量阶数 $O(\varepsilon^{-2})$ & \textbf{不支持}将 $P_{\text{exact}}(h)$ 直接等同于现实业务预测的完整参数后验方差；\textbf{不支持}将理想 CRB 样本量直接用于存在严重漏报与报告回填的现实监测网络 \\
 \addlinespace[1.5pt]
 \textbf{州级实证层}：机制视界与误差记账（第 5 节） & 美国 51 个州级辖区住院面板测得插件式 NB2 模型内机制视界中位数为 2.2--7.1 周；两项显式模型分量与一项模型—观测代数差额的描述性误差记账中 21 个配置跨州中位代数差额占比的中位数为 $55.0\%$（$h=1$ 为 $45.4\%$） & 在多数阶段—步长配置中，当前工作模型下的显式机制分量不能充分覆盖实测误差；但该关系具有明显阶段异质性，部分短步长或低残差配置中机制分量可接近实测误差；机制视界构成现实业务预警时效的宽松经验参考外包络 & \textbf{不支持}将 $55\%$ 代数差额解读为因果正交的方差分解；\textbf{不支持}机制视界与推断窗口无关（5--10 周窗口引起 $-48.7\%$ 至 $+44.6\%$ 变动） \\
 \addlinespace[1.5pt]
@@ -337,7 +337,7 @@ h^*_{\text{stoch}} = \begin{cases}
 \label{eq:h_stoch_bound}
 \end{equation}
 其中式 (\ref{eq:h_stoch_bound}) 给出连续阈值根，离散机制视界取下整 $H^*_{\text{stoch}} = \lfloor h^*_{\text{stoch}} \rfloor$；近临界与亚临界连续解分别满足 $h^*_{\text{stoch}} = \frac{I_0\tau^2}{1+1/k}$ 与 $h^*_{\text{stoch}} = -\frac{\ln[1+I_0(1-R)\tau^2/(1+R/k)]}{\ln R}$。
-\item \textbf{全方程数值精确求根}：在实际实证计算中，将引理~\ref{lem:param_amplification} 的精确对数正态项代入，视界精确数值解 $h^*_{\text{exact}}$ 由单调方程 $\text{CV}^2(h) + P(h; s_{\log R}) = \tau^2$ 唯一确定。
+\item \textbf{全方程数值精确求根}：在实际实证计算中，将引理~\ref{lem:param_amplification} 的精确对数正态项代入，视界精确数值解 $h^*_{\text{exact}}$ 由单调方程 $\text{CV}^2(h) + P_{\text{exact}}(h; s_{\log R}) = \tau^2$ 唯一确定。
 \end{enumerate}
 \end{theorem}
 
@@ -420,7 +420,7 @@ h^*_{\text{ref}}(C) \;\approx\; \frac{\mu_g}{7}\,\sqrt{\frac{C\left(\tau^2 - \te
 \end{corollary}
 
 \begin{proof}
-由定理~\ref{thm:fisher}，无偏估计量满足 $\text{Var}(\hat{R})/R^2 \ge (1/R+1/k)/C$；在估计量处处为正且满足渐近正态性的正则条件下，经 Delta 方法一阶展开可得 $s_{\log R}^{\,2} \approx \text{Var}(\hat{R})/R^2 \ge (1/R+1/k)/C$。由引理~\ref{lem:param_amplification}，$P(h;s_{\log R})$ 关于 $s_{\log R}$ 严格递增，故 $\text{RelMSE}(h) = \text{CV}^2(h) + P(h;s_{\log R})$ 关于 $s_{\log R}$ 严格递增，临界方程的根 $h^*$ 关于 $s_{\log R}$ 单调递减；代入渐近有效估计量的方差基准即得乐观标度式。在超临界体制（$R > 1$）且 $\tau^2 > \text{CV}^2_\infty$ 的常规工作点，取领先阶饱和形式 $\text{CV}^2(h) \to \text{CV}^2_\infty$ 与 $P \approx (h s_{\log R})^2$ 反解即得式 (\ref{eq:crb_horizon})。
+由定理~\ref{thm:fisher}，无偏估计量满足 $\text{Var}(\hat{R})/R^2 \ge (1/R+1/k)/C$；在估计量处处为正且满足渐近正态性的正则条件下，经 Delta 方法一阶展开可得 $s_{\log R}^{\,2} \approx \text{Var}(\hat{R})/R^2 \ge (1/R+1/k)/C$。由引理~\ref{lem:param_amplification}，$P_{\text{exact}}(h;s_{\log R})$ 关于 $s_{\log R}$ 严格递增，故 $\text{RelMSE}(h) = \text{CV}^2(h) + P_{\text{exact}}(h;s_{\log R})$ 关于 $s_{\log R}$ 严格递增，临界方程的根 $h^*$ 关于 $s_{\log R}$ 单调递减；代入渐近有效估计量的方差基准即得乐观标度式。在超临界体制（$R > 1$）且 $\tau^2 > \text{CV}^2_\infty$ 的常规工作点，取领先阶饱和形式 $\text{CV}^2(h) \to \text{CV}^2_\infty$ 与 $P_{\text{quad}} = (h s_{\log R})^2$ 反解即得式 (\ref{eq:crb_horizon})。
 \end{proof}
 
 式 (\ref{eq:crb_horizon}) 给出的机制视界标度参照显式依赖初始发病规模 $I_0$ 与渐近方差饱和极限 $\text{CV}^2_\infty$。在大初值极限下（$I_0 \to \infty$，$\text{CV}^2_\infty \to 0$），代入 $\varepsilon=0.1$、$k=1$、$\tau=0.5$、$\mu_g=4.7$ 天以及基准样本量 $C=1{,}300$，可解得 $h^*_{\text{ref}} \approx 8.8$ 周。但在表~\ref{tab:horizons} 列报的州级实际工作点（$I_0$ 中位数 37--757，对应 $\text{CV}^2_\infty = 0.03$--$0.70$）上，相同的 $C$ 仅给出 $3.5$--$8.4$ 周的理论标度值；当发病规模过低导致 $\text{CV}^2_\infty \ge \tau^2$（$I_0 \lesssim 10$）时，根号内部转为负值，意味着内在过程噪声已单独击穿误差容忍门槛。因此，该标度参照应被理解为大初值与充分样本量条件下的潜在乐观外推窗口上限，而非任意小样本序列均可企及的实际视界。
@@ -588,7 +588,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 
 州级住院面板覆盖美国 51 个州级辖区（50 州加哥伦比亚特区）的三类主要呼吸道病原体：(1) COVID-19（Delta、Omicron、JN.1 三个波次）；(2) 季节性流感（2022--23、2024--25 流行季）；(3) 呼吸道合胞病毒 RSV（2024--25、2025--26 流行季）。分析统一使用周度新增确诊住院指标，不混合病例、检测与死亡目标。需要说明：数据跨越多个美国国家监测体系变迁，早期 Delta 和 Omicron 住院数据源自 HHS Protect 报告体系，后期统一并入 NHSN 发布接口；本文数据均来自 CDC 数据门户最终冻结快照，统一了周度终报计数口径，但不同历史阶段存在底层报告系统的机构迁移。
 
-数据预处理以各阶段起步期连续 5 个周度观测（$W=5$）作为推断窗口，采用对数线性回归估计周度增长乘子 $R_{\text{周}}=\exp(b_{\text{week}})$ 及其对数尺度标准误 $s_{\text{周}}=\text{SE}(b_{\text{week}})$（自由度 $\text{df}=3$）；由 Ho 等\citep{ho2023simultaneous} 对数差分二阶矩法估计宏观有效离散度 $k_{\text{agg}}$ （设定上限 1,000）；初始发病规模 $I_0$ 取推断窗口内的周度均值。关于 $I_0$ 取值口径与 Markov 起点的偏差：宏观更新模型 $Z_{t+1}\mid Z_t\sim\text{NB}(R_{\text{周}}Z_t,k_{\text{agg}})$ 的理论起点应为当前状态 $Z_t$；本文采用五周窗口均值 $\bar Z$，属于平滑潜在状态。该差异具有阶段依赖性：疫情上升期窗口均值略低于当前值，下降期则略高于当前值。敏感性分析表明，将 $I_0$ 分别设定为窗口均值、末周计数与对数回归拟合末端值时，各阶段州级中位机制视界的变化仅在 $-0.2\%\sim +4.8\%$ 之间，个别低计数州最大变动约 $+51\%$，整体对主口径结论影响有限。若改用小样本 $t(3)$ 临界值替换渐近标准正态分位数，区间宽度相应扩大 1.62 倍。
+数据预处理以各阶段起步期连续 5 个周度观测（$W=5$）作为推断窗口，采用对数线性回归估计周度增长乘子 $R_{\text{周}}=\exp(b_{\text{week}})$ 及其对数尺度标准误 $s_{\text{周}}=\text{SE}(b_{\text{week}})$（自由度 $\text{df}=3$）；由 Ho 等\citep{ho2023simultaneous} 对数差分二阶矩法估计宏观有效离散度 $k_{\text{agg}}$ （设定上限 1,000）；初始发病规模 $I_0$ 取推断窗口内的周度均值。关于 $I_0$ 取值口径与 Markov 起点的偏差：宏观更新模型 $Z_{t+1}\mid Z_t\sim\text{NB}(R_{\text{周}}Z_t,k_{\text{agg}})$ 的理论起点应为当前状态 $Z_t$；本文采用五周窗口均值 $\bar Z$，属于平滑潜在状态。该差异具有阶段依赖性：峰前时间窗口的均值通常略低于当前值，峰后时间窗口则可能略高于当前值。敏感性分析表明，将 $I_0$ 分别设定为窗口均值、末周计数与对数回归拟合末端值时，各阶段州级中位机制视界的变化仅在 $-0.2\%\sim +4.8\%$ 之间，个别低计数州最大变动约 $+51\%$，整体对主口径结论影响有限。若改用小样本 $t(3)$ 临界值替换渐近标准正态分位数，区间宽度相应扩大 1.62 倍。
 
 \subsection{微观传播链层：子代分布与信息论下界的个体级验证}\label{sec:micro}
 
@@ -926,7 +926,7 @@ V_h \Big|_{R=1} &= I_0 (k_{\text{agg}} + I_0) \left[ \left(1 + \frac{1}{k_{\text
 \begin{enumerate}[itemsep=1pt,topsep=1.5pt,parsep=0pt]
 \item \textbf{定理~\ref{thm:sharp_floor}}：正交拆分 $Y_{t+h}-\delta_h = (Y_{t+h}-m_h)+(m_h-\delta_h)$，交叉项 $(m_h-\delta_h)\mathbb{E}[Y_{t+h}-m_h\mid\mathcal{F}_t]=0$，得 $\mathcal{R}_h = V_h+(m_h-\delta_h)^2\ge V_h$，等号当且仅当 $\delta_h=m_h$。
 \item \textbf{引理 1--2}：全方差公式得差分方程 $V_n-R^2V_{n-1}=\sigma^2I_0R^{n-1}$，$R^{2n}$ 伸缩求和导出 $\text{CV}^2(h)=(1+R/k)(1-R^{-h})/[I_0(R-1)]$，超临界下饱和于 $\text{CV}^2_\infty$。
-\item \textbf{引理 3 与定理~\ref{thm:horizon}}：对数正态矩母 $\mathbb{E}[Y^m]=\exp(m^2s^2/2)$ 展开 $P(h)=\exp(2h^2s^2)-2\exp(h^2s^2/2)+1$；假定 (A4) 正交性确立 $\text{RelMSE}=\text{CV}^2+P$，单调性保证 $h^*$ 唯一。
+\item \textbf{引理 3 与定理~\ref{thm:horizon}}：对数正态矩母 $\mathbb{E}[Y^m]=\exp(m^2s^2/2)$ 展开 $P_{\text{exact}}(h)=\exp(2h^2s^2)-2\exp(h^2s^2/2)+1$；假定 (A4) 正交性确立 $\text{RelMSE}=\text{CV}^2+P_{\text{exact}}$，单调性保证 $h^*$ 唯一。
 \item \textbf{定理~\ref{thm:monotonicity}}：$\text{CV}^2$ 增量 $(1+R/k)/(I_0R^{h+1})>0$；辅助函数 $g(y)=(y^{h_2}-y^{h_1})(y^{h_2}+y^{h_1}-2)$ 在 $y>1$ 与 $0<y<1$ 均同号恒正。
 \item \textbf{定理~\ref{thm:fisher}}：NB 对数似然二阶导负期望得 $I_1(R)=k/[R(R+k)]$；交叉偏导期望为零确立渐近正交；Wald 型检验反解样本量门槛。
 \item \textbf{定理~\ref{thm:macro_exact}}：全方差法则得 $V_{t+1}=qV_t+I_0R^{t+1}+I_0^2R^{2t+2}/k_{\text{agg}}$（$q=R^2c$），除以 $q^{t+1}$ 裂项求和，利用 $q-R^2=R^2/k_{\text{agg}}$ 合并得 $V_h=I_0R(q^h-R^h)/(q-R)+I_0^2(q^h-R^{2h})$。
