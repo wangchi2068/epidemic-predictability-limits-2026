@@ -404,15 +404,21 @@ def emit_table3(roll_state, roll_nat, phases, bud=None):
 
 def emit_table4(bud):
     rows = []
-    for key, rec in bud.items():
-        for h, r in sorted(rec["horizons"].items()):
+    keys = list(bud.keys())
+    for key in keys:
+        rec = bud[key]
+        h_items = sorted(rec["horizons"].items())
+        for idx, (h, r) in enumerate(h_items):
+            phase_cell = f"\\multirow{{{len(h_items)}}}{{*}}{{{rec['display']}}}" if idx == 0 else ""
             rows.append(
-                f"{rec['display']} & {h} & {r['n_states']} & "
+                f"{phase_cell} & {h} & {r['n_states']} & "
                 f"{r['median_obs']*1e4:.2f} & {r['median_cv2']*1e4:.2f} & "
                 f"{r['median_p']*1e4:.2f} & "
                 f"{100*r['median_share']:.1f}\\% "
                 f"[{100*r['q25_share']:.1f}, {100*r['q75_share']:.1f}] & "
                 f"{100*r['frac_positive']:.0f}\\% \\\\")
+        if key != keys[-1]:
+            rows.append("\\midrule")
     body = ("\\begin{tabular}{lccccccc}\n"
             "\\toprule\n"
             "阶段 & $h_{\\text{周}}$ & $n_{\\text{州}}$ & "

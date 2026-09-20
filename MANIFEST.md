@@ -11,7 +11,7 @@
 | `main.pdf` | PDF 文档 | 正式提交稿编译产物（严格 35 页，由 Tectonic 从 `main.tex` 编译生成） |
 | `archive/main_reframed.tex` | LaTeX 源码 | [历史存档] 重构探索稿源码（12 页，曾用作独立审计验证测试） |
 | `archive/main_reframed.pdf` | PDF 文档 | [历史存档] 重构探索稿编译产物（12 页） |
-| `references.bib` | BibTeX | 净化后的参考文献库（46 篇，双向完全闭合：0 缺失、0 未引项） |
+| `references.bib` | BibTeX | 净化后的参考文献库（48 篇，双向完全闭合：0 缺失、0 未引项） |
 | `README.md` | Markdown | 项目自洽指南、架构说明与复现指南 |
 | `MANIFEST.md` | Markdown | 本文件：全量有效交付文件与磁盘真实路径对照表 |
 | `environment.yml` | YAML | Conda 运行环境依赖定义 |
@@ -132,6 +132,7 @@
 | `scripts_v2/fetch_flusight_release.py` | FluSight 锁定 release 的下载与 SHA-256 登记脚本 |
 | `scripts_v2/verify_reframed.py` | Independent numerical checks for macro recursion, parameter mixtures, WIS and moving-block bootstrap |
 | `scripts_v2/emit_v3.py` | 描述性误差记账与 LaTeX 表格片段全自动生成脚本 |
+| `scripts_v2/make_framework_figure.py` | 传染病预测视界机制基准与四层证据架构全景图渲染脚本（图 1） |
 | `scripts_v2/make_figures_v3.py` | 经验实证高清图件渲染脚本（图 3, 图 4, 图 5, 图 6） |
 | `scripts_v2/make_all_figures_v2.py` | 理论推导与数值下界高清图件渲染脚本（图 2 及推导手册图件） |
 | `scripts_v2/sim_verify_t1.py` | 定理 1（分支过程两阶段递推）与定理 2（单调性极限）蒙特卡洛数值验证 |

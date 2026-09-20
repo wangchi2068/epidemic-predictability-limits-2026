@@ -50,54 +50,74 @@ PATHOGEN_COLOR = {
 
 
 def fig_micro(micro: dict):
-    fig, axes = plt.subplots(1, 3, figsize=(8.4, 2.65), dpi=300)
-    series = [
-        ("Hong_Kong_COVID19_Local", "香港 COVID-19（本地）", "#1f78b4"),
-        ("Hong_Kong_COVID19_All", "香港 COVID-19（全体）", "#4575b4"),
-        ("Guinea_Ebola_2014", "几内亚埃博拉 2014", "#d73027")
-    ]
+    fig, axes = plt.subplots(1, 3, figsize=(8.6, 2.75), dpi=300)
     
-    for ax, (key, label, color) in zip(axes, series):
+    # Load empirical raw data
+    sec = pd.read_csv(ROOT / "data" / "micro" / "hong_kong_adam2020" /
+                      "secondary_cases.csv")["secondary.cases"].values
+    hk_local = np.concatenate([sec, np.zeros(256)])
+    hk_all = np.concatenate([sec, np.zeros(1038 - 99)])
+    eb = pd.read_csv(ROOT / "data" / "micro" / "guinea_ebola_faye2015" /
+                     "ebola_conakry_offspring.csv")["secondary_cases"].values
+    
+    datasets = {
+        "Hong_Kong_COVID19_Local": ("香港 COVID-19（本地）", hk_local),
+        "Hong_Kong_COVID19_All": ("香港 COVID-19（全体）", hk_all),
+        "Guinea_Ebola_2014": ("几内亚埃博拉 2014", eb)
+    }
+    
+    xs = np.arange(0, 16)
+    
+    for ax, (key, (label, raw_x)) in zip(axes, datasets.items()):
         rec = micro[key]
         R, k = rec["R_mle"], rec["k_mle"]
         crb_ratio = rec["bootstrap"]["ratio_var_to_crb"]
         daic = rec["delta_aic_poisson_vs_nb"]
         
-        xs = np.arange(0, 16)
+        # Empirical PMF
+        counts = np.bincount(raw_x.astype(int))
+        emp_pmf = np.zeros(len(xs))
+        for v in range(min(len(counts), len(xs))):
+            emp_pmf[v] = counts[v] / len(raw_x)
+            
         p_nb = k / (k + R)
         pmf_nb = nbinom.pmf(xs, k, p_nb)
         pmf_poi = poisson.pmf(xs, R)
         
-        # Plot Negative Binomial fit as bars
-        ax.bar(xs - 0.15, pmf_nb, width=0.55, color=color, alpha=0.82,
-               edgecolor=color, linewidth=0.8, label="负二项拟合 (NB)", zorder=3)
-        # Plot Poisson fit as comparison dashed line with points
-        ax.plot(xs, pmf_poi, "o--", color="#e41a1c", ms=4.5, lw=1.5,
-                label="Poisson 对照 (无过度离散)", zorder=4)
+        # 1. Empirical observed frequencies as bars
+        ax.bar(xs, emp_pmf, width=0.60, color="#3b6998", alpha=0.72,
+               edgecolor="#1d3d60", linewidth=0.8, label="实测经验频率", zorder=2)
+        # 2. Negative Binomial MLE fit as dark solid curve with dots
+        ax.plot(xs, pmf_nb, "-o", color="#0f172a", ms=4.2, lw=1.8,
+                label="负二项拟合 (NB)", zorder=4)
+        # 3. Poisson comparison as distinct red dashed line with square markers
+        ax.plot(xs, pmf_poi, "--s", color="#dc2626", ms=3.8, lw=1.5,
+                label="Poisson 对照", zorder=3)
         
         ax.axhline(0, color="black", lw=0.6)
-        ax.set_title(f"{label}", fontsize=10.0, fontweight="bold", pad=8)
+        ax.set_title(f"{label}", fontsize=9.8, fontweight="bold", pad=8)
         ax.set_xlabel("二代病例数 (Offspring Count)", fontsize=8.8)
         if ax is axes[0]:
             ax.set_ylabel("概率质量 (PMF)", fontsize=8.8)
         
         ax.set_xticks(range(0, 16, 2))
-        ax.legend(loc="upper right", frameon=True, facecolor="white", edgecolor="#cccccc", fontsize=7.6)
+        ax.set_xlim(-0.7, 15.7)
+        ax.legend(loc="upper right", frameon=True, facecolor="white", edgecolor="#cccccc", fontsize=7.8)
         
-        # Statistics Box
+        # Statistics Box with publication-grade font >= 8.2pt
         info_text = (
             f"$\\hat{{R}} = {R:.2f}$\n"
             f"$\\hat{{k}}_{{\\mathrm{{ind}}}} = {k:.3f}$\n"
             f"$\\Delta\\mathrm{{AIC}} = {daic:.1f}$\n"
             f"$\\mathrm{{Var}}_{{\\mathrm{{boot}}}} / \\mathrm{{CRB}} = {crb_ratio:.3f}$"
         )
-        ax.text(0.48, 0.62, info_text, transform=ax.transAxes, fontsize=7.8, va="top",
+        ax.text(0.44, 0.62, info_text, transform=ax.transAxes, fontsize=8.2, va="top",
                 bbox=dict(boxstyle="round,pad=0.35", facecolor="#f8fafc", edgecolor="#cbd5e1", lw=0.8))
         
     fig.tight_layout()
     fig.savefig(FIGS / "fig_micro.png", dpi=300)
     plt.close(fig)
-    print("[OK] fig_micro.png upgraded to publication-grade")
+    print("[OK] fig_micro.png upgraded to publication-grade with empirical bars")
 
 
 def fig_state_horizons(phases: dict):

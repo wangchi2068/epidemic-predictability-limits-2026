@@ -166,11 +166,15 @@ def check_blacklist():
     for f in files:
         if not f.exists():
             fail(f"reader-facing file missing: {f.name}")
-        t = _norm(f.read_text(encoding="utf-8"))
+        raw_content = f.read_text(encoding="utf-8")
+        raw_hexes = re.findall(r"\b[0-9a-fA-F]{20,}\b", raw_content)
+        if raw_hexes:
+            fail(f"raw hex hash found in {f.name}: {raw_hexes}")
+        t = _norm(raw_content)
         for phrase in STALE:
             if _norm(phrase) in t:
                 fail(f"stale literal {phrase!r} found in {f.name}")
-    print(f"[OK] stale-literal scan clean across {len(files)} reader-facing files")
+    print(f"[OK] stale-literal scan clean across {len(files)} reader-facing files (0 raw hashes, 0 stale phrases)")
 
 
 def check_abstract():
@@ -301,9 +305,9 @@ def check_citations():
         fail(f"missing citation keys in references.bib: {missing}")
     if unref:
         fail(f"unreferenced citation keys in references.bib: {unref}")
-    if len(entries) != 46:
-        fail(f"expected exactly 46 references, found {len(entries)}")
-    print(f"[OK] citations 100% two-way closed ({len(cites)}/46 entries cited, 0 missing, 0 unreferenced)")
+    if len(entries) != 48:
+        fail(f"expected exactly 48 references, found {len(entries)}")
+    print(f"[OK] citations 100% two-way closed ({len(cites)}/48 entries cited, 0 missing, 0 unreferenced)")
 
 
 def check_pdf_pages():

@@ -120,7 +120,7 @@ def main() -> None:
             "n_unbounded": {c: len(rec["states"]) - len(vals[c]) for c in CAL},
             "median_nb1_saturation": float(np.median(sat)) if sat else None,
         }
-        d = rec["display"][:9]
+        d = rec["display"]
         row = f"{key:<10s} " + "".join(
             (f"{med[c]:10.2f}" if med[c] is not None else f"{'—':>10s}") for c in CAL)
         print(row + (f"{out[key]['median_nb1_saturation']:10.3f}"
@@ -135,7 +135,11 @@ def main() -> None:
         cells = " & ".join(
             (f"{med[c]:.2f}" if med[c] is not None else "---") for c in CAL)
         lines.append(f"{d} & {cells} \\\\")
-    lines += ["\\bottomrule", "\\end{tabular}"]
+    lines += [
+        "\\bottomrule",
+        "\\end{tabular}",
+        "\\begin{flushleft}\\scriptsize \\textbf{注：}四种宏观方差结构均在相同 5 周推断窗口、相同参数集与 $\\tau=0.5$ 容错门槛下由各州独立求根后取中位数。NB1／准 Poisson 的过度离散系数校准为 $\\phi = 1 + R I_0 / k_{\\text{agg}}$，保证单步方差与 NB2 在工作点严格对齐以隔离纯结构效应。\\end{flushleft}"
+    ]
     (TABLES / "tab_alt_variance.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     (REPORTS / "alt_variance_calibers.json").write_text(

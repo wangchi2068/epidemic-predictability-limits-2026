@@ -94,12 +94,12 @@ def gen_fig2():
         Z[:, t + 1] = np.where(m > 0, rng.negative_binomial(np.maximum(m * k, 1e-9), p), 0.0)
     cv2_sim = Z[:, 1:].var(axis=0, ddof=1) / (Z[:, 1:].mean(axis=0) ** 2)
     
-    ax.plot(h_vals, cv2_theory, "-", color="#1f78b4", lw=2.2, label="引理 1 闭式解 $\\mathrm{CV}^2(h)$", zorder=3)
+    ax.plot(h_vals, cv2_theory, "-", color="#1f78b4", lw=2.2, label="引理 2 闭式解 $\\mathrm{CV}^2(h)$", zorder=3)
     ax.plot(h_vals, cv2_sim, "o", color="#e31a1c", ms=5.5, alpha=0.9, markeredgecolor="white",
             markeredgewidth=0.8, label="20,000 次微观分支模拟", zorder=4)
     ax.axhline(cv2_inf, color="#636363", ls="--", lw=1.3,
                label=f"渐近饱和地板 $\\mathrm{{CV}}^2_\\infty={cv2_inf:.4f}$", zorder=2)
-    ax.set_title("(a) 微观分支过程内在相对方差与渐近饱和 (Lemma 1)", fontsize=9.8, fontweight="bold", pad=8)
+    ax.set_title("(a) 微观分支过程内在相对方差与渐近饱和（引理 2）", fontsize=9.8, fontweight="bold", pad=8)
     ax.set_xlabel("前瞻步长 $h$（代际数）", fontsize=9.0)
     ax.set_ylabel("群体内在相对方差 $\\mathrm{CV}^2(h)$", fontsize=9.0)
     ax.set_xticks(range(1, 16, 2))
@@ -133,12 +133,12 @@ def gen_fig2():
     # Heuristic approximation: h / k_agg
     cv2_heuristic = h_macro / k_agg
     
-    ax2.plot(h_macro, cv2_macro_exact, "-", color="#1f78b4", lw=2.2, label="定理 5 精确闭式递推 $\\mathrm{CV}^2_{\\mathrm{macro}}(h)$", zorder=3)
+    ax2.plot(h_macro, cv2_macro_exact, "-", color="#1f78b4", lw=2.2, label="定理 5 精确闭式解 $\\mathrm{CV}^2_{\\mathrm{macro}}(h)$", zorder=3)
     ax2.plot(h_macro, cv2_macro_sim, "s", color="#e31a1c", ms=5.5, alpha=0.9, markeredgecolor="white",
              markeredgewidth=0.8, label="20,000 次宏观更新模拟", zorder=4)
     ax2.plot(h_macro, cv2_heuristic, ":", color="#2ca02c", lw=1.6, label="一阶启发式近似 $h / k_{\\mathrm{agg}}$", zorder=2)
     
-    ax2.set_title("(b) 宏观负二项聚合更新方差几何发散 (Theorem 5)", fontsize=9.8, fontweight="bold", pad=8)
+    ax2.set_title("(b) 宏观负二项聚合更新方差几何发散（定理 5）", fontsize=9.8, fontweight="bold", pad=8)
     ax2.set_xlabel("前瞻步长 $h$（周数）", fontsize=9.0)
     ax2.set_ylabel("宏观相对方差 $\\mathrm{CV}^2_{\\mathrm{macro}}(h)$", fontsize=9.0)
     ax2.set_xticks(range(1, 13))

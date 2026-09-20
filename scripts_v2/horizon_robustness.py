@@ -169,7 +169,8 @@ def emit_threshold_table(sweep, phases_json) -> None:
             "\\toprule\n"
             "阶段 & $\\ge 50$ 例（主口径） & $\\ge 30$ 例 & $\\ge 20$ 例 & $\\ge 10$ 例 \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n"
-            "\\bottomrule\n\\end{tabular}\n")
+            "\\bottomrule\n\\end{tabular}\n"
+            "\\begin{flushleft}\\scriptsize \\textbf{注：}各列显示将 5 周推断窗口累计发病门槛由 $\\ge 50$ 例逐步放宽后，各阶段重新拟合的州级中位机制视界（周），括号内为满足门槛的辖区数 $n$。低发病阶段（两季 RSV）中位视界随门槛放宽大幅收缩，反映了准入规则对低发病单元的向上选择偏倚。\\end{flushleft}\n")
     (ROOT / "tables_v3" / "tab_threshold_sweep.tex").write_text(body, encoding="utf-8")
     print("[OK] tables_v3/tab_threshold_sweep.tex")
 
@@ -223,32 +224,40 @@ def joint_horizon_ci(phases_json, B=1000, seed=20260919, ngrid=41):
                 f = lambda h: float(macro_model.cv2_macro(h, R0 * m, k, I0)) \
                     + float(SP.p_lognorm(h, min(s, 1.0))) - TAU ** 2
                 hs.append(_solve_h(f))
-            arr = np.array([h if h is not None else np.nan for h in hs])
-            tables.append(arr)
-        tables = np.vstack(tables)
-        meds = []
+            tables.append((R0, s, hs))
+
+        boot_meds = []
+        log_mult = np.log(mult)
         for _ in range(B):
-            idx = rng.integers(0, n, n)
-            jit = rng.normal(0.0, np.array([rows[i]["s_week"] for i in idx]),
-                             n)
-            pos = np.clip(jit, np.log(0.60), np.log(1.67))
-            frac = (pos - np.log(0.60)) / (np.log(1.67) - np.log(0.60)) * (ngrid - 1)
-            j0 = np.floor(frac).astype(int)
-            j1 = np.minimum(j0 + 1, ngrid - 1)
-            w = frac - j0
-            sub = tables[idx]
-            vals = sub[np.arange(n), j0] * (1 - w) + sub[np.arange(n), j1] * w
-            vals = vals[np.isfinite(vals)]
-            if vals.size:
-                meds.append(float(np.median(vals)))
-        if meds:
-            meds = np.array(meds)
-            out[key] = {
-                "display": rec["display"], "n_states": n, "B": B,
-                "point_median": float(np.median([v["h_week"] for v in rows])),
-                "ci_lo": float(np.percentile(meds, 2.5)),
-                "ci_hi": float(np.percentile(meds, 97.5)),
-            }
+            sample_idx = rng.choice(n, size=n, replace=True)
+            sampled_h = []
+            for i in sample_idx:
+                R0, s, hs = tables[i]
+                eps = rng.normal(0.0, s)
+                if eps <= log_mult[0]:
+                    h_val = hs[0]
+                elif eps >= log_mult[-1]:
+                    h_val = hs[-1]
+                else:
+                    h_val = float(np.interp(eps, log_mult, hs))
+                if h_val is not None and np.isfinite(h_val):
+                    sampled_h.append(h_val)
+            if sampled_h:
+                boot_meds.append(float(np.median(sampled_h)))
+
+        point_vals = [s["h_week"] for s in rec["states"].values()
+                      if s.get("h_week") is not None]
+        point_med = float(np.median(point_vals)) if point_vals else float("nan")
+        ci_lo = float(np.percentile(boot_meds, 2.5))
+        ci_hi = float(np.percentile(boot_meds, 97.5))
+        out[key] = {
+            "display": rec["display"],
+            "n_states": len(point_vals),
+            "point_median": point_med,
+            "ci_lo": ci_lo,
+            "ci_hi": ci_hi,
+            "boot_se": float(np.std(boot_meds)),
+        }
     return out
 
 
@@ -265,7 +274,8 @@ def emit_joint_ci_table(joint, phases_json):
             "\\toprule\n"
             "阶段 & $n_{\\text{州}}$ & 点估计 & 95\\% 联合自助区间 & 区间宽度 \\\\\n"
             "\\midrule\n" + "\n".join(rows) + "\n"
-            "\\bottomrule\n\\end{tabular}\n")
+            "\\bottomrule\n\\end{tabular}\n"
+            "\\begin{flushleft}\\scriptsize \\textbf{注：}联合自助区间（$B=1{,}000$，确定性种子 20260919）同时联合传播了同阶段内辖区抽样变异与增长乘子对数标准误的估计不确定性；$k_{\\text{agg}}$ 与初始均值 $I_0$ 的敏感性见第 5.6 节正文扫描，未并入本表。\\end{flushleft}\n")
     (ROOT / "tables_v3" / "tab_joint_ci.tex").write_text(body, encoding="utf-8")
     print("[OK] tables_v3/tab_joint_ci.tex")
 
