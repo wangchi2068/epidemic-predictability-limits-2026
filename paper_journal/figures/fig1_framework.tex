@@ -1,0 +1,96 @@
+\documentclass[tikz,border=18pt]{standalone}
+\usepackage{ctex}
+\usepackage{amsmath,amssymb}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, backgrounds, fit, shadows}
+
+\definecolor{themeDarkBlue}{RGB}{28, 55, 90}
+\definecolor{themeTeal}{RGB}{20, 125, 135}
+\definecolor{themeOrange}{RGB}{215, 90, 45}
+\definecolor{themeSlate}{RGB}{70, 85, 105}
+\definecolor{bgBlue}{RGB}{242, 246, 252}
+\definecolor{bgTeal}{RGB}{240, 250, 250}
+\definecolor{bgOrange}{RGB}{254, 245, 240}
+\definecolor{borderBlue}{RGB}{180, 205, 235}
+\definecolor{borderTeal}{RGB}{160, 215, 220}
+\definecolor{borderOrange}{RGB}{240, 185, 160}
+
+\begin{document}
+\begin{tikzpicture}[
+    >=Stealth,
+    font=\sffamily,
+    card/.style={
+        rectangle, rounded corners=6pt, draw=#1, fill=white, line width=1.1pt,
+        inner sep=8pt, align=center, drop shadow={opacity=0.08, shadow xshift=1pt, shadow yshift=-1.5pt}
+    },
+    panel/.style={
+        rectangle, rounded corners=8pt, draw=#1, line width=0.9pt, dashed, inner sep=14pt, fill opacity=0.45
+    },
+    arrow/.style={
+        ->, line width=1.2pt, draw=themeSlate
+    },
+    highlightArrow/.style={
+        ->, line width=1.5pt, draw=themeOrange
+    }
+]
+
+% ---------------- Tier 1: Inputs ----------------
+\node[card=themeTeal, fill=bgTeal, text width=6.0cm] (demo) {
+    \textbf{\textcolor{themeTeal}{\large 动力学内在随机性}}\\[2pt]
+    \textbf{\textcolor{themeTeal}{\footnotesize （传播统计涨落）}}\\[5pt]
+    \footnotesize 负二项分支过程 $Z_{t+1} \mid Z_t \sim \text{NB}(R Z_t, k)$\\[4pt]
+    \textbf{不可约条件方差下界}：\\[3pt]
+    $\text{CV}^2(h) = \dfrac{(1+R/k)(1-R^{-h})}{I_0(R-1)} \xrightarrow{h\to\infty} \dfrac{1+R/k}{I_0(R-1)}$
+};
+
+\node[card=themeDarkBlue, fill=bgBlue, text width=6.0cm, right=1.6cm of demo] (param) {
+    \textbf{\textcolor{themeDarkBlue}{\large 参数推断不确定性}}\\[2pt]
+    \textbf{\textcolor{themeDarkBlue}{\footnotesize （统计估计误差）}}\\[5pt]
+    \footnotesize 监测窗口观测估计量 $\hat{R} \sim \mathcal{N}(R, s_R^2)$\\[4pt]
+    \textbf{外推几何放大项}：\\[3pt]
+    $P(h) = \dfrac{\mathbb{E}[(\hat{R}^h - R^h)^2]}{R^{2h}} \approx \left(\dfrac{h\,s_R}{R}\right)^2$
+};
+
+% ---------------- Tier 2: Core Decomposition ----------------
+\node[card=themeSlate, fill=white, text width=10.2cm, below=2.1cm of $(demo)!0.5!(param)$] (decomp) {
+    \textbf{\textcolor{themeDarkBlue}{\Large 相对均方误差严格正交分解（定理 1--2）}}\\[7pt]
+    $\text{relMSE}^2(h) = \underbrace{\text{CV}^2(h)}_{\text{内在动力学方差下界}} + \underbrace{P(h)}_{\text{参数外推放大项}} \quad \text{\small （严格单调递增，处处可求逆）}$\\[8pt]
+    \footnotesize 目标相对误差预算阈值 $\tau$（公卫应急决策容忍阈值，如 $\tau=0.5$ 对应 50\% 相对误差限）
+};
+
+% ---------------- Tier 3: Limits & Application ----------------
+\node[card=themeOrange, fill=bgOrange, text width=13.6cm, below=2.1cm of decomp] (horizon) {
+    \textbf{\textcolor{themeOrange}{\Large 条件机制预测视界解析闭式（$h^*$）}}\\[8pt]
+    $\boxed{h^* \approx \mu_g \cdot \dfrac{R}{s_R}\sqrt{\tau^2 - \dfrac{1+R/k}{I_0(R-1)}}} \qquad \xrightarrow{R\to 1} \qquad h^*_{\text{gen}} = \dfrac{\sqrt{b^2+4 s_R^2\tau^2}-b}{2 s_R^2}$\\[9pt]
+    \small
+    \setlength{\tabcolsep}{10pt}
+    \begin{tabular}{ccc}
+    \textbf{近临界慢化视界塌缩 (定理 3)} & \textbf{Fisher 信息界辨识约束 (引理 2)} & \textbf{实测误差代数记账 (第 4 节)} \\[4pt]
+    $|R-1| \sim \dfrac{R+1}{N} \implies h^* \to 0$ & $C \gtrsim \dfrac{6.2(1/R+1/k)}{(R-1)^2}$ & $\text{relMSE}^2 = \text{CV}^2 + P + \mathcal{E}_{\text{业务扰动}}$
+    \end{tabular}
+};
+
+% ---------------- Connecting Arrows ----------------
+\draw[arrow, draw=themeTeal] (demo.south) -- ++(0,-0.75) -| ($(decomp.north west)!0.3!(decomp.north)$)
+    node[pos=0.25, left, font=\footnotesize\bfseries\color{themeTeal}] {内在机制贡献};
+
+\draw[arrow, draw=themeDarkBlue] (param.south) -- ++(0,-0.75) -| ($(decomp.north east)!0.3!(decomp.north)$)
+    node[pos=0.25, right, font=\footnotesize\bfseries\color{themeDarkBlue}] {外在推断贡献};
+
+\draw[highlightArrow] (decomp.south) -- (horizon.north)
+    node[midway, fill=white, inner sep=3pt, font=\footnotesize\bfseries\color{themeOrange}, rounded corners=2pt, draw=themeOrange!50] {首次穿透 $\text{relMSE}(h^*) = \tau$};
+
+% ---------------- Background Enclosure Panels with standalone tag banner ----------------
+\begin{scope}[on background layer]
+    % Panel 1 with top margin
+    \node[panel=borderBlue, fill=bgBlue, fit={(demo) (param) ([yshift=24pt]demo.north) ([yshift=24pt]param.north)}] (panel1) {};
+    % Top tag banner placed cleanly inside top margin, never obscured
+    \node[anchor=north west, fill=themeDarkBlue, text=white, font=\bfseries\footnotesize, rounded corners=3pt, inner sep=4pt, xshift=10pt, yshift=-5pt] at (panel1.north west) {【阶段 I：双源动力学随机性机制输入】};
+
+    % Panel 2 with top margin
+    \node[panel=borderOrange, fill=bgOrange, fit={(horizon) ([yshift=24pt]horizon.north)}] (panel2) {};
+    % Top tag banner placed cleanly inside top margin, never obscured
+    \node[anchor=north west, fill=themeOrange, text=white, font=\bfseries\footnotesize, rounded corners=3pt, inner sep=4pt, xshift=10pt, yshift=-5pt] at (panel2.north west) {【阶段 II：理论界限定量输出与公卫决策基准】};
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

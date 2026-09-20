@@ -23,7 +23,7 @@
    README.md and MANIFEST.md must exist on disk.
 10. Citations closure: references.bib is 100% two-way closed with main.tex
     (exactly 44 entries cited, 0 missing, 0 unreferenced).
-11. PDF page count: compiled main.pdf is verified to match README.md (30 pages).
+11. PDF page count: compiled main.pdf is verified to match README.md (35 pages).
 12. Phase classification protocol: verify peak-anchored retrospective classification logic
     (|ref - peak| <= 7d -> peak, ref < peak - 7d -> rising, ref > peak + 7d -> declining)
     and empirical partition consistency across all three FluSight releases.
