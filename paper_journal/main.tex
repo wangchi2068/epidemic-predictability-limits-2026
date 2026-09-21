@@ -71,11 +71,6 @@
 
 \vspace{0.4em}
 
-\noindent{\small\textbf{Abstract:} Why do infectious-disease forecasts lose skill at multi-week horizons and near epidemic peaks? We build a mechanistic benchmark that separates process variance from parameter-estimation error. For a weekly negative-binomial (NB2) renewal model with fixed dispersion we derive an exact finite-step variance closed form whose relative variance contains a geometric divergence term; parameter uncertainty enters through a lognormal amplification law, and the mechanistic horizon is the unique root of the resulting monotone relative-error budget. Micro transmission chains support overdispersed negative-binomial offspring ($\Delta$AIC 93.9--244.0). Across seven US epidemic phases (up to 51 jurisdictions), state-level horizon medians span 2.2--7.1 weeks (multi-window envelope 1.52--8.07). The two explicit components leave a median 55.0\% residual share of observed error, and a version-locked audit of three CDC FluSight seasons shows the mechanistic predictor under-covering in all phases (0.405--0.554), with pre-peak coverage drops that cannot be separated from static variance misspecification. The mechanistic horizon is a model-conditional, optimistic reference envelope for operational early-warning lead time.\\
-\textbf{Keywords:} infectious disease forecasting; forecast horizon; renewal model; branching process; mechanistic benchmark; calibration; weighted interval score}
-
-\vspace{0.6em}
-
 \section{引言}\label{sec:intro}
 
 \subsection{研究背景与现实困境}
@@ -383,7 +378,7 @@ h^* \approx \frac{\sqrt{b^2 + 4 s_{\text{周}}^2 \tau^2} - b}{2 s_{\text{周}}^2
 
 审计结果给出三项跨赛季一致的特征（推断纪律说明：涉及全部 9 组“赛季 $\times$ 模型”覆盖率的检验均经 Bonferroni 校正 $\alpha = 0.05/9 \approx 0.0056$；PIT 检验为独立近似的单样本 $t$ 检验，序列相关使其仅作量级参考）：
 (1) \textbf{集成的持续技能优势}：在所有赛季与提前期上，Hub 集成的 WIS 均优于基线与机制预测器（$h=1$ 时 v1.0.0 为 34.00 对 45.68 对 59.94；v1.1.0 为 85.27 对 125.11 对 170.88；v1.2.0 为 60.24 对 90.57 对 116.72），配对差的 HHS 大区整群移动块自助 95\% 区间不跨零；
-(2) \textbf{机制预测器的全相位欠覆盖}：代入式机制预测器标称 95\% 区间的实测覆盖率全季仅 \textbf{0.405--0.554}（各赛季 Wilson 区间均显著低于 0.95），区间名义宽度比基线窄 12.6\%--44.6%——静态 NB2 方差低估了现实宏观波动；
+(2) \textbf{机制预测器的全相位欠覆盖}：代入式机制预测器标称 95\% 区间的实测覆盖率全季仅 \textbf{0.405--0.554}（各赛季 Wilson 区间均显著低于 0.95），区间名义宽度比基线窄 12.6\%--44.6\%——静态 NB2 方差低估了现实宏观波动；
 (3) \textbf{尾部行为}：机制预测器 PIT 均值在 v1.1.0 与 v1.2.0 显著低于 0.50（0.381 与 0.363，$p<10^{-20}$），v1.0.0 为 0.506（$p=0.57$，无显著偏离）；Hub 集成 PIT 均值三季均显著高于 0.50（0.568、0.605、0.559，$p<10^{-12}$）。
 
 \subsection{峰前期校准特征与 COVIDhub 对照}\label{sec:phase_collapse}
@@ -393,13 +388,13 @@ h^* \approx \frac{\sqrt{b^2 + 4 s_{\text{周}}^2 \tau^2} - b}{2 s_{\text{周}}^2
 \begin{table}[htbp]
 \centering
 \footnotesize
-\caption{CDC FluSight 按全局峰值相对位置分层的 95\% 区间实测覆盖率与 Wilson 置信区间（$h=1$ 周，严格四方交集）}
+\caption{CDC FluSight 按全局峰值相对位置分层的 95\% 区间实测覆盖率及 Wilson 置信区间（$h=1$ 周，严格四方交集）}
 \label{tab:phase_stratification}
 \setlength{\tabcolsep}{4pt}
 \input{tables_v3/table9b_phase_ci}
 \vspace{2pt}
 \begin{flushleft}
-\scriptsize \textbf{注：}阶段划分依据各州级辖区完整流行季全局峰值日期（事后分层）。峰前/峰中/峰后单元数 $n$：v1.0.0 为 108/36/1,193；v1.1.0 为 343/132/840；v1.2.0 为 43/32/1,301。v1.2.0 峰前期仅 43 个单元，其区间宽度应作低精度指示值解读。
+\scriptsize \textbf{注：}每格为实测覆盖率与 Wilson 95\% 置信区间。阶段划分依据各州级辖区完整流行季全局峰值日期（事后分层）：峰前 $>7$ 天、峰值 $\pm 7$ 天、峰后 $>7$ 天。v1.2.0 峰前期仅 43 个单元，其区间宽度应作低精度指示值解读。
 \end{flushleft}
 \end{table}
 
