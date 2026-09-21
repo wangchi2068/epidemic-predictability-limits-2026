@@ -168,14 +168,14 @@ def fig_state_horizons(phases: dict):
     # ------------------ Panel (b): Dominance of Macro Process Variance
     ax2 = axes[1]
     # Macro process variance share at horizon: CV^2_macro / tau^2
-    # In text: cross-state median ranges from 0.73 to 0.89 across all phases
     tau = 0.5
     tau2 = tau ** 2
     cv2_shares = []
+    cv2_medians = []
     for k in PHASE_ORDER:
         rec = phases[k]
-        # compute or collect CV^2_macro(h*) / tau^2
-        # from text and reports, median is ~0.73 to 0.89
+        # exact macro process variance share at the working point h*,
+        # computed from the Theorem 2 closed form (not the h/k_agg heuristic)
         shares = []
         for v in rec["states"].values():
             h_w = v.get("h_week")
@@ -185,10 +185,11 @@ def fig_state_horizons(phases: dict):
             if None in (h_w, k_a, r_w, i_0):
                 continue
             # exact macro process variance share at the working point h*,
-            # computed from the Theorem 5 closed form (not the h/k_agg heuristic)
+            # computed from the Theorem 2 closed form (not the h/k_agg heuristic)
             shares.append(macro_model.cv2_macro(h_w, r_w, k_a, i_0) / tau2)
         cv2_shares.append(shares if shares else [np.nan])
-        
+        cv2_medians.append(float(np.nanmedian(shares)) if shares else float("nan"))
+
     bp2 = ax2.boxplot(cv2_shares, widths=0.52, showfliers=False,
                       patch_artist=True, medianprops=dict(color="#0f172a", lw=1.8), zorder=4)
     ax2.set_xticks(range(1, len(labels) + 1))
@@ -199,10 +200,15 @@ def fig_state_horizons(phases: dict):
         p.set_alpha(0.35)
         p.set_edgecolor(PATHOGEN_COLOR[k])
         p.set_linewidth(1.1)
-        
+
+    # Band over the cross-state median range, computed from the data itself
+    # (never hardcoded: the figure must stay consistent with the text).
+    lo, hi = float(np.nanmin(cv2_medians)), float(np.nanmax(cv2_medians))
     ax2.axhline(1.0, color="#b91c1c", ls="--", lw=1.2, label=r"临界方差总预算 $\tau^2$", zorder=2)
-    ax2.axhspan(0.73, 0.89, color="#94a3b8", alpha=0.20, label="跨州中位数经验区间 (73%--89%)", zorder=1)
-    
+    ax2.axhspan(lo, hi, color="#94a3b8", alpha=0.20,
+                label=f"跨州中位数区间 ({lo*100:.0f}%--{hi*100:.0f}%)", zorder=1)
+    print(f"[OK] panel (b) median share range {lo:.4f}--{hi:.4f}")
+
     ax2.set_title("(b) 宏观过程内在方差占视界工作点预算之比重", fontsize=9.8, fontweight="bold", pad=8)
     ax2.set_ylabel(r"过程方差占比 $\mathrm{CV}^2_{\mathrm{macro}}(h^*) / \tau^2$", fontsize=8.8)
     ax2.set_ylim(0.4, 1.05)

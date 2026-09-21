@@ -11,8 +11,15 @@ Run:  python scripts_v2/verify_journal_claims.py
 """
 from __future__ import annotations
 
+import sys
+
 import numpy as np
 from scipy.optimize import brentq
+
+# The script prints Chinese labels; force a UTF-8 stdout so it runs on a
+# GBK-default Windows console instead of raising UnicodeEncodeError.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
 
 SEED = 20260921
 
