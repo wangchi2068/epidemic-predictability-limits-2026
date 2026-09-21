@@ -1,11 +1,15 @@
-\documentclass[tikz,border=18pt]{standalone}
+% !TEX program = tectonic
+% 图 1：传染病传播动力学与预测视界理论推导原理图（期刊版）
+% 定理/引理编号与正文一致：定理1 条件风险恒等式；定理2 宏观NB2方差闭式；
+% 定理3 Fisher信息与CRB；定理4 机制视界；引理2 微观饱和界；引理3 对数正态放大律。
+\documentclass[tikz,border=14pt]{standalone}
 \usepackage{ctex}
 \usepackage{amsmath,amssymb}
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, backgrounds, fit, shadows}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, backgrounds, fit}
 
 \definecolor{themeDarkBlue}{RGB}{28, 55, 90}
 \definecolor{themeTeal}{RGB}{20, 125, 135}
-\definecolor{themeOrange}{RGB}{215, 90, 45}
+\definecolor{themeOrange}{RGB}{200, 82, 40}
 \definecolor{themeSlate}{RGB}{70, 85, 105}
 \definecolor{bgBlue}{RGB}{242, 246, 252}
 \definecolor{bgTeal}{RGB}{240, 250, 250}
@@ -19,77 +23,91 @@
     >=Stealth,
     font=\sffamily,
     card/.style={
-        rectangle, rounded corners=6pt, draw=#1, fill=white, line width=1.1pt,
-        inner sep=8pt, align=center, drop shadow={opacity=0.08, shadow xshift=1pt, shadow yshift=-1.5pt}
+        rectangle, rounded corners=6pt, draw=#1, line width=1.1pt,
+        inner sep=9pt, align=center
     },
     panel/.style={
-        rectangle, rounded corners=8pt, draw=#1, line width=0.9pt, dashed, inner sep=14pt, fill opacity=0.45
+        rectangle, rounded corners=8pt, draw=#1, line width=0.9pt, dashed, inner sep=13pt
     },
-    arrow/.style={
-        ->, line width=1.2pt, draw=themeSlate
-    },
-    highlightArrow/.style={
-        ->, line width=1.5pt, draw=themeOrange
-    }
+    arrow/.style={->, line width=1.2pt, draw=themeSlate},
+    highlightArrow/.style={->, line width=1.5pt, draw=themeOrange},
+    alab/.style={font=\footnotesize\bfseries, fill=white, inner sep=3pt,
+                 rounded corners=2pt, draw=#1!60, text=#1!85!black}
 ]
 
-% ---------------- Tier 1: Inputs ----------------
-\node[card=themeTeal, fill=bgTeal, text width=6.0cm] (demo) {
+% ---------------- Tier 1: 双源随机性输入 ----------------
+\node[card=themeTeal, fill=bgTeal, text width=6.2cm] (demo) {
     \textbf{\textcolor{themeTeal}{\large 动力学内在随机性}}\\[2pt]
-    \textbf{\textcolor{themeTeal}{\footnotesize （传播统计涨落）}}\\[5pt]
-    \footnotesize 负二项分支过程 $Z_{t+1} \mid Z_t \sim \text{NB}(R Z_t, k)$\\[4pt]
-    \textbf{不可约条件方差下界}：\\[3pt]
-    $\text{CV}^2(h) = \dfrac{(1+R/k)(1-R^{-h})}{I_0(R-1)} \xrightarrow{h\to\infty} \dfrac{1+R/k}{I_0(R-1)}$
+    \textbf{\textcolor{themeTeal}{\footnotesize （传播过程噪声）}}\\[5pt]
+    \footnotesize 负二项分支过程 $Z_{t+1} \mid Z_t \sim \mathrm{NB}(R Z_t,\, k)$\\[5pt]
+    \footnotesize 微观相对方差饱和常数（\textbf{引理 2}）：\\[2pt]
+    $\mathrm{CV}^2_\infty = \dfrac{1+R/k_{\mathrm{ind}}}{I_0(R-1)}$\\[5pt]
+    \footnotesize 宏观周度更新几何发散项（\textbf{定理 2}）：\\[2pt]
+    $\bigl[(1+1/k_{\mathrm{agg}})^h - 1\bigr]$
 };
 
-\node[card=themeDarkBlue, fill=bgBlue, text width=6.0cm, right=1.6cm of demo] (param) {
+\node[card=themeDarkBlue, fill=bgBlue, text width=6.2cm, right=2.0cm of demo] (param) {
     \textbf{\textcolor{themeDarkBlue}{\large 参数推断不确定性}}\\[2pt]
     \textbf{\textcolor{themeDarkBlue}{\footnotesize （统计估计误差）}}\\[5pt]
-    \footnotesize 监测窗口观测估计量 $\hat{R} \sim \mathcal{N}(R, s_R^2)$\\[4pt]
-    \textbf{外推几何放大项}：\\[3pt]
-    $P(h) = \dfrac{\mathbb{E}[(\hat{R}^h - R^h)^2]}{R^{2h}} \approx \left(\dfrac{h\,s_R}{R}\right)^2$
+    \footnotesize 监测窗口估计 $\log\hat{R} \sim \mathcal{N}(\log R,\, s^2_{\text{周}})$\\[5pt]
+    \footnotesize 外推放大律（\textbf{引理 3}）：\\[2pt]
+    $P_{\text{exact}}(h;s) = e^{2h^2s^2} - 2e^{\frac{1}{2}h^2s^2} + 1$\\[5pt]
+    \footnotesize 代入式点预测系统性上偏：$\mathbb{E}[\hat{R}^h] = R^h e^{h^2s^2/2} > R^h$
 };
 
-% ---------------- Tier 2: Core Decomposition ----------------
-\node[card=themeSlate, fill=white, text width=10.2cm, below=2.1cm of $(demo)!0.5!(param)$] (decomp) {
-    \textbf{\textcolor{themeDarkBlue}{\Large 相对均方误差严格正交分解（定理 1--2）}}\\[7pt]
-    $\text{relMSE}^2(h) = \underbrace{\text{CV}^2(h)}_{\text{内在动力学方差下界}} + \underbrace{P(h)}_{\text{参数外推放大项}} \quad \text{\small （严格单调递增，处处可求逆）}$\\[8pt]
-    \footnotesize 目标相对误差预算阈值 $\tau$（公卫应急决策容忍阈值，如 $\tau=0.5$ 对应 50\% 相对误差限）
+% ---------------- Tier 2: 条件风险分解 ----------------
+\node[card=themeSlate, fill=white, text width=12.8cm] (decomp) at ($(demo.south east)!0.5!(param.south west) + (0,-3.3)$) {
+    \textbf{\textcolor{themeDarkBlue}{\large 条件风险分解（\textbf{定理 1} 锐条件风险恒等式；假定 1 条件正交）}}\\[7pt]
+    $\mathrm{RelMSE}(h) \;=\; \underbrace{\mathrm{CV}^2_{\text{macro}}(h)}_{\text{内在机制贡献}} \;+\; \underbrace{P_{\text{exact}}(h;s)}_{\text{外在推断贡献}}$
+    \quad \footnotesize （关于 $h$ 严格单调递增：定理 2、引理 3）\\[7pt]
+    \footnotesize 目标相对误差预算阈值 $\tau$（公共卫生决策容忍度，如 $\tau=0.5$ 对应 50\% 相对误差上限）
 };
 
-% ---------------- Tier 3: Limits & Application ----------------
-\node[card=themeOrange, fill=bgOrange, text width=13.6cm, below=2.1cm of decomp] (horizon) {
-    \textbf{\textcolor{themeOrange}{\Large 条件机制预测视界解析闭式（$h^*$）}}\\[8pt]
-    $\boxed{h^* \approx \mu_g \cdot \dfrac{R}{s_R}\sqrt{\tau^2 - \dfrac{1+R/k}{I_0(R-1)}}} \qquad \xrightarrow{R\to 1} \qquad h^*_{\text{gen}} = \dfrac{\sqrt{b^2+4 s_R^2\tau^2}-b}{2 s_R^2}$\\[9pt]
-    \small
-    \setlength{\tabcolsep}{10pt}
-    \begin{tabular}{ccc}
-    \textbf{近临界慢化视界塌缩 (定理 3)} & \textbf{Fisher 信息界辨识约束 (引理 2)} & \textbf{实测误差代数记账 (第 4 节)} \\[4pt]
-    $|R-1| \sim \dfrac{R+1}{N} \implies h^* \to 0$ & $C \gtrsim \dfrac{6.2(1/R+1/k)}{(R-1)^2}$ & $\text{relMSE}^2 = \text{CV}^2 + P + \mathcal{E}_{\text{业务扰动}}$
-    \end{tabular}
+% ---------------- Tier 3: 视界输出与决策映射 ----------------
+\node[card=themeOrange, fill=bgOrange, text width=9.4cm] (horizon) at ($(decomp.south) + (0,-3.7)$) {
+    \textbf{\textcolor{themeOrange}{\large 条件机制预测视界（\textbf{定理 4}）}}\\[6pt]
+    \footnotesize 阈值根定义：\\[2pt]
+    $h^{*}_{\text{cont}} = \sup\{\, h \ge 0 \mid \mathrm{RelMSE}(h) \le \tau^2 \,\}$\\[6pt]
+    \footnotesize 线性化闭式速算：\\[2pt]
+    $h^{*} \approx \dfrac{\sqrt{b^2 + 4s^2_{\text{周}}\tau^2} - b}{2s^2_{\text{周}}},\;\; b \equiv 1/k_{\mathrm{agg}}$\\[3pt]
+    \footnotesize （较数值精确根高估 8\%--29\%，中位约 10\%；精确值以数值求根为准）
 };
 
-% ---------------- Connecting Arrows ----------------
-\draw[arrow, draw=themeTeal] (demo.south) -- ++(0,-0.75) -| ($(decomp.north west)!0.3!(decomp.north)$)
-    node[pos=0.25, left, font=\footnotesize\bfseries\color{themeTeal}] {内在机制贡献};
+\node[card=black!45, fill=white, text width=5.6cm] (fisher) at ($(horizon.south) + (-3.15,-1.9)$) {
+    \footnotesize\textbf{辨识样本量门槛（\textbf{定理 3}）}\\[3pt]
+    \footnotesize Fisher 信息：$\mathcal{I}_N = \dfrac{Nk}{R(R+k)}$\\[3pt]
+    \footnotesize 相对标准误达 $\varepsilon$ 需 $N \gtrsim O(\varepsilon^{-2})$
+};
 
-\draw[arrow, draw=themeDarkBlue] (param.south) -- ++(0,-0.75) -| ($(decomp.north east)!0.3!(decomp.north)$)
-    node[pos=0.25, right, font=\footnotesize\bfseries\color{themeDarkBlue}] {外在推断贡献};
+\node[card=black!45, fill=white, text width=5.6cm] (budget) at ($(horizon.south) + (3.15,-1.9)$) {
+    \footnotesize\textbf{实测误差代数记账（第 4.3 节）}\\[3pt]
+    \footnotesize $\mathrm{RelMSE}_{\text{obs}} = \mathrm{CV}^2_{\text{macro}} + P_{\text{exact}} + \mathcal{E}_{\text{res}}$\\[3pt]
+    \footnotesize 21 配置差额占比中位数 55.0\%
+};
 
-\draw[highlightArrow] (decomp.south) -- (horizon.north)
-    node[midway, fill=white, inner sep=3pt, font=\footnotesize\bfseries\color{themeOrange}, rounded corners=2pt, draw=themeOrange!50] {首次穿透 $\text{relMSE}(h^*) = \tau$};
+% ---------------- 连接箭头（标签全部旁置，不压卡片） ----------------
+\draw[arrow, draw=themeTeal] (demo.south) -- ++(0,-0.62) -| ($(decomp.north west)!0.22!(decomp.north east)$);
+\node[alab=themeTeal, anchor=south] at ($(decomp.north west)!0.22!(decomp.north east) + (0,0.72)$) {内在机制贡献};
 
-% ---------------- Background Enclosure Panels with standalone tag banner ----------------
+\draw[arrow, draw=themeDarkBlue] (param.south) -- ++(0,-0.62) -| ($(decomp.north west)!0.78!(decomp.north east)$);
+\node[alab=themeDarkBlue, anchor=south] at ($(decomp.north west)!0.78!(decomp.north east) + (0,0.72)$) {外在推断贡献};
+
+\draw[highlightArrow] (decomp.south) -- (horizon.north);
+\node[alab=themeOrange, anchor=west] at ($(decomp.south) + (0.32,-0.95)$) {首次穿透 $\mathrm{RelMSE}(h^{*}) = \tau^2$};
+
+% ---------------- 背景面板与徽章 ----------------
 \begin{scope}[on background layer]
-    % Panel 1 with top margin
-    \node[panel=borderBlue, fill=bgBlue, fit={(demo) (param) ([yshift=24pt]demo.north) ([yshift=24pt]param.north)}] (panel1) {};
-    % Top tag banner placed cleanly inside top margin, never obscured
-    \node[anchor=north west, fill=themeDarkBlue, text=white, font=\bfseries\footnotesize, rounded corners=3pt, inner sep=4pt, xshift=10pt, yshift=-5pt] at (panel1.north west) {【阶段 I：双源动力学随机性机制输入】};
+    \node[panel=borderBlue, fill=bgBlue, fill opacity=0.55,
+          fit={(demo) (param) ([yshift=22pt]demo.north) ([yshift=22pt]param.north)}] (panel1) {};
+    \node[anchor=north west, fill=themeDarkBlue, text=white, font=\bfseries\footnotesize,
+          rounded corners=3pt, inner sep=4pt, xshift=10pt, yshift=-5pt] at (panel1.north west)
+          {【阶段 I：双源动力学随机性机制输入】};
 
-    % Panel 2 with top margin
-    \node[panel=borderOrange, fill=bgOrange, fit={(horizon) ([yshift=24pt]horizon.north)}] (panel2) {};
-    % Top tag banner placed cleanly inside top margin, never obscured
-    \node[anchor=north west, fill=themeOrange, text=white, font=\bfseries\footnotesize, rounded corners=3pt, inner sep=4pt, xshift=10pt, yshift=-5pt] at (panel2.north west) {【阶段 II：理论界限定量输出与公卫决策基准】};
+    \node[panel=borderOrange, fill=bgOrange, fill opacity=0.55,
+          fit={(horizon) (fisher) (budget) ([yshift=22pt]horizon.north)}] (panel2) {};
+    \node[anchor=north west, fill=themeOrange, text=white, font=\bfseries\footnotesize,
+          rounded corners=3pt, inner sep=4pt, xshift=10pt, yshift=-5pt] at (panel2.north west)
+          {【阶段 II：视界定量输出与决策映射】};
 \end{scope}
 
 \end{tikzpicture}
